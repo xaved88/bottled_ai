@@ -1,0 +1,18 @@
+from enum import Enum
+
+
+class ScreenType(Enum):
+    EVENT = 'EVENT'
+    CHEST = 'CHEST'
+    SHOP_ROOM = 'SHOP_ROOM'
+    REST = 'REST'
+    CARD_REWARD = 'CARD_REWARD'
+    COMBAT_REWARD = 'COMBAT_REWARD'
+    MAP = 'MAP'
+    BOSS_REWARD = 'BOSS_REWARD'
+    SHOP_SCREEN = 'SHOP_SCREEN'
+    GRID = 'GRID'
+    HAND_SELECT = 'HAND_SELECT'
+    GAME_OVER = 'GAME_OVER'
+    COMPLETE = 'COMPLETE'
+    NONE = 'NONE'
