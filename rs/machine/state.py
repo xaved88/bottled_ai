@@ -8,7 +8,7 @@ from rs.machine.command import Command
 class GameState:
     def __init__(self, json_state: json):
         self.json = json_state
-        if "combat_state" in json_state["game_state"]:
+        if "game_state" in json_state and "combat_state" in json_state["game_state"]:
             self.hand: Deck = Deck(json_state["game_state"]["combat_state"]["hand"])
             self.draw_pile: Deck = Deck(json_state["game_state"]["combat_state"]["draw_pile"])
             self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
