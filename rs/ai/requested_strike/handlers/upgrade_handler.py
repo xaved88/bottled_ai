@@ -1,12 +1,10 @@
 from typing import List
 
-from rs.game.card import CardType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 
-# Just for doing random things that we want at specific places
 class UpgradeHandler(Handler):
 
     def __init__(self):
@@ -28,10 +26,10 @@ class UpgradeHandler(Handler):
                and state.game_state()["screen_type"] == "GRID" \
                and state.game_state()["screen_state"]["for_upgrade"]
 
-    def handle(self, state: GameState) -> str:
+    def handle(self, state: GameState) -> List[str]:
         choice_list = state.game_state()["choice_list"]
 
         for priority in self.priorities:
             if priority in choice_list:
-                return "choose " + priority
-        return "choose " + choice_list[0]
+                return ["choose " + priority]
+        return ["choose " + choice_list[0]]

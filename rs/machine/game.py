@@ -42,13 +42,14 @@ class Game:
 
     def run(self):
         log("Starting Run")
-        i = 0
-        while i < 100:  # todo -> bring this out to an actual end condition
+        while True:  # todo -> bring this out to an actual end condition
             handled = False
             for handler in self.handlers:
                 if handler.can_handle(self.lastState):
                     log("Handler: " + str(handler))
-                    self.__send_command(handler.handle(self.lastState))
+                    commands = handler.handle(self.lastState)
+                    for command in commands:
+                        self.__send_command(command)
                     handled = True
                     break
             if not handled:

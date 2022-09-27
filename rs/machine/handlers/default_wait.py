@@ -10,5 +10,5 @@ class DefaultWaitHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.WAIT)
 
-    def handle(self, state: GameState) -> str:
-        return "wait 30"
+    def handle(self, state: GameState) -> List[str]:
+        return ["wait 30"]

@@ -50,3 +50,13 @@ class GameState:
 
     def player_entangled(self):
         return bool(next((p for p in self.get_player_combat()["powers"] if p["id"] == "Entangled"), None))
+
+    def get_deck_card_list(self) -> dict[str, int]:
+        cards = {}
+        for card in self.deck.cards:
+            name = card.name.lower()
+            if name in cards:
+                cards[name] += 1
+            else:
+                cards[name] = 1
+        return cards
