@@ -1,6 +1,6 @@
 To get this set up:
 
-1) Have Python installed (Note: you might need to add Python to the system path variable things on Windows)
+1) Have Python 3.9 or .10 or so installed (Note: you might need to add Python to the system path variable things on Windows)
 2) Through the steam workshop, make sure you have:
     - BaseMod https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019
     - StSLib https://steamcommunity.com/sharedfiles/filedetails/?id=1609158507
