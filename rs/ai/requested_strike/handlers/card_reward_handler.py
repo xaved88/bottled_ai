@@ -34,5 +34,5 @@ class CardRewardHandler(Handler):
                 continue
             if desired_card in deck_card_list and deck_card_list[desired_card] >= self.desired_cards[desired_card]:
                 continue
-            return ["choose " + str(choice_list.index(desired_card))]
+            return ["wait 30", "choose " + str(choice_list.index(desired_card)), "wait 30"]
         return ["skip", "proceed"]
