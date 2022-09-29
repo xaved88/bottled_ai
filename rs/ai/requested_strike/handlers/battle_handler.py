@@ -163,12 +163,12 @@ class BattleHandler(Handler):
         return ["end"]
 
     def get_target_from_monster_list(self, monsters: List[dict]) -> int:
-        max_health = 999
+        highest_health = 999
         target = 0
         for i, m in enumerate(monsters):
-            health = m['current_hp'] + m['block']
-            if health < max_health and not m['is_gone']:
-                max_health = health
+            effective_health = m['current_hp'] + m['block']
+            if effective_health < highest_health and not m['is_gone']:
+                highest_health = effective_health
                 target = i
         return target
 
