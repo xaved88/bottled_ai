@@ -15,5 +15,7 @@ class EventHandler(Handler):
         event_name = state.game_state()['screen_state']['event_name']
 
         ## Any custom logic for each event name would go here ##
+        # if event_name == "Purifier":
+        #    return ["choose 1", "choose 0"] # avoids purifying and then closes screen
 
         return ["choose 0"]
