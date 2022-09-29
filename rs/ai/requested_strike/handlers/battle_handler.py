@@ -152,7 +152,7 @@ class BattleHandler(Handler):
             base = [10] if card.upgrades else [9]
         if name == 'twin strike':
             base = [7, 7] if card.upgrades else [5, 5]
-        if name == 'strike':
+        if name == 'strike_r':
             base = [9] if card.upgrades else [6]
 
         if weak:
