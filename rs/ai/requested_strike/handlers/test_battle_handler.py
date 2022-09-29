@@ -38,7 +38,6 @@ class TempBattleHandlerTestCase(unittest.TestCase):
         self.assertEqual(["play 1 0"], handler.handle(state))
 
     def test_kill_lagavulin_state(self):
-        #This isn't working because the whole bash+ thing I reckon?
         handler = BattleHandler()
         state = GameState(json.loads(KILL_STATE_LAGAVULIN))
 

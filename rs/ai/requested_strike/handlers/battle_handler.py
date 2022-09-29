@@ -48,7 +48,6 @@ class BattleHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.PLAY)
 
-    ## TODO -> entangled state
     def handle(self, state: GameState) -> List[str]:
         # Determine target (lowest effective hp)
         target_index = self.get_target_from_monster_list(state.get_monsters())

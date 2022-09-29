@@ -11,7 +11,7 @@ class DefaultChooseHandler(Handler):
         return state.has_command(Command.CHOOSE)
 
     def handle(self, state: GameState) -> List[str]:
-        # TODO -> if potion is choice and slots are full then discard.
+        # If potion is choice and slots are full then discard.
         if state.get_choice_list()[0] == "potion" and state.are_potions_full():
             return ["potion discard 0"]
 

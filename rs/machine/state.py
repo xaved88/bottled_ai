@@ -60,3 +60,6 @@ class GameState:
             else:
                 cards[name] = 1
         return cards
+
+    def get_map(self) -> List[dict]:
+        return self.game_state()["map"]
