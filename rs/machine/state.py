@@ -63,3 +63,9 @@ class GameState:
 
     def get_map(self) -> List[dict]:
         return self.game_state()["map"]
+
+    def has_monster(self, name: str) -> bool:
+        for monster in self.get_monsters():
+            if monster['name'] == name:
+                return True
+        return False
