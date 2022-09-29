@@ -14,13 +14,13 @@ class PathHandler(Handler):
         pass
 
     def can_handle(self, state: GameState) -> bool:
-        return state.screen_type == ScreenType.MAP.value and state.has_command(Command.CHOOSE)
+        return state.screen_type() == ScreenType.MAP.value and state.has_command(Command.CHOOSE)
 
     def handle(self, state: GameState) -> List[str]:
         # Get the math and paths set up
         n = state.game_state()["screen_state"]["current_node"]
         current_position = str(n["x"]) + "_" + str(n["y"])
-        game_map = Map(state.get_map(), current_position)
+        game_map = Map(state.get_map(), current_position, state.game_state()['floor'])
 
         # Sort the paths by our priorities (note that the highest priority = the last sort, in this case)
         game_map.sort_paths_by_questions()

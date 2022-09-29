@@ -21,5 +21,5 @@ if __name__ == "__main__":
 Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
 24W1XWCFJR2ZC - upgrade from neow, we get entangled in fourth battle or so. First card reward PS + Shockwave.
-NMRZXQFDKKHK - ???
+NMRZXQFDKKHK - gremlin nob kills as first elite currently, will be a good one for battle specific combat checks...
 """

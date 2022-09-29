@@ -31,8 +31,9 @@ class Path:
 
 
 class Map:
-    def __init__(self, map_json: List[dict], current_position: str):
+    def __init__(self, map_json: List[dict], current_position: str, current_floor: int):
         self.rooms: dict[str, Room] = {}
+
         self.current_position = current_position
         for room in map_json:
             r = Room(room)
@@ -52,9 +53,13 @@ class Map:
             for c in room.childrenIds:
                 room.add_child(self.rooms[c])
 
-        paths: List[List[Room]] = [
-            [self.rooms[current_position]]
-        ]
+        paths: List[List[Room]] = []
+        if current_position in self.rooms:
+            paths.append([self.rooms[current_position]])
+        else:
+            for key in self.rooms.keys():
+                if key.startswith(str(current_floor)):
+                    paths.append([self.rooms[key]])
         while paths[0][-1].children:
             for path in paths:
                 if not path[-1].children:
@@ -69,7 +74,7 @@ class Map:
         self.paths = [Path(path) for path in paths]
 
     def get_path_choice_from_choices(self, choices: List[str]):
-        next_node = self.paths[-1].rooms[0]
+        next_node = self.paths[-1].rooms[1]
         next_x = next_node.id[0]
         for i in range(len(choices)):
             if choices[i][2] == next_x:
