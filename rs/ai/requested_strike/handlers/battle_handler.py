@@ -168,7 +168,7 @@ class BattleHandler(Handler):
         damage = 0
         for m in monsters:
             if not m['is_gone']:
-                damage += m['move_adjusted_damage']
+                damage += m['move_adjusted_damage'] * m['move_hits']
         return damage
 
     def get_plays_from_list(self, card_list: List[str], energy_remaining: int, state: GameState) -> (int, List[int]):
