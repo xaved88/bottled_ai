@@ -1,1 +1,3 @@
-print('okay we are here')
+import sys
+
+print(sys.version)
