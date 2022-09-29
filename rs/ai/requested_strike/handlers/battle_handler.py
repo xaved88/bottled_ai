@@ -81,7 +81,8 @@ class BattleHandler(Handler):
                 if i not in plays \
                         and cih.type == CardType.ATTACK \
                         and cih.id.lower() not in self.attack_shuns \
-                        and energy_remaining >= cih.cost:
+                        and energy_remaining >= cih.cost\
+                        and cih.is_playable:
                     energy_remaining -= cih.cost
                     plays.append(i)
 
@@ -96,7 +97,7 @@ class BattleHandler(Handler):
 
         # Play any non-played non-attack cards
         for i, cih in enumerate(state.hand.cards):
-            if i not in plays and energy_remaining >= cih.cost and cih.type != CardType.ATTACK:
+            if i not in plays and energy_remaining >= cih.cost and cih.type != CardType.ATTACK and cih.is_playable:
                 energy_remaining -= cih.cost
                 plays.append(i)
 
@@ -174,7 +175,7 @@ class BattleHandler(Handler):
         plays = []
         for card in card_list:
             for i, cih in enumerate(state.hand.cards):
-                if card == cih.id.lower() and energy_remaining >= cih.cost:
+                if card == cih.id.lower() and energy_remaining >= cih.cost and cih.is_playable:
                     energy_remaining -= cih.cost
                     plays.append(i)
         return energy_remaining, plays
