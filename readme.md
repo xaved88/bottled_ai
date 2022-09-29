@@ -12,9 +12,12 @@ To get this set up:
 4) Run the game with the mods enabled
 5) Now your spire config file should be created! See https://github.com/kiooeht/ModTheSpire/wiki/SpireConfig for how to navigate there
 6) Find `config.properties` in the CommunicationMod folder. Then:
-    - Windows ex: Add `command=python .\\ai\\requested_strike\\main.py` to the `config.properties` file there.
-    - MacOS ex: Add `command=python3 ./ai/requested_strike/main.py` to the `config.properties` file there.
+    - Windows: Add `command=python .\\ai\\requested_strike\\main.py` to the `config.properties` file there.
+    - MacOS: Add `command=python3 ./ai/requested_strike/main.py` to the `config.properties` file there.
 7) Add default.log to ai\requested_strike\logs 
 8) Run the bot via the game's main menu -> Mods -> Communication Mod -> Config (next to "Return") -> Start external process
 
 Now it should all be able to run!
+
+The process has a timeout of 10s so if you simply see that delay but nothing's happening, then something isn't working.
+To debug, check the output in the ModTheSpire console, or the `communication_mod_errors.log` in the StS folder.
