@@ -50,6 +50,7 @@ class Game:
                     commands = handler.handle(self.lastState)
                     for command in commands:
                         self.__send_command(command)
+                        #self.__send_command("wait 30") # for slowing things down so you can see what's going on!
                     handled = True
                     break
             if not handled:
