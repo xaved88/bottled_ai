@@ -99,7 +99,7 @@ class BattleHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
         # Determine target (lowest effective hp)
-        target_index = self.get_target_from_monster_list(state.get_monsters())
+        target_index = self.get_target(state.get_monsters())
         target = state.get_monsters()[target_index]
 
         # Get damage in hand, enemy damage, and knowledge of if we can kill the target
@@ -110,7 +110,7 @@ class BattleHandler(Handler):
 
         # If damage can kill, attack mode.
         # If incoming damage >= 10, defend mode.
-        mode = 'attack' if can_kill or incoming_damage < 10 else 'defend'
+        mode = 'attack' if can_kill or incoming_damage < self.defend_damage_threshhold() or self.should_yolo() else 'defend'
 
         always_priorities = self.get_always_priorities(vulnerable_count)
         defend_priorities = self.get_defend_priorities(vulnerable_count)
@@ -162,7 +162,11 @@ class BattleHandler(Handler):
             return [command]
         return ["end"]
 
-    def get_target_from_monster_list(self, monsters: List[dict]) -> int:
+    # MEMBER FUNCTIONS
+    def should_yolo(self) -> bool:
+        return False  # can be overridden by children
+
+    def get_target(self, monsters: List[dict]) -> int:
         max_health = 999
         target = 0
         for i, m in enumerate(monsters):
@@ -171,6 +175,11 @@ class BattleHandler(Handler):
                 max_health = health
                 target = i
         return target
+
+    def defend_damage_threshhold(self) -> int:
+        return 10  # can be overridden by children
+
+    # UTILITY FUNCTIONS
 
     def get_damage_in_hand(self, hand: Deck, state: GameState, player: dict, target: dict, ) -> int:
         vulnerable = bool(next((power for power in target['powers'] if power['id'] == 'Vulnerable'), None))

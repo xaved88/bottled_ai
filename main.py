@@ -11,7 +11,7 @@ if __name__ == "__main__":
     try:
         client = Client()
         game = Game(client, REQUESTED_STRIKE)
-        game.start("NMRZXQFDKKHK")
+        game.start("19M4YWURMXE59")
         game.run()
     except Exception as e:
         log("Exception! " + str(e))
@@ -22,6 +22,7 @@ Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
 24W1XWCFJR2ZC - upgrade from neow, we get entangled in fourth battle or so. First card reward PS + Shockwave.
 NMRZXQFDKKHK - gremlin nob as first elite currently, will be a good one for battle specific combat checks...
-NMRZXQFDKKHK - perfected strike sometime before first elite
-NMRZXQFDKKHK - shop 4th room on the left (but path logic avoids it currently)
+             - perfected strike sometime before first elite
+             - shop 4th room on the left (but path logic avoids it currently)
+19M4YWURMXE59 - remove on floor 2, event on floor 2, and sentries as first elite
 """
