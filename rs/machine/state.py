@@ -69,3 +69,10 @@ class GameState:
             if monster['name'] == name:
                 return True
         return False
+
+
+def get_stacks_of_power(powers: List[dict], power_id: str):
+    for power in powers:
+        if power['id'] == power_id:
+            return power['amount']
+    return 0

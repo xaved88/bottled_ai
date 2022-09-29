@@ -5,10 +5,11 @@ from rs.game.card import Card, CardType
 from rs.game.deck import Deck
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
-from rs.machine.state import GameState
+from rs.machine.state import GameState, get_stacks_of_power
 
 
 # https://alexdriedger.github.io/SlayTheSpireModding/docs/id-cards
+
 
 class BattleHandler(Handler):
 
@@ -22,6 +23,15 @@ class BattleHandler(Handler):
             'ghostly',
             'shockwave',
         ]
+        self.always_1v: List[str] = [
+            'offering',
+            'battle trance',
+            'seeing red',
+            'bloodletting',
+            'apotheosis',
+            'ghostly',
+        ]
+        self.always_3v: List[str] = self.always_1v
 
         self.attack_preferences: List[str] = [
             'bash',
@@ -32,9 +42,32 @@ class BattleHandler(Handler):
             'pommel strike',
             'twin strike',
         ]
+        self.attack_preferences_1v: List[str] = [
+            'perfected strike',
+            'bash',
+            'thunderclap',
+            'reaper',
+            'bludgeon',
+            'pommel strike',
+            'twin strike',
+        ]
+        self.attack_preferences_3v: List[str] = [
+            'perfected strike',
+            'reaper',
+            'bludgeon',
+            'pommel strike',
+            'twin strike',
+        ]
 
         self.attack_shuns: List[str] = [
             'strike_r'
+        ]
+        self.attack_shuns_1v: List[str] = [
+            'strike_r'
+        ]
+        self.attack_shuns_3v: List[str] = [
+            'bludgeon',
+            'thunderclap'
         ]
 
         self.defend_preferences: List[str] = [
@@ -43,6 +76,22 @@ class BattleHandler(Handler):
             'shrug it off',
             'true grit',
             'defend_r',
+        ]
+        self.defend_preferences_1v: List[str] = [
+            'shockwave'
+            'impervious',
+            'flame barrier',
+            'shrug it off',
+            'true grit',
+            'defend_r',
+        ]
+        self.defend_preferences_3v: List[str] = [
+            'impervious',
+            'flame barrier',
+            'shrug it off',
+            'true grit',
+            'defend_r',
+            'shockwave'
         ]
 
     def can_handle(self, state: GameState) -> bool:
@@ -54,6 +103,7 @@ class BattleHandler(Handler):
         target = state.get_monsters()[target_index]
 
         # Get damage in hand, enemy damage, and knowledge of if we can kill the target
+        vulnerable_count = get_stacks_of_power(target['powers'], "Vulnerable")
         damage = self.get_damage_in_hand(state.hand, state, state.get_player_combat(), target)
         incoming_damage = self.get_incoming_damage(state.get_monsters())
         can_kill = damage >= (target['current_hp'] + target['block'])
@@ -62,37 +112,41 @@ class BattleHandler(Handler):
         # If incoming damage >= 10, defend mode.
         mode = 'attack' if can_kill or incoming_damage < 10 else 'defend'
 
+        always_priorities = self.get_always_priorities(vulnerable_count)
+        defend_priorities = self.get_defend_priorities(vulnerable_count)
+        attack_priorities = self.get_attack_priorities(vulnerable_count)
+        shuns = self.get_attack_shuns(vulnerable_count)
         # Play always preferred cards
         energy_remaining = state.get_player_combat()['energy']
-        (energy_remaining, plays) = self.get_plays_from_list(self.always, energy_remaining, state)
+        (energy_remaining, plays) = self.get_plays_from_list(always_priorities, energy_remaining, state)
 
         # Play prioritized defensive cards only if in defensive mode
         if mode == 'defend':
-            (energy_remaining, add_plays) = self.get_plays_from_list(self.defend_preferences, energy_remaining, state)
+            (energy_remaining, add_plays) = self.get_plays_from_list(defend_priorities, energy_remaining, state)
             plays += add_plays
 
         if not state.player_entangled():
             # Play preferred attacks
-            (energy_remaining, add_plays) = self.get_plays_from_list(self.attack_preferences, energy_remaining, state)
+            (energy_remaining, add_plays) = self.get_plays_from_list(attack_priorities, energy_remaining, state)
             plays += add_plays
 
             # Play neutral attacks
             for i, cih in enumerate(state.hand.cards):
                 if i not in plays \
                         and cih.type == CardType.ATTACK \
-                        and cih.id.lower() not in self.attack_shuns \
-                        and energy_remaining >= cih.cost\
+                        and cih.id.lower() not in shuns \
+                        and energy_remaining >= cih.cost \
                         and cih.is_playable:
                     energy_remaining -= cih.cost
                     plays.append(i)
 
             # Play shunned attacks
-            (energy_remaining, add_plays) = self.get_plays_from_list(self.attack_shuns, energy_remaining, state)
+            (energy_remaining, add_plays) = self.get_plays_from_list(shuns, energy_remaining, state)
             plays += add_plays
 
         # Play deprioritized def cards only if in attack mode
         if mode == 'attack':
-            (energy_remaining, add_plays) = self.get_plays_from_list(self.defend_preferences, energy_remaining, state)
+            (energy_remaining, add_plays) = self.get_plays_from_list(defend_priorities, energy_remaining, state)
             plays += add_plays
 
         # Play any non-played non-attack cards
@@ -168,7 +222,12 @@ class BattleHandler(Handler):
         damage = 0
         for m in monsters:
             if not m['is_gone']:
-                damage += m['move_adjusted_damage'] * m['move_hits']
+                base_damage = m['move_adjusted_damage']
+                if base_damage == -1:
+                    base_damage = m['move_base_damage']
+                if base_damage == -1:
+                    base_damage = 0
+                damage += base_damage * m['move_hits']
         return damage
 
     def get_plays_from_list(self, card_list: List[str], energy_remaining: int, state: GameState) -> (int, List[int]):
@@ -179,3 +238,31 @@ class BattleHandler(Handler):
                     energy_remaining -= cih.cost
                     plays.append(i)
         return energy_remaining, plays
+
+    def get_always_priorities(self, vulnerable: int) -> List[str]:
+        if vulnerable < 1:
+            return self.always
+        elif vulnerable < 3:
+            return self.always_1v
+        return self.always_3v
+
+    def get_attack_priorities(self, vulnerable: int) -> List[str]:
+        if vulnerable < 1:
+            return self.attack_preferences
+        elif vulnerable < 3:
+            return self.attack_preferences_1v
+        return self.attack_preferences_3v
+
+    def get_attack_shuns(self, vulnerable: int) -> List[str]:
+        if vulnerable < 1:
+            return self.attack_shuns
+        elif vulnerable < 3:
+            return self.attack_shuns_1v
+        return self.attack_shuns_3v
+
+    def get_defend_priorities(self, vulnerable: int) -> List[str]:
+        if vulnerable < 1:
+            return self.defend_preferences
+        elif vulnerable < 3:
+            return self.defend_preferences_1v
+        return self.defend_preferences_3v
