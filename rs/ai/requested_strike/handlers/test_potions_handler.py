@@ -14,7 +14,7 @@ class PotionsHandlerTestCase(unittest.TestCase):
         handler = PotionsEliteHandler()
         state = GameState(json.loads(STATE))
         self.assertTrue(handler.can_handle(state))
-        self.assertEqual(["potion 0 0"], handler.handle(state))
+        self.assertEqual(['wait 30', 'potion use 0 0', 'wait 30'], handler.handle(state))
 
 
 if __name__ == '__main__':

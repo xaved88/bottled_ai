@@ -9,8 +9,7 @@ from rs.helper.logger import log, init_log
 # NOTE -> now it will keep running even when you abandon if there are more seeds/runs left, so you'll need to force your way out.
 use_seeded_runs = True
 run_amount = 50
-run_seeds = ['EFI1QKN4EWKB']
-
+run_seeds = ['3RWGR6T3HKE6A']
 """
 Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
@@ -20,6 +19,7 @@ NMRZXQFDKKHK - gremlin nob as first elite currently, will be a good one for batt
              - shop 4th room on the left (but path logic avoids it currently)
 19M4YWURMXE59 - remove on floor 2, event on floor 2, and sentries as first elite
 1SG4LPD7YFUBM - Astrolabe as act1 reward
+3RWGR6T3HKE6A - 2 card gen potions to use for act 1 boss, good potion edge case
 """
 
 if __name__ == "__main__":

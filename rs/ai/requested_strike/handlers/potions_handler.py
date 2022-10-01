@@ -1,5 +1,6 @@
 from typing import List
 
+from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
@@ -23,9 +24,10 @@ class PotionsBaseHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
         pot = self.get_potions_to_play(state)[0]
+        wait_command = "wait 30"
         if pot['requires_target']:
-            return ["potion use " + str(pot['idx']) + " 0"]
-        return ["potion use " + str(pot['idx'])]
+            return [wait_command, "potion use " + str(pot['idx']) + " 0", wait_command]
+        return [wait_command, "potion use " + str(pot['idx']), wait_command]
 
     def get_potions_to_play(self, state: GameState) -> List[dict]:
         to_play = []
@@ -44,6 +46,7 @@ class PotionsEliteHandler(PotionsBaseHandler):
         hp_per = state.get_player_health_percentage() * 100
         return state.has_command(Command.POTION) \
                and state.combat_state() \
+               and state.screen_type() == ScreenType.NONE.value \
                and state.game_state()['room_type'] == "MonsterRoomElite" \
                and ((hp_per <= 50 and state.combat_state()['turn'] == 1) or hp_per <= 30) \
                and self.get_potions_to_play(state)
@@ -56,6 +59,7 @@ class PotionsBossHandler(PotionsBaseHandler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.POTION) \
                and state.combat_state() \
+               and state.screen_type() == ScreenType.NONE.value \
                and state.game_state()['room_type'] == "MonsterRoomBoss" \
                and state.combat_state()['turn'] == 1 \
                and self.get_potions_to_play(state)
