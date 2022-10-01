@@ -7,9 +7,9 @@ from rs.machine.game import Game
 from rs.helper.logger import log, init_log
 
 # NOTE -> now it will keep running even when you abandon if there are more seeds/runs left, so you'll need to force your way out.
-use_seeded_runs = False
+use_seeded_runs = True
 run_amount = 50
-run_seeds = ['1SG4LPD7YFUBM']
+run_seeds = ['EFI1QKN4EWKB']
 
 """
 Seeds:

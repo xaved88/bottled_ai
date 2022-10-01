@@ -230,7 +230,7 @@ class BattleHandler(Handler):
     def get_incoming_damage(self, monsters: List[dict]):
         damage = 0
         for m in monsters:
-            if not m['is_gone']:
+            if not m['is_gone'] and 'move_adjusted_damage' in m:
                 base_damage = m['move_adjusted_damage']
                 if base_damage == -1:
                     base_damage = m['move_base_damage']
