@@ -18,11 +18,20 @@ class GameState:
     def game_state(self):
         return self.json["game_state"]
 
+    def combat_state(self):
+        if 'combat_state' in self.game_state():
+            return self.game_state()["combat_state"]
+        else:
+            return None
+
     def has_command(self, command: Command) -> bool:
         return command.value in self.json.get("available_commands")
 
     def get_player_combat(self):
         return self.game_state()["combat_state"]["player"]
+
+    def get_player_health_percentage(self) -> float:
+        return self.game_state()["current_hp"] / self.game_state()["max_hp"]
 
     def get_monsters(self):
         return self.game_state()["combat_state"]["monsters"]

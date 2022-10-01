@@ -8,5 +8,6 @@ class Command(Enum):
     END = "end"
     LEAVE = "leave"
     PLAY = "play"
+    POTION = "potion"
     PROCEED = "proceed"
     WAIT = "wait"

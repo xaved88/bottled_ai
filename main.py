@@ -11,7 +11,7 @@ if __name__ == "__main__":
     try:
         client = Client()
         game = Game(client, REQUESTED_STRIKE)
-        game.start("19M4YWURMXE59")
+        game.start("NMRZXQFDKKHK")
         game.run()
     except Exception as e:
         log("Exception! " + str(e))
