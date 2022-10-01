@@ -8,12 +8,16 @@ from rs.machine.command import Command
 class GameState:
     def __init__(self, json_state: json):
         self.json = json_state
-        if "game_state" in json_state and "combat_state" in json_state["game_state"]:
-            self.hand: Deck = Deck(json_state["game_state"]["combat_state"]["hand"])
-            self.draw_pile: Deck = Deck(json_state["game_state"]["combat_state"]["draw_pile"])
-            self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
-            self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
-        self.deck: Deck = Deck(json_state["game_state"]["deck"])
+        if "game_state" in json_state:
+            if "combat_state" in json_state["game_state"]:
+                self.hand: Deck = Deck(json_state["game_state"]["combat_state"]["hand"])
+                self.draw_pile: Deck = Deck(json_state["game_state"]["combat_state"]["draw_pile"])
+                self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
+                self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
+            self.deck: Deck = Deck(json_state["game_state"]["deck"])
+
+    def is_game_running(self) -> bool:
+        return self.json["in_game"]
 
     def game_state(self):
         return self.json["game_state"]
