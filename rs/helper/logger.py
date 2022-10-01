@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from rs.helper.seed import get_seed_string
+from rs.machine.state import GameState
+
 ROOT_DIR = "./ai/requested_strike"
 
 current_run_log_file: str = ''
@@ -26,6 +29,18 @@ def log_to_run(message: str):
         log("Dying due to this seeming to be stuck", current_run_log_file)
         raise Exception("Dying due to this seeming to be stuck...")
     log(message, current_run_log_file)
+
+
+def log_run_results(state: GameState):
+    message = "Seed:" + get_seed_string(state.game_state()['seed'])
+    message += ", Floor:" + str(state.floor())
+    message += ", Score:" + str(state.game_state()['screen_state']['score'])
+    message += ", Monsters: "
+    for m in state.get_monsters():
+        message += m["name"]
+    with open(ROOT_DIR + "/logs/run_history.log", 'a+') as f:
+        f.write(message)
+        f.close()
 
 
 def log(message, filename="default"):

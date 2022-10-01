@@ -8,6 +8,7 @@ from rs.machine.handlers.default_cancel import DefaultCancelHandler
 from rs.machine.handlers.default_choose import DefaultChooseHandler
 from rs.machine.handlers.default_confirm import DefaultConfirmHandler
 from rs.machine.handlers.default_end import DefaultEndHandler
+from rs.machine.handlers.default_game_over import DefaultGameOverHandler
 from rs.machine.handlers.default_leave import DefaultLeaveHandler
 from rs.machine.handlers.default_play import DefaultPlayHandler
 from rs.machine.handlers.default_shop import DefaultShopHandler
@@ -16,6 +17,7 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 DEFAULT_GAME_HANDLERS = [
+    DefaultGameOverHandler(),
     DefaultLeaveHandler(),
     DefaultShopHandler(),
     DefaultChooseHandler(),

@@ -38,6 +38,8 @@ class GameState:
         return self.game_state()["current_hp"] / self.game_state()["max_hp"]
 
     def get_monsters(self):
+        if "combat_state" not in self.game_state():
+            return []
         return self.game_state()["combat_state"]["monsters"]
 
     def get_choice_list(self):
