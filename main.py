@@ -8,8 +8,8 @@ from rs.helper.logger import log, init_log
 
 # NOTE -> now it will keep running even when you abandon if there are more seeds/runs left, so you'll need to force your way out.
 use_seeded_runs = False
-run_amount = 10
-run_seeds = ['NMRZXQFDKKHK']
+run_amount = 50
+run_seeds = ['1SG4LPD7YFUBM']
 
 """
 Seeds:
@@ -19,6 +19,7 @@ NMRZXQFDKKHK - gremlin nob as first elite currently, will be a good one for batt
              - perfected strike sometime before first elite
              - shop 4th room on the left (but path logic avoids it currently)
 19M4YWURMXE59 - remove on floor 2, event on floor 2, and sentries as first elite
+1SG4LPD7YFUBM - Astrolabe as act1 reward
 """
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 from typing import List
 
+from rs.ai.requested_strike.handlers.astrolabe_handler import AstrolabeHandler
 from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
 from rs.ai.requested_strike.handlers.campfire_handler import CampfireHandler
 from rs.ai.requested_strike.handlers.card_reward_handler import CardRewardHandler
@@ -26,6 +27,10 @@ requested_strike_custom_battle_handlers: List[Handler] = [
 ]
 
 REQUESTED_STRIKE: List[Handler] = requested_strike_custom_battle_handlers + [
+    # Some edge cases
+    AstrolabeHandler(),
+
+    # General Stuff
     BattleHandler(),
     EventHandler(),
     UpgradeHandler(),
