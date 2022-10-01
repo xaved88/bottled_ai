@@ -54,7 +54,7 @@ class GameState:
     def screen_type(self):
         return self.game_state()["screen_type"]
 
-    def floor(self):
+    def floor(self) -> int:
         return self.game_state()["floor"]
 
     def player_entangled(self):
