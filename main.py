@@ -18,6 +18,10 @@ if __name__ == "__main__":
         log(traceback.format_exc())
 
 """
+State for when a round is finished and we're ready to start a new one:
+#{"available_commands":["start","state"],"ready_for_command":true,"in_game":false}
+
+
 Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
 24W1XWCFJR2ZC - upgrade from neow, we get entangled in fourth battle or so. First card reward PS + Shockwave.
