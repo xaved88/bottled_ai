@@ -44,12 +44,12 @@ def log_run_results(state: GameState):
 
 
 def log(message, filename="default"):
-    f = open(ROOT_DIR + "/logs/" + filename + ".log", "a")
+    f = open(ROOT_DIR + "/logs/" + filename + ".log", "a+")
     f.write(message + "\n")
     f.close()
 
 
 def init_log(filename="default"):
-    with open(ROOT_DIR + "/logs/" + filename + ".log", 'r+') as file:
+    with open(ROOT_DIR + "/logs/" + filename + ".log", 'a+') as file:
         file.truncate(0)
         file.close()

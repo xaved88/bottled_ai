@@ -14,8 +14,7 @@ To get this set up:
 6) Find `config.properties` in the CommunicationMod folder. Then:
     - Windows: Add `command=python .\\ai\\requested_strike\\main.py` to the `config.properties` file there.
     - MacOS: Add `command=python3 ./ai/requested_strike/main.py` to the `config.properties` file there.
-7) Add default.log to ai\requested_strike\logs 
-8) Run the bot via the game's main menu -> Mods -> Communication Mod -> Config (next to "Return") -> Start external process
+7) Run the bot via the game's main menu -> Mods -> Communication Mod -> Config (next to "Return") -> Start external process
 
 Now it should all be able to run!
 
