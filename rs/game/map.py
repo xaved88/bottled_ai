@@ -58,7 +58,7 @@ class Map:
             paths.append([self.rooms[current_position]])
         else:
             for key in self.rooms.keys():
-                if key.startswith("0"):
+                if key.endswith("_0"):
                     paths.append([self.rooms[key]])
         while paths[0][-1].children:
             for path in paths:
