@@ -38,6 +38,7 @@ def log_run_results(state: GameState):
     message += ", Monsters: "
     for m in state.get_monsters():
         message += m["name"]
+    message += "\n"
     with open(ROOT_DIR + "/logs/run_history.log", 'a+') as f:
         f.write(message)
         f.close()
