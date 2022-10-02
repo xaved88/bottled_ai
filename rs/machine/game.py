@@ -2,6 +2,7 @@ import json
 from typing import List, Optional
 
 from rs.api.client import Client
+from rs.helper.controller import await_controller
 from rs.helper.logger import init_run_logging, log_to_run
 from rs.helper.seed import get_seed_string
 from rs.machine.handlers.default_cancel import DefaultCancelHandler
@@ -48,6 +49,7 @@ class Game:
     def run(self):
         log_to_run("Starting Run")
         while self.lastState.is_game_running():  # todo -> bring this out to an actual end condition
+            await_controller()
             handled = False
             for handler in self.handlers:
                 if handler.can_handle(self.lastState):
