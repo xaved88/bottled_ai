@@ -1,6 +1,8 @@
 To get this set up:
 
-1) Have Python 3.9 or .10 or so installed (Note: you might need to add Python to the system path variable things on Windows)
+1) Have Python 3.9 or .10 or so installed
+    - Windows: you might need to add Python to the system path variable things
+    - MacOS: you need Python 3.9+ within xcode. This requires xcode 14.0+, which in turn requires MacOS Monterey (lower versions won't work!)
 2) Through the steam workshop, make sure you have:
     - BaseMod https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019
     - StSLib https://steamcommunity.com/sharedfiles/filedetails/?id=1609158507
