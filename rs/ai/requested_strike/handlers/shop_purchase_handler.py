@@ -44,8 +44,7 @@ class ShopPurchaseHandler(Handler):
         ]
 
     def can_handle(self, state: GameState) -> bool:
-        return state.has_command(Command.CHOOSE) \
-               and state.screen_type() == ScreenType.SHOP_SCREEN.value
+        return state.screen_type() == ScreenType.SHOP_SCREEN.value
 
     def handle(self, state: GameState) -> List[str]:
         choice = self.find_choice(state)
