@@ -1,5 +1,6 @@
 from typing import List
 
+from rs.game.card import CardType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
@@ -34,6 +35,13 @@ class PurgeHandler(Handler):
     def get_choices(self, state: GameState) -> List[int]:
         choice_list = state.get_choice_list()
         choices = []
+
+        # First Curses
+        for card in state.deck.cards:
+            if card.type == CardType.CURSE and card.name.lower() in choice_list:
+                choices.append(choice_list.index(card.name.lower()))
+
+        # Then the rest
         for pref in self.preferences:
             for i in range(len(choice_list)):
                 if pref == choice_list[i]:
