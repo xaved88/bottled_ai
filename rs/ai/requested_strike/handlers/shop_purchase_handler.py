@@ -57,10 +57,10 @@ class ShopPurchaseHandler(Handler):
     def find_choice(self, state: GameState) -> str:
         gold = state.game_state()['gold']
         screen_state = state.game_state()['screen_state']
-        purge_cost = screen_state['purge_cost']
+        can_purge = screen_state['purge_available'] and gold >= screen_state['purge_cost']
 
         # 1. Purge curses
-        if gold >= purge_cost and state.deck.contains_type(CardType.CURSE):
+        if can_purge and state.deck.contains_type(CardType.CURSE):
             return "purge"
 
         # 2. Perfected strike
@@ -74,7 +74,7 @@ class ShopPurchaseHandler(Handler):
                 return "membership card"
 
         # 4. Purge in general
-        if gold >= purge_cost and state.deck.contains_cards(["Strike", "Strike+", "Defend", "Defend+"]):
+        if can_purge and state.deck.contains_cards(["Strike", "Strike+", "Defend", "Defend+"]):
             return "purge"
 
         # 5. Relics based on list
