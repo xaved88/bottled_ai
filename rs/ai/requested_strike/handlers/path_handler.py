@@ -23,7 +23,7 @@ class PathHandler(Handler):
         game_map = Map(state.get_map(), current_position, state.game_state()['floor'])
 
         # Sort the paths by our priorities (note that the highest priority = the last sort, in this case)
-        game_map.sort_paths_by_questions()
+        game_map.sort_paths_by_questions_and_shops()
         game_map.sort_paths_by_campfires()
         game_map.sort_paths_by_elites()
 

@@ -87,8 +87,8 @@ class Map:
     def sort_paths_by_campfires(self):
         self.paths.sort(key=campfire_count)
 
-    def sort_paths_by_questions(self):
-        self.paths.sort(key=question_count)
+    def sort_paths_by_questions_and_shops(self):
+        self.paths.sort(key=question_and_shop_count)
 
 
 def elite_count(a: Path):
@@ -99,8 +99,8 @@ def campfire_count(a: Path):
     return a.room_count[RoomType.CAMPFIRE]
 
 
-def question_count(a: Path):
-    return a.room_count[RoomType.QUESTION]
+def question_and_shop_count(a: Path):
+    return a.room_count[RoomType.QUESTION] + a.room_count[RoomType.SHOP]
 
 
 class RoomType(Enum):
