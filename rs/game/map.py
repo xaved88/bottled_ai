@@ -24,17 +24,24 @@ class Map:
             'children': [],
         })
 
+        # get the first room and add your own starting point
+        starter_children = []
+        for r in self.rooms.values():
+            if "_0" in r.id:
+                coords = r.id.split("_")
+                starter_children.append({"x": int(coords[0]), "y": int(coords[1])})
+        self.rooms["0_-1"] = Room({
+            'symbol': 'B',
+            'x': 0,
+            'y': 0,
+            'children': starter_children
+        })
         for room in self.rooms.values():
             for c in room.childrenIds:
                 room.add_child(self.rooms[c])
 
         paths: List[List[Room]] = []
-        if current_position in self.rooms:
-            paths.append([self.rooms[current_position]])
-        else:
-            for key in self.rooms.keys():
-                if key.endswith("_0"):
-                    paths.append([self.rooms[key]])
+        paths.append([self.rooms[self.current_position]])
         while paths[0][-1].children:
             for path in paths:
                 if not path[-1].children:
@@ -46,10 +53,10 @@ class Map:
                     paths.append(new_path)
                 path.append(room.children[0])
 
-        self.paths = [Path(path) for path in paths]
+        self.paths = [Path(path[1:]) for path in paths]
 
     def get_path_choice_from_choices(self, choices: List[str]):
-        next_node = self.paths[-1].rooms[1]
+        next_node = self.paths[-1].rooms[0]
         next_x = next_node.id[0]
         for i in range(len(choices)):
             if choices[i][2] == next_x:
@@ -68,7 +75,7 @@ class Map:
     def sort_paths_by_reward_to_survivability(self, state: GameState):
         for path in self.paths:
             path.calculate_reward_survivability(state)
-        self.paths.sort(key=reward_and_survivability, reverse=True)
+        self.paths.sort(key=reward_and_survivability)
 
 
 def elite_count(a: Path):

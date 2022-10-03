@@ -2,6 +2,7 @@ from typing import List
 
 from rs.game.map import Map
 from rs.game.screen_type import ScreenType
+from rs.helper.logger import log, log_to_run
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
