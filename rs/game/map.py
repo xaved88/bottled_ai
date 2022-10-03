@@ -1,33 +1,8 @@
-from enum import Enum
 from typing import List
 
-
-class Room:
-    def __init__(self, room_json: dict):
-        self.type: RoomType = RoomType(room_json['symbol'])  # TODO - does this even work?!?!
-        self.id: str = str(room_json['x']) + '_' + str(room_json['y'])
-        self.childrenIds: List[str] = []
-        for c in room_json['children']:
-            self.childrenIds.append(str(c['x']) + '_' + str(c['y']))
-        self.children: List[Room] = []
-        self.parents: List[Room] = []
-
-    def add_child(self, room):
-        self.children.append(room)
-        room.add_parent(self)
-
-    def add_parent(self, room):
-        self.parents.append(room)
-
-
-class Path:
-    def __init__(self, rooms: List[Room]):
-        self.rooms = rooms
-        self.room_count: dict[RoomType, int] = {RoomType.MONSTER: 0, RoomType.QUESTION: 0, RoomType.ELITE: 0,
-                                                RoomType.CAMPFIRE: 0, RoomType.TREASURE: 0, RoomType.SHOP: 0,
-                                                RoomType.BOSS: 0}
-        for room in self.rooms:
-            self.room_count[room.type] += 1
+from rs.game.path import Path
+from rs.game.room import RoomType, Room
+from rs.machine.state import GameState
 
 
 class Map:
@@ -90,6 +65,11 @@ class Map:
     def sort_paths_by_questions_and_shops(self):
         self.paths.sort(key=question_and_shop_count)
 
+    def sort_paths_by_reward_to_survivability(self, state: GameState):
+        for path in self.paths:
+            path.calculate_reward_survivability(state)
+        self.paths.sort(key=reward_and_survivability, reverse=True)
+
 
 def elite_count(a: Path):
     return a.room_count[RoomType.ELITE]
@@ -103,11 +83,5 @@ def question_and_shop_count(a: Path):
     return a.room_count[RoomType.QUESTION] + a.room_count[RoomType.SHOP]
 
 
-class RoomType(Enum):
-    MONSTER = 'M'
-    QUESTION = '?'
-    ELITE = 'E'
-    CAMPFIRE = 'R'
-    TREASURE = 'T'
-    SHOP = '$'
-    BOSS = 'B'  # custom
+def reward_and_survivability(a: Path):
+    return a.reward_survivability

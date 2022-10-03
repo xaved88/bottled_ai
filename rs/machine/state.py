@@ -48,6 +48,12 @@ class GameState:
     def get_relics(self):
         return self.game_state()["relics"]
 
+    def has_relic(self, relic_name: str) -> bool:
+        for relic in self.get_relics():
+            if relic['name'] == relic_name:
+                return True
+        return False
+
     def get_potions(self):
         return self.game_state()["potions"]
 

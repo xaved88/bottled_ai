@@ -6,9 +6,20 @@ from rs.api.client import Client
 from rs.machine.game import Game
 from rs.helper.logger import log, init_log, log_new_run_sequence
 
-use_seeded_runs = False
-run_amount = 10
-run_seeds = ['2AKHVLXU75Q77']
+use_seeded_runs = True
+run_amount = 1
+run_seeds = [
+    '2V27Y5ZB12TGH',
+    '40KFT3ZZNRPE0',
+    '3MD3J57AE0AVT',
+    '4WM6CLQ8Y51UU',
+    '4WU3JG91PXJBV',
+    '4QCITNBIE7C0',
+    '36QHCLWMGMY6H',
+    '1B5P668ENZMAA',
+    '4MTB3PBAYK2WA',
+    '53BDRGT449DVJ',
+]
 """
 Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
