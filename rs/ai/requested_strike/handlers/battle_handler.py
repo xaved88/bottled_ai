@@ -100,6 +100,8 @@ class BattleHandler(Handler):
     def handle(self, state: GameState) -> List[str]:
         # Determine target (lowest effective hp)
         target_index = self.get_target(state.get_monsters())
+        if target_index == -1:
+            return ["end"]
         target = state.get_monsters()[target_index]
 
         # Get damage in hand, enemy damage, and knowledge of if we can kill the target
@@ -168,7 +170,7 @@ class BattleHandler(Handler):
 
     def get_target(self, monsters: List[dict]) -> int:
         highest_health = 999
-        target = 0
+        target = -1
         for i, m in enumerate(monsters):
             effective_health = m['current_hp'] + m['block']
             if effective_health < highest_health and not m['is_gone']:
