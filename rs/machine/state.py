@@ -85,6 +85,9 @@ class GameState:
                 return True
         return False
 
+    def get_player_block(self) -> int:
+        return self.get_player_combat()['block']
+
 
 def get_stacks_of_power(powers: List[dict], power_id: str):
     for power in powers:

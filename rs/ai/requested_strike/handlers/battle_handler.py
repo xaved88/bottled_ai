@@ -105,7 +105,7 @@ class BattleHandler(Handler):
         # Get damage in hand, enemy damage, and knowledge of if we can kill the target
         vulnerable_count = get_stacks_of_power(target['powers'], "Vulnerable")
         damage = self.get_damage_in_hand(state.hand, state, state.get_player_combat(), target)
-        incoming_damage = self.get_incoming_damage(state.get_monsters())
+        incoming_damage = self.get_incoming_effective_damage(state.get_monsters(), state.get_player_block())
         can_kill = damage >= (target['current_hp'] + target['block'])
 
         # If damage can kill, attack mode.
@@ -177,7 +177,7 @@ class BattleHandler(Handler):
         return target
 
     def defend_damage_threshhold(self) -> int:
-        return 10  # can be overridden by children
+        return 3  # can be overridden by children
 
     # UTILITY FUNCTIONS
 
@@ -227,7 +227,7 @@ class BattleHandler(Handler):
 
         return sum(base)
 
-    def get_incoming_damage(self, monsters: List[dict]):
+    def get_incoming_effective_damage(self, monsters: List[dict], block: int):
         damage = 0
         for m in monsters:
             if not m['is_gone'] and 'move_adjusted_damage' in m:
@@ -237,7 +237,7 @@ class BattleHandler(Handler):
                 if base_damage == -1:
                     base_damage = 0
                 damage += base_damage * m['move_hits']
-        return damage
+        return damage - block
 
     def get_plays_from_list(self, card_list: List[str], energy_remaining: int, state: GameState) -> (int, List[int]):
         plays = []
