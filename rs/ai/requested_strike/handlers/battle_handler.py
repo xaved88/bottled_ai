@@ -169,11 +169,11 @@ class BattleHandler(Handler):
         return False  # can be overridden by children
 
     def get_target(self, monsters: List[dict]) -> int:
-        highest_health = 999
+        highest_health = None
         target = -1
         for i, m in enumerate(monsters):
             effective_health = m['current_hp'] + m['block']
-            if effective_health < highest_health and not m['is_gone']:
+            if (highest_health == None or effective_health < highest_health) and not m['is_gone']:
                 highest_health = effective_health
                 target = i
         return target
