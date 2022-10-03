@@ -4,12 +4,11 @@ import traceback
 from rs.ai.requested_strike.requested_strike import REQUESTED_STRIKE
 from rs.api.client import Client
 from rs.machine.game import Game
-from rs.helper.logger import log, init_log
+from rs.helper.logger import log, init_log, log_new_run_sequence
 
-# NOTE -> now it will keep running even when you abandon if there are more seeds/runs left, so you'll need to force your way out.
 use_seeded_runs = False
 run_amount = 10
-run_seeds = ['3RWGR6T3HKE6A']
+run_seeds = ['2AKHVLXU75Q77']
 """
 Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
@@ -26,6 +25,7 @@ NMRZXQFDKKHK - gremlin nob as first elite currently, will be a good one for batt
 if __name__ == "__main__":
     init_log()
     log("Starting up")
+    log_new_run_sequence()
     try:
         client = Client()
         game = Game(client, REQUESTED_STRIKE)
