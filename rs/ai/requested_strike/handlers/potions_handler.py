@@ -10,7 +10,7 @@ dont_play_potions = [
     'GamblersBrew',
     'FairyInABottle',
     'SmokeBomb',
-    'Elixir',
+    'ElixirPotion',
     'LiquidMemories',
     'SneckoOil'
 ]
