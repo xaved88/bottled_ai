@@ -29,3 +29,4 @@ class CardRarity(Enum):
     COMMON = "COMMON"
     UNCOMMON = "UNCOMMON"
     RARE = "RARE"
+    SPECIAL = "SPECIAL"

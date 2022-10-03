@@ -18,4 +18,4 @@ class EventHandler(Handler):
         # if event_name == "Purifier":
         #    return ["choose 1", "choose 0"] # avoids purifying and then closes screen
 
-        return ["choose 0"]
+        return ["choose 0", "wait 30"]
