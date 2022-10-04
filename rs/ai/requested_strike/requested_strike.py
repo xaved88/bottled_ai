@@ -6,6 +6,7 @@ from rs.ai.requested_strike.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.requested_strike.handlers.campfire_handler import CampfireHandler
 from rs.ai.requested_strike.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.requested_strike.handlers.custom_battle.gremlin_nob_handler import GremlinNobHandler
+from rs.ai.requested_strike.handlers.custom_battle.lagavulin_handler import LagavulinHandler
 from rs.ai.requested_strike.handlers.custom_battle.sentries_handler import SentriesHandler
 from rs.ai.requested_strike.handlers.custom_battle.transient_handler import TransientHandler
 from rs.ai.requested_strike.handlers.event_handler import EventHandler
@@ -26,6 +27,7 @@ requested_strike_custom_battle_handlers: List[Handler] = [
 
     # Enemies After
     GremlinNobHandler(),
+    LagavulinHandler(),
     SentriesHandler(),
     TransientHandler(),
 ]
