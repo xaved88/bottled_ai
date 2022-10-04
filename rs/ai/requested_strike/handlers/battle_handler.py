@@ -41,6 +41,7 @@ class BattleHandler(Handler):
             'bludgeon',
             'pommel strike',
             'twin strike',
+            'cleave',
         ]
         self.attack_preferences_1v: List[str] = [
             'perfected strike',
@@ -50,6 +51,7 @@ class BattleHandler(Handler):
             'bludgeon',
             'pommel strike',
             'twin strike',
+            'cleave',
         ]
         self.attack_preferences_3v: List[str] = [
             'perfected strike',
@@ -57,6 +59,7 @@ class BattleHandler(Handler):
             'bludgeon',
             'pommel strike',
             'twin strike',
+            'cleave',
         ]
 
         self.attack_shuns: List[str] = [
