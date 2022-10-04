@@ -39,7 +39,9 @@ class Map:
         for room in self.rooms.values():
             for c in room.childrenIds:
                 room.add_child(self.rooms[c])
-
+        #Sometimes there are weird bugs in the comm mod giving bad coordinates. Only seen at the start of acts, so pretend we're there?
+        if(self.current_position not in self.rooms):
+            self.current_position = "0_-1"
         paths: List[List[Room]] = []
         paths.append([self.rooms[self.current_position]])
         while paths[0][-1].children:

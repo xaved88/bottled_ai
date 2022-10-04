@@ -18,3 +18,9 @@ class Deck:
             if card.name in names:
                 return True
         return False
+
+    def get_card_index(self, id: str) -> int:
+        for i in range(len(self.cards)):
+            if self.cards[i].id == id:
+                return i
+        return -1
