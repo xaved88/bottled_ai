@@ -68,6 +68,8 @@ class Game:
                 if handler.can_handle(self.last_state):
                     log_to_run("Handler: " + str(handler))
                     commands = handler.handle(self.last_state)
+                    if not commands:
+                        continue
                     for command in commands:
                         self.__send_command(command)
                         # self.__send_command("wait 30")  # for slowing things down so you can see what's going on!
