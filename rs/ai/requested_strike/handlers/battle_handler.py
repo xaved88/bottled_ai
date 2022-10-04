@@ -69,7 +69,7 @@ class BattleHandler(Handler):
             'strike_r'
         ]
         self.attack_shuns_3v: List[str] = [
-            'bludgeon',
+            'bash',
             'thunderclap'
         ]
 
