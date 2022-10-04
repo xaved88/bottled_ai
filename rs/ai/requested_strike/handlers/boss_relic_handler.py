@@ -63,4 +63,4 @@ class BossRelicHandler(Handler):
         for p in prefs:
             if p in state.get_choice_list():
                 return ["choose " + str(state.get_choice_list().index(p))]
-        return ["skip"]
+        return ["skip", "proceed"]
