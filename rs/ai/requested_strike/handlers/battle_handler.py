@@ -24,6 +24,7 @@ class BattleHandler(Handler):
             'shockwave',
         ]
         self.always_1v: List[str] = [
+            'dropkick',
             'offering',
             'battle trance',
             'seeing red',
@@ -44,6 +45,7 @@ class BattleHandler(Handler):
             'cleave',
         ]
         self.attack_preferences_1v: List[str] = [
+            'dropkick',
             'perfected strike',
             'bash',
             'thunderclap',
@@ -54,6 +56,7 @@ class BattleHandler(Handler):
             'cleave',
         ]
         self.attack_preferences_3v: List[str] = [
+            'dropkick',
             'perfected strike',
             'reaper',
             'bludgeon',
@@ -63,7 +66,8 @@ class BattleHandler(Handler):
         ]
 
         self.attack_shuns: List[str] = [
-            'strike_r'
+            'strike_r',
+            'dropkick',
         ]
         self.attack_shuns_1v: List[str] = [
             'strike_r'
@@ -81,7 +85,8 @@ class BattleHandler(Handler):
             'defend_r',
         ]
         self.defend_preferences_1v: List[str] = [
-            'shockwave'
+            'dropkick',
+            'shockwave',
             'impervious',
             'flame barrier',
             'shrug it off',
@@ -89,6 +94,7 @@ class BattleHandler(Handler):
             'defend_r',
         ]
         self.defend_preferences_3v: List[str] = [
+            'dropkick',
             'impervious',
             'flame barrier',
             'shrug it off',
@@ -114,7 +120,7 @@ class BattleHandler(Handler):
         can_kill = damage >= (target['current_hp'] + target['block'])
 
         # If damage can kill, attack mode.
-        # If incoming damage >= 10, defend mode.
+        # If incoming damage exceeds defend_damage_threshold, defend mode.
         mode = 'attack' if can_kill or incoming_damage < self.defend_damage_threshhold() or self.should_yolo() else 'defend'
 
         always_priorities = self.get_always_priorities(vulnerable_count)
@@ -222,6 +228,10 @@ class BattleHandler(Handler):
             base = [7, 7] if card.upgrades else [5, 5]
         if name == 'strike_r':
             base = [9] if card.upgrades else [6]
+        if name == 'cleave':
+            base = [11] if card.upgrades else [8]
+        if name == 'dropkick':
+            base = [8] if card.upgrades else [5]
 
         if weak:
             for i, v in enumerate(base):
