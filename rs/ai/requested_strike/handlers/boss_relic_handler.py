@@ -47,7 +47,7 @@ class BossRelicHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
         # we have to copy this, otherwise it will modify the prefs list until the bot is rerun
-        prefs = self.pref
+        prefs = self.pref.copy()
 
         has_energy_relic = bool(len(list(
             filter(lambda r: r['name'].lower() in self.energy_relics, state.get_relics()))))
