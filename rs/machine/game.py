@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from rs.api.client import Client
 from rs.helper.controller import await_controller
-from rs.helper.logger import init_run_logging, log_to_run
+from rs.helper.logger import init_run_logging, log_to_run, log_snapshot
 from rs.helper.seed import get_seed_string
 from rs.machine.handlers.default_cancel import DefaultCancelHandler
 from rs.machine.handlers.default_choose import DefaultChooseHandler
@@ -37,11 +37,12 @@ class Game:
         self.last_state: Optional[GameState] = None
         self.game_over_handler: DefaultGameOverHandler = DefaultGameOverHandler()
 
-    def start(self, seed: str = ""):
+    def start(self, seed: str = "", take_snapshots: bool = False):
         self.run_elites = []
         self.last_elite = ""
         self.run_bosses = []
         self.last_boss = ""
+        self.take_snapshots = take_snapshots
 
         start_message = "start Ironclad"
         if seed:
@@ -80,6 +81,9 @@ class Game:
                 raise Exception("ah I didn't know what to do!")
 
     def __send_command(self, command: str):
+        if self.take_snapshots and self.last_state and 'game_state' in self.last_state.json and 'floor' in self.last_state.game_state():
+            log_snapshot(self.last_state.floor(), command)
+
         self.last_state = GameState(json.loads(self.client.send_message(command)))
 
     def __handle_state_based_logging(self):

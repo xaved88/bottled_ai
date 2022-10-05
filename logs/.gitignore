@@ -1,2 +1,3 @@
 # Ignore all logs in this directory
 *.log
+*/*.jpg

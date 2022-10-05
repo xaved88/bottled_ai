@@ -6,7 +6,8 @@ from rs.api.client import Client
 from rs.machine.game import Game
 from rs.helper.logger import log, init_log, log_new_run_sequence
 
-use_seeded_runs = True
+take_screenshots = True
+use_seeded_runs = False
 run_amount = 1
 run_seeds = [
     '2V27Y5ZB12TGH',
@@ -45,12 +46,12 @@ if __name__ == "__main__":
         game = Game(client, REQUESTED_STRIKE)
         if use_seeded_runs:
             for seed in run_seeds:
-                game.start(seed)
+                game.start(seed, take_screenshots)
                 game.run()
                 time.sleep(1)
         else:
             for i in range(run_amount):
-                game.start()
+                game.start("", take_screenshots)
                 game.run()
                 time.sleep(1)
 
