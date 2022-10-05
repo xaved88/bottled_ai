@@ -10,7 +10,7 @@
 1) Checkout this repository, and clone it into the steam app folder in a new folder: `ai\requested_strike`.
     - Windows ex: ` E:\Steam\steamapps\common\SlayTheSpire\ai\requested_strike`
     - MacOS ex: Browse local files of StS via Steam -> Right click and Show Package Contents -> Resources -> ai -> requested_strike
-2) Run `pip install -r requirements.txt` in the root folder of the project (installs python dependencies)
+2) Run `python -m pip install -r requirements.txt` in the root folder of the project (installs python dependencies)
 
 ### Getting The Game Setup
 1) Through the steam workshop, make sure you have:
