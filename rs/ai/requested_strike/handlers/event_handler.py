@@ -12,6 +12,7 @@ class EventHandler(Handler):
         return state.screen_type() == ScreenType.EVENT.value and state.has_command(Command.CHOOSE)
 
     def handle(self, state: GameState) -> List[str]:
+        hp_per = state.get_player_health_percentage() * 100
         event_name = state.game_state()['screen_state']['event_name']
 
 
@@ -40,7 +41,10 @@ class EventHandler(Handler):
             return ["choose 1", "choose 0"]  # Leave. Prefer logic for the event repeating, and then take the relic.
 
         if event_name == "Shining Light":
-            return ["choose 1", "choose 0"]  # Leave. Would prefer to take it if health >=50%
+            if hp_per >= 60:
+                return ["choose 0", "choose 0"] # Take the 2 random upgrades.
+            else:
+                return ["choose 1", "choose 0"] # Leave.
 
         if event_name == "The Ssssserpent":
             return ["choose 1", "choose 0"]  # Leave
