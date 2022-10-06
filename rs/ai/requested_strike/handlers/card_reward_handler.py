@@ -18,6 +18,10 @@ class CardRewardHandler(Handler):
             'shockwave': 2,
             'thunderclap': 2,
             'pommel strike': 2,
+            'shrug it off': 2,
+            'impervious': 2,
+            'ghostly armor': 1,
+            'flame barrier': 1,
         }
 
     def can_handle(self, state: GameState) -> bool:

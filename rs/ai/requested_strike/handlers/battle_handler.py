@@ -82,6 +82,7 @@ class BattleHandler(Handler):
             'flame barrier',
             'shrug it off',
             'true grit',
+            'ghostly armor',
             'defend_r',
         ]
         self.defend_preferences_1v: List[str] = [
@@ -91,6 +92,7 @@ class BattleHandler(Handler):
             'flame barrier',
             'shrug it off',
             'true grit',
+            'ghostly armor',
             'defend_r',
         ]
         self.defend_preferences_3v: List[str] = [
@@ -99,8 +101,9 @@ class BattleHandler(Handler):
             'flame barrier',
             'shrug it off',
             'true grit',
+            'ghostly armor',
             'defend_r',
-            'shockwave'
+            'shockwave',
         ]
 
     def can_handle(self, state: GameState) -> bool:
