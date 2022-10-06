@@ -1,6 +1,6 @@
 import json
 import unittest
-from typing import List
+from typing import List, Type
 
 from definitions import ROOT_DIR
 from rs.machine.handlers.handler import Handler
@@ -9,9 +9,9 @@ from rs.machine.state import GameState
 
 class BaseTestHandlerFixture(unittest.TestCase):
     ai_handlers: List[Handler]  # should be overriden by AI package fixture
-    handler: Handler  # should be overridden by children - the expected handler to respond to this state.
+    handler: Type[Handler]  # should be overridden by children - the expected handler to respond to this state.
 
-    def execute_handler_tests(self, state_path: str, expected: List[str]):
+    def execute_handler_tests(self, state_path: str, expected: List[str] = None):
         f = open(f"{ROOT_DIR}/tests/res/{state_path}", "r")
         state = f.read()
         f.close()
@@ -29,4 +29,5 @@ class BaseTestHandlerFixture(unittest.TestCase):
         if actual is None:
             self.fail("No handler found that could handle")
 
-        self.assertEqual(expected, actual)
+        if expected is not None:
+            self.assertEqual(expected, actual)
