@@ -7,11 +7,7 @@ from rs.api.client import Client
 from rs.machine.game import Game
 from rs.helper.logger import log, init_log, log_new_run_sequence
 
-if sys.platform.startswith('darwin'):
-    take_screenshots = False
-else:
-    take_screenshots = True
-
+take_screenshots = True  # Functionality is disabled on Mac and this value won't change anything
 use_seeded_runs = False
 run_amount = 1
 run_seeds = [

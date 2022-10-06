@@ -1,4 +1,5 @@
 import json
+import sys
 from typing import List, Optional
 
 from rs.api.client import Client
@@ -42,7 +43,7 @@ class Game:
         self.last_elite = ""
         self.run_bosses = []
         self.last_boss = ""
-        self.take_snapshots = take_snapshots
+        self.take_snapshots = take_snapshots if not sys.platform.startswith('darwin') else False
 
         start_message = "start Ironclad"
         if seed:
