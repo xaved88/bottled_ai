@@ -4,8 +4,9 @@ from typing import List, Optional
 from rs.api.client import Client
 from rs.helper.controller import await_controller
 from rs.helper.general import can_handle_screenshots
-from rs.helper.logger import init_run_logging, log_to_run, log_snapshot
+from rs.helper.logger import init_run_logging, log_to_run
 from rs.helper.seed import get_seed_string
+from rs.helper.snapshot_logger import log_snapshot
 from rs.machine.default_game_over import DefaultGameOverHandler
 from rs.machine.handlers.default_cancel import DefaultCancelHandler
 from rs.machine.handlers.default_choose import DefaultChooseHandler
