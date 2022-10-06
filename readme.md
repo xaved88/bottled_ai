@@ -41,3 +41,11 @@ To debug, check the output in the ModTheSpire console, or the `communication_mod
 - In the config parameters in main.py, turn "take_screenshots" to True
 - Only the last run will have its screenshots saved, and they're in logs/screenshots (starting a new run will delete anything in there)
 - Doesn't run on Mac, so also various previous steps about python dependencies may not be required
+
+### Testing
+- All tests can be found in the /tests directory
+- You can run coverage checks with:
+  - `python -m coverage run -m unittest discover .\tests`
+  - `python -m coverage report`
+  - `python -m coverage html`
+- We don't know if we trust them yet, but yeah
