@@ -4,13 +4,14 @@ import sys
 from datetime import datetime
 from typing import List
 
+from definitions import ROOT_DIR
+
 if not sys.platform.startswith('darwin'):
     import pyautogui
 
 from rs.helper.seed import get_seed_string
 from rs.machine.state import GameState
 
-ROOT_DIR = "./ai/requested_strike"
 
 current_run_log_file: str = ''
 current_run_log_count: int = 0

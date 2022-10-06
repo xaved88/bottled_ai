@@ -1,9 +1,8 @@
 from enum import Enum
 from time import sleep
 
+from definitions import ROOT_DIR
 from rs.helper.logger import log_to_run
-
-ROOT_DIR = "./ai/requested_strike"
 
 
 class ControllerCommand(Enum):
