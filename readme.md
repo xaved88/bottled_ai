@@ -40,3 +40,4 @@ To debug, check the output in the ModTheSpire console, or the `communication_mod
 - You'll need to adjust the display settings in game to be bordered window (not fullscreen, not borderless window)
 - In the config parameters in main.py, turn "take_screenshots" to True
 - Only the last run will have its screenshots saved, and they're in logs/screenshots (starting a new run will delete anything in there)
+- Doesn't run on Mac, so also various previous steps about python dependencies may not be required
