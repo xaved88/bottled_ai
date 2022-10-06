@@ -1,16 +1,16 @@
 import json
-import sys
 from typing import List, Optional
 
 from rs.api.client import Client
 from rs.helper.controller import await_controller
+from rs.helper.general import can_handle_screenshots
 from rs.helper.logger import init_run_logging, log_to_run, log_snapshot
 from rs.helper.seed import get_seed_string
+from rs.machine.default_game_over import DefaultGameOverHandler
 from rs.machine.handlers.default_cancel import DefaultCancelHandler
 from rs.machine.handlers.default_choose import DefaultChooseHandler
 from rs.machine.handlers.default_confirm import DefaultConfirmHandler
 from rs.machine.handlers.default_end import DefaultEndHandler
-from rs.machine.default_game_over import DefaultGameOverHandler
 from rs.machine.handlers.default_leave import DefaultLeaveHandler
 from rs.machine.handlers.default_play import DefaultPlayHandler
 from rs.machine.handlers.default_shop import DefaultShopHandler
@@ -43,7 +43,7 @@ class Game:
         self.last_elite = ""
         self.run_bosses = []
         self.last_boss = ""
-        self.take_snapshots = take_snapshots if not sys.platform.startswith('darwin') else False
+        self.take_snapshots = take_snapshots and can_handle_screenshots()
 
         start_message = "start Ironclad"
         if seed:

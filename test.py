@@ -1,8 +1,12 @@
 import sys
-if not sys.platform.startswith('darwin'):
+
+from rs.helper.general import can_handle_screenshots
+
+if can_handle_screenshots():
     import pyautogui
 
 print(sys.version, sys.path)
-if not sys.platform.startswith('darwin'):
+
+if can_handle_screenshots():
     myScreenshot = pyautogui.screenshot()
     myScreenshot.save('./tmp.jpg')
