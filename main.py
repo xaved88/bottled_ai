@@ -37,7 +37,7 @@ NMRZXQFDKKHK - gremlin nob as first elite currently, will be a good one for batt
 1SG4LPD7YFUBM - Astrolabe as act1 reward
 3RWGR6T3HKE6A - 2 card gen potions to use for act 1 boss, good potion edge case
 2AKHVLXU75Q77 - shop floor 2 (with perfected strike)
-40KFT3ZZNRPE0 - the one where we reached Awakened One (also picks up snecko and busted crown??) <- that last part should be fixed now
+40KFT3ZZNRPE0 - reached Awakened One on a new account (also picks up snecko)
 4WM6CLQ8Y51UU - neow transform into dropkick, also another early dropkick if we wanted it
 2V27Y5ZB12TGH - gambling chip relic
 """
