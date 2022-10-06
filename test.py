@@ -1,6 +1,8 @@
 import sys
-import pyautogui
+if not sys.platform.startswith('darwin'):
+    import pyautogui
 
 print(sys.version, sys.path)
-myScreenshot = pyautogui.screenshot()
-myScreenshot.save('./tmp.jpg')
+if not sys.platform.startswith('darwin'):
+    myScreenshot = pyautogui.screenshot()
+    myScreenshot.save('./tmp.jpg')

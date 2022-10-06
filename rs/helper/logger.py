@@ -1,9 +1,11 @@
 import os
 import shutil
+import sys
 from datetime import datetime
 from typing import List
 
-import pyautogui
+if not sys.platform.startswith('darwin'):
+    import pyautogui
 
 from rs.helper.seed import get_seed_string
 from rs.machine.state import GameState
