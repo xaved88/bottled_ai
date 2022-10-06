@@ -52,6 +52,21 @@ class PotionsEliteHandler(PotionsBaseHandler):
                and self.get_potions_to_play(state)
 
 
+class PotionsEventFightHandler(PotionsBaseHandler): # Treat most Event Fights like Elites
+    def __int__(self):
+        super().__init__()
+
+    def can_handle(self, state: GameState) -> bool:
+        hp_per = state.get_player_health_percentage() * 100
+        return state.has_command(Command.POTION) \
+               and state.combat_state() \
+               and state.screen_type() == ScreenType.NONE.value \
+               and state.game_state()['room_type'] == "EventRoom" \
+               and not state.has_monster("Fungi Beast") \
+               and ((hp_per <= 50 and state.combat_state()['turn'] == 1) or hp_per <= 30) \
+               and self.get_potions_to_play(state)
+
+
 class PotionsBossHandler(PotionsBaseHandler):
     def __int__(self):
         super().__init__()
