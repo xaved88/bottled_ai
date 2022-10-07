@@ -36,7 +36,6 @@ NMRZXQFDKKHK - gremlin nob as first elite currently, will be a good one for batt
 2AKHVLXU75Q77 - shop floor 2 (with perfected strike)
 40KFT3ZZNRPE0 - reached Awakened One on a new account (also picks up snecko)
 4WM6CLQ8Y51UU - neow transform into dropkick, also another early dropkick if we wanted it
-2V27Y5ZB12TGH - gambling chip relic
 """
 
 if __name__ == "__main__":
