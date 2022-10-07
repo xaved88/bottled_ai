@@ -13,3 +13,7 @@ class ShopPurchaseHandlerTestCase(RsTestHandlerFixture):
 
     def test_cant_afford_anything(self):
         self.execute_handler_tests('/shop/shop_nothing_to_buy.json', ['return', 'proceed'])
+
+    def test_buy_upgraded_cards(self):
+        self.execute_handler_tests('/shop/shop_buy_perfected_strike+.json', ['choose 1', 'wait 30'])
+

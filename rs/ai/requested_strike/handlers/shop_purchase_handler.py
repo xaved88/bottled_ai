@@ -65,7 +65,7 @@ class ShopPurchaseHandler(Handler):
         # 2. Perfected strike
         for card in screen_state['cards']:
             if card['id'] == 'Perfected Strike' and gold >= card['price']:
-                return "perfected strike"
+                return card['name'].lower()
 
         # 3. Membership Card
         for relic in screen_state['relics']:
