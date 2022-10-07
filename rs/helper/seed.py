@@ -1,3 +1,6 @@
+import random
+
+
 def get_seed_string(seed: float) -> str:
     seed_string = ""
     chars = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
@@ -27,33 +30,5 @@ def make_seed_string_number(seed: str) -> float:
     return total
 
 
-"""
-  public static long getLong(String seedStr) {
-    long total = 0L;
-    seedStr = seedStr.toUpperCase().replaceAll("O", "0");
-    for (int i = 0; i < seedStr.length(); i++) {
-      char toFind = seedStr.charAt(i);
-      int remainder = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ".indexOf(toFind);
-      if (remainder == -1)
-        System.out.println("Character in seed is invalid: " + toFind); 
-      total *= "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ".length();
-      total += remainder;
-    } 
-    return total;
-  }
-  
-  
-  public static String getString(long seed) {
-    StringBuilder bldr = new StringBuilder();
-    BigInteger leftover = new BigInteger(Long.toUnsignedString(seed));
-    BigInteger charCount = BigInteger.valueOf("0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ".length());
-    while (!leftover.equals(BigInteger.ZERO)) {
-      BigInteger remainder = leftover.remainder(charCount);
-      leftover = leftover.divide(charCount);
-      int charIndex = remainder.intValue();
-      char c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ".charAt(charIndex);
-      bldr.insert(0, c);
-    } 
-    return bldr.toString();
-  }
-"""
+def make_random_seed() -> str:
+    return get_seed_string(random.randrange(1337, 4_000_000_000_000_000_000))

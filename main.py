@@ -1,6 +1,7 @@
 import time
 import traceback
 
+from rs.helper.seed import make_random_seed
 from rs.ai.requested_strike.requested_strike import REQUESTED_STRIKE
 from rs.api.client import Client
 from rs.machine.game import Game
@@ -52,7 +53,7 @@ if __name__ == "__main__":
                 time.sleep(1)
         else:
             for i in range(run_amount):
-                game.start("", take_screenshots)
+                game.start(make_random_seed(), take_screenshots)
                 game.run()
                 time.sleep(1)
 
