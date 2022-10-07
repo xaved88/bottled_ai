@@ -5,7 +5,7 @@ from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
-# Don't actually know the id of most of these...
+
 dont_play_potions = [
     'GamblersBrew',
     'FairyInABottle',

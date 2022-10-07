@@ -15,7 +15,6 @@ class EventHandler(Handler):
         hp_per = state.get_player_health_percentage() * 100
         event_name = state.game_state()['screen_state']['event_name']
 
-
         # ACT 1
 
         if event_name == "Big Fish":
@@ -38,29 +37,30 @@ class EventHandler(Handler):
         #    return ["choose 2"] # Upgrade Card - needs more logic to not get stuck
 
         if event_name == "Scrap Ooze":
-            return ["choose 1", "choose 0"]  # Leave. Prefer logic for the event repeating, and then take the relic.
+            return ["choose 0"]  # Yolo. We'll probably get it after a few tries? If not, we don't deserve to live!!
 
         if event_name == "Shining Light":
-            if hp_per >= 60:
-                return ["choose 0", "choose 0"] # Take the 2 random upgrades.
+            if hp_per >= 50:
+                return ["choose 0", "choose 0"]  # Take the 2 random upgrades.
             else:
-                return ["choose 1", "choose 0"] # Leave.
+                return ["choose 1", "choose 0"]  # Leave.
 
         if event_name == "The Ssssserpent":
             return ["choose 1", "choose 0"]  # Leave
 
         if event_name == "World of Goop":
-            return ["choose 1", "choose 0"]  # Leave. Would prefer to take it if health >=70%
+            if hp_per >= 70:
+                return ["choose 0", "choose 0"]  # Take the money and lose a little HP.
+            else:
+                return ["choose 1", "choose 0"]  # Leave
 
         if event_name == "Wing Statue":
             return ["choose 0"]  # Purge at cost of 7 HP
-
 
         # ACT 1, 2
 
         if event_name == "Face Trader":
             return ["choose 2", "choose 0"]  # Leave. Would prefer to take it if health >=70%
-
 
         # ACT 1, 2, 3
 
@@ -100,9 +100,8 @@ class EventHandler(Handler):
         # if event_name == "We Meet Again!":
         #    return ["choose 1", "choose 0"]  # Don't know how to make sure we avoid losing a card. Need to check.
 
-        # if event_name == "The Woman in Blue":
-        #    return ["choose 0", "choose 0"]  # Misbehaves in StS run display currently, will double-check still.
-
+        if event_name == "The Woman in Blue":
+            return ["choose 0", "choose 0"]  # Weird in the StS run display by saying "ignored", but we get the potion.
 
         # ACT 2
 
@@ -128,13 +127,16 @@ class EventHandler(Handler):
             return ["choose 1", "choose 0"]  # Slightly more expected value. ^^
 
         if event_name == "Knowing Skull":
-            return ["choose 3", "choose 0"]  # Leave (also lol we probably would suicide on this without this decision.)
+            return ["choose 3", "choose 0"]  # Leave
 
         if event_name == "The Library":
-            return ["choose 1", "choose 0"]  # Heal, because heal, but also because I don't know if we handle this.
+            return ["choose 1", "choose 0"]  # Heal, but also because I don't know if we handle selection here.
 
         if event_name == "Masked Bandits":
-            return ["choose 1"]  # Fuck 'em up!!
+            if hp_per >= 60:
+                return ["choose 1"]  # Fuck 'em up!
+            else:
+                return ["choose 0", "choose 0"]  # Give up all money and leave.
 
         if event_name == "The Mausoleum":
             return ["choose 1", "choose 0"]  # Leave, we don't like curses and aren't good with relics.
@@ -154,12 +156,10 @@ class EventHandler(Handler):
         # if event_name == "Vampires(?)":
         #    return ["choose 0", "choose 0"]  # Want no bites but I need to have a look at the logs.
 
-
         # Act 2, 3
 
-        # if event_name == "Designer In-Spire":
-        #    return ["choose 0", "choose 0"]  # Just let default handling do this, it'll do reasonable things.
-
+        if event_name == "Designer In-Spire":
+            return ["choose 0"]  # It'll do reasonable things like upgrading and removing.
 
         # Act 3
 
@@ -173,13 +173,16 @@ class EventHandler(Handler):
         #    return ["choose 1", "choose 0"]  # Don't know how to make sure we leave yet.
 
         if event_name == "Mysterious Sphere":
-            return ["choose 1", "choose 0"]  # Dangerous fight, avoid until we can add health logic.
+            if hp_per >= 60:
+                return ["choose 0"]  # Fuck 'em up!
+            else:
+                return ["choose 0", "choose 0"]  # Give up all money and leave.
 
         if event_name == "Secret Portal":
             return ["choose 1", "choose 0"]  # Nope - we want the rest of Act 3 to not screw up our stats.
 
         if event_name == "Sensory Stone":
-            return ["choose 0"]  # Add 1 colorless Card but not really.
+            return ["choose 0"]  # Ignore
 
         # if event_name == "Tomb of Lord Red Mask":
         #    return ["choose 1", "choose 0"]  # Needs logic
