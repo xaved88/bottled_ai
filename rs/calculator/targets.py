@@ -4,10 +4,11 @@ from rs.calculator.powers import PowerId, Powers
 
 
 class Target:
-    current_hp: int
-    max_hp: int
-    block: int
-    powers: Powers
+    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers):
+        self.current_hp: int = current_hp
+        self.max_hp: int = max_hp
+        self.block: int = block
+        self.powers: Powers = powers
 
     def inflict_damage(self, base_damage: int, hits: int, blockable: bool = True, vulnerable_modifier: float = 1.5):
         damage = base_damage
@@ -33,4 +34,7 @@ class Target:
 
 
 class Player(Target):
-    energy: int
+
+    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, energy: int):
+        super().__init__(current_hp, max_hp, block, powers)
+        self.energy: int = energy

@@ -28,7 +28,7 @@ bash_card.needs_target = True
 bash_card.type = CardType.ATTACK
 
 state = HandState()
-state.cards = []
+state.hand = []
 
 state.player = Player()
 state.player.powers = dict()
@@ -55,11 +55,11 @@ for i in range(5):
 state.cards.append(copy.deepcopy(bash_card))
 """
 
-state.cards.append(copy.deepcopy(strike_card))
-state.cards.append(copy.deepcopy(strike_card))
-state.cards.append(copy.deepcopy(bash_card))
-state.cards.append(copy.deepcopy(strike_card))
-state.cards.append(copy.deepcopy(strike_card))
+state.hand.append(copy.deepcopy(strike_card))
+state.hand.append(copy.deepcopy(strike_card))
+state.hand.append(copy.deepcopy(bash_card))
+state.hand.append(copy.deepcopy(strike_card))
+state.hand.append(copy.deepcopy(strike_card))
 
 # NOW WE RUN IT
 init_path = PlayPath([], state)
