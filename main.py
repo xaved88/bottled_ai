@@ -7,22 +7,13 @@ from rs.api.client import Client
 from rs.machine.game import Game
 from rs.helper.logger import log, init_log, log_new_run_sequence
 
-
-take_screenshots = True  # Functionality is disabled on Mac and this value won't change anything
-use_seeded_runs = False
-run_amount = 1
+take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything
+#if there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
-    '2V27Y5ZB12TGH',
-    '40KFT3ZZNRPE0',
-    '3MD3J57AE0AVT',
-    '4WM6CLQ8Y51UU',
-    '4WU3JG91PXJBV',
-    '4QCITNBIE7C0',
-    '36QHCLWMGMY6H',
-    '1B5P668ENZMAA',
-    '4MTB3PBAYK2WA',
-    '53BDRGT449DVJ',
+   # 'FPI4YFAE017Y',
 ]
+run_amount = 20
+
 """
 Seeds:
 EFI1QKN4EWKB - transform from neow, gets to floor 27 just aggro LTR
@@ -45,7 +36,7 @@ if __name__ == "__main__":
     try:
         client = Client()
         game = Game(client, REQUESTED_STRIKE)
-        if use_seeded_runs:
+        if run_seeds:
             for seed in run_seeds:
                 game.start(seed, take_screenshots)
                 game.run()
