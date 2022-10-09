@@ -150,3 +150,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 20)
         self.see_player_spent_energy(play, 2)
+
+    def test_uppercut(self):
+        state = self.given_state(CardId.UPPERCUT)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 13)
+        self.see_enemy_has_status(play, PowerId.WEAK, 1)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1)
+        self.see_player_spent_energy(play, 2)
+
+    def test_disarm(self):
+        state = self.given_state(CardId.DISARM)
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 2
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 6)
+        self.see_enemy_has_status(play, PowerId.STRENGTH, -2)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)
+        self.see_player_exhaust_count(play, 1)

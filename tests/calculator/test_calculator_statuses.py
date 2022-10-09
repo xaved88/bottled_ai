@@ -98,7 +98,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VIGOR: 8})
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 14)
-        self.player_does_not_have_power(play, PowerId.VIGOR)
+        self.see_player_does_not_have_power(play, PowerId.VIGOR)
 
     def test_curl_up(self):
         state = self.given_state(CardId.STRIKE_R)

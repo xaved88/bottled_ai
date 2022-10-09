@@ -57,27 +57,27 @@ normal = okay
 - ~~blood for blood~~ (cost doesn't lower when taking damage in turn yet :shrug:)
 - ~~bloodletting~~
 - ~~carnage~~ (no etheral handling yet)
-- **disarm** (need exhaust basic)
+- ~~disarm~~
 - **dropkick** (need to add the specific effect for energy increase, if vulnerable)
 - **entrench** (need the double mechanic)
 - flame barrier (maybe just say "add thorns" for the time being?)
 - ghostly armor (no ethereal handling yet)
 - hemokinesis
-- **inflame** (need power basic)
-- **intimidate** (need exhaust basic)
+- inflame
+- intimidate
 - pummel
-- **seeing red** (need exhaust basic)
-- **shockwave** (need exhaust basic)
+- seeing red
+- shockwave
 - ~~uppercut~~
 - bludgeon
-- **feed** (need exhaust basic, and also max_hp +)
-- **fiend fire** (need exhaust entire hand thingy?)
+- **feed** (need max_hp +)
+- **fiend fire** (need exhaust other cards)
 - immolate
-- **impervious** (need exhaust basic)
-- **limit break** (need exhaust basic)
-- **offering** (need exhaust basic)
-- **reaper** (need exhaust basic, specific healing)
-- **apparition** (need exhaust basic), intangible
+- impervious 
+- limit break
+- offering
+- **reaper** (need specific healing)
+- **apparition** (need intangible)
 - **bite** (need healing?)
 - jax
 - **burn** (need something)

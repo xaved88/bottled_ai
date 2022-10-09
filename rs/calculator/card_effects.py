@@ -84,5 +84,8 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         powers = {PowerId.WEAK: 1, PowerId.VULNERABLE: 1} if not card.upgrade \
             else {PowerId.WEAK: 2, PowerId.VULNERABLE: 2}
         return [CardEffects(damage=13, hits=1, target=TargetType.MONSTER, applies_powers=powers)]
+    if card.id == CardId.DISARM:
+        return [CardEffects(target=TargetType.MONSTER,
+                            applies_powers={PowerId.STRENGTH: -2 if not card.upgrade else 3})]
         # default case, todo maybe some logging or?
     return [CardEffects()]

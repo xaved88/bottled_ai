@@ -15,12 +15,13 @@ Play = tuple[int, int]  # card index, target index (-1 for none/all)
 class HandState:
 
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
-                 draw_pile: List[Card] = None,
+                 exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
                  monsters: List[Monster] = None, relics: Relics = None):
 
         self.player: Player = player
         self.hand: List[Card] = [] if hand is None else hand
         self.discard_pile: List[Card] = [] if discard_pile is None else discard_pile
+        self.exhaust_pile: List[Card] = [] if exhaust_pile is None else exhaust_pile
         self.draw_pile: List[Card] = [] if draw_pile is None else draw_pile
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
@@ -117,13 +118,15 @@ class HandState:
             if self.relics[RelicId.PEN_NIB] >= 10:
                 self.relics[RelicId.PEN_NIB] -= 10
 
-        # TODO -> exhaust here
-        self.discard_pile.append(card)
+        if card.exhausts:
+            self.exhaust_pile.append(card)
+        elif card.type != CardType.POWER:
+            self.discard_pile.append(card)
         del self.hand[card_index]
 
     def end_turn(self):
         # special end of turn
-        self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR)
+        self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
 
         # decrement buffs that should be counted down
         # increment relics that should be counted up
@@ -131,7 +134,10 @@ class HandState:
         # apply enemy damage
         for monster in self.monsters:
             if monster.hits:
-                self.player.inflict_damage(monster.damage, monster.hits)
+                monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAK) else 0.75
+                monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
+                damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
+                self.player.inflict_damage(damage, monster.hits)
 
 
 def is_card_playable(card: Card, player: Player) -> bool:

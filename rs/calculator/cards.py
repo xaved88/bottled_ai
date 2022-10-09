@@ -11,6 +11,7 @@ class CardId(Enum):
     CARNAGE = 'carnage'
     CLEAVE = 'cleave'
     CLOTHESLINE = 'clothesline'
+    DISARM = 'disarm'
     DEFEND_R = 'defend_r'
     HEAVY_BLADE = 'heavy blade'
     IRON_WAVE = 'iron wave'
@@ -25,12 +26,13 @@ class CardId(Enum):
 
 class Card:
     def __init__(self, card_id: CardId, upgrade: int, cost: int, needs_target: bool, card_type: CardType,
-                 ethereal: bool = False):
+                 ethereal: bool = False, exhausts: bool = False):
         self.id: CardId = card_id
         self.upgrade: int = upgrade
         self.cost: int = cost  # energy cost. Maybe -1 for no cost and not playable statuses?
         self.needs_target: bool = needs_target
         self.ethereal: bool = ethereal
+        self.exhausts: bool = exhausts
         self.type: CardType = card_type  # todo -> maybe we want to extract that enum so this remains decoupled?
 
 
@@ -70,4 +72,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, True)
     if card_id == CardId.UPPERCUT:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DISARM:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL, exhausts=True)
     # TODO -> logging or throw error or something if it gets here?
