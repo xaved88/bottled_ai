@@ -20,6 +20,7 @@ Powers = dict[PowerId: int]
 
 DEBUFFS: List[PowerId] = [
     PowerId.FRAIL,
+    PowerId.ENTANGLED,
     PowerId.VULNERABLE,
     PowerId.WEAK,
 ]
