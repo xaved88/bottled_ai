@@ -1,17 +1,9 @@
-import unittest
-
+from calculator.test_calculator_fixture import CalculatorTestFixture
 from rs.calculator.cards import CardId, get_card
-from rs.calculator.hand_state import HandState
-from rs.calculator.play_path import PlayPath, get_paths
-from rs.calculator.powers import PowerId, Powers
-from rs.calculator.targets import Player, Target
+from rs.calculator.powers import PowerId
 
 
-class CalculatorCardsTest(unittest.TestCase):
-
-    ##############
-    # Test cases #
-    ##############
+class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_strike_r(self):
         state = self.given_state(CardId.STRIKE_R)
@@ -147,28 +139,20 @@ class CalculatorCardsTest(unittest.TestCase):
         self.see_enemy_lost_hp(play, 16)
         self.see_player_spent_energy(play, 1)
 
-    ##################
-    # Helper Methods #
-    ##################
+    def test_blood_for_blood(self):
+        state = self.given_state(CardId.BLOOD_FOR_BLOOD)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 18)
+        self.see_player_spent_energy(play, 4)
 
-    def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None) -> HandState:
-        return HandState(
-            player=Player(50, 100, 50, {} if player_powers is None else player_powers, 5),
-            hand=[get_card(card_id, None, upgrade)],
-            targets=[Target(100, 100, 0, {}) for i in range(targets)]
-        )
+    def test_bloodletting(self):
+        state = self.given_state(CardId.BLOODLETTING)
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, 3)
+        self.see_player_spent_energy(play, -2)
 
-    def when_calculating_state_play(self, hand_state: HandState) -> PlayPath:
-        return get_paths(PlayPath([], hand_state))[-1]
-
-    def see_enemy_lost_hp(self, play: PlayPath, amount: int, enemy_index: int = 0):
-        self.assertEqual(100 - amount, play.state.targets[enemy_index].current_hp)
-
-    def see_enemy_has_debuff(self, play: PlayPath, power_id: PowerId, amount: int, enemy_index: int = 0):
-        self.assertEqual(amount, play.state.targets[enemy_index].powers.get(power_id, 0))
-
-    def see_player_spent_energy(self, play: PlayPath, amount: int):
-        self.assertEqual(5 - amount, play.state.player.energy)
-
-    def see_player_gained_block(self, play: PlayPath, amount: int):
-        self.assertEqual(50 + amount, play.state.player.block)
+    def test_carnage(self):
+        state = self.given_state(CardId.CARNAGE)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 20)
+        self.see_player_spent_energy(play, 2)

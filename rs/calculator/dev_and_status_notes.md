@@ -19,11 +19,11 @@ normal = okay
 
 ## RELICS AND STATUS TO DO
 
-- strike dummy :: (we can just add relics into the info for getting the card effects and check it in all strikes)
-- velvet choker :: (just add a counter check to the start of get plays)
-- paper phrog :: (just add to the start of the transform_from_play)
-- nunchaku :: (add at the end of the transform, around where energy is, based on card type)
-- pen nib :: (add counter before the effects resolve, add to damage somewhere...)
+- ~~strike dummy~~
+- ~~velvet choker~~
+- ~~paper phrog~~
+- ~~nunchaku~~
+- ~~pen nib~~
 - strength :: (already a spot for it)
 - dexterity :: (do just like strength)
 - artifact :: (if we only care about it for the enemy, we would just need to have some sort of debuff map to know which
@@ -31,8 +31,8 @@ normal = okay
 - plated armor :: (does depend on us implementing the turn resolve shit)
 - vigor :: (basically goes where strength goes, then consumes itself)
 - curl up :: (would be done inside the damage place of the enemies, I reckon)
-- ~~vulnerable~~
-- ~~weak~~
+- vulnerable :: done but still lacking the monsters attacking into it
+- weak :: done but still lacking the monsters attacking with it
 - entangled :: (a check on this in the get plays and attack type should be easy)
 - frail :: (just some additional logic in the block)
 
@@ -55,14 +55,14 @@ normal = okay
 - ~~shrug it off~~
 - ~~thunderclap~~
 - ~~twin strike~~
-- **blood for blood** (need to have a damage counter technically? Maybe mark as incomplete and ignore?)
-- **bloodletting** (need energy increase)
-- carnage
+- ~~blood for blood~~ (cost doesn't lower when taking damage in turn yet :shrug:)
+- ~~bloodletting~~
+- ~~carnage~~ (no etheral handling yet)
 - **disarm** (need exhaust basic)
 - **dropkick** (need to add the specific effect for energy increase, if vulnerable)
 - **entrench** (need the double mechanic)
 - flame barrier (maybe just say "add thorns" for the time being?)
-- ghostly armor
+- ghostly armor (no ethereal handling yet)
 - hemokinesis
 - **inflame** (need power basic)
 - **intimidate** (need exhaust basic)

@@ -20,17 +20,19 @@ class CardEffects:
             blockable: bool = True,
             block: int = 0,
             target: TargetType = TargetType.SELF,
-            applies_powers=None
+            applies_powers=None,
+            energy_gain: int = 0,
     ):
         if applies_powers is None:
             applies_powers = dict()
-        self.damage = damage
-        self.hits = hits
-        self.blockable = blockable
-        self.block = block
-        self.target = target
+        self.damage: int = damage
+        self.hits: int = hits
+        self.blockable: bool = blockable
+        self.block: int = block
+        self.target: TargetType = target
         # applies to the targets? Are there ever things that do _more_ than that?
         self.applies_powers: Powers = applies_powers
+        self.energy_gain: int = energy_gain
         # special effect lambdas maybe we can add in here at some point but not for now.
 
 
@@ -71,5 +73,12 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
                             applies_powers={PowerId.VULNERABLE: 1})]
     if card.id == CardId.TWIN_STRIKE:
         return [CardEffects(damage=5 if not card.upgrade else 7, hits=2, target=TargetType.MONSTER)]
+    if card.id == CardId.BLOOD_FOR_BLOOD:  # TODO -> calculate cost reduction at some point.
+        return [CardEffects(damage=18 if not card.upgrade else 22, hits=1, target=TargetType.MONSTER)]
+    if card.id == CardId.BLOODLETTING:
+        return [CardEffects(energy_gain=2 if not card.upgrade else 3, damage=3, hits=1, blockable=False,
+                            target=TargetType.SELF)]
+    if card.id == CardId.CARNAGE:
+        return [CardEffects(damage=20 if not card.upgrade else 28, hits=1, target=TargetType.MONSTER)]
         # default case, todo maybe some logging or?
     return [CardEffects()]
