@@ -83,7 +83,7 @@ class EventHandler(Handler):
             return ["choose 0"]  # Free potions
 
         # if event_name == "Match and Keep":
-        #    return ["choose 0"]  # Existing logic just tries the first stuff over and over, fine.
+        #   return ["choose 0"]  # Existing logic is fine.
 
         if event_name == "Ominous Forge":
             return ["choose 1", "choose 0"]  # I love the Warped Tongs relic.
@@ -101,7 +101,7 @@ class EventHandler(Handler):
         #    return ["choose 1", "choose 0"]  # Don't know how to make sure we avoid losing a card. Need to check.
 
         if event_name == "The Woman in Blue":
-            return ["choose 0", "choose 0"]  # Weird in the StS run display by saying "ignored", but we get the potion.
+            return ["choose 0", "choose 0"]  # Grab 1 potion.
 
         # ACT 2
 
@@ -120,8 +120,17 @@ class EventHandler(Handler):
         if event_name == "Cursed Tome":
             return ["choose 1", "choose 0"]  # Leave, we don't currently make good use of the possible relics.
 
-        # if event_name == "Forgotten Altar":
-        #    return ["choose 2", "choose 0"] # Don't know how to handle this event.
+        # if event_name == "Forgotten Altar": #FINISH AND REDO THIS LOGIC D:
+        # if state.has_relic("Golden Idol") and state.has_relic("Ectoplasm") and hp_per >= 60:
+        #    return ["choose 1", "choose 0"]  # Max HP up
+        #
+        # if state.has_relic("Golden Idol") and state.has_relic("Ectoplasm") and hp_per < 60:
+        #     return ["choose 2", "choose 0"]  # Take the curse
+
+        # if state.has_relic("Golden Idol") and (state.has_relic("Ectoplasm") == False):
+        #    return ["choose 0", "choose 0"]  # Healing relic
+        # else:
+        #    return ["choose 1", "choose 0"]  # Take the curse then.
 
         if event_name == "The Joust":
             return ["choose 1", "choose 0"]  # Slightly more expected value. ^^
@@ -153,8 +162,11 @@ class EventHandler(Handler):
         # if event_name == "Pleading Vagrant":
         #    return ["choose 1", "choose 0"]  # Leave. Prefer the relic but money logic. Actually, needs testing.
 
-        # if event_name == "Vampires(?)":
-        #    return ["choose 0", "choose 0"]  # Want no bites but I need to have a look at the logs.
+        if event_name == "Vampires(?)":  # Don't want bites
+            if state.has_relic("Blood Vial"):
+                return ["choose 2", "choose 0"]
+            else:
+                return ["choose 1", "choose 0"]
 
         # Act 2, 3
 
@@ -169,8 +181,8 @@ class EventHandler(Handler):
         if event_name == "Mind Bloom":
             return ["choose 0"]  # Fight an Act 1 boss for a relic.
 
-        # if event_name == "The Moai Head":
-        #    return ["choose 1", "choose 0"]  # Don't know how to make sure we leave yet.
+        if event_name == "The Moai Head":
+            return ["choose 1", "choose 0"]  # Get a bunch of money or leave
 
         if event_name == "Mysterious Sphere":
             if hp_per >= 60:
@@ -184,8 +196,11 @@ class EventHandler(Handler):
         if event_name == "Sensory Stone":
             return ["choose 0"]  # Ignore
 
-        # if event_name == "Tomb of Lord Red Mask":
-        #    return ["choose 1", "choose 0"]  # Needs logic
+        if event_name == "Tomb of Lord Red Mask":
+            if state.has_relic("Red Mask") or state.game_state()['gold'] <= 130:
+                return ["choose 0", "choose 0"]  # Either free money or cheap.
+            else:
+                return ["choose 1", "choose 0"]  # Leave
 
         if event_name == "Winding Halls":
             return ["choose 2", "choose 0"]  # Lose Max HP to avoid dealing with complexity.
