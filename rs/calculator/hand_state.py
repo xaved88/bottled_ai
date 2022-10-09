@@ -103,6 +103,10 @@ class HandState:
             # energy gain
             self.player.energy += effect.energy_gain
 
+            # custom hooks
+            for hook in effect.custom_hooks:
+                hook(self, target_index)  # TODO - would be nice to find a way to resolve this circular dep
+
         # post turn counter increments (we can make this more dynamic/clean as we get more of them)
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
@@ -151,7 +155,7 @@ def is_card_playable(card: Card, player: Player) -> bool:
     if card.type == CardType.ATTACK and player.powers.get(PowerId.ENTANGLED):
         return False
 
-    # todo -> special card-specific logic, like clash
+    # special card-specific logic, like clash
 
     return True
 
@@ -162,7 +166,5 @@ def can_card_target_target(card: Card, target: Target) -> bool:
 
     if target.current_hp <= 0:
         return False
-
-    # TODO -> any other cases? Maybe a check on if the target is targetable, who knows.
 
     return True

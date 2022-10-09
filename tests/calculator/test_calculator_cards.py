@@ -170,3 +170,18 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_discard_count(play, 0)
         self.see_player_exhaust_count(play, 1)
+
+    def test_dropkick_vs_normal(self):
+        state = self.given_state(CardId.DROPKICK)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_player_spent_energy(play, 1)
+        self.see_cards_played(play, 1)
+
+    def test_dropkick_vs_vulnerable(self):
+        state = self.given_state(CardId.DROPKICK)
+        state.monsters[0].powers = {PowerId.VULNERABLE: 1}
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_spent_energy(play, 0)
+        self.see_cards_played(play, 1)

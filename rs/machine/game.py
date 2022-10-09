@@ -56,7 +56,7 @@ class Game:
 
     def run(self):
         log_to_run("Starting Run")
-        while self.last_state.is_game_running():  # todo -> bring this out to an actual end condition
+        while self.last_state.is_game_running():
             await_controller()
             self.__handle_state_based_logging()
             handled = False

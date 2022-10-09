@@ -12,6 +12,7 @@ class CardId(Enum):
     CLEAVE = 'cleave'
     CLOTHESLINE = 'clothesline'
     DISARM = 'disarm'
+    DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
     HEAVY_BLADE = 'heavy blade'
     IRON_WAVE = 'iron wave'
@@ -33,7 +34,7 @@ class Card:
         self.needs_target: bool = needs_target
         self.ethereal: bool = ethereal
         self.exhausts: bool = exhausts
-        self.type: CardType = card_type  # todo -> maybe we want to extract that enum so this remains decoupled?
+        self.type: CardType = card_type
 
 
 def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
@@ -74,4 +75,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.DISARM:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL, exhausts=True)
+    if card_id == CardId.DROPKICK:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     # TODO -> logging or throw error or something if it gets here?

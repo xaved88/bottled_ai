@@ -1,6 +1,7 @@
 from enum import Enum
-from typing import List
+from typing import List, Callable
 
+from rs.calculator.card_effect_custom_hooks import CardEffectCustomHook, dropkick_custom_hook
 from rs.calculator.cards import Card, CardId
 from rs.calculator.powers import Powers, PowerId
 
@@ -22,18 +23,16 @@ class CardEffects:
             target: TargetType = TargetType.SELF,
             applies_powers=None,
             energy_gain: int = 0,
+            custom_hooks: List[CardEffectCustomHook] = None
     ):
-        if applies_powers is None:
-            applies_powers = dict()
         self.damage: int = damage
         self.hits: int = hits
         self.blockable: bool = blockable
         self.block: int = block
         self.target: TargetType = target
-        # applies to the targets? Are there ever things that do _more_ than that?
-        self.applies_powers: Powers = applies_powers
+        self.applies_powers: Powers = dict() if applies_powers is None else applies_powers
         self.energy_gain: int = energy_gain
-        # special effect lambdas maybe we can add in here at some point but not for now.
+        self.custom_hooks: List[CardEffectCustomHook] = [] if custom_hooks is None else custom_hooks
 
 
 def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], discard_pile: List[Card],
@@ -60,7 +59,6 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         amount = 5 if not card.upgrade else 7
         return [CardEffects(damage=amount, hits=1, block=amount, target=TargetType.MONSTER)]
     if card.id == CardId.PERFECTED_STRIKE:
-        # TODO -> maybe make this a list when all cards are done
         strike_amount = len([1 for c in discard_pile + draw_pile + hand if "strike" in c.id.value])
         damage = 6 + strike_amount * (2 if not card.upgrade else 3)
         return [CardEffects(damage=damage, hits=1, target=TargetType.MONSTER)]
@@ -73,7 +71,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
                             applies_powers={PowerId.VULNERABLE: 1})]
     if card.id == CardId.TWIN_STRIKE:
         return [CardEffects(damage=5 if not card.upgrade else 7, hits=2, target=TargetType.MONSTER)]
-    if card.id == CardId.BLOOD_FOR_BLOOD:  # TODO -> calculate cost reduction at some point.
+    if card.id == CardId.BLOOD_FOR_BLOOD:
         return [CardEffects(damage=18 if not card.upgrade else 22, hits=1, target=TargetType.MONSTER)]
     if card.id == CardId.BLOODLETTING:
         return [CardEffects(energy_gain=2 if not card.upgrade else 3, damage=3, hits=1, blockable=False,
@@ -87,5 +85,8 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
     if card.id == CardId.DISARM:
         return [CardEffects(target=TargetType.MONSTER,
                             applies_powers={PowerId.STRENGTH: -2 if not card.upgrade else 3})]
+    if card.id == CardId.DROPKICK:
+        return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER,
+                            custom_hooks=[dropkick_custom_hook])]
         # default case, todo maybe some logging or?
     return [CardEffects()]

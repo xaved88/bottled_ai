@@ -4,7 +4,7 @@ from typing import List
 
 class Room:
     def __init__(self, room_json: dict):
-        self.type: RoomType = RoomType(room_json['symbol'])  # TODO - does this even work?!?!
+        self.type: RoomType = RoomType(room_json['symbol'])
         self.id: str = str(room_json['x']) + '_' + str(room_json['y'])
         self.childrenIds: List[str] = []
         for c in room_json['children']:

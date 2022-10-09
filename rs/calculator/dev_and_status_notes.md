@@ -3,7 +3,7 @@ This is where we'll keep the status of the calculator organized for a bit, what 
 ### We are disregarding:
 
 - card draw
-- exhaust
+- ethereal
 - _anything_ random
 - X cards
 
@@ -17,7 +17,7 @@ normal = okay
 
 ~~strikethrough~~ = done
 
-## RELICS AND STATUS TO DO
+## VITAL RELICS AND STATUS (all done!)
 
 - ~~strike dummy~~
 - ~~velvet choker~~
@@ -35,11 +35,7 @@ normal = okay
 - ~~artifact~~
 - ~~plated armor~~
 
-## CARDS TO DO
-
-#### TODO
-
-(none of the cards have been assessed yet for whether we need changes to them... I think most work though.)
+## VITAL CARDS
 
 - ~~strike_r~~
 - ~~defend_r~~
@@ -56,10 +52,10 @@ normal = okay
 - ~~twin strike~~
 - ~~blood for blood~~ (cost doesn't lower when taking damage in turn yet :shrug:)
 - ~~bloodletting~~
-- ~~carnage~~ (no etheral handling yet)
+- ~~carnage~~ (no ethereal handling yet)
 - ~~disarm~~
-- **dropkick** (need to add the specific effect for energy increase, if vulnerable)
-- **entrench** (need the double mechanic)
+- ~~dropkick~~
+- entrench :: can do with hooks
 - flame barrier (maybe just say "add thorns" for the time being?)
 - ghostly armor (no ethereal handling yet)
 - hemokinesis
@@ -70,24 +66,24 @@ normal = okay
 - shockwave
 - ~~uppercut~~
 - bludgeon
-- **feed** (need max_hp +)
-- **fiend fire** (need exhaust other cards)
+- feed :: can do with hooks
+- **fiend fire** (need pre & post hooks definition, as right now they're all post)
 - immolate
-- impervious 
+- impervious
 - limit break
 - offering
-- **reaper** (need specific healing)
-- **apparition** (need intangible)
-- **bite** (need healing?)
+- **reaper** (need specific healing (damage dealt counter?))
+- **apparition** (need intangible, no ethereal)
+- **bite** (need healing? or can we just do it with -hp cost)
 - jax
-- **burn** (need something)
-- **normality** (need something)
-- **pain** (need something)
-- **regret** (need something)
+- **burn** (need end of turn in hand handling)
+- **normality** (need in hand handling, plus cardplay counter?)
+- **pain** (need in hand handling )
+- **regret** (need end of turn in hand handling)
 
-## OTHER DATA HERE
+## ENTITY NEXT PRIORITIES
 
-### Relics
+### RELICS
 
 (5's are the mvp for release)
 
@@ -326,3 +322,9 @@ parasite
 regret
 shame
 writhe
+
+### INCOMPLETE/HALF BAKED FEATURES
+
+- Consider extracting and decoupling the card type from the game to something within the calculator domain
+- Blood for blood doesn't update cost when you lose hp from your own cards
+- PerfectedStrike is doing string comparison, probably wants a enum list at some point
