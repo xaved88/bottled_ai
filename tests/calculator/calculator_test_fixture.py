@@ -49,5 +49,8 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_player_exhaust_count(self, play: PlayPath, amount: int):
         self.assertEqual(amount, len(play.state.exhaust_pile))
 
+    def see_player_hand_count(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, len(play.state.hand))
+
     def see_player_does_not_have_power(self, play: PlayPath, power_id: PowerId):
         self.assertEqual(None, play.state.player.powers.get(power_id))

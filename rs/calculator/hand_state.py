@@ -71,6 +71,10 @@ class HandState:
         # play the card
         self.player.energy -= card.cost
         for effect in effects:
+            # custom post hooks
+            for hook in effect.pre_hooks:
+                hook(self, effect, target_index)
+
             # deal damage to target
             if effect.hits:
                 if effect.target == TargetType.SELF:
@@ -103,9 +107,9 @@ class HandState:
             # energy gain
             self.player.energy += effect.energy_gain
 
-            # custom hooks
-            for hook in effect.custom_hooks:
-                hook(self, target_index)  # TODO - would be nice to find a way to resolve this circular dep
+            # custom post hooks
+            for hook in effect.post_hooks:
+                hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
 
         # post turn counter increments (we can make this more dynamic/clean as we get more of them)
         if RelicId.VELVET_CHOKER in self.relics:
@@ -122,11 +126,13 @@ class HandState:
             if self.relics[RelicId.PEN_NIB] >= 10:
                 self.relics[RelicId.PEN_NIB] -= 10
 
-        if card.exhausts:
-            self.exhaust_pile.append(card)
-        elif card.type != CardType.POWER:
-            self.discard_pile.append(card)
-        del self.hand[card_index]
+        if card in self.hand: # because some cards like fiend fire, will destroy themselves before they can follow this route
+            idx = self.hand.index(card)
+            if card.exhausts:
+                self.exhaust_pile.append(card)
+            elif card.type != CardType.POWER:
+                self.discard_pile.append(card)
+            del self.hand[idx]
 
     def end_turn(self):
         # special end of turn

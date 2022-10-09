@@ -8,6 +8,7 @@ class CardId(Enum):
     BASH = 'bash'
     BLOODLETTING = 'bloodletting'
     BLOOD_FOR_BLOOD = 'blood for blood'
+    BLUDGEON = 'bludgeon'
     CARNAGE = 'carnage'
     CLEAVE = 'cleave'
     CLOTHESLINE = 'clothesline'
@@ -15,6 +16,8 @@ class CardId(Enum):
     DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
     ENTRENCH = 'entrench'
+    FEED = 'feed'
+    FIEND_FIRE = 'fiend fire'
     FLAME_BARRIER = 'flame barrier'
     GHOSTLY_ARMOR = 'ghostly armor'
     HEAVY_BLADE = 'heavy blade'
@@ -32,6 +35,7 @@ class CardId(Enum):
     THUNDERCLAP = 'thunderclap'
     TWIN_STRIKE = 'twin strike'
     UPPERCUT = 'uppercut'
+    WOUND = 'wound'
 
 
 class Card:
@@ -106,4 +110,12 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.SHOCKWAVE:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.BLUDGEON:
+        return Card(card_id, upgrade, 3 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.FEED:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.FIEND_FIRE:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.WOUND:
+        return Card(card_id, 0, -1, False, CardType.STATUS)
     # TODO -> logging or throw error or something if it gets here?

@@ -65,9 +65,9 @@ normal = okay
 - ~~seeing red~~
 - ~~shockwave~~
 - ~~uppercut~~
-- bludgeon
-- feed :: can do with hooks
-- **fiend fire** (need pre & post hooks definition, as right now they're all post)
+- ~~bludgeon~~
+- ~~feed~~
+- ~~fiend fire~~
 - immolate
 - impervious
 - limit break

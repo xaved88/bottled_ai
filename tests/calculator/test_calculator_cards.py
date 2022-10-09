@@ -265,3 +265,52 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
+
+    def test_bludgeon(self):
+        state = self.given_state(CardId.BLUDGEON)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_enemy_lost_hp(play, 32)
+
+    def test_feed(self):
+        state = self.given_state(CardId.FEED)
+        state.player.max_hp = 10
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 10)
+        self.assertEqual(10, play.state.player.max_hp)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_feed_on_kill(self):
+        state = self.given_state(CardId.FEED)
+        state.player.current_hp = 10
+        state.player.max_hp = 10
+        state.monsters[0].current_hp = 9
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(13, play.state.player.max_hp)
+        self.assertEqual(13, play.state.player.current_hp)
+
+    def test_fiend_fire(self):
+        state = self.given_state(CardId.FIEND_FIRE)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_exhaust_count(play, 2)
+        self.see_player_hand_count(play, 0)
+        self.see_cards_played(play, 1)
+    def test_fiend_fire_with_large_hand(self):
+        state = self.given_state(CardId.FIEND_FIRE)
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 42)
+        self.see_player_exhaust_count(play, 7)
+        self.see_player_hand_count(play, 0)
+        self.see_cards_played(play, 1)

@@ -1,7 +1,7 @@
 from enum import Enum
-from typing import List, Callable
+from typing import List
 
-from rs.calculator.card_effect_custom_hooks import CardEffectCustomHook, dropkick_custom_hook
+from rs.calculator.card_effect_custom_hooks import *
 from rs.calculator.cards import Card, CardId
 from rs.calculator.powers import Powers, PowerId
 
@@ -23,7 +23,8 @@ class CardEffects:
             target: TargetType = TargetType.SELF,
             applies_powers=None,
             energy_gain: int = 0,
-            custom_hooks: List[CardEffectCustomHook] = None
+            pre_hooks: List[CardEffectCustomHook] = None,
+            post_hooks: List[CardEffectCustomHook] = None,
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -32,7 +33,8 @@ class CardEffects:
         self.target: TargetType = target
         self.applies_powers: Powers = dict() if applies_powers is None else applies_powers
         self.energy_gain: int = energy_gain
-        self.custom_hooks: List[CardEffectCustomHook] = [] if custom_hooks is None else custom_hooks
+        self.pre_hooks: List[CardEffectCustomHook] = [] if pre_hooks is None else pre_hooks
+        self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
 
 
 def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], discard_pile: List[Card],
@@ -87,9 +89,9 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
                             applies_powers={PowerId.STRENGTH: -2 if not card.upgrade else 3})]
     if card.id == CardId.DROPKICK:
         return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER,
-                            custom_hooks=[dropkick_custom_hook])]
+                            post_hooks=[dropkick_post_hook])]
     if card.id == CardId.ENTRENCH:
-        return [CardEffects(target=TargetType.SELF, custom_hooks=[dropkick_custom_hook])]
+        return [CardEffects(target=TargetType.SELF, post_hooks=[dropkick_post_hook])]
     if card.id == CardId.FLAME_BARRIER:
         return [CardEffects(target=TargetType.SELF, block=12 if not card.upgrade else 16,
                             applies_powers={PowerId.FLAME_BARRIER: 4 if not card.upgrade else 6})]
@@ -111,6 +113,16 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         amount = 3 if not card.upgrade else 5
         return [CardEffects(target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.WEAK: amount, PowerId.VULNERABLE: amount})]
+    if card.id == CardId.BLUDGEON:
+        return [CardEffects(target=TargetType.MONSTER, damage=32 if not card.upgrade else 42, hits=1)]
+    if card.id == CardId.FEED:
+        return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 12, hits=1,
+                            post_hooks=[feed_post_hook if not card.upgrade else feed_upgraded_post_hook])]
+    if card.id == CardId.FIEND_FIRE:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
+                            pre_hooks=[fiend_fire_pre_hook], post_hooks=[fiend_fire_post_hook])]
+    if card.id == CardId.WOUND:
+        return [CardEffects(target=TargetType.NONE)]
 
     # default case, todo maybe some logging or?
     return [CardEffects()]
