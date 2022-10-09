@@ -55,15 +55,15 @@ normal = okay
 - ~~carnage~~ (no ethereal handling yet)
 - ~~disarm~~
 - ~~dropkick~~
-- entrench :: can do with hooks
-- flame barrier (maybe just say "add thorns" for the time being?)
-- ghostly armor (no ethereal handling yet)
-- hemokinesis
-- inflame
-- intimidate
-- pummel
-- seeing red
-- shockwave
+- ~~entrench~~
+- ~~flame barrier~~ (flame barrier buff/status exists but no handling added for it yet)
+- ~~ghostly armor~~ (no ethereal handling yet)
+- ~~hemokinesis~~
+- ~~inflame~~
+- ~~intimidate~~
+- ~~pummel~~
+- ~~seeing red~~
+- ~~shockwave~~
 - ~~uppercut~~
 - bludgeon
 - feed :: can do with hooks
@@ -145,6 +145,7 @@ normal = okay
 - 3 buffer
 - 3 regen
 - 3 thorns
+- 3 flame barrier
 - 3 combust
 - 3 double tap / duplication
 - 3 flame barrier

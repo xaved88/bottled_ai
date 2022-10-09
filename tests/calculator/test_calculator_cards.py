@@ -185,3 +185,83 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 7)
         self.see_player_spent_energy(play, 0)
         self.see_cards_played(play, 1)
+
+    def test_entrench(self):
+        state = self.given_state(CardId.ENTRENCH)
+        state.player.block = 32
+        play = self.when_calculating_state_play(state)
+        self.see_player_gained_block(play, 32)
+        self.see_player_spent_energy(play, 2)
+
+    def test_flame_barrier(self):
+        state = self.given_state(CardId.FLAME_BARRIER)
+        play = self.when_calculating_state_play(state)
+        self.see_player_gained_block(play, 12)
+        self.see_player_has_status(play, PowerId.FLAME_BARRIER, 4)
+        self.see_player_spent_energy(play, 2)
+
+    def test_ghostly_armor(self):
+        state = self.given_state(CardId.GHOSTLY_ARMOR)
+        play = self.when_calculating_state_play(state)
+        self.see_player_gained_block(play, 10)
+        self.see_player_spent_energy(play, 1)
+
+    def test_hemokinesis(self):
+        state = self.given_state(CardId.HEMOKINESIS)
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, 2)
+        self.see_enemy_lost_hp(play, 15)
+        self.see_player_spent_energy(play, 1)
+
+    def test_inflame(self):
+        state = self.given_state(CardId.INFLAME)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_status(play, PowerId.STRENGTH, 2)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_intimidate(self):
+        state = self.given_state(CardId.INTIMIDATE, targets=2)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_status(play, PowerId.WEAK, amount=1, enemy_index=0)
+        self.see_enemy_has_status(play, PowerId.WEAK, amount=1, enemy_index=1)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_pummel(self):
+        state = self.given_state(CardId.PUMMEL)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_pummel_with_str_vs_plated_armor(self):  # technically everything is covered but a good systems check
+        state = self.given_state(CardId.PUMMEL)
+        state.player.powers[PowerId.STRENGTH] = 3
+        state.monsters[0].powers[PowerId.PLATED_ARMOR] = 5
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 20)
+        self.see_enemy_has_status(play, PowerId.PLATED_ARMOR, 1)
+
+    def test_seeing_red(self):
+        state = self.given_state(CardId.SEEING_RED)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, -1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_seeing_red_not_played_with_no_energy(self):
+        state = self.given_state(CardId.SEEING_RED)
+        state.player.energy = 0
+        play = self.when_calculating_state_play(state)
+        self.see_cards_played(play, 0)
+
+    def test_shockwave(self):
+        state = self.given_state(CardId.SHOCKWAVE, targets=2)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_status(play, PowerId.WEAK, amount=3, enemy_index=0)
+        self.see_enemy_has_status(play, PowerId.WEAK, amount=3, enemy_index=1)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=0)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_exhaust_count(play, 1)

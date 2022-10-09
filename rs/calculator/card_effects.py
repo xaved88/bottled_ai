@@ -88,5 +88,29 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
     if card.id == CardId.DROPKICK:
         return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER,
                             custom_hooks=[dropkick_custom_hook])]
-        # default case, todo maybe some logging or?
+    if card.id == CardId.ENTRENCH:
+        return [CardEffects(target=TargetType.SELF, custom_hooks=[dropkick_custom_hook])]
+    if card.id == CardId.FLAME_BARRIER:
+        return [CardEffects(target=TargetType.SELF, block=12 if not card.upgrade else 16,
+                            applies_powers={PowerId.FLAME_BARRIER: 4 if not card.upgrade else 6})]
+    if card.id == CardId.GHOSTLY_ARMOR:
+        return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
+    if card.id == CardId.HEMOKINESIS:
+        return [CardEffects(damage=15 if not card.upgrade else 20, hits=1, target=TargetType.MONSTER),
+                CardEffects(damage=2, hits=1, blockable=False, target=TargetType.SELF)]
+    if card.id == CardId.INFLAME:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 3})]
+    if card.id == CardId.INTIMIDATE:
+        return [CardEffects(target=TargetType.ALL_MONSTERS,
+                            applies_powers={PowerId.WEAK: 1 if not card.upgrade else 2})]
+    if card.id == CardId.PUMMEL:
+        return [CardEffects(damage=2, hits=4 if not card.upgrade else 5, target=TargetType.MONSTER)]
+    if card.id == CardId.SEEING_RED:
+        return [CardEffects(energy_gain=2, target=TargetType.SELF)]
+    if card.id == CardId.SHOCKWAVE:
+        amount = 3 if not card.upgrade else 5
+        return [CardEffects(target=TargetType.ALL_MONSTERS,
+                            applies_powers={PowerId.WEAK: amount, PowerId.VULNERABLE: amount})]
+
+    # default case, todo maybe some logging or?
     return [CardEffects()]
