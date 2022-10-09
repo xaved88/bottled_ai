@@ -1,6 +1,6 @@
 import math
 
-from rs.calculator.powers import PowerId, Powers
+from rs.calculator.powers import PowerId, Powers, DEBUFFS
 
 
 class Target:
@@ -12,21 +12,44 @@ class Target:
 
     def inflict_damage(self, base_damage: int, hits: int, blockable: bool = True, vulnerable_modifier: float = 1.5):
         damage = base_damage
-        if PowerId.VULNERABLE in self.powers and self.powers[PowerId.VULNERABLE]:
+        if self.powers.get(PowerId.VULNERABLE):
             damage = math.floor(damage * vulnerable_modifier)
+        if self.powers.get(PowerId.PLATED_ARMOR):
+            temp_block = self.block
+            reduction = 0
+            for i in range(hits):
+                temp_block -= damage
+                if temp_block < 0:
+                    reduction += 1
+            if reduction:
+                new_value = self.powers.get(PowerId.PLATED_ARMOR) - reduction
+                if new_value:
+                    self.powers[PowerId.PLATED_ARMOR] = new_value
+                else:
+                    del self.powers[PowerId.PLATED_ARMOR]
         damage *= hits
         if blockable:
             self.block -= damage
             if self.block < 0:
                 self.current_hp += self.block
-                self.block = 0
+                if self.powers.get(PowerId.CURL_UP):
+                    self.block = self.powers.get(PowerId.CURL_UP)
+                    del self.powers[PowerId.CURL_UP]
+                else:
+                    self.block = 0
         else:
             self.current_hp -= damage
+
         self.current_hp = max(0, self.current_hp)
 
     def add_powers(self, powers: Powers):
-        keys = dict.keys(powers)
         for power in powers:
+            if power in DEBUFFS and self.powers.get(PowerId.ARTIFACT):
+                if self.powers[PowerId.ARTIFACT] == 1:
+                    del self.powers[PowerId.ARTIFACT]
+                else:
+                    self.powers[PowerId.ARTIFACT] -= 1
+                continue
             if power in self.powers:
                 self.powers[power] += powers[power]
             else:
@@ -38,3 +61,11 @@ class Player(Target):
     def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, energy: int):
         super().__init__(current_hp, max_hp, block, powers)
         self.energy: int = energy
+
+
+class Monster(Target):
+
+    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, damage: int = 0, hits: int = 0):
+        super().__init__(current_hp, max_hp, block, powers)
+        self.damage: int = damage
+        self.hits: int = hits

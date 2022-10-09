@@ -9,6 +9,9 @@ class PlayPath:
         self.plays: List[Play] = plays
         self.state: HandState = state
 
+    def end_turn(self):
+        self.state.end_turn()
+
 
 def get_paths(path: PlayPath) -> List[PlayPath]:
     # todo -> some sort of state.resolve/end turn thing. all the counters need to decrease, poison damage, take damage from monsters, etc.

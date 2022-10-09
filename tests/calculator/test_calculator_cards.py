@@ -1,4 +1,4 @@
-from calculator.test_calculator_fixture import CalculatorTestFixture
+from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import CardId, get_card
 from rs.calculator.powers import PowerId
 
@@ -35,14 +35,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.BASH)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 8)
-        self.see_enemy_has_debuff(play, PowerId.VULNERABLE, 2)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_bash_upgraded(self):
         state = self.given_state(CardId.BASH, 1)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 10)
-        self.see_enemy_has_debuff(play, PowerId.VULNERABLE, 3)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, 3)
         self.see_player_spent_energy(play, 2)
 
     def test_anger(self):
@@ -62,7 +62,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.CLOTHESLINE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 12)
-        self.see_enemy_has_debuff(play, PowerId.WEAK, 2)
+        self.see_enemy_has_status(play, PowerId.WEAK, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_heavy_blade(self):
@@ -123,20 +123,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 4, enemy_index=0)
         self.see_enemy_lost_hp(play, 4, enemy_index=1)
-        self.see_enemy_has_debuff(play, PowerId.VULNERABLE, 1, enemy_index=0)
-        self.see_enemy_has_debuff(play, PowerId.VULNERABLE, 1, enemy_index=1)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1, enemy_index=0)
+        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1, enemy_index=1)
         self.see_player_spent_energy(play, 1)
 
     def test_twin_strike(self):
         state = self.given_state(CardId.TWIN_STRIKE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 10)
-        self.see_player_spent_energy(play, 1)
-
-    def test_twin_strike_with_strength(self):
-        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.STRENGTH: 3})
-        play = self.when_calculating_state_play(state)
-        self.see_enemy_lost_hp(play, 16)
         self.see_player_spent_energy(play, 1)
 
     def test_blood_for_blood(self):

@@ -1,4 +1,4 @@
-from calculator.test_calculator_fixture import CalculatorTestFixture
+from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import CardId, get_card
 from rs.calculator.play_path import PlayPath
 from rs.calculator.powers import PowerId
@@ -24,7 +24,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_paper_phrog(self):
         state = self.given_state(CardId.STRIKE_R)
-        state.targets[0].powers[PowerId.VULNERABLE] = 1
+        state.monsters[0].powers[PowerId.VULNERABLE] = 1
         state.relics[RelicId.PAPER_PHROG] = 1
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 10)

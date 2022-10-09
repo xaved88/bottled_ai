@@ -24,17 +24,16 @@ normal = okay
 - ~~paper phrog~~
 - ~~nunchaku~~
 - ~~pen nib~~
-- strength :: (already a spot for it)
-- dexterity :: (do just like strength)
-- artifact :: (if we only care about it for the enemy, we would just need to have some sort of debuff map to know which
-  powers are debuffs, and then prevent the adding of those per charge...)
-- plated armor :: (does depend on us implementing the turn resolve shit)
-- vigor :: (basically goes where strength goes, then consumes itself)
-- curl up :: (would be done inside the damage place of the enemies, I reckon)
-- vulnerable :: done but still lacking the monsters attacking into it
-- weak :: done but still lacking the monsters attacking with it
-- entangled :: (a check on this in the get plays and attack type should be easy)
-- frail :: (just some additional logic in the block)
+- ~~strength~~
+- ~~dexterity~~
+- ~~vulnerable~~
+- ~~weak~~
+- ~~frail~~
+- ~~entangled~~
+- ~~vigor~~
+- ~~curl up~~
+- ~~artifact~~
+- ~~plated armor~~
 
 ## CARDS TO DO
 
@@ -69,7 +68,7 @@ normal = okay
 - pummel
 - **seeing red** (need exhaust basic)
 - **shockwave** (need exhaust basic)
-- uppercut
+- ~~uppercut~~
 - bludgeon
 - **feed** (need exhaust basic, and also max_hp +)
 - **fiend fire** (need exhaust entire hand thingy?)

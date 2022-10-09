@@ -20,6 +20,7 @@ class CardId(Enum):
     STRIKE_R = 'strike_r'
     THUNDERCLAP = 'thunderclap'
     TWIN_STRIKE = 'twin strike'
+    UPPERCUT = 'uppercut'
 
 
 class Card:
@@ -67,4 +68,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, base_cost if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.CARNAGE:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, True)
+    if card_id == CardId.UPPERCUT:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     # TODO -> logging or throw error or something if it gets here?
