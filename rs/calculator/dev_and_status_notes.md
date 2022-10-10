@@ -68,14 +68,14 @@ normal = okay
 - ~~bludgeon~~
 - ~~feed~~
 - ~~fiend fire~~
-- immolate
-- impervious
-- limit break
-- offering
+- ~~immolate~~
+- ~~impervious~~
+- ~~limit break~~
+- ~~offering~~
 - **reaper** (need specific healing (damage dealt counter?))
 - **apparition** (need intangible, no ethereal)
 - **bite** (need healing? or can we just do it with -hp cost)
-- jax
+- ~~jax~~
 - **burn** (need end of turn in hand handling)
 - **normality** (need in hand handling, plus cardplay counter?)
 - **pain** (need in hand handling )

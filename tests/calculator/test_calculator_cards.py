@@ -300,6 +300,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 2)
         self.see_player_hand_count(play, 0)
         self.see_cards_played(play, 1)
+
     def test_fiend_fire_with_large_hand(self):
         state = self.given_state(CardId.FIEND_FIRE)
         state.hand.append(get_card(CardId.WOUND))
@@ -314,3 +315,64 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 7)
         self.see_player_hand_count(play, 0)
         self.see_cards_played(play, 1)
+
+    def test_immolate(self):
+        state = self.given_state(CardId.IMMOLATE, targets=2)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 21, 0)
+        self.see_enemy_lost_hp(play, 21, 1)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_count(play, 2)
+
+    def test_impervious(self):
+        state = self.given_state(CardId.IMPERVIOUS)
+        play = self.when_calculating_state_play(state)
+        self.see_player_gained_block(play, 30)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_limit_break(self):
+        state = self.given_state(CardId.LIMIT_BREAK, player_powers={PowerId.STRENGTH: 3})
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_status(play, PowerId.STRENGTH, 6)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_limit_break_upgraded(self):
+        state = self.given_state(CardId.LIMIT_BREAK, upgrade=1, player_powers={PowerId.STRENGTH: 3})
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_status(play, PowerId.STRENGTH, 6)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 0)
+        self.see_player_discard_count(play, 1)
+
+    def test_limit_break_no_strength(self):
+        state = self.given_state(CardId.LIMIT_BREAK)
+        play = self.when_calculating_state_play(state)
+        self.see_player_does_not_have_power(play, PowerId.STRENGTH)
+
+    def test_limit_break_negative_strength(self):
+        state = self.given_state(CardId.LIMIT_BREAK, player_powers={PowerId.STRENGTH: -3})
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_status(play, PowerId.STRENGTH, -6)
+
+    def test_offering(self):
+        state = self.given_state(CardId.OFFERING)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, -2)
+        self.see_player_lost_hp(play, 6)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_jax(self):
+        state = self.given_state(CardId.JAX)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_lost_hp(play, 3)
+        self.see_player_has_status(play, PowerId.STRENGTH, 2)
+
+    def test_jax_when_having_strength(self):
+        state = self.given_state(CardId.JAX, player_powers={PowerId.STRENGTH: 2})
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_lost_hp(play, 3)
+        self.see_player_has_status(play, PowerId.STRENGTH, 4)

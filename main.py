@@ -10,7 +10,7 @@ from rs.helper.logger import log, init_log, log_new_run_sequence
 take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything
 #if there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
-   # 'FPI4YFAE017Y',
+    '10HTDAVER34YR',
 ]
 run_amount = 20
 

@@ -9,6 +9,7 @@ class CardId(Enum):
     BLOODLETTING = 'bloodletting'
     BLOOD_FOR_BLOOD = 'blood for blood'
     BLUDGEON = 'bludgeon'
+    BURN = 'burn'
     CARNAGE = 'carnage'
     CLEAVE = 'cleave'
     CLOTHESLINE = 'clothesline'
@@ -22,9 +23,14 @@ class CardId(Enum):
     GHOSTLY_ARMOR = 'ghostly armor'
     HEAVY_BLADE = 'heavy blade'
     HEMOKINESIS = 'hemokinesis'
+    IMMOLATE = 'immolate'
+    IMPERVIOUS = 'impervious'
     INFLAME = 'inflame'
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
+    JAX = 'j.a.x.'
+    LIMIT_BREAK = 'limit break'
+    OFFERING = 'offering'
     PERFECTED_STRIKE = 'perfected strike'
     POMMEL_STRIKE = 'pommel strike'
     PUMMEL = 'pummel'
@@ -118,4 +124,16 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.WOUND:
         return Card(card_id, 0, -1, False, CardType.STATUS)
+    if card_id == CardId.IMMOLATE:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.BURN:
+        return Card(card_id, 0, -1, False, CardType.STATUS)
+    if card_id == CardId.IMPERVIOUS:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.LIMIT_BREAK:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL, exhausts=not upgrade)
+    if card_id == CardId.OFFERING:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.JAX:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     # TODO -> logging or throw error or something if it gets here?

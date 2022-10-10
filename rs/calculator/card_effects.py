@@ -123,6 +123,20 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
                             pre_hooks=[fiend_fire_pre_hook], post_hooks=[fiend_fire_post_hook])]
     if card.id == CardId.WOUND:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.IMMOLATE:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=21 if not card.upgrade else 28, hits=1,
+                            post_hooks=[immolate_post_hook])]
+    if card.id == CardId.BURN:  # TODO -> hook burn up with the -2 hp on end of turn thing...
+        return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.IMPERVIOUS:
+        return [CardEffects(target=TargetType.SELF, block=30 if not card.upgrade else 40)]
+    if card.id == CardId.LIMIT_BREAK:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[limit_break_post_hook])]
+    if card.id == CardId.OFFERING:
+        return [CardEffects(target=TargetType.SELF, damage=6, hits=1, blockable=False, energy_gain=2)]
+    if card.id == CardId.JAX:
+        return [CardEffects(target=TargetType.SELF, damage=3, hits=1, blockable=False,
+                            post_hooks=[jax_post_hook if not card.upgrade else jax_upgraded_post_hook])]
 
     # default case, todo maybe some logging or?
     return [CardEffects()]
