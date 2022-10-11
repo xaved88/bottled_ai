@@ -31,7 +31,6 @@ def get_best_battle_path(game_state: GameState, comparator: ReportComparator) ->
     hand_state = create_hand_state(game_state)
     paths = {}
     get_paths_performant(PlayPath([], hand_state), paths)
-    print(f"Number of paths found: {len(paths.keys())}")
     for path in paths.values():
         path.state.end_turn()
 
