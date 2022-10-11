@@ -55,12 +55,22 @@ class Target:
             else:
                 self.powers[power] = powers[power]
 
+    def get_state_string(self) -> str:
+        state: str = f"{self.current_hp},{self.max_hp},{self.block}"
+        power_keys = sorted([k.value for k in self.powers.keys()])
+        for k in power_keys:
+            state += k + str(self.powers[PowerId(k)]) + ","
+        return state
+
 
 class Player(Target):
 
     def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, energy: int):
         super().__init__(current_hp, max_hp, block, powers)
         self.energy: int = energy
+
+    def get_state_string(self) -> str:
+        return super().get_state_string() + str(self.energy) + ","
 
 
 class Monster(Target):
@@ -69,3 +79,6 @@ class Monster(Target):
         super().__init__(current_hp, max_hp, block, powers)
         self.damage: int = damage
         self.hits: int = hits
+
+    def get_state_string(self) -> str:
+        return super().get_state_string() + f"{self.damage},{self.hits},"

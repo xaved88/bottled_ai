@@ -3,7 +3,7 @@ from typing import List, Tuple, Callable
 from rs.calculator.game_state_converter import create_hand_state
 from rs.calculator.hand_state import Play
 from rs.calculator.play_path_report import PathPlayReport
-from rs.calculator.play_path import PlayPath, get_paths
+from rs.calculator.play_path import PlayPath, get_paths, get_paths_performant
 from rs.machine.state import GameState
 
 # (best:PathPlayReport, challenger:PathPlayReport) -> is_challenger_better: bool
@@ -29,16 +29,17 @@ def default_path_comparator(best: PathPlayReport, challenger: PathPlayReport) ->
 def get_best_battle_path(game_state: GameState, comparator: ReportComparator) -> PathPlayReport:
     original_hp = game_state.combat_state()['player']['current_hp']
     hand_state = create_hand_state(game_state)
-    paths = get_paths(PlayPath([], hand_state))
-    for path in paths:
+    paths = {}
+    get_paths_performant(PlayPath([], hand_state), paths)
+    print(f"Number of paths found: {len(paths.keys())}")
+    for path in paths.values():
         path.state.end_turn()
 
     best_report = None
-    reports = [PathPlayReport(path.state, original_hp, path) for path in paths]
+    reports = [PathPlayReport(path.state, original_hp, path) for path in paths.values()]
     for report in reports:
         if best_report is None:
             best_report = report
-            best_path = path
         else:
             if comparator(best_report, report):
                 best_report = report

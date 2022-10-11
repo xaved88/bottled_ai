@@ -56,6 +56,9 @@ class Card:
         self.exhausts: bool = exhausts
         self.type: CardType = card_type
 
+    def get_state_string(self) -> str:
+        return f"{self.id.value}+{self.upgrade}+{self.cost},"
+
 
 def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.STRIKE_R:

@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import math
 from typing import List
 
@@ -126,7 +127,7 @@ class HandState:
             if self.relics[RelicId.PEN_NIB] >= 10:
                 self.relics[RelicId.PEN_NIB] -= 10
 
-        if card in self.hand: # because some cards like fiend fire, will destroy themselves before they can follow this route
+        if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
             idx = self.hand.index(card)
             if card.exhausts:
                 self.exhaust_pile.append(card)
@@ -148,6 +149,31 @@ class HandState:
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
                 self.player.inflict_damage(damage, monster.hits)
+
+    def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
+        state_string = self.player.get_state_string()
+        for m in self.monsters:
+            state_string += m.get_state_string()
+
+        #cards
+        state_string += "h"
+        shand = sorted(self.hand, key=lambda c: c.id.value + str(c.upgrade), )
+        for card in shand:
+            state_string += card.get_state_string()
+        state_string += "d"
+        dishand = sorted(self.discard_pile, key=lambda c: c.id.value + str(c.upgrade), )
+        for card in dishand:
+            state_string += card.get_state_string()
+        state_string += "w"
+        drawhand = sorted(self.draw_pile, key=lambda c: c.id.value + str(c.upgrade), )
+        for card in drawhand:
+            state_string += card.get_state_string()
+
+        # relics
+        state_string += "r"
+        for relic in self.relics.keys():
+            state_string += f"{relic.value}.{self.relics[relic]},"
+        return hashlib.sha1(str(state_string).encode()).hexdigest()
 
 
 def is_card_playable(card: Card, player: Player) -> bool:

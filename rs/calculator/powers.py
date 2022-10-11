@@ -1,7 +1,6 @@
 from enum import Enum
 from typing import List
 
-
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
