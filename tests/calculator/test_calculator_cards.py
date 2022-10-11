@@ -62,7 +62,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.CLOTHESLINE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 12)
-        self.see_enemy_has_status(play, PowerId.WEAK, 2)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_heavy_blade(self):
@@ -155,7 +155,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.UPPERCUT)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
-        self.see_enemy_has_status(play, PowerId.WEAK, 1)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, 1)
         self.see_enemy_has_status(play, PowerId.VULNERABLE, 1)
         self.see_player_spent_energy(play, 2)
 
@@ -224,8 +224,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_intimidate(self):
         state = self.given_state(CardId.INTIMIDATE, targets=2)
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.WEAK, amount=1, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.WEAK, amount=1, enemy_index=1)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=1, enemy_index=0)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=1, enemy_index=1)
         self.see_player_spent_energy(play, 0)
         self.see_player_exhaust_count(play, 1)
 
@@ -259,8 +259,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_shockwave(self):
         state = self.given_state(CardId.SHOCKWAVE, targets=2)
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.WEAK, amount=3, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.WEAK, amount=3, enemy_index=1)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=3, enemy_index=0)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=3, enemy_index=1)
         self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=0)
         self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
         self.see_player_spent_energy(play, 2)

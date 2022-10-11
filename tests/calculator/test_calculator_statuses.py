@@ -69,12 +69,12 @@ class CalculatorCardsTest(CalculatorTestFixture):
         pass
 
     def test_weak_when_attacking(self):
-        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.WEAK: 1})
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.WEAKENED: 1})
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 4)
 
     def test_weak_with_multi_attack_when_attacking(self):
-        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.WEAK: 1})
+        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.WEAKENED: 1})
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 6)
 
@@ -126,7 +126,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
         self.see_enemy_has_status(play, PowerId.VULNERABLE, 1)
-        self.see_enemy_has_status(play, PowerId.WEAK, 0)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, 0)
         self.see_enemy_has_status(play, PowerId.ARTIFACT, 0)
 
     def test_artifact_multiple_stacks(self):
@@ -135,7 +135,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
         self.see_enemy_has_status(play, PowerId.VULNERABLE, 0)
-        self.see_enemy_has_status(play, PowerId.WEAK, 0)
+        self.see_enemy_has_status(play, PowerId.WEAKENED, 0)
         self.see_enemy_has_status(play, PowerId.ARTIFACT, 1)
 
     def test_plated_armor_adds_block(self):

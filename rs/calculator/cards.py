@@ -4,6 +4,7 @@ from rs.game.card import CardType
 
 
 class CardId(Enum):
+    FAKE = 'fake'  # temp fake card for all the ones we don't know yet in game. Basically, treat like a wound.
     ANGER = 'anger'
     BASH = 'bash'
     BLOODLETTING = 'bloodletting'

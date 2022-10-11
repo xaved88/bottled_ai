@@ -1,7 +1,7 @@
 from typing import List
 
 from rs.game.screen_type import ScreenType
-from rs.helper.logger import log_run_results
+from rs.helper.logger import log_run_results, log_missing_calculator_enums_to_run
 from rs.machine.command import Command
 from rs.machine.state import GameState
 
@@ -13,5 +13,6 @@ class DefaultGameOverHandler():
                and (state.has_command(Command.CONFIRM) or state.has_command(Command.PROCEED))
 
     def handle(self, state: GameState, elites: List[str], bosses: List[str]) -> List[str]:
+        log_missing_calculator_enums_to_run()
         log_run_results(state, elites, bosses)
         return ["proceed"]

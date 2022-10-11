@@ -5,6 +5,7 @@ from typing import List, Type
 from definitions import ROOT_DIR
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
+from test_helpers.resources import load_resource_state
 
 
 class BaseTestHandlerFixture(unittest.TestCase):
@@ -12,11 +13,7 @@ class BaseTestHandlerFixture(unittest.TestCase):
     handler: Type[Handler]  # should be overridden by children - the expected handler to respond to this state.
 
     def execute_handler_tests(self, state_path: str, expected: List[str] = None):
-        f = open(f"{ROOT_DIR}/tests/res/{state_path}", "r")
-        state = f.read()
-        f.close()
-        state = GameState(json.loads(state))
-
+        state = load_resource_state(state_path)
         actual = None
         for h in self.ai_handlers:
             if h.can_handle(state):

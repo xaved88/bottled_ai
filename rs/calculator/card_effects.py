@@ -52,7 +52,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         return [CardEffects(damage=8 if not card.upgrade else 11, hits=1, target=TargetType.ALL_MONSTERS)]
     if card.id == CardId.CLOTHESLINE:
         return [CardEffects(damage=12 if not card.upgrade else 14, hits=1, target=TargetType.MONSTER,
-                            applies_powers={PowerId.WEAK: 2} if not card.upgrade else {PowerId.WEAK: 3})]
+                            applies_powers={PowerId.WEAKENED: 2} if not card.upgrade else {PowerId.WEAKENED: 3})]
     if card.id == CardId.HEAVY_BLADE:
         str_bonus = player_powers.get(PowerId.STRENGTH, 0)
         damage = 12 + (str_bonus * 2 if not card.upgrade else str_bonus * 4)
@@ -81,8 +81,8 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
     if card.id == CardId.CARNAGE:
         return [CardEffects(damage=20 if not card.upgrade else 28, hits=1, target=TargetType.MONSTER)]
     if card.id == CardId.UPPERCUT:
-        powers = {PowerId.WEAK: 1, PowerId.VULNERABLE: 1} if not card.upgrade \
-            else {PowerId.WEAK: 2, PowerId.VULNERABLE: 2}
+        powers = {PowerId.WEAKENED: 1, PowerId.VULNERABLE: 1} if not card.upgrade \
+            else {PowerId.WEAKENED: 2, PowerId.VULNERABLE: 2}
         return [CardEffects(damage=13, hits=1, target=TargetType.MONSTER, applies_powers=powers)]
     if card.id == CardId.DISARM:
         return [CardEffects(target=TargetType.MONSTER,
@@ -104,7 +104,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 3})]
     if card.id == CardId.INTIMIDATE:
         return [CardEffects(target=TargetType.ALL_MONSTERS,
-                            applies_powers={PowerId.WEAK: 1 if not card.upgrade else 2})]
+                            applies_powers={PowerId.WEAKENED: 1 if not card.upgrade else 2})]
     if card.id == CardId.PUMMEL:
         return [CardEffects(damage=2, hits=4 if not card.upgrade else 5, target=TargetType.MONSTER)]
     if card.id == CardId.SEEING_RED:
@@ -112,7 +112,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
     if card.id == CardId.SHOCKWAVE:
         amount = 3 if not card.upgrade else 5
         return [CardEffects(target=TargetType.ALL_MONSTERS,
-                            applies_powers={PowerId.WEAK: amount, PowerId.VULNERABLE: amount})]
+                            applies_powers={PowerId.WEAKENED: amount, PowerId.VULNERABLE: amount})]
     if card.id == CardId.BLUDGEON:
         return [CardEffects(target=TargetType.MONSTER, damage=32 if not card.upgrade else 42, hits=1)]
     if card.id == CardId.FEED:

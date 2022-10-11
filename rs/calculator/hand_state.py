@@ -64,7 +64,7 @@ class HandState:
             for effect in effects:
                 effect.damage *= 2
 
-        player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAK) else 0.75
+        player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
         player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
         monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
 
@@ -144,7 +144,7 @@ class HandState:
         # apply enemy damage
         for monster in self.monsters:
             if monster.hits:
-                monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAK) else 0.75
+                monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
                 self.player.inflict_damage(damage, monster.hits)

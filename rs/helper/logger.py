@@ -10,16 +10,25 @@ from rs.machine.state import GameState
 
 current_run_log_file: str = ''
 current_run_log_count: int = 0
+current_run_calculator_missing_relics: set[str] = set()
+current_run_calculator_missing_powers: set[str] = set()
+current_run_calculator_missing_cards: set[str] = set()
 
 
 def init_run_logging(seed: str):
     dt = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     global current_run_log_file
     global current_run_log_count
+    global current_run_calculator_missing_relics
+    global current_run_calculator_missing_powers
+    global current_run_calculator_missing_cards
     current_run_log_count = 0
     current_run_log_file = "runs/" + dt + "--" + seed
     with open(ROOT_DIR + "/logs/" + current_run_log_file + ".log", 'x') as file:
         file.close()
+    current_run_calculator_missing_relics = set()
+    current_run_calculator_missing_powers = set()
+    current_run_calculator_missing_cards = set()
 
 
 def log_to_run(message: str):
@@ -32,6 +41,30 @@ def log_to_run(message: str):
         log("Dying due to this seeming to be stuck", current_run_log_file)
         raise Exception("Dying due to this seeming to be stuck...")
     log(message, current_run_log_file)
+
+
+def log_calculator_missing_relic(relic_id: str):
+    global current_run_calculator_missing_relics
+    current_run_calculator_missing_relics.add(relic_id)
+
+
+def log_calculator_missing_card(card_id: str):
+    global current_run_calculator_missing_cards
+    current_run_calculator_missing_cards.add(card_id)
+
+
+def log_calculator_missing_power(power_id: str):
+    global current_run_calculator_missing_powers
+    current_run_calculator_missing_powers.add(power_id)
+
+
+def log_missing_calculator_enums_to_run():
+    global current_run_calculator_missing_relics
+    global current_run_calculator_missing_powers
+    global current_run_calculator_missing_cards
+    log_to_run(f"Missing relic ids:{','.join(current_run_calculator_missing_relics)}")
+    log_to_run(f"Missing power ids:{','.join(current_run_calculator_missing_powers)}")
+    log_to_run(f"Missing card ids:{','.join(current_run_calculator_missing_cards)}")
 
 
 def log_run_results(state: GameState, elites: List[str], bosses: List[str]):
