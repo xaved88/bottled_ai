@@ -49,3 +49,9 @@ To debug, check the output in the ModTheSpire console, or the `communication_mod
   - `python -m coverage report`
   - `python -m coverage html`
 - We don't know if we trust them yet, but yeah
+
+### Analyzing
+You can run `analyze.py` to do analysis on recent runs. Simply supply a list of seeds to the variable at the top.
+
+It can be used for just seeing how a session went, but it will naturally get the last two instances of a seed and compare them. 
+So, it's made for doing a set of runs, changing the logic and rerunning them, then comparing performance results.
