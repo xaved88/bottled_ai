@@ -142,9 +142,9 @@ normal = okay
 - 4 rage
 - 4 metallicize
 - 4 intangible
+- 4 thorns
 - 3 buffer
 - 3 regen
-- 3 thorns
 - 3 flame barrier
 - 3 combust
 - 3 double tap / duplication
@@ -161,6 +161,7 @@ normal = okay
 
 - 4 angry
 - 4 sharp hide (guardian)
+- 4 flight
 - 3 mode shift (guardian)
 - 3 explosive
 - 3 enrage

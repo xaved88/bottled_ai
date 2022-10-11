@@ -17,6 +17,7 @@ from rs.ai.requested_strike.handlers.potions_handler import PotionsBossHandler, 
 from rs.ai.requested_strike.handlers.purge_handler import PurgeHandler
 from rs.ai.requested_strike.handlers.shop_entrance_handler import ShopEntranceHandler
 from rs.ai.requested_strike.handlers.shop_purchase_handler import ShopPurchaseHandler
+from rs.ai.requested_strike.handlers.smart_battle_handler import SmartBattleHandler
 from rs.ai.requested_strike.handlers.smart_path_handler import SmartPathHandler
 from rs.ai.requested_strike.handlers.transform_handler import TransformHandler
 from rs.ai.requested_strike.handlers.upgrade_handler import UpgradeHandler
@@ -38,6 +39,9 @@ requested_strike_custom_battle_handlers: List[Handler] = [
 REQUESTED_STRIKE: List[Handler] = requested_strike_custom_battle_handlers + [
     # Some edge cases
     AstrolabeHandler(),
+
+    # Temp for testing
+    #SmartBattleHandler(),
 
     # General Stuff
     BossRelicHandler(),

@@ -138,12 +138,12 @@ class HandState:
         # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
 
-        # decrement buffs that should be counted down
+        # todo - decrement buffs that should be counted down?
         # increment relics that should be counted up
 
         # apply enemy damage
         for monster in self.monsters:
-            if monster.hits:
+            if monster.current_hp > 0 and monster.hits:
                 monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)

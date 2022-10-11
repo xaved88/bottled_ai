@@ -14,7 +14,6 @@ class PlayPath:
 
 
 def get_paths(path: PlayPath) -> List[PlayPath]:
-    # todo -> some sort of state.resolve/end turn thing. all the counters need to decrease, poison damage, take damage from monsters, etc.
     possibilities: List[PlayPath] = [path]
     for play in path.state.get_plays():
         new_state: HandState = copy.deepcopy(path.state)
