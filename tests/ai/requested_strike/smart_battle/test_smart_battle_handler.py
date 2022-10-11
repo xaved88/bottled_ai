@@ -21,6 +21,5 @@ class BattleHandlerTestCase(RsTestHandlerFixture):
         start = time.perf_counter()
         self.execute_handler_tests('battles/smart_battle/smart_battle_complex_case.json', ['play 1'])
         end = time.perf_counter()
-        if end > start + 20:
+        if end > start + 40:
             self.fail("Process took too long!")
-
