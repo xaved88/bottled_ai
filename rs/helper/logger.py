@@ -26,6 +26,7 @@ def init_run_logging(seed: str):
     current_run_log_file = "runs/" + dt + "--" + seed
     with open(ROOT_DIR + "/logs/" + current_run_log_file + ".log", 'x') as file:
         file.close()
+    log("Seed: " + seed, "calculator_missing_enums")
     current_run_calculator_missing_relics = set()
     current_run_calculator_missing_powers = set()
     current_run_calculator_missing_cards = set()
@@ -62,9 +63,9 @@ def log_missing_calculator_enums_to_run():
     global current_run_calculator_missing_relics
     global current_run_calculator_missing_powers
     global current_run_calculator_missing_cards
-    log_to_run(f"Missing relic ids:{','.join(current_run_calculator_missing_relics)}")
-    log_to_run(f"Missing power ids:{','.join(current_run_calculator_missing_powers)}")
-    log_to_run(f"Missing card ids:{','.join(current_run_calculator_missing_cards)}")
+    log(f"Missing relic ids:{','.join(current_run_calculator_missing_relics)}", "calculator_missing_enums")
+    log(f"Missing power ids:{','.join(current_run_calculator_missing_powers)}", "calculator_missing_enums")
+    log(f"Missing card ids:{','.join(current_run_calculator_missing_cards)}", "calculator_missing_enums")
 
 
 def log_run_results(state: GameState, elites: List[str], bosses: List[str]):
