@@ -1,5 +1,4 @@
 import copy
-import hashlib
 import math
 from typing import List
 
@@ -173,7 +172,7 @@ class HandState:
         state_string += "r"
         for relic in self.relics.keys():
             state_string += f"{relic.value}.{self.relics[relic]},"
-        return hashlib.sha1(str(state_string).encode()).hexdigest()
+        return state_string
 
 
 def is_card_playable(card: Card, player: Player) -> bool:
