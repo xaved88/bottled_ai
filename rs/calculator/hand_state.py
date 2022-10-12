@@ -1,9 +1,9 @@
-import copy
 import math
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
 from rs.calculator.cards import Card
+from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Target, Player, Monster
@@ -103,7 +103,7 @@ class HandState:
                     self.monsters[target_index].add_powers(effect.applies_powers)
                 elif effect.target == TargetType.ALL_MONSTERS:
                     for target in self.monsters:
-                        target.add_powers(copy.deepcopy(effect.applies_powers))
+                        target.add_powers(pickle_deepcopy(effect.applies_powers))
             # energy gain
             self.player.energy += effect.energy_gain
 
@@ -154,7 +154,7 @@ class HandState:
         for m in self.monsters:
             state_string += m.get_state_string()
 
-        #cards
+        # cards
         state_string += "h"
         shand = sorted(self.hand, key=lambda c: c.id.value + str(c.upgrade), )
         for card in shand:

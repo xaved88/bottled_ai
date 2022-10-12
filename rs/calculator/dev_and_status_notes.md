@@ -103,7 +103,7 @@ normal = okay
 - 4 tori
 - 4 fossilized helix
 - 4 tungsten rod
-- 3 the boot
+- 4 the boot
 - 3 gremlin horn
 - 3 shuriken
 - 3 kunai
