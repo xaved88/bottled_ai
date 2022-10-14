@@ -7,6 +7,7 @@ from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
 class BattleHandlerTestCase(RsTestHandlerFixture):
     handler = BattleHandler
 
+    ai_handlers = [BattleHandler()]
     def test_plays_bash(self):
         self.execute_handler_tests('battles/general/battle_should_play_bash.json', ['play 2 0'])
 

@@ -23,6 +23,9 @@ run_seeds = [
     '11252A1T7FIP7',
 ]
 
+latest_runs_title = "Latest Run"
+earlier_runs_title = "Earlier Run"
+
 
 ### BELOW HERE ACTUALL CODE
 
@@ -111,7 +114,7 @@ for seed in run_seeds:
     b = None if seed not in earlier else earlier[seed]
 
     if a:
-        table.field_names = ["Field", "Latest Run", "Earlier Run", "Difference"]
+        table.field_names = ["Field", latest_runs_title, earlier_runs_title, "Difference"]
         ap = a.summarize()
         bp = None if not b else b.summarize()
         for k in ap:
@@ -145,7 +148,7 @@ def formatish(a):
 
 table = PrettyTable()
 table.title = f"Summary of {len(run_seeds)} runs"
-table.field_names = ["Field", "Latest Runs", "Earlier Runs", "Difference"]
+table.field_names = ["Field", latest_runs_title + "s", earlier_runs_title + "s", "Difference"]
 for k in latest_agg:
     if k == "Killed By":
         a = most_common(latest_agg[k])
@@ -155,8 +158,8 @@ for k in latest_agg:
         diff = "-"
         table.add_row([k, a, b, diff])
     else:
-        a = "-" if not latest_agg[k] else statistics.mean(latest_agg[k])
-        b = "-" if not earlier_agg[k] else statistics.mean(earlier_agg[k])
+        a = "-" if not latest_agg[k] else statistics.mean([i for i in latest_agg[k] if not isinstance(i, str)])
+        b = "-" if not earlier_agg[k] else statistics.mean([i for i in earlier_agg[k] if not isinstance(i, str)])
         diff = "-" if a == "-" or b == "-" else a - b
         table.add_row([k, formatish(a), formatish(b), formatish(diff)])
 

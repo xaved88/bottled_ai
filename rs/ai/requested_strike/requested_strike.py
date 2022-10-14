@@ -41,7 +41,7 @@ REQUESTED_STRIKE: List[Handler] = requested_strike_custom_battle_handlers + [
     AstrolabeHandler(),
 
     # Temp for testing
-    #SmartBattleHandler(),
+    SmartBattleHandler(),
 
     # General Stuff
     BossRelicHandler(),
