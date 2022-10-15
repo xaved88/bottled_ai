@@ -1,12 +1,12 @@
-import sys
+from time import sleep
 
-from rs.helper.general import can_handle_screenshots
+from rs.controller.controller_window import ControllerWindow
 
-if can_handle_screenshots():
-    import pyautogui
+window = ControllerWindow()
 
-print(sys.version, sys.path)
-
-if can_handle_screenshots():
-    myScreenshot = pyautogui.screenshot()
-    myScreenshot.save('./tmp.jpg')
+while True:
+    window.run()
+#    sleep(0.5)
+    if window.status.is_aborted:
+        window.close()
+        break

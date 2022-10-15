@@ -2,7 +2,7 @@ import json
 from typing import List, Optional
 
 from rs.api.client import Client
-from rs.helper.controller import await_controller
+from rs.controller.controller_window import ControllerWindow
 from rs.helper.general import can_handle_screenshots
 from rs.helper.logger import init_run_logging, log_to_run
 from rs.helper.seed import get_seed_string
@@ -54,10 +54,18 @@ class Game:
         init_run_logging(state_seed)
         self.__send_command("choose 0")
 
-    def run(self):
+    def run(self, controller: ControllerWindow):
         log_to_run("Starting Run")
         while self.last_state.is_game_running():
-            await_controller()
+            # controller handling
+            if controller:
+                controller.run()
+                if controller.status.is_aborted:
+                    raise Exception("Aborting due to controller")
+                if controller.status.should_pause(self.last_state):
+                    self.__send_silent_command("wait 100")
+                    continue
+
             self.__handle_state_based_logging()
             handled = False
             # Handle Game Over
@@ -87,6 +95,9 @@ class Game:
             log_snapshot(self.last_state.floor(), command)
 
         self.last_state = GameState(json.loads(self.client.send_message(command)))
+
+    def __send_silent_command(self, command: str):
+        self.last_state = GameState(json.loads(self.client.send_message(command, silent=True)))
 
     def __handle_state_based_logging(self):
         monsters = self.last_state.get_monsters()
