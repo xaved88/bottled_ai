@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import List
 
+
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
@@ -10,6 +11,7 @@ class PowerId(Enum):
     ENTANGLED = 'entangled'
     FLAME_BARRIER = 'flame barrier'  # no handling for flame barrier yet. implement with thorns
     FRAIL = 'frail'
+    MINION = 'minion'
     PLATED_ARMOR = 'plated armor'
     STRENGTH = 'strength'
     VIGOR = 'vigor'

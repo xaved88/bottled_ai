@@ -138,6 +138,12 @@ class HandState:
                 self.discard_pile.append(card)
             del self.hand[idx]
 
+        #minion battles -> make sure a non-minion is alive, otherwise kill them all.
+        if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
+            if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
+                for m in self.monsters:
+                    m.current_hp = 0
+
     def end_turn(self):
         # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
