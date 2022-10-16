@@ -25,22 +25,6 @@ def default_path_comparator(best: PathPlayReport, challenger: PathPlayReport) ->
     return False
 
 
-def aggressive_path_comparator(best: PathPlayReport, challenger: PathPlayReport) -> bool:
-    if best.battle_lost != challenger.battle_lost:
-        return not challenger.battle_lost
-    if best.battle_won != challenger.battle_won:
-        return challenger.battle_won
-    if max(9, best.incoming_damage) != max(9, challenger.incoming_damage):
-        return challenger.incoming_damage < best.incoming_damage
-    if best.dead_monsters != challenger.dead_monsters:
-        return challenger.dead_monsters > best.dead_monsters
-    if best.lowest_health_monster != challenger.lowest_health_monster:
-        return challenger.lowest_health_monster < best.lowest_health_monster
-    if best.total_monster_health != challenger.total_monster_health:
-        return challenger.total_monster_health < best.total_monster_health
-    return False
-
-
 def get_best_battle_path(game_state: GameState, comparator: ReportComparator) -> PathPlayReport:
     original_hp = game_state.combat_state()['player']['current_hp']
     hand_state = create_hand_state(game_state)

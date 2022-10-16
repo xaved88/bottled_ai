@@ -7,7 +7,7 @@ from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
-
+#Deprecated - we're consistently using the smart path handler instead
 class PathHandler(Handler):
 
     # maybe configure some preferences here

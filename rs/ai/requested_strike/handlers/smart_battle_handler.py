@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.calculator.executor import get_best_battle_path, default_path_comparator, aggressive_path_comparator
+from rs.calculator.executor import get_best_battle_path, default_path_comparator
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState

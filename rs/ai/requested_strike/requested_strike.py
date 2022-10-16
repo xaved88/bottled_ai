@@ -12,7 +12,7 @@ from rs.ai.requested_strike.handlers.custom_battle.lagavulin_handler import Laga
 from rs.ai.requested_strike.handlers.custom_battle.sentries_handler import SentriesHandler
 from rs.ai.requested_strike.handlers.custom_battle.transient_handler import TransientHandler
 from rs.ai.requested_strike.handlers.event_handler import EventHandler
-from rs.ai.requested_strike.handlers.path_handler import PathHandler
+from rs.ai.requested_strike.handlers.neow_handler import NeowHandler
 from rs.ai.requested_strike.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
 from rs.ai.requested_strike.handlers.purge_handler import PurgeHandler
 from rs.ai.requested_strike.handlers.shop_entrance_handler import ShopEntranceHandler
@@ -46,6 +46,7 @@ REQUESTED_STRIKE: List[Handler] = requested_strike_custom_battle_handlers + [
     # General Stuff
     BossRelicHandler(),
     BattleHandler(),
+    NeowHandler(),
     EventHandler(),
     UpgradeHandler(),
     TransformHandler(),
@@ -53,7 +54,6 @@ REQUESTED_STRIKE: List[Handler] = requested_strike_custom_battle_handlers + [
     CombatRewardHandler(),
     CardRewardHandler(),
     ChestHandler(),
-    #PathHandler(),
     SmartPathHandler(),
     CampfireHandler(),
     ShopEntranceHandler(),
