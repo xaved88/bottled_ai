@@ -16,7 +16,8 @@ class AstrolabeHandler(Handler):
         ]
 
     def can_handle(self, state: GameState) -> bool:
-        return state.game_state()['room_type'] == "TreasureRoomBoss" \
+        return (state.game_state()['room_type'] == "TreasureRoomBoss"
+                or state.game_state()['room_type'] == "NeowRoom") \
                and state.has_command(Command.CHOOSE) \
                and 'screen_state' in state.game_state() \
                and 'num_cards' in state.game_state()['screen_state'] \
