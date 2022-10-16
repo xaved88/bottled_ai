@@ -25,3 +25,7 @@ class BattleHandlerTestCase(RsTestHandlerFixture):
         end = time.perf_counter()
         if end > start + 40:
             self.fail("Process took too long!")
+
+    def test_another_simple_case(self):
+        state = load_resource_state('battles/smart_battle/smart_battle_another_simple.json')
+        self.assertEqual(['play 2 0'], SmartBattleHandler().handle(state))
