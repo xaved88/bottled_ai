@@ -37,17 +37,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_dexterity_adds_to_block(self):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.DEXTERITY: 3})
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 8)
+        self.see_player_has_block(play, 8)
 
     def test_dexterity_when_negative(self):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.DEXTERITY: -3})
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 2)
+        self.see_player_has_block(play, 2)
 
     def test_dexterity_when_block_would_be_below_zero(self):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.DEXTERITY: -13})
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 0)
+        self.see_player_has_block(play, 0)
         self.see_cards_played(play, 1)
 
     def test_vulnerable_when_attacking(self):
@@ -63,10 +63,20 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 14)
 
     def test_vulnerable_when_defending(self):
-        pass
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1})
+        state.monsters[0].damage = 10
+        state.monsters[0].hits = 1
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 15)
 
     def test_vulnerable_with_multi_attack_when_defending(self):
-        pass
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1})
+        state.monsters[0].damage = 7
+        state.monsters[0].hits = 2
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 20)
 
     def test_weak_when_attacking(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.WEAKENED: 1})
@@ -87,7 +97,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_frail(self):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.FRAIL: 1})
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 3)
+        self.see_player_has_block(play, 3)
 
     def test_entangled_no_attacks_played(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.ENTANGLED: 1})
@@ -142,7 +152,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.PLATED_ARMOR: 4})
         play = self.when_calculating_state_play(state)
         play.end_turn()
-        self.see_player_gained_block(play, 4)
+        self.see_player_has_block(play, 4)
 
     def test_plated_armor_gets_reduced_by_damage(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.PLATED_ARMOR: 4})

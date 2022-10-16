@@ -93,7 +93,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER,
                             post_hooks=[dropkick_post_hook])]
     if card.id == CardId.ENTRENCH:
-        return [CardEffects(target=TargetType.SELF, post_hooks=[dropkick_post_hook])]
+        return [CardEffects(target=TargetType.SELF, post_hooks=[entrench_post_hook])]
     if card.id == CardId.FLAME_BARRIER:
         return [CardEffects(target=TargetType.SELF, block=12 if not card.upgrade else 16,
                             applies_powers={PowerId.FLAME_BARRIER: 4 if not card.upgrade else 6})]

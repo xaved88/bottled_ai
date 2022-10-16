@@ -99,11 +99,13 @@ class HandState:
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
                     self.player.add_powers(effect.applies_powers)
-                elif effect.target == TargetType.MONSTER:
-                    self.monsters[target_index].add_powers(effect.applies_powers)
-                elif effect.target == TargetType.ALL_MONSTERS:
-                    for target in self.monsters:
-                        target.add_powers(pickle_deepcopy(effect.applies_powers))
+                else:
+                    targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
+                    for target in targets:
+                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
+                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
+                            target.add_powers({PowerId.WEAKENED: 1})
+
             # energy gain
             self.player.energy += effect.energy_gain
 
@@ -130,6 +132,20 @@ class HandState:
             if self.relics[RelicId.PEN_NIB] >= 10:
                 self.relics[RelicId.PEN_NIB] -= 10
 
+        if RelicId.ORNAMENTAL_FAN in self.relics and card.type == CardType.ATTACK:
+            self.relics[RelicId.ORNAMENTAL_FAN] += 1
+            if self.relics[RelicId.ORNAMENTAL_FAN] >= 3:
+                self.relics[RelicId.ORNAMENTAL_FAN] -= 3
+                self.player.block += 4
+
+        if RelicId.LETTER_OPENER in self.relics and card.type == CardType.SKILL:
+            self.relics[RelicId.LETTER_OPENER] += 1
+            if self.relics[RelicId.LETTER_OPENER] >= 3:
+                self.relics[RelicId.LETTER_OPENER] -= 3
+                for monster in self.monsters:
+                    if monster.current_hp > 0:
+                        monster.inflict_damage(5, 1, vulnerable_modifier=1)
+
         if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
             idx = self.hand.index(card)
             if card.exhausts:
@@ -138,13 +154,16 @@ class HandState:
                 self.discard_pile.append(card)
             del self.hand[idx]
 
-        #minion battles -> make sure a non-minion is alive, otherwise kill them all.
+        # minion battles -> make sure a non-minion is alive, otherwise kill them all.
         if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
             if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
                 for m in self.monsters:
                     m.current_hp = 0
 
     def end_turn(self):
+        if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
+            self.player.block += 6
+
         # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
 
@@ -152,12 +171,13 @@ class HandState:
         # increment relics that should be counted up
 
         # apply enemy damage
+        player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
         for monster in self.monsters:
             if monster.current_hp > 0 and monster.hits:
                 monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
-                self.player.inflict_damage(damage, monster.hits)
+                self.player.inflict_damage(damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
@@ -191,9 +211,9 @@ class HandState:
             else CardId.DRAW_1 if self.player.energy == 0 \
             else CardId.DRAW_0
 
-        amount = min(amount, 11 - len(self.draw_pile)) # can't draw more than 10 cards, will discard the played card tho
+        amount = min(amount,
+                     11 - len(self.draw_pile))  # can't draw more than 10 cards, will discard the played card tho
         self.hand += [get_card(card_type) for i in range(amount)]
-
 
 
 def is_card_playable(card: Card, player: Player) -> bool:

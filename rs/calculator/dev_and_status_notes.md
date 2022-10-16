@@ -11,12 +11,12 @@ Yeah, let's just do 4 different cards for right now, because that will fit best 
 
 ## NEXT FEATURES
 - ~~card draw~~
-- minion handling
+- ~~minion handling~~
 
 ## STRATEGY DECISIONS
 - weak + vulnerable, improve valuing of it
-- prioritizing card draw in the strategy?
-- what else?
+- prioritizing card draw in the strategy
+- prioritize feed / hand of greed over not.
 
 ### KEY:
 
@@ -32,11 +32,11 @@ normal = okay
 
 ## NEXT RELICS
 
-- 4 ornamental fan
-- 4 orichalcum
-- 4 odd mushroom
-- 4 champion belt
-- 4 letter opener
+- ~~ornamental fan~~
+- ~~orichalcum~~
+- ~~odd mushroom~~
+- ~~champion belt~~
+- ~~letter opener~~
 - 4 tori
 - 4 fossilized helix
 - 4 tungsten rod

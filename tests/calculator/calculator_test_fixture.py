@@ -39,7 +39,7 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_player_has_energy(self, play: PlayPath, amount: int):
         self.assertEqual(amount, play.state.player.energy)
 
-    def see_player_gained_block(self, play: PlayPath, amount: int):
+    def see_player_has_block(self, play: PlayPath, amount: int):
         self.assertEqual(amount, play.state.player.block)
 
     def see_player_has_status(self, play: PlayPath, power_id: PowerId, amount: int):

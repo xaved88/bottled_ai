@@ -1,4 +1,5 @@
 import math
+from typing import List
 
 from rs.calculator.powers import PowerId, Powers, DEBUFFS
 
@@ -42,7 +43,9 @@ class Target:
 
         self.current_hp = max(0, self.current_hp)
 
-    def add_powers(self, powers: Powers):
+    # returns a list of powerIds that were applied and not blocked by artifacts
+    def add_powers(self, powers: Powers) -> List[PowerId]:
+        applied_powers = []
         for power in powers:
             if power in DEBUFFS and self.powers.get(PowerId.ARTIFACT):
                 if self.powers[PowerId.ARTIFACT] == 1:
@@ -50,10 +53,12 @@ class Target:
                 else:
                     self.powers[PowerId.ARTIFACT] -= 1
                 continue
+            applied_powers.append(power)
             if power in self.powers:
                 self.powers[power] += powers[power]
             else:
                 self.powers[power] = powers[power]
+        return applied_powers
 
     def get_state_string(self) -> str:
         state: str = f"{self.current_hp},{self.max_hp},{self.block}"

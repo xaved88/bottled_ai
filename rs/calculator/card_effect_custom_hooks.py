@@ -11,6 +11,8 @@ def dropkick_post_hook(state: HandStateInterface, effect: CardEffectsInterface, 
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.VULNERABLE):
             state.player.energy += 1
+            state.draw_cards(1)
+
 
 
 def entrench_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):

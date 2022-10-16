@@ -22,14 +22,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.see_player_gained_block(play, 5)
+        self.see_player_has_block(play, 5)
 
     def test_defend_r_upgraded(self):
         state = self.given_state(CardId.DEFEND_R, 1)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.see_player_gained_block(play, 8)
+        self.see_player_has_block(play, 8)
 
     def test_bash(self):
         state = self.given_state(CardId.BASH)
@@ -87,7 +87,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.IRON_WAVE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 5)
-        self.see_player_gained_block(play, 5)
+        self.see_player_has_block(play, 5)
         self.see_player_spent_energy(play, 1)
 
     def test_perfected_strike(self):
@@ -117,7 +117,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_shrug_it_off(self):
         state = self.given_state(CardId.SHRUG_IT_OFF)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 8)
+        self.see_player_has_block(play, 8)
         self.see_player_spent_energy(play, 1)
         self.see_player_hand_count(play, 1)
         self.see_player_drew_cards(play, 1, 3)
@@ -181,6 +181,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 5)
         self.see_player_spent_energy(play, 1)
         self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 0)
+        self.see_player_drew_cards(play, 0, 3)
 
     def test_dropkick_vs_vulnerable(self):
         state = self.given_state(CardId.DROPKICK)
@@ -189,25 +191,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 7)
         self.see_player_spent_energy(play, 0)
         self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1, 3)
 
     def test_entrench(self):
         state = self.given_state(CardId.ENTRENCH)
         state.player.block = 32
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 32)
+        self.see_player_has_block(play, 64)
         self.see_player_spent_energy(play, 2)
 
     def test_flame_barrier(self):
         state = self.given_state(CardId.FLAME_BARRIER)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 12)
+        self.see_player_has_block(play, 12)
         self.see_player_has_status(play, PowerId.FLAME_BARRIER, 4)
         self.see_player_spent_energy(play, 2)
 
     def test_ghostly_armor(self):
         state = self.given_state(CardId.GHOSTLY_ARMOR)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 10)
+        self.see_player_has_block(play, 10)
         self.see_player_spent_energy(play, 1)
 
     def test_hemokinesis(self):
@@ -331,7 +335,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_impervious(self):
         state = self.given_state(CardId.IMPERVIOUS)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 30)
+        self.see_player_has_block(play, 30)
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
 
