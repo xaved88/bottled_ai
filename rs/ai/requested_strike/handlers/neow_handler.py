@@ -17,4 +17,4 @@ class NeowHandler(Handler):
         if "leave" in state.get_choice_list():
             return ["choose 0"]
         # choose 3 here for relic swap
-        return ["choose 0"]
+        return ["choose 0", "wait 30"]
