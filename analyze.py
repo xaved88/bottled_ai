@@ -27,7 +27,7 @@ latest_runs_title = "Latest Run"
 earlier_runs_title = "Earlier Run"
 
 
-### BELOW HERE ACTUALL CODE
+### BELOW HERE ACTUAL CODE
 
 
 class RunSummary:
