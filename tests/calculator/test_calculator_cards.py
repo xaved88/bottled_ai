@@ -111,12 +111,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 9)
         self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1, 3)
 
     def test_shrug_it_off(self):
         state = self.given_state(CardId.SHRUG_IT_OFF)
         play = self.when_calculating_state_play(state)
         self.see_player_gained_block(play, 8)
         self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1, 3)
 
     def test_thunderclap(self):
         state = self.given_state(CardId.THUNDERCLAP, targets=2)
@@ -358,10 +362,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_offering(self):
         state = self.given_state(CardId.OFFERING)
+        state.player.energy = 0
         play = self.when_calculating_state_play(state)
-        self.see_player_spent_energy(play, -2)
+        self.see_player_has_energy(play, 2)
         self.see_player_lost_hp(play, 6)
         self.see_player_exhaust_count(play, 1)
+        self.see_player_hand_count(play, 3)
+        self.see_player_drew_cards(play, 3, 2)
 
     def test_jax(self):
         state = self.given_state(CardId.JAX)

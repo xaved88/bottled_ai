@@ -2,7 +2,7 @@ import math
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
-from rs.calculator.cards import Card
+from rs.calculator.cards import Card, CardId, get_card
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
@@ -107,6 +107,10 @@ class HandState:
             # energy gain
             self.player.energy += effect.energy_gain
 
+            # card draw
+            if effect.draw:
+                self.draw_cards(effect.draw)
+
             # custom post hooks
             for hook in effect.post_hooks:
                 hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
@@ -173,6 +177,17 @@ class HandState:
         for relic in self.relics.keys():
             state_string += f"{relic.value}.{self.relics[relic]},"
         return state_string
+
+    def draw_cards(self, amount: int):
+        # determine which type of card to draw based on energy
+        card_type = CardId.DRAW_3P if self.player.energy >= 3 \
+            else CardId.DRAW_2 if self.player.energy == 2 \
+            else CardId.DRAW_1 if self.player.energy == 0 \
+            else CardId.DRAW_0
+
+        amount = min(amount, 11 - len(self.draw_pile)) # can't draw more than 10 cards, will discard the played card tho
+        self.hand += [get_card(card_type) for i in range(amount)]
+
 
 
 def is_card_playable(card: Card, player: Player) -> bool:

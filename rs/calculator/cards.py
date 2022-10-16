@@ -4,7 +4,14 @@ from rs.game.card import CardType
 
 
 class CardId(Enum):
+    # PLACEHOLDER/LOGIC CARDS
     FAKE = 'fake'  # temp fake card for all the ones we don't know yet in game. Basically, treat like a wound.
+    DRAW_0 = 'draw 0'  # a card drawn, with 0 energy to play it when drawn.
+    DRAW_1 = 'draw 1'  # a card drawn, with 1 energy to play it when drawn.
+    DRAW_2 = 'draw 2'  # a card drawn, with 2 energy to play it when drawn.
+    DRAW_3P = 'draw 3p'  # a card drawn, with 3 or more energy to play it when drawn.
+
+    # REAL CARDS
     ANGER = 'anger'
     BASH = 'bash'
     BLOODLETTING = 'bloodletting'
@@ -140,4 +147,12 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.JAX:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DRAW_3P:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.DRAW_2:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.DRAW_1:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.DRAW_0:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
     # TODO -> logging or throw error or something if it gets here?

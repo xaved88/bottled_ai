@@ -16,7 +16,7 @@ def make_card(card: GameCard) -> Card:
     card_id = card.id.lower()
     if card_id not in possible_card_ids:
         log_calculator_missing_card(card_id)
-        return Card(CardId.FAKE, 0, -1, False, CardType.STATUS)
+        return Card(CardId.FAKE, 0, -1, False, CardType.FAKE)
     return Card(
         card_id=CardId(card.id.lower()),
         # todo - some sort of logging here for ones we don't know. treat as wounds maybe? What about battle trance?

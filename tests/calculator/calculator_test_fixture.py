@@ -36,6 +36,9 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_player_spent_energy(self, play: PlayPath, amount: int):
         self.assertEqual(amount, 5 - play.state.player.energy)
 
+    def see_player_has_energy(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, play.state.player.energy)
+
     def see_player_gained_block(self, play: PlayPath, amount: int):
         self.assertEqual(amount, play.state.player.block)
 
@@ -53,6 +56,14 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def see_player_hand_count(self, play: PlayPath, amount: int):
         self.assertEqual(amount, len(play.state.hand))
+
+    def see_player_drew_cards(self, play: PlayPath, amount: int, energy: int):
+        card_id = CardId.DRAW_3P if energy >= 3 \
+            else CardId.DRAW_2 if energy == 2 \
+            else CardId.DRAW_1 if energy == 0 \
+            else CardId.DRAW_0
+        actual = len([1 for c in play.state.hand if c.id == card_id])
+        self.assertEqual(amount, actual)
 
     def see_player_does_not_have_power(self, play: PlayPath, power_id: PowerId):
         self.assertEqual(None, play.state.player.powers.get(power_id))

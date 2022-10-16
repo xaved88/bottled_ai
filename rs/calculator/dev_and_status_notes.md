@@ -1,11 +1,22 @@
 This is where we'll keep the status of the calculator organized for a bit, what next steps are, total prio lists, etc.
 
-### We are disregarding:
 
-- card draw
-- ethereal
-- _anything_ random
-- X cards
+So the concept for card draw...
+We'll create a new "card_draw" card. Would be great if we could give it an internal stat for
+"How much energy it had left" (though we could also just create 4 new cards for 3+, 2, 1, 0)...
+Card draw will give you those into your hand.
+
+Yeah, let's just do 4 different cards for right now, because that will fit best in it.
+
+
+## NEXT FEATURES
+- ~~card draw~~
+- minion handling
+
+## STRATEGY DECISIONS
+- weak + vulnerable, improve valuing of it
+- prioritizing card draw in the strategy?
+- what else?
 
 ### KEY:
 
@@ -16,6 +27,8 @@ normal = okay
 **bold** = we need to make adjustments for
 
 ~~strikethrough~~ = done
+
+
 
 ## NEXT RELICS
 
@@ -243,3 +256,6 @@ normal = okay
 - Consider extracting and decoupling the card type from the game to something within the calculator domain
 - Blood for blood doesn't update cost when you lose hp from your own cards
 - For performance gains → consider only looking 3 or 4 card plays into the future, instead of the whole hand?
+- ethereal
+- _anything_ random
+- X cards

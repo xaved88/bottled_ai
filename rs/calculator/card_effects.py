@@ -23,6 +23,7 @@ class CardEffects:
             target: TargetType = TargetType.SELF,
             applies_powers=None,
             energy_gain: int = 0,
+            draw: int = 0,
             pre_hooks: List[CardEffectCustomHook] = None,
             post_hooks: List[CardEffectCustomHook] = None,
     ):
@@ -33,6 +34,7 @@ class CardEffects:
         self.target: TargetType = target
         self.applies_powers: Powers = dict() if applies_powers is None else applies_powers
         self.energy_gain: int = energy_gain
+        self.draw: int = draw
         self.pre_hooks: List[CardEffectCustomHook] = [] if pre_hooks is None else pre_hooks
         self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
 
@@ -65,9 +67,9 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         damage = 6 + strike_amount * (2 if not card.upgrade else 3)
         return [CardEffects(damage=damage, hits=1, target=TargetType.MONSTER)]
     if card.id == CardId.POMMEL_STRIKE:
-        return [CardEffects(damage=9 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER)]
+        return [CardEffects(damage=9 if not card.upgrade else 10, hits=1, draw=1, target=TargetType.MONSTER)]
     if card.id == CardId.SHRUG_IT_OFF:
-        return [CardEffects(block=8 if not card.upgrade else 11, target=TargetType.SELF)]
+        return [CardEffects(block=8 if not card.upgrade else 11, draw=1, target=TargetType.SELF)]
     if card.id == CardId.THUNDERCLAP:
         return [CardEffects(damage=4 if not card.upgrade else 6, hits=1, target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.VULNERABLE: 1})]
@@ -133,7 +135,8 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
     if card.id == CardId.LIMIT_BREAK:
         return [CardEffects(target=TargetType.SELF, post_hooks=[limit_break_post_hook])]
     if card.id == CardId.OFFERING:
-        return [CardEffects(target=TargetType.SELF, damage=6, hits=1, blockable=False, energy_gain=2)]
+        return [CardEffects(target=TargetType.SELF, damage=6, hits=1, blockable=False,
+                            draw=3 if not card.upgrade else 5, energy_gain=2)]
     if card.id == CardId.JAX:
         return [CardEffects(target=TargetType.SELF, damage=3, hits=1, blockable=False,
                             post_hooks=[jax_post_hook if not card.upgrade else jax_upgraded_post_hook])]
