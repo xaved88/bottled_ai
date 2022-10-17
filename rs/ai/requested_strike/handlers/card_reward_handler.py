@@ -11,12 +11,13 @@ class CardRewardHandler(Handler):
     def __init__(self):
         self.desired_cards: dict[str, int] = {
             'perfected strike': 5,
-            'offering': 2,
+            'offering': 1,
             'battle trance': 2,
             'reaper': 2,
             'twin strike': 2,
             'shockwave': 2,
             'thunderclap': 2,
+            'dropkick': 2,
             'pommel strike': 2,
             'shrug it off': 2,
             'impervious': 2,
@@ -39,4 +40,5 @@ class CardRewardHandler(Handler):
             if desired_card in deck_card_list and deck_card_list[desired_card] >= self.desired_cards[desired_card]:
                 continue
             return ["wait 30", "choose " + str(choice_list.index(desired_card)), "wait 30"]
+
         return ["skip", "proceed"]
