@@ -59,6 +59,13 @@ def create_hand_state(game_state: GameState) -> HandState:
         return None
 
     cs = game_state.combat_state()
+
+    # get relics
+    relics: Relics = {
+        make_relic_id(relic['name'].lower()): (relic['counter'])
+        for relic in game_state.game_state()['relics']
+    }
+
     # get player status
     player = Player(
         current_hp=cs['player']['current_hp'],
@@ -66,6 +73,7 @@ def create_hand_state(game_state: GameState) -> HandState:
         powers=make_powers(cs['player']['powers']),
         block=cs['player']['block'],
         energy=cs['player']['energy'],
+        relics=relics,
     )
 
     # get enemies
@@ -80,12 +88,6 @@ def create_hand_state(game_state: GameState) -> HandState:
         )
         for monster in cs['monsters']
     ]
-
-    # get relics
-    relics: Relics = {
-        make_relic_id(relic['name'].lower()): (relic['counter'])
-        for relic in game_state.game_state()['relics']
-    }
 
     # get cards
     hand = [make_card(card) for card in game_state.hand.cards]

@@ -17,6 +17,7 @@ Yeah, let's just do 4 different cards for right now, because that will fit best 
 - weak + vulnerable, improve valuing of it
 - prioritizing card draw in the strategy
 - prioritize feed / hand of greed over not.
+- prioritize at the very bottom, keeping energy (to prevent defend defend defend kill kind of things)
 
 ### KEY:
 
@@ -37,10 +38,10 @@ normal = okay
 - ~~odd mushroom~~
 - ~~champion belt~~
 - ~~letter opener~~
-- 4 tori
-- 4 fossilized helix
-- 4 tungsten rod
-- 4 the boot
+- ~~tori~~
+- ~~fossilized helix~~
+- ~~tungsten rod~~
+- ~~the boot~~
 
 
 ## NEXT POWERS
@@ -60,6 +61,7 @@ normal = okay
 - wild strike
 - battle trance
 - rage
+- rampage
 - metallicize
 - reckless charge
 - power through
@@ -197,7 +199,6 @@ normal = okay
 - feel no pain
 - fire breathing
 - infernal blade
-- rampage
 - rupture
 - searing blow
 - second wind
@@ -259,3 +260,4 @@ normal = okay
 - ethereal
 - _anything_ random
 - X cards
+- self damage shouldn't break plate armor, need to apply the attack types correctly for inflicting damage

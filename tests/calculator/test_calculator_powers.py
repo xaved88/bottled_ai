@@ -163,3 +163,30 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_lost_hp(play, 6)
         self.see_player_has_status(play, PowerId.PLATED_ARMOR, 2)
+
+    def test_buffer_blocks_incoming_damage(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.BUFFER: 1})
+        state.monsters[0].damage = 999
+        state.monsters[0].hits = 1
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 0)
+        self.see_player_does_not_have_power(play, PowerId.BUFFER)
+
+    def test_buffer_consumed_by_self_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, player_powers={PowerId.BUFFER: 1})
+        state.monsters[0].damage = 8
+        state.monsters[0].hits = 1
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 8)
+        self.see_player_does_not_have_power(play, PowerId.BUFFER)
+
+    def test_multiple_buffer_stacks(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.BUFFER: 3})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 10
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 7)
+        self.see_player_does_not_have_power(play, PowerId.BUFFER)

@@ -142,6 +142,83 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, amount=5, enemy_index=1)
         self.see_relic_value(play, RelicId.LETTER_OPENER, 0)
 
+    def test_torii_reduces_small_damage(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.TORII: 1})
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 13
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 13)
+
+    def test_torii_reduces_self_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, relics={RelicId.TORII: 1})
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 1)
+
+    def test_torii_does_not_reduce_one_damage(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.TORII: 1})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 13
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 13)
+
+    def test_torii_does_not_reduce_large_damage(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.TORII: 1})
+        state.monsters[0].damage = 6
+        state.monsters[0].hits = 2
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 12)
+
+    def test_tungsten_rod_reduces_damage(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.TUNGSTEN_ROD: 1})
+        state.monsters[0].damage = 6
+        state.monsters[0].hits = 2
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 10)
+
+    def test_tungsten_rod_reduces_self_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, relics={RelicId.TUNGSTEN_ROD: 1})
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 2)
+
+    def test_tungsten_rod_and_torii_vs_five_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, relics={RelicId.TUNGSTEN_ROD: 1, RelicId.TORII: 1})
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 8
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 0)
+
+    def test_tungsten_rod_and_torii_vs_six_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, relics={RelicId.TUNGSTEN_ROD: 1, RelicId.TORII: 1})
+        state.monsters[0].damage = 6
+        state.monsters[0].hits = 8
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 40)
+
+    def test_the_boot_deals_extra_damage(self):
+        state = self.given_state(CardId.PUMMEL, relics={RelicId.THE_BOOT: 1})
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 20)
+
+    def test_the_boot_doesnt_deal_extra_damage_through_block(self):
+        state = self.given_state(CardId.PUMMEL, relics={RelicId.THE_BOOT: 1})
+        state.monsters[0].block = 8
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_the_boots_extra_damage_is_calculated_for_each_hit(self):
+        state = self.given_state(CardId.PUMMEL, relics={RelicId.THE_BOOT: 1})
+        state.monsters[0].block = 3
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 15)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))

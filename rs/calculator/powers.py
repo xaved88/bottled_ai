@@ -6,6 +6,7 @@ class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
     ARTIFACT = 'artifact'
+    BUFFER = 'buffer'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'
     ENTANGLED = 'entangled'

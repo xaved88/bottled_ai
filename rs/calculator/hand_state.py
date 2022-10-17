@@ -63,6 +63,7 @@ class HandState:
         if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
             for effect in effects:
                 effect.damage *= 2
+        player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
 
         player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
         player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
@@ -84,10 +85,12 @@ class HandState:
                     damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
                     if effect.target == TargetType.MONSTER:
                         self.monsters[target_index].inflict_damage(damage, effect.hits, effect.blockable,
-                                                                   vulnerable_modifier=monster_vulnerable_modifier)
+                                                                   vulnerable_modifier=monster_vulnerable_modifier,
+                                                                   min_hp_damage=player_min_attack_hp_damage)
                     elif effect.target == TargetType.ALL_MONSTERS:
                         for target in self.monsters:
-                            target.inflict_damage(damage, effect.hits, effect.blockable, monster_vulnerable_modifier)
+                            target.inflict_damage(damage, effect.hits, effect.blockable, monster_vulnerable_modifier,
+                                                  min_hp_damage=player_min_attack_hp_damage)
 
             # block (always applies to player right?)
             if effect.block:
