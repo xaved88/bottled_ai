@@ -41,4 +41,7 @@ class CardRewardHandler(Handler):
                 continue
             return ["wait 30", "choose " + str(choice_list.index(desired_card)), "wait 30"]
 
+        if 'bowl' in choice_list:
+            return ["wait 30", "choose bowl", "proceed"]
+
         return ["skip", "proceed"]
