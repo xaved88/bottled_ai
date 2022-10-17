@@ -21,8 +21,8 @@ class BossRelicHandler(Handler):
             "mark of pain",  ## removed if already have another energy relic
             "busted crown",  ## removed if already have another energy relic or it's act 1
             "coffee dripper",  ## removed if already have another energy relic or it's act 1
-            "runic cube",
             "slaver\u0027s collar",
+            "runic cube",
             "runic pyramid",
             "black blood",
             "empty cage",
