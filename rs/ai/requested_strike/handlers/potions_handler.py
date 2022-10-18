@@ -5,10 +5,10 @@ from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
-
+# see also combat_reward_handler.py for discarding potions
 dont_play_potions = [
-    'GamblersBrew',
     'FairyInABottle',
+    'GamblersBrew',
     'SmokeBomb',
     'ElixirPotion',
     'LiquidMemories',
@@ -52,7 +52,7 @@ class PotionsEliteHandler(PotionsBaseHandler):
                and self.get_potions_to_play(state)
 
 
-class PotionsEventFightHandler(PotionsBaseHandler): # Treat most Event Fights like Elites
+class PotionsEventFightHandler(PotionsBaseHandler):  # Treat most Event Fights like Elites
     def __int__(self):
         super().__init__()
 

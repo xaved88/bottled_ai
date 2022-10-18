@@ -308,8 +308,8 @@
         "requires_target": false,
         "can_use": false,
         "can_discard": true,
-        "name": "Elixir",
-        "id": "ElixirPotion"
+        "name": "Flex Potion",
+        "id": "SteroidPotion"
       },
       {
         "requires_target": false,
