@@ -28,13 +28,19 @@ class EventHandler(Handler):
             return ["choose 1", "choose 0"]  # Escape. Maybe we could take it if we have lots of health.
 
         if event_name == "Golden Idol":
-            return ["choose 1", "choose 0"]  # Leave. Wouldn't mind taking it if it's early and we've got the health.
+            if hp_per >= 90:
+                return ["choose 0", "choose 1", "choose 0"]  # Take some damage
+            else:
+                return ["choose 1", "choose 0"]  # Leave.
 
         if event_name == "Hypnotizing Colored Mushrooms":
             return ["choose 0"]  # Fuck 'em up
 
-        # if event_name == "Living Wall":
-        #    return ["choose 2"] # Upgrade Card - needs more logic to not get stuck
+        if event_name == "Living Wall":
+            if len(state.get_choice_list()) == 3:
+                return ["choose 2"]  # Upgrade
+            else:
+                return ["choose 0"]  # Leave after
 
         if event_name == "Scrap Ooze":
             return ["choose 0"]  # Yolo. We'll probably get it after a few tries? If not, we don't deserve to live!!
@@ -188,13 +194,13 @@ class EventHandler(Handler):
             if hp_per >= 60:
                 return ["choose 0"]  # Fuck 'em up!
             else:
-                return ["choose 0", "choose 0"]  # Give up all money and leave.
+                return ["choose 1", "choose 0"]  # Leave
 
         if event_name == "Secret Portal":
             return ["choose 1", "choose 0"]  # Nope - we want the rest of Act 3 to not screw up our stats.
 
         if event_name == "Sensory Stone":
-            return ["choose 0"]  # Ignore
+            return ["choose 0"]  # Ignore, essentially
 
         if event_name == "Tomb of Lord Red Mask":
             if state.has_relic("Red Mask") or state.game_state()['gold'] <= 130:
