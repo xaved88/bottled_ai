@@ -12,7 +12,6 @@ class PurgeHandler(Handler):
         self.preferences: List[str] = [
             'defend',
             'strike',
-            'defend+',
             'strike+',
         ]
 
