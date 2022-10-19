@@ -21,8 +21,8 @@ class EventHandler(Handler):
             return ["choose 1", "choose 0"]  # Max health
 
         # if event_name == "The Cleric":
-        #    return ["choose 1"] # Purge at cost of 7 HP
-        # dunno how to handle this yet, we theoretically might not have money
+        #    return ["choose 0"] # Heal
+        # Add handling for skipping heal if we're fine.
 
         if event_name == "Dead Adventurer":
             return ["choose 1", "choose 0"]  # Escape. Maybe we could take it if we have lots of health.
@@ -88,8 +88,8 @@ class EventHandler(Handler):
         if event_name == "Lab":
             return ["choose 0"]  # Free potions
 
-        # if event_name == "Match and Keep":
-        #   return ["choose 0"]  # Existing logic is fine.
+        if event_name == "Match and Keep":
+            return ["choose 0"]  # Just keep clicking
 
         if event_name == "Ominous Forge":
             return ["choose 1", "choose 0"]  # I love the Warped Tongs relic.
@@ -107,7 +107,7 @@ class EventHandler(Handler):
         #    return ["choose 1", "choose 0"]  # Don't know how to make sure we avoid losing a card. Need to check.
 
         if event_name == "The Woman in Blue":
-            return ["choose 0", "choose 0"]  # Grab 1 potion.
+            return ["choose 0"]  # Grab 1 potion, or if we don't have enough money, leave.
 
         # ACT 2
 
