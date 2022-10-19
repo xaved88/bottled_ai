@@ -8,8 +8,8 @@ from rs.api.client import Client
 from rs.machine.game import Game
 from rs.helper.logger import log, init_log, log_new_run_sequence
 
-take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything
-#if there are run seeds, it will run them. Otherwise, it will use the run amount.
+take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything.
+# If there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
    # '10HTDAVER34YR',
 ]
