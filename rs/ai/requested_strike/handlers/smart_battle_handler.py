@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.calculator.comparator import DefaultSbcComparator
+from rs.ai.requested_strike.comparators.general_comparator import GeneralComparator
 from rs.calculator.executor import get_best_battle_path
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -13,7 +13,7 @@ class SmartBattleHandler(Handler):
         return state.has_command(Command.PLAY) and state.game_state()['room_type'] == "MonsterRoom"
 
     def handle(self, state: GameState) -> List[str]:
-        path = get_best_battle_path(state, DefaultSbcComparator())
+        path = get_best_battle_path(state, GeneralComparator())
 
         if path.plays:
             next_move = path.plays[0]

@@ -2,7 +2,7 @@ from rs.calculator.hand_state import HandState
 from rs.calculator.powers import PowerId
 
 
-class SbcComparator:  #Abstract class, just for signature for the kiddos.
+class SbcComparator:  # Abstract class, just for signature for the kiddos.
     def does_best_remain_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
         return True
 
@@ -30,12 +30,6 @@ class DefaultSbcComparator(SbcComparator):
             return not challenger_values['battle_lost']
         if best_values['battle_won'] != challenger_values['battle_won']:
             return challenger_values['battle_won']
-
-        # if battle won -> maximize max_hp, maximize current_hp, NUNCHAKU, PEN_NIB.
-
-        # else ->
-        # free card draw (early)
-        # free card draw (most)
         if max(2, best_values['incoming_damage']) != max(2, challenger_values['incoming_damage']):
             return challenger_values['incoming_damage'] < best_values['incoming_damage']
         if best_values['dead_monsters'] != challenger_values['dead_monsters']:
@@ -44,6 +38,4 @@ class DefaultSbcComparator(SbcComparator):
             return challenger_values['lowest_health_monster'] < best_values['lowest_health_monster']
         if best_values['total_monster_health'] != challenger_values['total_monster_health']:
             return challenger_values['total_monster_health'] < best_values['total_monster_health']
-        # paid card draw (early)
-        # paid card draw (most) ?
         return False
