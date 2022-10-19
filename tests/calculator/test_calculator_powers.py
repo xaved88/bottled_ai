@@ -128,8 +128,18 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
         self.see_enemy_has_power(play, PowerId.ARTIFACT, 0)
 
+    def test_artifact_blocks_negative_buff(self):
+        state = self.given_state(CardId.DARK_SHACKLES)
+        state.monsters[0].powers[PowerId.ARTIFACT] = 1
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_does_not_have_power(play, PowerId.ARTIFACT)
+        self.see_enemy_does_not_have_power(play, PowerId.STRENGTH)
+
     def test_artifact_does_not_block_buff(self):
-        pass
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.ARTIFACT: 1})
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.ARTIFACT, 1)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
 
     def test_artifact_multiple_debuffs(self):
         state = self.given_state(CardId.UPPERCUT)
@@ -163,7 +173,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         play.end_turn()
         self.see_player_lost_hp(play, 6)
-        self.see_player_has_status(play, PowerId.PLATED_ARMOR, 2)
+        self.see_player_has_power(play, PowerId.PLATED_ARMOR, 2)
 
     def test_buffer_blocks_incoming_damage(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.BUFFER: 1})
@@ -308,9 +318,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 4)
         self.see_enemy_does_not_have_power(play, PowerId.FLIGHT)
 
+    def test_no_draw_prevents_draw(self):
+        state = self.given_state(CardId.POMMEL_STRIKE, player_powers={PowerId.NO_DRAW: 1})
+        play = self.when_calculating_state_play(state)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_count(play, 1)
 
-"""
-TODO DEAR FUTURE ME!
-
-You've implemented the basics for flame barrier, thorns, and sharp hide, but not tested them yet or anything... you should do that.
-"""
+    def test_no_draw_blocked_by_artifact(self):
+        state = self.given_state(CardId.BATTLE_TRANCE, player_powers={PowerId.ARTIFACT: 1})
+        play = self.when_calculating_state_play(state)
+        self.see_player_hand_count(play, 3)
+        self.see_player_discard_count(play, 1)
+        self.see_player_does_not_have_power(play, PowerId.ARTIFACT)
+        self.see_player_does_not_have_power(play, PowerId.NO_DRAW)

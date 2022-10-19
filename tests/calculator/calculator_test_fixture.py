@@ -51,7 +51,7 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_player_has_block(self, play: PlayPath, amount: int):
         self.assertEqual(amount, play.state.player.block)
 
-    def see_player_has_status(self, play: PlayPath, power_id: PowerId, amount: int):
+    def see_player_has_power(self, play: PlayPath, power_id: PowerId, amount: int):
         self.assertEqual(amount, play.state.player.powers.get(power_id, 0))
 
     def see_cards_played(self, play: PlayPath, amount: int):
@@ -59,6 +59,9 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def see_player_discard_count(self, play: PlayPath, amount: int):
         self.assertEqual(amount, len(play.state.discard_pile))
+
+    def see_player_draw_pile_count(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, len(play.state.draw_pile))
 
     def see_player_exhaust_count(self, play: PlayPath, amount: int):
         self.assertEqual(amount, len(play.state.exhaust_pile))

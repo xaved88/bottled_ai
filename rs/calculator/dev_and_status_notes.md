@@ -55,23 +55,23 @@ normal = okay
 - 
 ## NEXT CARDS
 
-- body slam
-- clash
-- flex
-- wild strike
-- battle trance
-- rage
-- rampage
-- metallicize
-- reckless charge
-- power through
-- spot weakness
-- reaper
-- bandage up
-- dark shackles
-- flash of steel
-- swift strike
-- trip
+- ~~body slam~~
+- ~~clash~~
+- ~~flex~~
+- ~~wild strike~~
+- ~~battle trance~~
+- ~~rage~~
+- ~~rampage~~
+- ~~metallicize~~
+- ~~reckless charge~~
+- ~~power through~~
+- ~~spot weakness~~
+- ~~reaper~~
+- ~~bandage up~~
+- ~~dark shackles~~
+- ~~flash of steel~~
+- ~~swift strike~~
+- ~~trip~~
 - apotheosis
 - hand of greed
 - master of strategy
@@ -262,3 +262,5 @@ normal = okay
 - X cards
 - self damage shouldn't break plate armor, need to apply the attack types correctly for inflicting damage
 - Flight + vulnerable rounding may be off
+- Flex -> dunno about the strength down at the end of the turn, could be "flex" or "generic strength up power"
+- Rampage -> it doesn't increase the card damage that turn if you were to draw with headbutt or something.

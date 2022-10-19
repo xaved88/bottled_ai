@@ -34,7 +34,7 @@ class HandState:
             return plays
 
         for card_idx, card in enumerate(self.hand):
-            if not is_card_playable(card, self.player):
+            if not is_card_playable(card, self.player, self.hand):
                 continue
             if card.needs_target:
                 for target_idx, target in enumerate(self.monsters):
@@ -48,7 +48,7 @@ class HandState:
     def transform_from_play(self, play: Play):
         (card_index, target_index) = play
         card = self.hand[card_index]
-        effects = get_card_effects(card, self.player.powers, self.draw_pile, self.discard_pile, self.hand)
+        effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
 
         # damage bonuses:
         damage_additive_bonus = 0
@@ -80,6 +80,10 @@ class HandState:
             for hook in effect.pre_hooks:
                 hook(self, effect, target_index)
 
+            # heal
+            if effect.heal:
+                self.player.heal(effect.heal)
+
             # deal damage to target
             if effect.hits:
                 if effect.target == TargetType.SELF:
@@ -89,14 +93,19 @@ class HandState:
                 else:
                     damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
                     if effect.target == TargetType.MONSTER:
-                        self.monsters[target_index].inflict_damage(source=self.player, base_damage=damage,
-                                                                   hits=effect.hits, blockable=effect.blockable,
-                                                                   vulnerable_modifier=monster_vulnerable_modifier,
-                                                                   min_hp_damage=player_min_attack_hp_damage)
+                        (hp_damage) = self.monsters[target_index].inflict_damage(source=self.player, base_damage=damage,
+                                                                                 hits=effect.hits,
+                                                                                 blockable=effect.blockable,
+                                                                                 vulnerable_modifier=monster_vulnerable_modifier,
+                                                                                 min_hp_damage=player_min_attack_hp_damage)
+                        effect.hp_damage = hp_damage
                     elif effect.target == TargetType.ALL_MONSTERS:
+                        effect.hp_damage = 0
                         for target in self.monsters:
-                            target.inflict_damage(self.player, damage, effect.hits, effect.blockable, monster_vulnerable_modifier,
-                                                  min_hp_damage=player_min_attack_hp_damage)
+                            (hp_damage) = target.inflict_damage(self.player, damage, effect.hits, effect.blockable,
+                                                                monster_vulnerable_modifier,
+                                                                min_hp_damage=player_min_attack_hp_damage)
+                            effect.hp_damage += hp_damage
 
             # block (always applies to player right?)
             if effect.block:
@@ -122,6 +131,15 @@ class HandState:
             if effect.draw:
                 self.draw_cards(effect.draw)
 
+        if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
+            idx = self.hand.index(card)
+            if card.exhausts:
+                self.exhaust_pile.append(card)
+            elif card.type != CardType.POWER:
+                self.discard_pile.append(card)
+            del self.hand[idx]
+
+        for effect in effects:
             # custom post hooks
             for hook in effect.post_hooks:
                 hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
@@ -154,14 +172,6 @@ class HandState:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
                         monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
-
-        if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
-            idx = self.hand.index(card)
-            if card.exhausts:
-                self.exhaust_pile.append(card)
-            elif card.type != CardType.POWER:
-                self.discard_pile.append(card)
-            del self.hand[idx]
 
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
         if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
@@ -215,6 +225,8 @@ class HandState:
         return state_string
 
     def draw_cards(self, amount: int):
+        if PowerId.NO_DRAW in self.player.powers:
+            return
         # determine which type of card to draw based on energy
         card_type = CardId.DRAW_3P if self.player.energy >= 3 \
             else CardId.DRAW_2 if self.player.energy == 2 \
@@ -226,7 +238,7 @@ class HandState:
         self.hand += [get_card(card_type) for i in range(amount)]
 
 
-def is_card_playable(card: Card, player: Player) -> bool:
+def is_card_playable(card: Card, player: Player, hand: List[Card]) -> bool:
     # unplayable cards like burn, wound, and reflex
     if card.cost == -1:
         return False
@@ -238,6 +250,8 @@ def is_card_playable(card: Card, player: Player) -> bool:
         return False
 
     # special card-specific logic, like clash
+    if card.id == CardId.CLASH and len([1 for c in hand if c.type != CardType.ATTACK]):
+        return False
 
     return True
 

@@ -17,6 +17,7 @@ class PowerId(Enum):
     INTANGIBLE = 'intangibleplayer'
     METALLICIZE = 'metallicize'
     MINION = 'minion'
+    NO_DRAW = 'no draw'
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'
     SHARP_HIDE = 'sharp hide'
@@ -34,4 +35,10 @@ DEBUFFS: List[PowerId] = [
     PowerId.ENTANGLED,
     PowerId.VULNERABLE,
     PowerId.WEAKENED,
+    PowerId.NO_DRAW,
+]
+
+DEBUFFS_WHEN_NEGATIVE: List[PowerId] = [
+    PowerId.STRENGTH,
+    PowerId.DEXTERITY,
 ]

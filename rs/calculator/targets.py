@@ -1,7 +1,7 @@
 import math
 from typing import List
 
-from rs.calculator.powers import PowerId, Powers, DEBUFFS
+from rs.calculator.powers import PowerId, Powers, DEBUFFS, DEBUFFS_WHEN_NEGATIVE
 from rs.calculator.relics import Relics, RelicId
 
 # hp_damage_dealt
@@ -48,7 +48,7 @@ class Target:
                 )
 
             if self.powers.get(PowerId.FLIGHT):
-                hit_damage = math.floor(hit_damage * .5) # this may not be entirely accurate, pay attention
+                hit_damage = math.floor(hit_damage * .5)  # this may not be entirely accurate, pay attention
 
             if blockable and self.block:
                 if self.block > hit_damage:
@@ -112,7 +112,8 @@ class Target:
     def add_powers(self, powers: Powers) -> List[PowerId]:
         applied_powers = []
         for power in powers:
-            if power in DEBUFFS and self.powers.get(PowerId.ARTIFACT):
+            if self.powers.get(PowerId.ARTIFACT) and \
+                    (power in DEBUFFS or (powers[power] < 0 and power in DEBUFFS_WHEN_NEGATIVE)):
                 if self.powers[PowerId.ARTIFACT] == 1:
                     del self.powers[PowerId.ARTIFACT]
                 else:
@@ -131,6 +132,11 @@ class Target:
         for k in power_keys:
             state += k + str(self.powers[PowerId(k)]) + ","
         return state
+
+    def heal(self, amount: int):
+        self.current_hp += amount
+        if self.current_hp > self.max_hp:
+            self.current_hp = self.max_hp
 
 
 class Player(Target):
