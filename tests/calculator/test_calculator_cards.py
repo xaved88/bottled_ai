@@ -112,7 +112,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 9)
         self.see_player_spent_energy(play, 1)
         self.see_player_hand_count(play, 1)
-        self.see_player_drew_cards(play, 1, 3)
+        self.see_player_drew_cards(play, 1)
 
     def test_shrug_it_off(self):
         state = self.given_state(CardId.SHRUG_IT_OFF)
@@ -120,7 +120,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 8)
         self.see_player_spent_energy(play, 1)
         self.see_player_hand_count(play, 1)
-        self.see_player_drew_cards(play, 1, 3)
+        self.see_player_drew_cards(play, 1)
 
     def test_thunderclap(self):
         state = self.given_state(CardId.THUNDERCLAP, targets=2)
@@ -182,7 +182,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_cards_played(play, 1)
         self.see_player_hand_count(play, 0)
-        self.see_player_drew_cards(play, 0, 3)
+        self.see_player_drew_cards(play, 0)
 
     def test_dropkick_vs_vulnerable(self):
         state = self.given_state(CardId.DROPKICK)
@@ -192,7 +192,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 0)
         self.see_cards_played(play, 1)
         self.see_player_hand_count(play, 1)
-        self.see_player_drew_cards(play, 1, 3)
+        self.see_player_drew_cards(play, 1)
 
     def test_entrench(self):
         state = self.given_state(CardId.ENTRENCH)
@@ -372,7 +372,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_lost_hp(play, 6)
         self.see_player_exhaust_count(play, 1)
         self.see_player_hand_count(play, 3)
-        self.see_player_drew_cards(play, 3, 2)
+        self.see_player_drew_cards(play, 3)
 
     def test_jax(self):
         state = self.given_state(CardId.JAX)
@@ -427,7 +427,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.BATTLE_TRANCE)
         play = self.when_calculating_state_play(state)
         self.see_player_discard_count(play, 1)
-        self.see_player_hand_count(play, 3)
+        self.see_player_drew_cards(play, 3)
 
     def test_rage(self):
         state = self.given_state(CardId.RAGE)
@@ -506,7 +506,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 3)
         self.see_player_discard_count(play, 1)
-        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1)
         self.see_player_spent_energy(play, 0)
 
     def test_swift_strike(self):
@@ -543,7 +543,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.MASTER_OF_STRATEGY)
         play = self.when_calculating_state_play(state)
         self.see_player_spent_energy(play, 0)
-        self.see_player_hand_count(play, 3)
+        self.see_player_drew_cards(play, 3)
         self.see_player_exhaust_count(play, 1)
 
     def test_apparition(self):

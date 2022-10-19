@@ -25,6 +25,8 @@ class HandState:
         self.draw_pile: List[Card] = [] if draw_pile is None else draw_pile
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
+        self.__is_first_play: bool = False  # transient and used only internally
+        self.__starting_energy: int = 0  # transient and used only internally
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -45,9 +47,15 @@ class HandState:
 
         return plays
 
-    def transform_from_play(self, play: Play):
+    def transform_from_play(self, play: Play, is_first_play: bool):
+        self.__is_first_play = is_first_play
+        self.__starting_energy = self.player.energy
+
         (card_index, target_index) = play
         card = self.hand[card_index]
+
+        # play the card
+        self.player.energy -= card.cost
         effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
 
         # pain
@@ -78,8 +86,6 @@ class HandState:
         if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
             self.player.block += self.player.powers[PowerId.RAGE]
 
-        # play the card
-        self.player.energy -= card.cost
         for effect in effects:
             # custom post hooks
             for hook in effect.pre_hooks:
@@ -237,11 +243,15 @@ class HandState:
     def draw_cards(self, amount: int):
         if PowerId.NO_DRAW in self.player.powers:
             return
+
+        early = self.__is_first_play
+        free = self.__starting_energy <= self.player.energy
+
         # determine which type of card to draw based on energy
-        card_type = CardId.DRAW_3P if self.player.energy >= 3 \
-            else CardId.DRAW_2 if self.player.energy == 2 \
-            else CardId.DRAW_1 if self.player.energy == 0 \
-            else CardId.DRAW_0
+        card_type = CardId.DRAW_FREE_EARLY if free and early \
+            else CardId.DRAW_FREE if free and not early \
+            else CardId.DRAW_PAY_EARLY if not free and early \
+            else CardId.DRAW_PAY
 
         # can't draw more than 10 cards, will discard the played card tho
         amount = min(amount, 11 - len(self.draw_pile))

@@ -1,14 +1,6 @@
 This is where we'll keep the status of the calculator organized for a bit, what next steps are, total prio lists, etc.
 
 
-So the concept for card draw...
-We'll create a new "card_draw" card. Would be great if we could give it an internal stat for
-"How much energy it had left" (though we could also just create 4 new cards for 3+, 2, 1, 0)...
-Card draw will give you those into your hand.
-
-Yeah, let's just do 4 different cards for right now, because that will fit best in it.
-
-
 ## NEXT FEATURES
 - ~~card draw~~
 - ~~minion handling~~
@@ -16,7 +8,7 @@ Yeah, let's just do 4 different cards for right now, because that will fit best 
 ## STRATEGY DECISIONS
 - weak + vulnerable, improve valuing of it
 - prioritizing card draw in the strategy
-- prioritize feed / hand of greed over not.
+- prioritize feed over not.
 - prioritize at the very bottom, keeping energy (to prevent defend defend defend kill kind of things)
 
 ### KEY:

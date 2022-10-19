@@ -20,7 +20,7 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
     paths[path_state] = path
     for play in path.state.get_plays():
         new_state: HandState = pickle_deepcopy(path.state)
-        new_state.transform_from_play(play)
+        new_state.transform_from_play(play, is_first_play=not path.plays)
         new_plays: List[Play] = path.plays.copy()
         new_plays.append(play)
         new_path: PlayPath = PlayPath(new_plays, new_state)
