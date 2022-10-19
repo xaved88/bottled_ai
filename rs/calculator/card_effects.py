@@ -186,6 +186,14 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.TRIP:
         return [CardEffects(target=TargetType.MONSTER if not card.upgrade else TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.VULNERABLE: 2})]
+    if card.id == CardId.APOTHEOSIS:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[apotheosis_post_hook])]
+    if card.id == CardId.HAND_OF_GREED:
+        return [CardEffects(target=TargetType.MONSTER, damage=20 if not card.upgrade else 25, hits=1)]
+    if card.id == CardId.MASTER_OF_STRATEGY:
+        return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4)]
+    if card.id == CardId.APPARITION:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE: 1})]
 
-    # default case, todo maybe some logging or?
+        # default case, todo maybe some logging or?
     return [CardEffects()]

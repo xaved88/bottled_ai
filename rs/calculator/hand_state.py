@@ -50,6 +50,11 @@ class HandState:
         card = self.hand[card_index]
         effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
 
+        # pain
+        pain_count = len([1 for c in self.hand if c.id == CardId.PAIN])
+        if pain_count:
+            self.player.inflict_damage(self.player, pain_count, 1, False, vulnerable_modifier=1, is_attack=False)
+
         # damage bonuses:
         damage_additive_bonus = 0
         if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
@@ -187,6 +192,11 @@ class HandState:
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
         self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
+        # regret
+        regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])
+        if regret_count:
+            self.player.inflict_damage(self.player, regret_count * len(self.hand), 1, False, vulnerable_modifier=1,
+                                       is_attack=False)
         # todo - decrement buffs that should be counted down?
         # todo - increment relics that should be counted up
 

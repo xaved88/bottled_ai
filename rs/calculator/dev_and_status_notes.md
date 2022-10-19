@@ -72,14 +72,13 @@ normal = okay
 - ~~flash of steel~~
 - ~~swift strike~~
 - ~~trip~~
-- apotheosis
-- hand of greed
-- master of strategy
-- apparition
-- slimed
-- normality
-- pain
-- regret
+- ~~apotheosis~~
+- ~~hand of greed~~
+- ~~master of strategy~~
+- ~~apparition~~
+- ~~slimed~~
+- ~~pain~~
+- ~~regret~~
 
 ## ENTITY NEXT PRIORITIES
 
@@ -239,7 +238,6 @@ normal = okay
 - transmutation
 - violence
 - bite
-- dazed
 - void
 - ascender's bane
 - clumsy
@@ -248,6 +246,7 @@ normal = okay
 - doubt
 - injury
 - necronomicurse
+- normality
 - parasite
 - shame
 - writhe
@@ -264,3 +263,4 @@ normal = okay
 - Flight + vulnerable rounding may be off
 - Flex -> dunno about the strength down at the end of the turn, could be "flex" or "generic strength up power"
 - Rampage -> it doesn't increase the card damage that turn if you were to draw with headbutt or something.
+- Hand of greed -> no gold...

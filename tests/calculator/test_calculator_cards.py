@@ -526,3 +526,47 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
         self.see_enemy_has_power(play, PowerId.VULNERABLE, 2, 1)
+
+    def test_apotheosis(self):
+        state = self.given_state(CardId.APOTHEOSIS)
+        state.draw_pile.append(get_card(CardId.STRIKE_R))
+        play = self.when_calculating_state_play(state)
+        self.assertEqual(play.state.draw_pile[0].upgrade, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_hand_of_greed(self):
+        state = self.given_state(CardId.HAND_OF_GREED)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 20)
+
+    def test_master_of_strategy(self):
+        state = self.given_state(CardId.MASTER_OF_STRATEGY)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_hand_count(play, 3)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_apparition(self):
+        state = self.given_state(CardId.APPARITION)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.INTANGIBLE, 1)
+
+    def test_slimed(self):
+        state = self.given_state(CardId.SLIMED)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_pain(self):
+        state = self.given_state(CardId.PAIN)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, 1)
+
+    def test_regret(self):
+        state = self.given_state(CardId.REGRET)
+        for i in range(4):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 5)

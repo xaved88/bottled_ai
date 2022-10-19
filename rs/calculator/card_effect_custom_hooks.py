@@ -96,6 +96,13 @@ def __spot_weakness_post_hook(state: HandStateInterface, target_index: int, amou
             state.player.powers[PowerId.STRENGTH] = 0
         state.player.powers[PowerId.STRENGTH] += amount
 
+
 def reaper_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     if hasattr(effect, 'hp_damage'):
         state.player.heal(effect.hp_damage)
+
+
+def apotheosis_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    for i in range(len(state.draw_pile)):
+        c = state.draw_pile[i]
+        state.draw_pile[i] = get_card(c.id, upgrade=c.upgrade + 1)
