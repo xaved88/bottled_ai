@@ -1,6 +1,7 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import CardId, get_card
 from rs.calculator.powers import PowerId
+from rs.calculator.relics import RelicId
 
 
 class CalculatorCardsTest(CalculatorTestFixture):
@@ -124,8 +125,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.monsters[0].powers[PowerId.ARTIFACT] = 1
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 8)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 0)
-        self.see_enemy_has_status(play, PowerId.ARTIFACT, 0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+        self.see_enemy_has_power(play, PowerId.ARTIFACT, 0)
 
     def test_artifact_does_not_block_buff(self):
         pass
@@ -135,18 +136,18 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.monsters[0].powers[PowerId.ARTIFACT] = 1
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 0)
-        self.see_enemy_has_status(play, PowerId.ARTIFACT, 0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 0)
+        self.see_enemy_has_power(play, PowerId.ARTIFACT, 0)
 
     def test_artifact_multiple_stacks(self):
         state = self.given_state(CardId.UPPERCUT)
         state.monsters[0].powers[PowerId.ARTIFACT] = 3
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 0)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 0)
-        self.see_enemy_has_status(play, PowerId.ARTIFACT, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 0)
+        self.see_enemy_has_power(play, PowerId.ARTIFACT, 1)
 
     def test_plated_armor_adds_block(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.PLATED_ARMOR: 4})
@@ -190,3 +191,126 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_lost_hp(play, 7)
         self.see_player_does_not_have_power(play, PowerId.BUFFER)
+
+    def test_rage_adds_block_for_attack(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.RAGE: 3})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_block(play, 6)
+
+    def test_rage_does_not_add_block_for_skill(self):
+        state = self.given_state(CardId.BLOODLETTING, player_powers={PowerId.RAGE: 3})
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_block(play, 0)
+
+    def test_metallicize_adds_block(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.METALLICIZE: 3})
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_has_block(play, 3)
+
+    def test_metallicize_adds_block_stacking_with_orichalcum(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.METALLICIZE: 3},
+                                 relics={RelicId.ORICHALCUM: 1})
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_has_block(play, 9)
+
+    def test_intangible_blocks_all_but_one_damage(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2, player_powers={PowerId.INTANGIBLE: 1})
+        state.monsters[0].damage = 999
+        state.monsters[0].hits = 1
+        state.monsters[1].damage = 1
+        state.monsters[1].hits = 5
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 6)
+
+    def test_intangible_with_tungsten_rod_blocks_all_damage(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.INTANGIBLE: 1},
+                                 relics={RelicId.TUNGSTEN_ROD: 1})
+        state.monsters[0].damage = 999
+        state.monsters[0].hits = 20
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 0)
+
+    def test_intangible_blocks_self_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, targets=2, player_powers={PowerId.INTANGIBLE: 1})
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, 1)
+
+    def test_flame_barrier_deals_damage_to_attacker(self):
+        state = self.given_state(CardId.FLAME_BARRIER)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 4
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 16)
+
+    def test_flame_barrier_blocked_by_block(self):
+        state = self.given_state(CardId.FLAME_BARRIER)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 4
+        state.monsters[0].block = 10
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_attacker_dies_to_flame_barrier_and_then_their_attack_stops(self):
+        state = self.given_state(CardId.FLAME_BARRIER)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 999
+        state.monsters[0].current_hp = 20
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 0)
+        self.see_enemy_hp_is(play, 0)
+
+    def test_thorns_deals_damage(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.THORNS: 3})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 4
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 12)
+
+    def test_sharp_hide_deals_damage_only_on_attack_play(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers[PowerId.SHARP_HIDE] = 4
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, 4)
+
+    def test_attacking_angry_gives_strength(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers[PowerId.ANGRY] = 3
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 2
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 14)
+
+    def test_flight_reduces_damage(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers[PowerId.FLIGHT] = 3
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 4)
+        self.see_enemy_has_power(play, PowerId.FLIGHT, 1)
+
+    def test_flight_popped_causes_stun(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers[PowerId.FLIGHT] = 2
+        state.monsters[0].damage = 999
+        state.monsters[0].hits = 999
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 0)
+        self.see_enemy_lost_hp(play, 4)
+        self.see_enemy_does_not_have_power(play, PowerId.FLIGHT)
+
+
+"""
+TODO DEAR FUTURE ME!
+
+You've implemented the basics for flame barrier, thorns, and sharp hide, but not tested them yet or anything... you should do that.
+"""

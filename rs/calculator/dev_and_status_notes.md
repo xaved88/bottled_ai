@@ -45,13 +45,13 @@ normal = okay
 
 
 ## NEXT POWERS
-- 4 rage
-- 4 metallicize
-- 4 intangible
-- 4 thorns
-- 4 angry
-- 4 sharp hide (guardian)
-- 4 flight
+- ~~rage~~
+- ~~metallicize~~
+- ~~intangible~~
+- ~~thorns~~
+- ~~angry~~
+- ~~sharp hide~~
+- ~~flight~~
 - 
 ## NEXT CARDS
 
@@ -261,3 +261,4 @@ normal = okay
 - _anything_ random
 - X cards
 - self damage shouldn't break plate armor, need to apply the attack types correctly for inflicting damage
+- Flight + vulnerable rounding may be off

@@ -124,8 +124,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.BASH)
         state.relics[RelicId.CHAMPION_BELT] = 1
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 2)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
 
     def test_letter_opener_increments(self):
         state = self.given_state(CardId.DEFEND_R)

@@ -69,6 +69,10 @@ class HandState:
         player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
         monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
 
+        # pre play stuff
+        if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
+            self.player.block += self.player.powers[PowerId.RAGE]
+
         # play the card
         self.player.energy -= card.cost
         for effect in effects:
@@ -79,17 +83,19 @@ class HandState:
             # deal damage to target
             if effect.hits:
                 if effect.target == TargetType.SELF:
-                    self.player.inflict_damage(base_damage=effect.damage, hits=1, blockable=effect.blockable,
-                                               vulnerable_modifier=1)
+                    self.player.inflict_damage(base_damage=effect.damage, source=self.player, hits=1,
+                                               blockable=effect.blockable,
+                                               vulnerable_modifier=1, is_attack=False)
                 else:
                     damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
                     if effect.target == TargetType.MONSTER:
-                        self.monsters[target_index].inflict_damage(damage, effect.hits, effect.blockable,
+                        self.monsters[target_index].inflict_damage(source=self.player, base_damage=damage,
+                                                                   hits=effect.hits, blockable=effect.blockable,
                                                                    vulnerable_modifier=monster_vulnerable_modifier,
                                                                    min_hp_damage=player_min_attack_hp_damage)
                     elif effect.target == TargetType.ALL_MONSTERS:
                         for target in self.monsters:
-                            target.inflict_damage(damage, effect.hits, effect.blockable, monster_vulnerable_modifier,
+                            target.inflict_damage(self.player, damage, effect.hits, effect.blockable, monster_vulnerable_modifier,
                                                   min_hp_damage=player_min_attack_hp_damage)
 
             # block (always applies to player right?)
@@ -147,7 +153,7 @@ class HandState:
                 self.relics[RelicId.LETTER_OPENER] -= 3
                 for monster in self.monsters:
                     if monster.current_hp > 0:
-                        monster.inflict_damage(5, 1, vulnerable_modifier=1)
+                        monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
 
         if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
             idx = self.hand.index(card)
@@ -169,9 +175,10 @@ class HandState:
 
         # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
+        self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
         # todo - decrement buffs that should be counted down?
-        # increment relics that should be counted up
+        # todo - increment relics that should be counted up
 
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
@@ -180,7 +187,7 @@ class HandState:
                 monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
-                self.player.inflict_damage(damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
+                self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
@@ -214,8 +221,8 @@ class HandState:
             else CardId.DRAW_1 if self.player.energy == 0 \
             else CardId.DRAW_0
 
-        amount = min(amount,
-                     11 - len(self.draw_pile))  # can't draw more than 10 cards, will discard the played card tho
+        # can't draw more than 10 cards, will discard the played card tho
+        amount = min(amount, 11 - len(self.draw_pile))
         self.hand += [get_card(card_type) for i in range(amount)]
 
 

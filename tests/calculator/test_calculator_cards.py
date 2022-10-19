@@ -35,14 +35,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.BASH)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 8)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_bash_upgraded(self):
         state = self.given_state(CardId.BASH, 1)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 10)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 3)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 3)
         self.see_player_spent_energy(play, 2)
 
     def test_anger(self):
@@ -62,7 +62,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.CLOTHESLINE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 12)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 2)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_heavy_blade(self):
@@ -127,8 +127,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 4, enemy_index=0)
         self.see_enemy_lost_hp(play, 4, enemy_index=1)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1, enemy_index=1)
         self.see_player_spent_energy(play, 1)
 
     def test_twin_strike(self):
@@ -159,8 +159,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.UPPERCUT)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 1)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1)
         self.see_player_spent_energy(play, 2)
 
     def test_disarm(self):
@@ -170,7 +170,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         play.end_turn()
         self.see_player_lost_hp(play, 6)
-        self.see_enemy_has_status(play, PowerId.STRENGTH, -2)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, -2)
         self.see_player_spent_energy(play, 1)
         self.see_player_discard_count(play, 0)
         self.see_player_exhaust_count(play, 1)
@@ -232,8 +232,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_intimidate(self):
         state = self.given_state(CardId.INTIMIDATE, targets=2)
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=1, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=1, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=1, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=1, enemy_index=1)
         self.see_player_spent_energy(play, 0)
         self.see_player_exhaust_count(play, 1)
 
@@ -250,7 +250,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.monsters[0].powers[PowerId.PLATED_ARMOR] = 5
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 20)
-        self.see_enemy_has_status(play, PowerId.PLATED_ARMOR, 1)
+        self.see_enemy_has_power(play, PowerId.PLATED_ARMOR, 1)
 
     def test_seeing_red(self):
         state = self.given_state(CardId.SEEING_RED)
@@ -267,10 +267,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_shockwave(self):
         state = self.given_state(CardId.SHOCKWAVE, targets=2)
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=3, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=3, enemy_index=1)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=3, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=3, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, amount=3, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
 
