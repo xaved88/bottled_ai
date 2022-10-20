@@ -18,6 +18,7 @@ class BossRelicHandler(Handler):
             "velvet choker",
             "cursed key",
             "fusion hammer",
+            "snecko eye",
             "mark of pain",  ## removed if already have another energy relic
             "busted crown",  ## removed if already have another energy relic or it's act 1
             "coffee dripper",  ## removed if already have another energy relic or it's act 1
