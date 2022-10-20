@@ -1,11 +1,15 @@
 This is where we'll keep the status of the calculator organized for a bit, what next steps are, total prio lists, etc.
 
-### We are disregarding:
 
-- card draw
-- ethereal
-- _anything_ random
-- X cards
+## NEXT FEATURES
+- ~~card draw~~
+- ~~minion handling~~
+
+## STRATEGY DECISIONS
+- weak + vulnerable, improve valuing of it
+- prioritizing card draw in the strategy
+- prioritize feed over not.
+- prioritize at the very bottom, keeping energy (to prevent defend defend defend kill kind of things)
 
 ### KEY:
 
@@ -17,69 +21,56 @@ normal = okay
 
 ~~strikethrough~~ = done
 
-## VITAL RELICS AND STATUS (all done!)
 
-- ~~strike dummy~~
-- ~~velvet choker~~
-- ~~paper phrog~~
-- ~~nunchaku~~
-- ~~pen nib~~
-- ~~strength~~
-- ~~dexterity~~
-- ~~vulnerable~~
-- ~~weak~~
-- ~~frail~~
-- ~~entangled~~
-- ~~vigor~~
-- ~~curl up~~
-- ~~artifact~~
-- ~~plated armor~~
 
-## VITAL CARDS
+## NEXT RELICS
 
-- ~~strike_r~~
-- ~~defend_r~~
-- ~~bash~~
-- ~~anger~~ (won't duplicate cards)
-- ~~cleave~~
-- ~~clothesline~~
-- ~~heavy blade~~
-- ~~iron wave~~
-- ~~perfected strike~~
-- ~~pommel strike~~
-- ~~shrug it off~~
-- ~~thunderclap~~
-- ~~twin strike~~
-- ~~blood for blood~~ (cost doesn't lower when taking damage in turn yet :shrug:)
-- ~~bloodletting~~
-- ~~carnage~~ (no ethereal handling yet)
-- ~~disarm~~
-- ~~dropkick~~
-- ~~entrench~~
-- ~~flame barrier~~ (flame barrier buff/status exists but no handling added for it yet)
-- ~~ghostly armor~~ (no ethereal handling yet)
-- ~~hemokinesis~~
-- ~~inflame~~
-- ~~intimidate~~
-- ~~pummel~~
-- ~~seeing red~~
-- ~~shockwave~~
-- ~~uppercut~~
-- ~~bludgeon~~
-- ~~feed~~
-- ~~fiend fire~~
-- ~~immolate~~
-- ~~impervious~~
-- ~~limit break~~
-- ~~offering~~
-- **reaper** (need specific healing (damage dealt counter?))
-- **apparition** (need intangible, no ethereal)
-- **bite** (need healing? or can we just do it with -hp cost)
-- ~~jax~~
-- **burn** (need end of turn in hand handling)
-- **normality** (need in hand handling, plus cardplay counter?)
-- **pain** (need in hand handling )
-- **regret** (need end of turn in hand handling)
+- ~~ornamental fan~~
+- ~~orichalcum~~
+- ~~odd mushroom~~
+- ~~champion belt~~
+- ~~letter opener~~
+- ~~tori~~
+- ~~fossilized helix~~
+- ~~tungsten rod~~
+- ~~the boot~~
+
+
+## NEXT POWERS
+- ~~rage~~
+- ~~metallicize~~
+- ~~intangible~~
+- ~~thorns~~
+- ~~angry~~
+- ~~sharp hide~~
+- ~~flight~~
+- 
+## NEXT CARDS
+
+- ~~body slam~~
+- ~~clash~~
+- ~~flex~~
+- ~~wild strike~~
+- ~~battle trance~~
+- ~~rage~~
+- ~~rampage~~
+- ~~metallicize~~
+- ~~reckless charge~~
+- ~~power through~~
+- ~~spot weakness~~
+- ~~reaper~~
+- ~~bandage up~~
+- ~~dark shackles~~
+- ~~flash of steel~~
+- ~~swift strike~~
+- ~~trip~~
+- ~~apotheosis~~
+- ~~hand of greed~~
+- ~~master of strategy~~
+- ~~apparition~~
+- ~~slimed~~
+- ~~pain~~
+- ~~regret~~
 
 ## ENTITY NEXT PRIORITIES
 
@@ -104,6 +95,7 @@ normal = okay
 - 4 fossilized helix
 - 4 tungsten rod
 - 4 the boot
+
 - 3 gremlin horn
 - 3 shuriken
 - 3 kunai
@@ -182,151 +174,85 @@ normal = okay
 - 2 strength down
 - 2 no draw
 
-### CARDS:
+### REMAINING CARDS
 
-#### GENERAL CARDS
-
-strike_r
-defend_r
-bash
-anger
-armaments
-body slam
-clash
-cleave
-clothesline
-flex
-havoc
-headbutt
-heavy blade
-iron wave
-perfected strike
-pommel strike
-shrug it off
-sword boomerang
-thunderclap
-true grit
-twin strike
-warcry
-wild strike
-battle trance
-blood for blood
-bloodletting
-burning pact
-carnage
-combust
-dark embrace
-disarm
-dropkick
-dual wield
-entrench
-evolve
-feel no pain
-fire breathing
-flame barrier
-ghostly armor
-hemokinesis
-infernal blade
-inflame
-intimidate
-metallicize
-power through
-pummel
-rage
-rampage
-reckless charge
-rupture
-searing blow
-second wind
-seeing red
-sentinel
-sever soul
-shockwave
-spot weakness
-uppercut
-whirlwind
-barricade
-beserk
-bludgeon
-brutality
-corruption
-demon form
-exhume
-feed
-fiend fire
-immolate
-impervious
-juggernaut
-limit break
-offering
-reaper
-
-#### Colorless cards
-
-bandage up
-blind
-dark shackles
-deep breath
-discovery
-dramatic entrance
-enlightenment
-flash of steel
-forethought
-good instincts
-impatience
-jack of all trades
-madness
-mind blast
-panacea
-panic button
-purity
-swift sttrike
-trip
-apotheosis
-chrysalis
-hand of greed
-magnetism
-master of strategy
-mayhem
-metamorphosis
-panache
-sadistic nature
-secret technique
-secret weapon
-the bomb
-thinking ahead
-transmutation
-violence
-apparition
-bite
-jax
-
-#### STATUS CARDS
-
-burn
-dazed
-wound
-slimed
-void
-
-#### CURSES
-
-ascender's bane
-clumsy
-curse of the bell
-decay
-doubt
-injury
-necronomicurse
-normality
-pain
-parasite
-regret
-shame
-writhe
+- armaments
+- havoc
+- headbutt
+- sword boomerang
+- true grit
+- warcry
+- burning pact
+- combust
+- dark embrace
+- dual wield
+- evolve
+- feel no pain
+- fire breathing
+- infernal blade
+- rupture
+- searing blow
+- second wind
+- sentinel
+- sever soul
+- whirlwind
+- barricade
+- beserk
+- brutality
+- corruption
+- demon form
+- exhume
+- juggernaut
+- blind
+- deep breath
+- discovery
+- dramatic entrance
+- enlightenment
+- forethought
+- good instincts
+- impatience
+- jack of all trades
+- madness
+- mind blast
+- panacea
+- panic button
+- purity
+- chrysalis
+- magnetism
+- mayhem
+- metamorphosis
+- panache
+- sadistic nature
+- secret technique
+- secret weapon
+- the bomb
+- thinking ahead
+- transmutation
+- violence
+- bite
+- void
+- ascender's bane
+- clumsy
+- curse of the bell
+- decay
+- doubt
+- injury
+- necronomicurse
+- normality
+- parasite
+- shame
+- writhe
 
 ### INCOMPLETE/HALF BAKED FEATURES
 
 - Consider extracting and decoupling the card type from the game to something within the calculator domain
 - Blood for blood doesn't update cost when you lose hp from your own cards
-- PerfectedStrike is doing string comparison, probably wants a enum list at some point
+- For performance gains → consider only looking 3 or 4 card plays into the future, instead of the whole hand?
+- ethereal
+- _anything_ random
+- X cards
+- self damage shouldn't break plate armor, need to apply the attack types correctly for inflicting damage
+- Flight + vulnerable rounding may be off
+- Flex -> dunno about the strength down at the end of the turn, could be "flex" or "generic strength up power"
+- Rampage -> it doesn't increase the card damage that turn if you were to draw with headbutt or something.
+- Hand of greed -> no gold...

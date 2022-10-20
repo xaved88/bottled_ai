@@ -1,45 +1,22 @@
-from typing import Callable
-
+from rs.calculator.comparator import SbcComparator
 from rs.calculator.game_state_converter import create_hand_state
+from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.play_path import PlayPath, get_paths
-from rs.calculator.play_path_report import PathPlayReport
 from rs.machine.state import GameState
 
-# (best:PathPlayReport, challenger:PathPlayReport) -> is_challenger_better: bool
-ReportComparator = Callable[[PathPlayReport, PathPlayReport], bool]
 
-
-def default_path_comparator(best: PathPlayReport, challenger: PathPlayReport) -> bool:
-    if best.battle_lost != challenger.battle_lost:
-        return not challenger.battle_lost
-    if best.battle_won != challenger.battle_won:
-        return challenger.battle_won
-    if max(2, best.incoming_damage) != max(2, challenger.incoming_damage):
-        return challenger.incoming_damage < best.incoming_damage
-    if best.dead_monsters != challenger.dead_monsters:
-        return challenger.dead_monsters > best.dead_monsters
-    if best.lowest_health_monster != challenger.lowest_health_monster:
-        return challenger.lowest_health_monster < best.lowest_health_monster
-    if best.total_monster_health != challenger.total_monster_health:
-        return challenger.total_monster_health < best.total_monster_health
-    return False
-
-
-def get_best_battle_path(game_state: GameState, comparator: ReportComparator) -> PathPlayReport:
-    original_hp = game_state.combat_state()['player']['current_hp']
-    hand_state = create_hand_state(game_state)
+def get_best_battle_path(game_state: GameState, comparator: SbcComparator) -> PlayPath:
+    original_state = create_hand_state(game_state)
     paths = {}
-    get_paths(PlayPath([], hand_state), paths)
+    get_paths(PlayPath([], pickle_deepcopy(original_state)), paths)
+
+    best_path = None
     for path in paths.values():
         path.state.end_turn()
-
-    best_report = None
-    reports = [PathPlayReport(path.state, original_hp, path) for path in paths.values()]
-    for report in reports:
-        if best_report is None:
-            best_report = report
+        if best_path is None:
+            best_path = path
         else:
-            if comparator(best_report, report):
-                best_report = report
+            if comparator.does_best_remain_the_best(best_path.state, path.state, original_state):
+                best_path = path
 
-    return best_report
+    return best_path

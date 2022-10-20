@@ -22,27 +22,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.see_player_gained_block(play, 5)
+        self.see_player_has_block(play, 5)
 
     def test_defend_r_upgraded(self):
         state = self.given_state(CardId.DEFEND_R, 1)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.see_player_gained_block(play, 8)
+        self.see_player_has_block(play, 8)
 
     def test_bash(self):
         state = self.given_state(CardId.BASH)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 8)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_bash_upgraded(self):
         state = self.given_state(CardId.BASH, 1)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 10)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 3)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 3)
         self.see_player_spent_energy(play, 2)
 
     def test_anger(self):
@@ -62,7 +62,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.CLOTHESLINE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 12)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 2)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
         self.see_player_spent_energy(play, 2)
 
     def test_heavy_blade(self):
@@ -87,7 +87,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.IRON_WAVE)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 5)
-        self.see_player_gained_block(play, 5)
+        self.see_player_has_block(play, 5)
         self.see_player_spent_energy(play, 1)
 
     def test_perfected_strike(self):
@@ -111,20 +111,24 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 9)
         self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1)
 
     def test_shrug_it_off(self):
         state = self.given_state(CardId.SHRUG_IT_OFF)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 8)
+        self.see_player_has_block(play, 8)
         self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1)
 
     def test_thunderclap(self):
         state = self.given_state(CardId.THUNDERCLAP, targets=2)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 4, enemy_index=0)
         self.see_enemy_lost_hp(play, 4, enemy_index=1)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1, enemy_index=1)
         self.see_player_spent_energy(play, 1)
 
     def test_twin_strike(self):
@@ -155,8 +159,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.UPPERCUT)
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 13)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, 1)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, 1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1)
         self.see_player_spent_energy(play, 2)
 
     def test_disarm(self):
@@ -166,7 +170,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         play.end_turn()
         self.see_player_lost_hp(play, 6)
-        self.see_enemy_has_status(play, PowerId.STRENGTH, -2)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, -2)
         self.see_player_spent_energy(play, 1)
         self.see_player_discard_count(play, 0)
         self.see_player_exhaust_count(play, 1)
@@ -177,6 +181,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 5)
         self.see_player_spent_energy(play, 1)
         self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 0)
+        self.see_player_drew_cards(play, 0)
 
     def test_dropkick_vs_vulnerable(self):
         state = self.given_state(CardId.DROPKICK)
@@ -185,25 +191,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 7)
         self.see_player_spent_energy(play, 0)
         self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1)
 
     def test_entrench(self):
         state = self.given_state(CardId.ENTRENCH)
         state.player.block = 32
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 32)
+        self.see_player_has_block(play, 64)
         self.see_player_spent_energy(play, 2)
 
     def test_flame_barrier(self):
         state = self.given_state(CardId.FLAME_BARRIER)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 12)
-        self.see_player_has_status(play, PowerId.FLAME_BARRIER, 4)
+        self.see_player_has_block(play, 12)
+        self.see_player_has_power(play, PowerId.FLAME_BARRIER, 4)
         self.see_player_spent_energy(play, 2)
 
     def test_ghostly_armor(self):
         state = self.given_state(CardId.GHOSTLY_ARMOR)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 10)
+        self.see_player_has_block(play, 10)
         self.see_player_spent_energy(play, 1)
 
     def test_hemokinesis(self):
@@ -216,7 +224,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_inflame(self):
         state = self.given_state(CardId.INFLAME)
         play = self.when_calculating_state_play(state)
-        self.see_player_has_status(play, PowerId.STRENGTH, 2)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
         self.see_player_spent_energy(play, 1)
         self.see_player_discard_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
@@ -224,8 +232,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_intimidate(self):
         state = self.given_state(CardId.INTIMIDATE, targets=2)
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=1, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=1, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=1, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=1, enemy_index=1)
         self.see_player_spent_energy(play, 0)
         self.see_player_exhaust_count(play, 1)
 
@@ -242,7 +250,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.monsters[0].powers[PowerId.PLATED_ARMOR] = 5
         play = self.when_calculating_state_play(state)
         self.see_enemy_lost_hp(play, 20)
-        self.see_enemy_has_status(play, PowerId.PLATED_ARMOR, 1)
+        self.see_enemy_has_power(play, PowerId.PLATED_ARMOR, 1)
 
     def test_seeing_red(self):
         state = self.given_state(CardId.SEEING_RED)
@@ -259,10 +267,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_shockwave(self):
         state = self.given_state(CardId.SHOCKWAVE, targets=2)
         play = self.when_calculating_state_play(state)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=3, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.WEAKENED, amount=3, enemy_index=1)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=0)
-        self.see_enemy_has_status(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=3, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, amount=3, enemy_index=1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, amount=3, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, amount=3, enemy_index=1)
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
 
@@ -327,21 +335,21 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_impervious(self):
         state = self.given_state(CardId.IMPERVIOUS)
         play = self.when_calculating_state_play(state)
-        self.see_player_gained_block(play, 30)
+        self.see_player_has_block(play, 30)
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
 
     def test_limit_break(self):
         state = self.given_state(CardId.LIMIT_BREAK, player_powers={PowerId.STRENGTH: 3})
         play = self.when_calculating_state_play(state)
-        self.see_player_has_status(play, PowerId.STRENGTH, 6)
+        self.see_player_has_power(play, PowerId.STRENGTH, 6)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
 
     def test_limit_break_upgraded(self):
         state = self.given_state(CardId.LIMIT_BREAK, upgrade=1, player_powers={PowerId.STRENGTH: 3})
         play = self.when_calculating_state_play(state)
-        self.see_player_has_status(play, PowerId.STRENGTH, 6)
+        self.see_player_has_power(play, PowerId.STRENGTH, 6)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 0)
         self.see_player_discard_count(play, 1)
@@ -354,25 +362,211 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_limit_break_negative_strength(self):
         state = self.given_state(CardId.LIMIT_BREAK, player_powers={PowerId.STRENGTH: -3})
         play = self.when_calculating_state_play(state)
-        self.see_player_has_status(play, PowerId.STRENGTH, -6)
+        self.see_player_has_power(play, PowerId.STRENGTH, -6)
 
     def test_offering(self):
         state = self.given_state(CardId.OFFERING)
+        state.player.energy = 0
         play = self.when_calculating_state_play(state)
-        self.see_player_spent_energy(play, -2)
+        self.see_player_has_energy(play, 2)
         self.see_player_lost_hp(play, 6)
         self.see_player_exhaust_count(play, 1)
+        self.see_player_hand_count(play, 3)
+        self.see_player_drew_cards(play, 3)
 
     def test_jax(self):
         state = self.given_state(CardId.JAX)
         play = self.when_calculating_state_play(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_lost_hp(play, 3)
-        self.see_player_has_status(play, PowerId.STRENGTH, 2)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
 
     def test_jax_when_having_strength(self):
         state = self.given_state(CardId.JAX, player_powers={PowerId.STRENGTH: 2})
         play = self.when_calculating_state_play(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_lost_hp(play, 3)
-        self.see_player_has_status(play, PowerId.STRENGTH, 4)
+        self.see_player_has_power(play, PowerId.STRENGTH, 4)
+
+    def test_body_slam(self):
+        state = self.given_state(CardId.BODY_SLAM)
+        state.player.block = 22
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 22)
+
+    def test_clash_with_another_attack(self):
+        state = self.given_state(CardId.CLASH)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.hand[1].cost = 99
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 14)
+        self.see_player_discard_count(play, 1)
+
+    def test_clash_with_a_skill(self):
+        state = self.given_state(CardId.CLASH)
+        state.hand.append(get_card(CardId.DEFEND_R))
+        state.hand[1].cost = 99
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_discard_count(play, 0)
+
+    def test_flex(self):
+        state = self.given_state(CardId.FLEX)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
+
+    def test_wild_strike(self):
+        state = self.given_state(CardId.WILD_STRIKE)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_discard_count(play, 1)
+        self.see_player_draw_pile_count(play, 1)
+
+    def test_battle_trance(self):
+        state = self.given_state(CardId.BATTLE_TRANCE)
+        play = self.when_calculating_state_play(state)
+        self.see_player_discard_count(play, 1)
+        self.see_player_drew_cards(play, 3)
+
+    def test_rage(self):
+        state = self.given_state(CardId.RAGE)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.RAGE, 3)
+
+    def test_rampage(self):
+        state = self.given_state(CardId.RAMPAGE)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 8)
+
+    def test_metallicize(self):
+        state = self.given_state(CardId.METALLICIZE)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.METALLICIZE, 3)
+
+    def test_reckless_charge(self):
+        state = self.given_state(CardId.RECKLESS_CHARGE)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_draw_pile_count(play, 1)
+
+    def test_power_through(self):
+        state = self.given_state(CardId.POWER_THROUGH)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_block(play, 15)
+        self.see_player_hand_count(play, 2)
+
+    def test_power_through_with_full_hand(self):
+        state = self.given_state(CardId.POWER_THROUGH)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_block(play, 15)
+        self.see_player_hand_count(play, 10)
+        self.see_player_discard_count(play, 2)
+
+    def test_spot_weakness_against_attacking_enemy(self):
+        state = self.given_state(CardId.SPOT_WEAKNESS)
+        state.monsters[0].damage = 0
+        state.monsters[0].hits = 1
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 3)
+
+    def test_spot_weakness_against_idle_enemy(self):
+        state = self.given_state(CardId.SPOT_WEAKNESS)
+        play = self.when_calculating_state_play(state)
+        self.see_player_does_not_have_power(play, PowerId.STRENGTH)
+
+    def test_reaper(self):
+        state = self.given_state(CardId.REAPER, targets=2)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 4)
+        self.see_enemy_lost_hp(play, 4, 1)
+        self.see_player_lost_hp(play, -8)
+
+    def test_reaper_does_not_heal_through_block(self):
+        state = self.given_state(CardId.REAPER)
+        state.monsters[0].block = 3
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 1)
+        self.see_player_lost_hp(play, -1)
+
+    def test_bandage_up(self):
+        state = self.given_state(CardId.BANDAGE_UP)
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, -4)
+
+    def test_dark_shackles(self):
+        state = self.given_state(CardId.DARK_SHACKLES)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, -9)
+
+    def test_flash_of_steel(self):
+        state = self.given_state(CardId.FLASH_OF_STEEL)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_player_discard_count(play, 1)
+        self.see_player_drew_cards(play, 1)
+        self.see_player_spent_energy(play, 0)
+
+    def test_swift_strike(self):
+        state = self.given_state(CardId.SWIFT_STRIKE)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_discard_count(play, 1)
+        self.see_player_spent_energy(play, 0)
+
+    def test_trip(self):
+        state = self.given_state(CardId.TRIP)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
+
+    def test_upgraded_trip(self):
+        state = self.given_state(CardId.TRIP, upgrade=1, targets=2)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2, 1)
+
+    def test_apotheosis(self):
+        state = self.given_state(CardId.APOTHEOSIS)
+        state.draw_pile.append(get_card(CardId.STRIKE_R))
+        play = self.when_calculating_state_play(state)
+        self.assertEqual(play.state.draw_pile[0].upgrade, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_hand_of_greed(self):
+        state = self.given_state(CardId.HAND_OF_GREED)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 20)
+
+    def test_master_of_strategy(self):
+        state = self.given_state(CardId.MASTER_OF_STRATEGY)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_drew_cards(play, 3)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_apparition(self):
+        state = self.given_state(CardId.APPARITION)
+        play = self.when_calculating_state_play(state)
+        self.see_player_has_power(play, PowerId.INTANGIBLE, 1)
+
+    def test_slimed(self):
+        state = self.given_state(CardId.SLIMED)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_pain(self):
+        state = self.given_state(CardId.PAIN)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_calculating_state_play(state)
+        self.see_player_lost_hp(play, 1)
+
+    def test_regret(self):
+        state = self.given_state(CardId.REGRET)
+        for i in range(4):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 5)

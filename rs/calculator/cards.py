@@ -4,16 +4,31 @@ from rs.game.card import CardType
 
 
 class CardId(Enum):
+    # PLACEHOLDER/LOGIC CARDS
     FAKE = 'fake'  # temp fake card for all the ones we don't know yet in game. Basically, treat like a wound.
+    DRAW_FREE_EARLY = 'draw free early'
+    DRAW_FREE = 'draw free'
+    DRAW_PAY_EARLY = 'draw pay early'
+    DRAW_PAY = 'draw pay'
+
+    # REAL CARDS
     ANGER = 'anger'
+    APOTHEOSIS = 'apotheosis'
+    APPARITION = 'ghostly'
+    BANDAGE_UP = 'bandage up'
     BASH = 'bash'
+    BATTLE_TRANCE = 'battle trance'
     BLOODLETTING = 'bloodletting'
     BLOOD_FOR_BLOOD = 'blood for blood'
     BLUDGEON = 'bludgeon'
+    BODY_SLAM = 'body slam'
     BURN = 'burn'
     CARNAGE = 'carnage'
+    CLASH = 'clash'
     CLEAVE = 'cleave'
     CLOTHESLINE = 'clothesline'
+    DARK_SHACKLES = 'dark shackles'
+    DAZED = 'dazed'
     DISARM = 'disarm'
     DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
@@ -21,7 +36,10 @@ class CardId(Enum):
     FEED = 'feed'
     FIEND_FIRE = 'fiend fire'
     FLAME_BARRIER = 'flame barrier'
+    FLASH_OF_STEEL = 'flash of steel'
+    FLEX = 'flex'
     GHOSTLY_ARMOR = 'ghostly armor'
+    HAND_OF_GREED = 'handofgreed'
     HEAVY_BLADE = 'heavy blade'
     HEMOKINESIS = 'hemokinesis'
     IMMOLATE = 'immolate'
@@ -31,17 +49,31 @@ class CardId(Enum):
     IRON_WAVE = 'iron wave'
     JAX = 'j.a.x.'
     LIMIT_BREAK = 'limit break'
+    MASTER_OF_STRATEGY = 'master of strategy'
+    METALLICIZE = 'metallicize'
     OFFERING = 'offering'
+    PAIN = 'pain'
     PERFECTED_STRIKE = 'perfected strike'
     POMMEL_STRIKE = 'pommel strike'
+    POWER_THROUGH = 'power through'
     PUMMEL = 'pummel'
+    RAGE = 'rage'
+    RAMPAGE = 'rampage'
+    REAPER = 'reaper'
+    REGRET = 'regret'
+    RECKLESS_CHARGE = 'reckless charge'
     SEEING_RED = 'seeing red'
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
+    SLIMED = 'slimed'
+    SPOT_WEAKNESS = 'spot weakness'
     STRIKE_R = 'strike_r'
+    SWIFT_STRIKE = 'swift strike'
     THUNDERCLAP = 'thunderclap'
+    TRIP = 'trip'
     TWIN_STRIKE = 'twin strike'
     UPPERCUT = 'uppercut'
+    WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
 
 
@@ -128,6 +160,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.WOUND:
         return Card(card_id, 0, -1, False, CardType.STATUS)
+    if card_id == CardId.DAZED:
+        return Card(card_id, 0, -1, False, CardType.STATUS, ethereal=True)
+    if card_id == CardId.SLIMED:
+        return Card(card_id, 0, 1 if cost is None else cost, False, CardType.STATUS, exhausts=True)
     if card_id == CardId.IMMOLATE:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.BURN:
@@ -140,4 +176,61 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.JAX:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DRAW_FREE_EARLY:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.DRAW_FREE:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.DRAW_PAY_EARLY:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.DRAW_PAY:
+        return Card(card_id, 0, -1, False, CardType.FAKE)
+    if card_id == CardId.BODY_SLAM:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.CLASH:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.FLEX:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.WILD_STRIKE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.BATTLE_TRANCE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.RAGE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.RAMPAGE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.METALLICIZE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.RECKLESS_CHARGE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.POWER_THROUGH:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.SPOT_WEAKNESS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
+    if card_id == CardId.REAPER:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.BANDAGE_UP:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DARK_SHACKLES:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.FLASH_OF_STEEL:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.SWIFT_STRIKE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.TRIP:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True if not upgrade else False, CardType.SKILL)
+    if card_id == CardId.APOTHEOSIS:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.HAND_OF_GREED:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.MASTER_OF_STRATEGY:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.APPARITION:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL,
+                    ethereal=True if not upgrade else False, exhausts=True)
+    if card_id == CardId.PAIN:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.REGRET:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
     # TODO -> logging or throw error or something if it gets here?

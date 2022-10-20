@@ -4,6 +4,7 @@ from typing import List
 from rs.calculator.card_effect_custom_hooks import *
 from rs.calculator.cards import Card, CardId
 from rs.calculator.powers import Powers, PowerId
+from rs.calculator.targets import Player
 
 
 class TargetType(Enum):
@@ -23,8 +24,10 @@ class CardEffects:
             target: TargetType = TargetType.SELF,
             applies_powers=None,
             energy_gain: int = 0,
+            draw: int = 0,
             pre_hooks: List[CardEffectCustomHook] = None,
             post_hooks: List[CardEffectCustomHook] = None,
+            heal: int = 0,
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -33,11 +36,13 @@ class CardEffects:
         self.target: TargetType = target
         self.applies_powers: Powers = dict() if applies_powers is None else applies_powers
         self.energy_gain: int = energy_gain
+        self.draw: int = draw
         self.pre_hooks: List[CardEffectCustomHook] = [] if pre_hooks is None else pre_hooks
         self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
+        self.heal: int = heal
 
 
-def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], discard_pile: List[Card],
+def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_pile: List[Card],
                      hand: List[Card]) -> List[CardEffects]:
     if card.id == CardId.STRIKE_R:
         return [CardEffects(damage=6 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER)]
@@ -54,7 +59,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         return [CardEffects(damage=12 if not card.upgrade else 14, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.WEAKENED: 2} if not card.upgrade else {PowerId.WEAKENED: 3})]
     if card.id == CardId.HEAVY_BLADE:
-        str_bonus = player_powers.get(PowerId.STRENGTH, 0)
+        str_bonus = player.powers.get(PowerId.STRENGTH, 0)
         damage = 12 + (str_bonus * 2 if not card.upgrade else str_bonus * 4)
         return [CardEffects(damage=damage, hits=1, target=TargetType.MONSTER)]
     if card.id == CardId.IRON_WAVE:
@@ -65,9 +70,9 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         damage = 6 + strike_amount * (2 if not card.upgrade else 3)
         return [CardEffects(damage=damage, hits=1, target=TargetType.MONSTER)]
     if card.id == CardId.POMMEL_STRIKE:
-        return [CardEffects(damage=9 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER)]
+        return [CardEffects(damage=9 if not card.upgrade else 10, hits=1, draw=1, target=TargetType.MONSTER)]
     if card.id == CardId.SHRUG_IT_OFF:
-        return [CardEffects(block=8 if not card.upgrade else 11, target=TargetType.SELF)]
+        return [CardEffects(block=8 if not card.upgrade else 11, draw=1, target=TargetType.SELF)]
     if card.id == CardId.THUNDERCLAP:
         return [CardEffects(damage=4 if not card.upgrade else 6, hits=1, target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.VULNERABLE: 1})]
@@ -91,7 +96,7 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
         return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER,
                             post_hooks=[dropkick_post_hook])]
     if card.id == CardId.ENTRENCH:
-        return [CardEffects(target=TargetType.SELF, post_hooks=[dropkick_post_hook])]
+        return [CardEffects(target=TargetType.SELF, post_hooks=[entrench_post_hook])]
     if card.id == CardId.FLAME_BARRIER:
         return [CardEffects(target=TargetType.SELF, block=12 if not card.upgrade else 16,
                             applies_powers={PowerId.FLAME_BARRIER: 4 if not card.upgrade else 6})]
@@ -133,10 +138,62 @@ def get_card_effects(card: Card, player_powers: Powers, draw_pile: List[Card], d
     if card.id == CardId.LIMIT_BREAK:
         return [CardEffects(target=TargetType.SELF, post_hooks=[limit_break_post_hook])]
     if card.id == CardId.OFFERING:
-        return [CardEffects(target=TargetType.SELF, damage=6, hits=1, blockable=False, energy_gain=2)]
+        return [CardEffects(target=TargetType.SELF, damage=6, hits=1, blockable=False,
+                            draw=3 if not card.upgrade else 5, energy_gain=2)]
     if card.id == CardId.JAX:
         return [CardEffects(target=TargetType.SELF, damage=3, hits=1, blockable=False,
                             post_hooks=[jax_post_hook if not card.upgrade else jax_upgraded_post_hook])]
+    if card.id == CardId.BODY_SLAM:
+        return [CardEffects(target=TargetType.MONSTER, damage=player.block, hits=1)]
+    if card.id == CardId.CLASH:
+        return [CardEffects(target=TargetType.MONSTER, damage=14 if not card.upgrade else 18, hits=1)]
+    if card.id == CardId.FLEX:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 4})]
+    if card.id == CardId.WILD_STRIKE:
+        return [CardEffects(target=TargetType.MONSTER, damage=12 if not card.upgrade else 18, hits=1,
+                            post_hooks=[wild_strike_post_hook])]
+    if card.id == CardId.BATTLE_TRANCE:
+        return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 5),
+                CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1})]
+    if card.id == CardId.RAGE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.RAGE: 3 if not card.upgrade else 5})]
+    if card.id == CardId.RAMPAGE:
+        return [CardEffects(target=TargetType.MONSTER, damage=8, hits=1)]
+    if card.id == CardId.METALLICIZE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.METALLICIZE: 3 if not card.upgrade else 4})]
+    if card.id == CardId.RECKLESS_CHARGE:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
+                            post_hooks=[reckless_charge_post_hook])]
+    if card.id == CardId.POWER_THROUGH:
+        return [CardEffects(block=15 if not card.upgrade else 20, target=TargetType.SELF,
+                            post_hooks=[power_through_post_hook])]
+    if card.id == CardId.SPOT_WEAKNESS:
+        return [CardEffects(target=TargetType.MONSTER,
+                            post_hooks=[
+                                spot_weakness_post_hook if not card.upgrade else spot_weakness_upgraded_post_hook])]
+    if card.id == CardId.REAPER:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=4 if not card.upgrade else 5, hits=1,
+                            post_hooks=[reaper_post_hook])]
+    if card.id == CardId.BANDAGE_UP:
+        return [CardEffects(target=TargetType.SELF, heal=4 if not card.upgrade else 6)]
+    if card.id == CardId.DARK_SHACKLES:
+        return [CardEffects(target=TargetType.MONSTER,
+                            applies_powers={PowerId.STRENGTH: -9 if not card.upgrade else -15})]
+    if card.id == CardId.FLASH_OF_STEEL:
+        return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 6, hits=1, draw=1)]
+    if card.id == CardId.SWIFT_STRIKE:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, draw=1)]
+    if card.id == CardId.TRIP:
+        return [CardEffects(target=TargetType.MONSTER if not card.upgrade else TargetType.ALL_MONSTERS,
+                            applies_powers={PowerId.VULNERABLE: 2})]
+    if card.id == CardId.APOTHEOSIS:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[apotheosis_post_hook])]
+    if card.id == CardId.HAND_OF_GREED:
+        return [CardEffects(target=TargetType.MONSTER, damage=20 if not card.upgrade else 25, hits=1)]
+    if card.id == CardId.MASTER_OF_STRATEGY:
+        return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4)]
+    if card.id == CardId.APPARITION:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE: 1})]
 
-    # default case, todo maybe some logging or?
+        # default case, todo maybe some logging or?
     return [CardEffects()]

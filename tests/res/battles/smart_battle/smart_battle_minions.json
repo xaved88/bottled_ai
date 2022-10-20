@@ -1,0 +1,1239 @@
+{
+  "available_commands": [
+    "play",
+    "end",
+    "potion",
+    "key",
+    "click",
+    "wait",
+    "state"
+  ],
+  "ready_for_command": true,
+  "in_game": true,
+  "game_state": {
+    "screen_type": "NONE",
+    "screen_state": {},
+    "seed": 1312173727253261583,
+    "combat_state": {
+      "draw_pile": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Pommel Strike",
+          "id": "Pommel Strike",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "25a15f81-b275-4eac-be51-0df84b4eae2b",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Battle Trance+",
+          "id": "Battle Trance",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "7017d214-565a-40bd-897e-72d717613133",
+          "upgrades": 1,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Twin Strike",
+          "id": "Twin Strike",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "223f956b-69a7-4738-89f9-0d9a6d8db5f5",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 2,
+          "name": "Perfected Strike+",
+          "id": "Perfected Strike",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "a5124c1d-c366-43c8-9c9e-9277d7e6819b",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Thunderclap",
+          "id": "Thunderclap",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "5945703f-a4d5-4d0c-b76c-38fddfd73968",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend+",
+          "id": "Defend_R",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "2186c682-6af2-4b22-872a-93de3a50c5c0",
+          "upgrades": 1,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 2,
+          "name": "Reaper",
+          "id": "Reaper",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "6e328fbf-19e4-4226-b643-f9508b5fb127",
+          "upgrades": 0,
+          "rarity": "RARE",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend+",
+          "id": "Defend_R",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "227262a5-8503-4375-8e9f-9e1e2350ef61",
+          "upgrades": 1,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 2,
+          "name": "Flame Barrier",
+          "id": "Flame Barrier",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "3a8f8c45-4748-44df-8976-3556e64fe47f",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Strike",
+          "id": "Strike_R",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "f35642e5-f659-4b63-bba0-45a6be814833",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": true
+        }
+      ],
+      "discard_pile": [],
+      "exhaust_pile": [],
+      "cards_discarded_this_turn": 0,
+      "times_damaged": 0,
+      "monsters": [
+        {
+          "is_gone": false,
+          "move_hits": 1,
+          "move_base_damage": 9,
+          "half_dead": false,
+          "move_adjusted_damage": 9,
+          "max_hp": 14,
+          "intent": "ATTACK",
+          "move_id": 1,
+          "name": "Sneaky Gremlin",
+          "current_hp": 14,
+          "block": 0,
+          "id": "GremlinThief",
+          "powers": [
+            {
+              "amount": -1,
+              "name": "Minion",
+              "id": "Minion"
+            }
+          ]
+        },
+        {
+          "is_gone": false,
+          "move_hits": 1,
+          "move_base_damage": 4,
+          "half_dead": false,
+          "move_adjusted_damage": 4,
+          "max_hp": 16,
+          "intent": "ATTACK_DEBUFF",
+          "move_id": 2,
+          "name": "Fat Gremlin",
+          "current_hp": 16,
+          "block": 0,
+          "id": "GremlinFat",
+          "powers": [
+            {
+              "amount": -1,
+              "name": "Minion",
+              "id": "Minion"
+            }
+          ]
+        },
+        {
+          "is_gone": false,
+          "move_hits": 1,
+          "move_base_damage": -1,
+          "half_dead": false,
+          "move_adjusted_damage": -1,
+          "max_hp": 181,
+          "intent": "DEFEND_BUFF",
+          "move_id": 3,
+          "name": "Gremlin Leader",
+          "current_hp": 1,
+          "block": 0,
+          "id": "GremlinLeader",
+          "powers": []
+        }
+      ],
+      "turn": 1,
+      "limbo": [],
+      "hand": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Strike",
+          "id": "Strike_R",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "2f56f27e-8e6c-4d09-93b3-c41ff7d34d3c",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": true
+        }
+      ],
+      "player": {
+        "orbs": [],
+        "current_hp": 57,
+        "block": 0,
+        "max_hp": 80,
+        "powers": [
+          {
+            "amount": -1,
+            "name": "Confusion",
+            "id": "Confusion"
+          }
+        ],
+        "energy": 3
+      }
+    },
+    "deck": [
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_R",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "77ea7e5b-a241-42b8-8c0f-1dc81daeff36",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_R",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "2f56f27e-8e6c-4d09-93b3-c41ff7d34d3c",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_R",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "bd6410ab-55fa-45a2-97b3-5a4c3c634558",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_R",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "479d0b05-4b92-4b8f-8e07-a6f65603008a",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_R",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "f35642e5-f659-4b63-bba0-45a6be814833",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend+",
+        "id": "Defend_R",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "227262a5-8503-4375-8e9f-9e1e2350ef61",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend",
+        "id": "Defend_R",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "b5e37da0-856c-4e4b-84d2-50b048965c87",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend+",
+        "id": "Defend_R",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "2186c682-6af2-4b22-872a-93de3a50c5c0",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Bash+",
+        "id": "Bash",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "1a313174-7ded-48f0-a699-64d26143463e",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Thunderclap",
+        "id": "Thunderclap",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "5945703f-a4d5-4d0c-b76c-38fddfd73968",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Perfected Strike+",
+        "id": "Perfected Strike",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "a5124c1d-c366-43c8-9c9e-9277d7e6819b",
+        "upgrades": 1,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Flame Barrier",
+        "id": "Flame Barrier",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "3a8f8c45-4748-44df-8976-3556e64fe47f",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Thunderclap",
+        "id": "Thunderclap",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "68ac8274-bdeb-4b38-a263-68f685c96c4a",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Reaper",
+        "id": "Reaper",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "6e328fbf-19e4-4226-b643-f9508b5fb127",
+        "upgrades": 0,
+        "rarity": "RARE",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Twin Strike",
+        "id": "Twin Strike",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "223f956b-69a7-4738-89f9-0d9a6d8db5f5",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Pommel Strike",
+        "id": "Pommel Strike",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "25a15f81-b275-4eac-be51-0df84b4eae2b",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Battle Trance+",
+        "id": "Battle Trance",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "7017d214-565a-40bd-897e-72d717613133",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      }
+    ],
+    "relics": [
+      {
+        "name": "Snecko Eye",
+        "id": "Snecko Eye",
+        "counter": -1
+      },
+      {
+        "name": "Warped Tongs",
+        "id": "WarpedTongs",
+        "counter": -1
+      },
+      {
+        "name": "Omamori",
+        "id": "Omamori",
+        "counter": 2
+      },
+      {
+        "name": "Regal Pillow",
+        "id": "Regal Pillow",
+        "counter": -1
+      },
+      {
+        "name": "War Paint",
+        "id": "War Paint",
+        "counter": -1
+      },
+      {
+        "name": "Ceramic Fish",
+        "id": "CeramicFish",
+        "counter": -1
+      },
+      {
+        "name": "Runic Cube",
+        "id": "Runic Cube",
+        "counter": -1
+      },
+      {
+        "name": "Membership Card",
+        "id": "Membership Card",
+        "counter": -1
+      },
+      {
+        "name": "Preserved Insect",
+        "id": "PreservedInsect",
+        "counter": -1
+      },
+      {
+        "name": "Meat on the Bone",
+        "id": "Meat on the Bone",
+        "counter": -1
+      }
+    ],
+    "max_hp": 80,
+    "act_boss": "Automaton",
+    "gold": 128,
+    "action_phase": "WAITING_ON_USER",
+    "act": 2,
+    "screen_name": "NONE",
+    "room_phase": "COMBAT",
+    "is_screen_up": false,
+    "potions": [
+      {
+        "requires_target": true,
+        "can_use": true,
+        "can_discard": true,
+        "name": "Weak Potion",
+        "id": "Weak Potion"
+      },
+      {
+        "requires_target": false,
+        "can_use": true,
+        "can_discard": true,
+        "name": "Swift Potion",
+        "id": "Swift Potion"
+      },
+      {
+        "requires_target": false,
+        "can_use": true,
+        "can_discard": true,
+        "name": "Block Potion",
+        "id": "Block Potion"
+      }
+    ],
+    "current_hp": 57,
+    "floor": 27,
+    "ascension_level": 0,
+    "class": "IRONCLAD",
+    "map": [
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ],
+        "x": 1,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "x": 3,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "x": 5,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "x": 1,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "x": 2,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "x": 3,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "x": 4,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "x": 1,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "x": 3,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "x": 5,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "x": 1,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "x": 2,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "x": 3,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "x": 4,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "x": 2,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "x": 3,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "x": 4,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 2,
+            "y": 6
+          }
+        ],
+        "x": 2,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "x": 3,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "x": 4,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 7
+          },
+          {
+            "x": 2,
+            "y": 7
+          }
+        ],
+        "x": 2,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "x": 3,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 1,
+            "y": 8
+          }
+        ],
+        "x": 1,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 2,
+            "y": 8
+          }
+        ],
+        "x": 2,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 4,
+            "y": 8
+          },
+          {
+            "x": 5,
+            "y": 8
+          }
+        ],
+        "x": 4,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 0,
+            "y": 9
+          },
+          {
+            "x": 2,
+            "y": 9
+          }
+        ],
+        "x": 1,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 2,
+            "y": 9
+          }
+        ],
+        "x": 2,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 5,
+            "y": 9
+          }
+        ],
+        "x": 4,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 5,
+            "y": 9
+          }
+        ],
+        "x": 5,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 10
+          }
+        ],
+        "x": 0,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 2,
+            "y": 10
+          },
+          {
+            "x": 3,
+            "y": 10
+          }
+        ],
+        "x": 2,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 4,
+            "y": 10
+          },
+          {
+            "x": 6,
+            "y": 10
+          }
+        ],
+        "x": 5,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 11
+          }
+        ],
+        "x": 1,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 11
+          }
+        ],
+        "x": 2,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 11
+          },
+          {
+            "x": 3,
+            "y": 11
+          }
+        ],
+        "x": 3,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 11
+          }
+        ],
+        "x": 4,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 5,
+            "y": 11
+          }
+        ],
+        "x": 6,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 12
+          }
+        ],
+        "x": 1,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 12
+          }
+        ],
+        "x": 2,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 4,
+            "y": 12
+          }
+        ],
+        "x": 3,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 12
+          }
+        ],
+        "x": 4,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 6,
+            "y": 12
+          }
+        ],
+        "x": 5,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 13
+          },
+          {
+            "x": 3,
+            "y": 13
+          }
+        ],
+        "x": 2,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 13
+          },
+          {
+            "x": 5,
+            "y": 13
+          }
+        ],
+        "x": 4,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 13
+          }
+        ],
+        "x": 6,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 14
+          }
+        ],
+        "x": 2,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 14
+          },
+          {
+            "x": 4,
+            "y": 14
+          }
+        ],
+        "x": 3,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 14
+          }
+        ],
+        "x": 5,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 2,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 3,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 4,
+        "y": 14,
+        "parents": []
+      }
+    ],
+    "room_type": "MonsterRoomElite"
+  }
+}

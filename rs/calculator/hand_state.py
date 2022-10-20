@@ -2,7 +2,7 @@ import math
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
-from rs.calculator.cards import Card
+from rs.calculator.cards import Card, CardId, get_card
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
@@ -25,6 +25,8 @@ class HandState:
         self.draw_pile: List[Card] = [] if draw_pile is None else draw_pile
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
+        self.__is_first_play: bool = False  # transient and used only internally
+        self.__starting_energy: int = 0  # transient and used only internally
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -34,7 +36,7 @@ class HandState:
             return plays
 
         for card_idx, card in enumerate(self.hand):
-            if not is_card_playable(card, self.player):
+            if not is_card_playable(card, self.player, self.hand):
                 continue
             if card.needs_target:
                 for target_idx, target in enumerate(self.monsters):
@@ -45,10 +47,21 @@ class HandState:
 
         return plays
 
-    def transform_from_play(self, play: Play):
+    def transform_from_play(self, play: Play, is_first_play: bool):
+        self.__is_first_play = is_first_play
+        self.__starting_energy = self.player.energy
+
         (card_index, target_index) = play
         card = self.hand[card_index]
-        effects = get_card_effects(card, self.player.powers, self.draw_pile, self.discard_pile, self.hand)
+
+        # play the card
+        self.player.energy -= card.cost
+        effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
+
+        # pain
+        pain_count = len([1 for c in self.hand if c.id == CardId.PAIN])
+        if pain_count:
+            self.player.inflict_damage(self.player, pain_count, 1, False, vulnerable_modifier=1, is_attack=False)
 
         # damage bonuses:
         damage_additive_bonus = 0
@@ -63,31 +76,47 @@ class HandState:
         if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
             for effect in effects:
                 effect.damage *= 2
+        player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
 
         player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
         player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
         monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
 
-        # play the card
-        self.player.energy -= card.cost
+        # pre play stuff
+        if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
+            self.player.block += self.player.powers[PowerId.RAGE]
+
         for effect in effects:
             # custom post hooks
             for hook in effect.pre_hooks:
                 hook(self, effect, target_index)
 
+            # heal
+            if effect.heal:
+                self.player.heal(effect.heal)
+
             # deal damage to target
             if effect.hits:
                 if effect.target == TargetType.SELF:
-                    self.player.inflict_damage(base_damage=effect.damage, hits=1, blockable=effect.blockable,
-                                               vulnerable_modifier=1)
+                    self.player.inflict_damage(base_damage=effect.damage, source=self.player, hits=1,
+                                               blockable=effect.blockable,
+                                               vulnerable_modifier=1, is_attack=False)
                 else:
                     damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
                     if effect.target == TargetType.MONSTER:
-                        self.monsters[target_index].inflict_damage(damage, effect.hits, effect.blockable,
-                                                                   vulnerable_modifier=monster_vulnerable_modifier)
+                        (hp_damage) = self.monsters[target_index].inflict_damage(source=self.player, base_damage=damage,
+                                                                                 hits=effect.hits,
+                                                                                 blockable=effect.blockable,
+                                                                                 vulnerable_modifier=monster_vulnerable_modifier,
+                                                                                 min_hp_damage=player_min_attack_hp_damage)
+                        effect.hp_damage = hp_damage
                     elif effect.target == TargetType.ALL_MONSTERS:
+                        effect.hp_damage = 0
                         for target in self.monsters:
-                            target.inflict_damage(damage, effect.hits, effect.blockable, monster_vulnerable_modifier)
+                            (hp_damage) = target.inflict_damage(self.player, damage, effect.hits, effect.blockable,
+                                                                monster_vulnerable_modifier,
+                                                                min_hp_damage=player_min_attack_hp_damage)
+                            effect.hp_damage += hp_damage
 
             # block (always applies to player right?)
             if effect.block:
@@ -99,14 +128,29 @@ class HandState:
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
                     self.player.add_powers(effect.applies_powers)
-                elif effect.target == TargetType.MONSTER:
-                    self.monsters[target_index].add_powers(effect.applies_powers)
-                elif effect.target == TargetType.ALL_MONSTERS:
-                    for target in self.monsters:
-                        target.add_powers(pickle_deepcopy(effect.applies_powers))
+                else:
+                    targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
+                    for target in targets:
+                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
+                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
+                            target.add_powers({PowerId.WEAKENED: 1})
+
             # energy gain
             self.player.energy += effect.energy_gain
 
+            # card draw
+            if effect.draw:
+                self.draw_cards(effect.draw)
+
+        if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
+            idx = self.hand.index(card)
+            if card.exhausts:
+                self.exhaust_pile.append(card)
+            elif card.type != CardType.POWER:
+                self.discard_pile.append(card)
+            del self.hand[idx]
+
+        for effect in effects:
             # custom post hooks
             for hook in effect.post_hooks:
                 hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
@@ -126,28 +170,50 @@ class HandState:
             if self.relics[RelicId.PEN_NIB] >= 10:
                 self.relics[RelicId.PEN_NIB] -= 10
 
-        if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
-            idx = self.hand.index(card)
-            if card.exhausts:
-                self.exhaust_pile.append(card)
-            elif card.type != CardType.POWER:
-                self.discard_pile.append(card)
-            del self.hand[idx]
+        if RelicId.ORNAMENTAL_FAN in self.relics and card.type == CardType.ATTACK:
+            self.relics[RelicId.ORNAMENTAL_FAN] += 1
+            if self.relics[RelicId.ORNAMENTAL_FAN] >= 3:
+                self.relics[RelicId.ORNAMENTAL_FAN] -= 3
+                self.player.block += 4
+
+        if RelicId.LETTER_OPENER in self.relics and card.type == CardType.SKILL:
+            self.relics[RelicId.LETTER_OPENER] += 1
+            if self.relics[RelicId.LETTER_OPENER] >= 3:
+                self.relics[RelicId.LETTER_OPENER] -= 3
+                for monster in self.monsters:
+                    if monster.current_hp > 0:
+                        monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
+
+        # minion battles -> make sure a non-minion is alive, otherwise kill them all.
+        if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
+            if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
+                for m in self.monsters:
+                    m.current_hp = 0
 
     def end_turn(self):
+        if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
+            self.player.block += 6
+
         # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
+        self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
+        # regret
+        regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])
+        if regret_count:
+            self.player.inflict_damage(self.player, regret_count * len(self.hand), 1, False, vulnerable_modifier=1,
+                                       is_attack=False)
         # todo - decrement buffs that should be counted down?
-        # increment relics that should be counted up
+        # todo - increment relics that should be counted up
 
         # apply enemy damage
+        player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
         for monster in self.monsters:
             if monster.current_hp > 0 and monster.hits:
                 monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
-                self.player.inflict_damage(damage, monster.hits)
+                self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
@@ -174,8 +240,25 @@ class HandState:
             state_string += f"{relic.value}.{self.relics[relic]},"
         return state_string
 
+    def draw_cards(self, amount: int):
+        if PowerId.NO_DRAW in self.player.powers:
+            return
 
-def is_card_playable(card: Card, player: Player) -> bool:
+        early = self.__is_first_play
+        free = self.__starting_energy <= self.player.energy
+
+        # determine which type of card to draw based on energy
+        card_type = CardId.DRAW_FREE_EARLY if free and early \
+            else CardId.DRAW_FREE if free and not early \
+            else CardId.DRAW_PAY_EARLY if not free and early \
+            else CardId.DRAW_PAY
+
+        # can't draw more than 10 cards, will discard the played card tho
+        amount = min(amount, 11 - len(self.draw_pile))
+        self.hand += [get_card(card_type) for i in range(amount)]
+
+
+def is_card_playable(card: Card, player: Player, hand: List[Card]) -> bool:
     # unplayable cards like burn, wound, and reflex
     if card.cost == -1:
         return False
@@ -187,6 +270,8 @@ def is_card_playable(card: Card, player: Player) -> bool:
         return False
 
     # special card-specific logic, like clash
+    if card.id == CardId.CLASH and len([1 for c in hand if c.type != CardType.ATTACK]):
+        return False
 
     return True
 

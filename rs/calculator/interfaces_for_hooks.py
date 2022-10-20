@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable
 
 from rs.calculator.cards import Card
 from rs.calculator.powers import Powers
@@ -20,6 +20,8 @@ class HandStateInterface:
     monsters: List[Monster]
     relics: Relics
 
+    draw_cards: Callable[[int], None]
+
 class CardEffectsInterface:
     damage: int 
     hits: int 
@@ -27,3 +29,4 @@ class CardEffectsInterface:
     block: int
     applies_powers: Powers 
     energy_gain: int
+    draw: int
