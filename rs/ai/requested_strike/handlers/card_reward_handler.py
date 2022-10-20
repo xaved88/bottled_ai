@@ -42,6 +42,10 @@ class CardRewardHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
         choice_list = state.game_state()["choice_list"]
+
+        for idx, choice in enumerate(choice_list):
+            choice_list[idx] = choice.replace("+", "")
+
         deck_card_list = state.get_deck_card_list()
 
         for desired_card in self.desired_cards.keys():
