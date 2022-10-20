@@ -11,13 +11,13 @@ desired_choices = [
     'obtain a random common relic',
     'obtain 100 gold',
     'choose a card to obtain',
-    'max hp +8',
     'obtain 3 random potions',
-    'enemies in your next three combats have 1 hp',
+    'choose a colorless card to obtain',
+    'max hp +8',
     'obtain a random rare card',
+    'enemies in your next three combats have 1 hp',
     'remove a card from your deck',
     'transform a card',
-    'choose a colorless card to obtain',
     'lose your starting relic obtain a random boss relic',
 ]
 
