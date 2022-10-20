@@ -25,6 +25,7 @@ class BossRelicHandler(Handler):
             "runic cube",
             "runic pyramid",
             "black blood",
+            "calling bell",
             "empty cage",
             "black star",
             "sacred bark",
