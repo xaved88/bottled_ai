@@ -16,10 +16,9 @@ class DefaultSbcComparator(SbcComparator):
         values['battle_won']: bool = not len(values['monsters_hp'])
         values['incoming_damage']: int = original.player.current_hp - state.player.current_hp
         values['dead_monsters']: int = len([True for monster in state.monsters if monster.current_hp <= 0])
-        monsters_vulnerable_hp = [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3)
-                                  for monster in state.monsters if monster.current_hp > 0]
-        values['lowest_health_monster']: int = 0 if values['battle_won'] else min(monsters_vulnerable_hp)
-        values['total_monster_health']: int = 0 if values['battle_won'] else sum(monsters_vulnerable_hp)
+        monsters_hp = [monster.current_hp for monster in state.monsters if monster.current_hp > 0]
+        values['lowest_health_monster']: int = 0 if values['battle_won'] else min(monsters_hp)
+        values['total_monster_health']: int = 0 if values['battle_won'] else sum(monsters_hp)
         return values
 
     def does_best_remain_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
