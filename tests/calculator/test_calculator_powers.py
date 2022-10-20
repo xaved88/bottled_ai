@@ -331,3 +331,61 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_discard_count(play, 1)
         self.see_player_does_not_have_power(play, PowerId.ARTIFACT)
         self.see_player_does_not_have_power(play, PowerId.NO_DRAW)
+
+    def test_split_removes_enemy_attack(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].damage = 13
+        state.monsters[0].hits = 2
+        state.monsters[0].current_hp = 46
+        state.monsters[0].max_hp = 80
+        state.monsters[0].powers = {PowerId.SPLIT: 1}
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_does_not_have_power(play, PowerId.SPLIT)
+        self.see_player_lost_hp(play, 0)
+
+    def test_not_quite_split_does_nothing(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].damage = 13
+        state.monsters[0].hits = 2
+        state.monsters[0].current_hp = 47
+        state.monsters[0].max_hp = 80
+        state.monsters[0].powers = {PowerId.SPLIT: 1}
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_has_power(play, PowerId.SPLIT, 1)
+        self.see_player_lost_hp(play, 26)
+
+    def test_mode_shift_removes_enemy_attack(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].damage = 13
+        state.monsters[0].hits = 2
+        state.monsters[0].powers = {PowerId.MODE_SHIFT: 1}
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_does_not_have_power(play, PowerId.MODE_SHIFT)
+        self.see_player_lost_hp(play, 0)
+        self.see_enemy_block_is(play, 20)
+
+    def test_mode_does_nothing_when_not_broken(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].damage = 13
+        state.monsters[0].hits = 2
+        state.monsters[0].powers = {PowerId.MODE_SHIFT: 8}
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_has_power(play, PowerId.MODE_SHIFT, 2)
+        self.see_player_lost_hp(play, 26)
+        self.see_enemy_block_is(play, 0)
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_mode_shift_blocks(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].damage = 13
+        state.monsters[0].hits = 2
+        state.monsters[0].powers = {PowerId.MODE_SHIFT: 5}
+        play = self.when_calculating_state_play(state)
+        play.end_turn()
+        self.see_enemy_does_not_have_power(play, PowerId.MODE_SHIFT)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_enemy_block_is(play, 15)

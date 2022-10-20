@@ -2,6 +2,7 @@ from rs.calculator.cards import CardId
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.hand_state import HandState
 from rs.calculator.powers import PowerId
+from rs.calculator.relics import RelicId
 
 
 class GCValues:
@@ -18,6 +19,9 @@ class GCValues:
             draw_pay_early: int,
             draw_pay: int,
             energy: int,
+            intangible: int,
+            enemy_vulnerable: int,
+            enemy_weak: int,
     ):
         self.battle_lost: bool = battle_lost
         self.battle_won: bool = battle_won
@@ -30,6 +34,9 @@ class GCValues:
         self.draw_pay_early: int = draw_pay_early
         self.draw_pay: int = draw_pay
         self.energy: int = energy
+        self.intangible: int = intangible
+        self.enemy_vulnerable: int = enemy_vulnerable
+        self.enemy_weak: int = enemy_weak
 
 
 class GeneralComparator(SbcComparator):
@@ -50,6 +57,9 @@ class GeneralComparator(SbcComparator):
             draw_pay_early=len([True for c in state.hand if c.id == CardId.DRAW_PAY_EARLY]),
             draw_pay=len([True for c in state.hand if c.id == CardId.DRAW_PAY or c.id == CardId.DRAW_PAY_EARLY]),
             energy=state.player.energy,
+            intangible=state.player.powers.get(PowerId.INTANGIBLE, 0),
+            enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
+            enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -58,14 +68,18 @@ class GeneralComparator(SbcComparator):
             return challenger_state.player.max_hp > best_state.player.max_hp
         if best.incoming_damage != challenger.incoming_damage:
             return challenger.incoming_damage < best.incoming_damage
-        # nunchaku counter
-        # pen nib counter
+        if RelicId.PEN_NIB in best_state.player.relics and \
+                best_state.player.relics[RelicId.PEN_NIB] != challenger_state.player.relics[RelicId.PEN_NIB]:
+            return challenger_state.player.relics[RelicId.PEN_NIB] > best_state.player.relics[RelicId.PEN_NIB]
+        if RelicId.NUNCHAKU in best_state.player.relics and \
+                best_state.player.relics[RelicId.NUNCHAKU] != challenger_state.player.relics[RelicId.NUNCHAKU]:
+            return challenger_state.player.relics[RelicId.NUNCHAKU] > best_state.player.relics[RelicId.NUNCHAKU]
         return False
 
     def does_best_remain_the_best(self, best_state: HandState, challenger_state: HandState,
                                   original: HandState) -> bool:
         """
-        - weak + vulnerable, improve valuing of it
+        - split
         """
         best = self.get_values(best_state, original)
         challenger = self.get_values(challenger_state, original)
@@ -83,10 +97,16 @@ class GeneralComparator(SbcComparator):
             return challenger.draw_free_early > best.draw_free_early
         if best.draw_free != challenger.draw_free:
             return challenger.draw_free > best.draw_free
+        if max(1, best.intangible) != max(1, challenger.intangible):
+            return challenger.intangible > best.intangible
         if max(2, best.incoming_damage) != max(2, challenger.incoming_damage):
             return challenger.incoming_damage < best.incoming_damage
         if best.dead_monsters != challenger.dead_monsters:
             return challenger.dead_monsters > best.dead_monsters
+        if max(1, best.enemy_vulnerable) != max(1, challenger.enemy_vulnerable):
+            return challenger.enemy_vulnerable > best.enemy_vulnerable
+        if max(1, best.enemy_weak) != max(1, challenger.enemy_weak):
+            return challenger.enemy_weak > best.enemy_weak
         if best.lowest_health_monster != challenger.lowest_health_monster:
             return challenger.lowest_health_monster < best.lowest_health_monster
         if best.total_monster_health != challenger.total_monster_health:

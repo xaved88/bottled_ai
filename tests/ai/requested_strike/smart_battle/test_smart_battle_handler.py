@@ -21,7 +21,7 @@ class BattleHandlerTestCase(RsTestHandlerFixture):
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
         state = load_resource_state('battles/smart_battle/smart_battle_complex_case.json')
-        self.assertEqual(['play 1'], SmartBattleHandler().handle(state))
+        self.assertEqual(['play 5'], SmartBattleHandler().handle(state))
         end = time.perf_counter()
         if end > start + 40:
             self.fail("Process took too long!")

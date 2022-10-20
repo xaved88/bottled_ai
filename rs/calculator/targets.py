@@ -83,6 +83,8 @@ class Target:
                         self.powers[PowerId.PLATED_ARMOR] -= 1
                     if is_attack and self.powers.get(PowerId.FLIGHT):
                         self.powers[PowerId.FLIGHT] -= 1
+                    if is_attack and self.powers.get(PowerId.MODE_SHIFT):
+                        self.powers[PowerId.MODE_SHIFT] -= hit_damage
                     if is_attack and self.powers.get(PowerId.CURL_UP):
                         self.block = self.powers.get(PowerId.CURL_UP)
                         del self.powers[PowerId.CURL_UP]
@@ -105,7 +107,16 @@ class Target:
                 self.damage = 0
                 self.hits = 0
                 del self.powers[PowerId.FLIGHT]
-
+            ms = self.powers.get(PowerId.MODE_SHIFT)
+            if ms is not None and ms < 1:
+                self.damage = 0
+                self.hits = 0
+                self.block = 20
+                del self.powers[PowerId.MODE_SHIFT]
+        if self.powers.get(PowerId.SPLIT) and self.current_hp <= self.max_hp / 2:
+            self.damage = 0
+            self.hits = 0
+            del self.powers[PowerId.SPLIT]
         return (health_damage_dealt)
 
     # returns a list of powerIds that were applied and not blocked by artifacts
