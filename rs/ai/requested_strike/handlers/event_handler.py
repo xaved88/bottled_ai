@@ -98,7 +98,7 @@ class EventHandler(Handler):
             return ["choose 0"]  # Purge
 
         if event_name == "Transmogrifier":
-            return ["choose 1", "choose 0"]  # Avoid transforms, many cards are just kind of a curse for us.
+            return ["choose leave"]  # Avoid transforms, many cards are just kind of a curse for us.
 
         if event_name == "Upgrade Shrine":
             return ["choose 0"]  # Free upgrade

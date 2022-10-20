@@ -28,7 +28,7 @@ class CardRewardHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \
                and state.screen_type() == ScreenType.CARD_REWARD.value \
-               and state.game_state()["room_phase"] == "COMPLETE"
+               and (state.game_state()["room_phase"] == "COMPLETE" or state.game_state()["room_phase"] == "EVENT")
 
     def handle(self, state: GameState) -> List[str]:
         choice_list = state.game_state()["choice_list"]
@@ -42,6 +42,9 @@ class CardRewardHandler(Handler):
             return ["wait 30", "choose " + str(choice_list.index(desired_card)), "wait 30"]
 
         if 'bowl' in choice_list:
-            return ["wait 30", "choose bowl", "proceed"]
+            return ["wait 30", "choose bowl"]
 
-        return ["skip", "proceed"]
+        if state.game_state()["room_phase"] == "EVENT":
+            return ["skip"]  # There isn't a `proceed` available after skipping Neow's card obtain for example.
+
+        return ["skip", "proceed"]  # This 'proceed' is for avoiding looking at the card rewards again.

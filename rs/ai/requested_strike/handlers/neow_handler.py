@@ -5,6 +5,22 @@ from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
+# We don't cover choice 2, which is an option constructed out of a buff AND a debuff. 3 is always relic swap.
+desired_choices = [
+    'upgrade a card',
+    'obtain a random common relic',
+    'obtain 100 gold',
+    'choose a card to obtain',
+    'max hp +8',
+    'obtain 3 random potions',
+    'enemies in your next three combats have 1 hp',
+    'obtain a random rare card',
+    'remove a card from your deck',
+    'transform a card',
+    'choose a colorless card to obtain',
+    'lose your starting relic obtain a random boss relic',
+]
+
 
 class NeowHandler(Handler):
 
@@ -16,5 +32,9 @@ class NeowHandler(Handler):
     def handle(self, state: GameState) -> List[str]:
         if "leave" in state.get_choice_list():
             return ["choose 0"]
-        # choose 3 here for relic swap
-        return ["choose 0", "wait 30"]
+
+        choice_list = state.game_state()["choice_list"]
+
+        for choice in desired_choices:
+            if choice in choice_list:
+                return ["choose " + choice, "wait 30"]
