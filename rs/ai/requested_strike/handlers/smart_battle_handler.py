@@ -10,7 +10,7 @@ from rs.machine.state import GameState
 class SmartBattleHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
-        return state.has_command(Command.PLAY) and state.game_state()['room_type'] == "MonsterRoom"
+        return state.has_command(Command.PLAY)
 
     def handle(self, state: GameState) -> List[str]:
         path = get_best_battle_path(state, GeneralComparator())
