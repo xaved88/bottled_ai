@@ -9,16 +9,31 @@ class UpgradeHandler(Handler):
 
     def __init__(self):
         self.priorities: List[str] = [
+            'apotheosis',
             'perfected strike',
             'bash',
             'shockwave',
-            'uppercut',
+            'uppercut',  # Not in pickup list at time of writing
             'battle trance',
             'offering',
-            'seeing red',
+            'blind',
+            'seeing red',  # Not in pickup list at time of writing
+            'dropkick',
+            'flame barrier',
             'twin strike',
             'pommel strike',
-            'thunderclap'
+            'handofgreed',
+            'thunderclap',
+            'shrug it off',
+            'impervious',
+            'ghostly armor',
+            'master of strategy',
+            'flash of steel',
+            'trip',
+            'dark shackles',
+            'swift strike',
+            'dramatic entrance',
+            'finesse',
         ]
 
     def can_handle(self, state: GameState) -> bool:
