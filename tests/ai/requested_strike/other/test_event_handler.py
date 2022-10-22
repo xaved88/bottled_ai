@@ -6,4 +6,4 @@ class TestEventHandler(RsTestHandlerFixture):
     handler = EventHandler
 
     def test_handle_purifier(self):
-        self.execute_handler_tests('/other/event_purifier.json', ['choose 0'])
+        self.execute_handler_tests('/other/event_purifier.json', ['choose 0', 'wait 30'])
