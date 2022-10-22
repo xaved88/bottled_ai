@@ -1,5 +1,6 @@
 from typing import List
 
+from config import presentation_mode, p_delay_s
 from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
@@ -17,4 +18,6 @@ class ChestHandler(Handler):
     def handle(self, state: GameState) -> List[str]:
         if state.has_relic("Cursed Key") and state.deck.contains_type(CardType.CURSE):
             return ["proceed"]
+        if presentation_mode:
+            return [p_delay_s, "choose 0", "wait 30"]
         return ["choose 0", "wait 30"]

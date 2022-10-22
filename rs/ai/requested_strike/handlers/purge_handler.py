@@ -1,5 +1,6 @@
 from typing import List
 
+from config import presentation_mode, p_delay
 from rs.game.card import CardType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -27,6 +28,8 @@ class PurgeHandler(Handler):
         if 'screen_state' in state.game_state() and 'num_cards' in state.game_state()['screen_state']:
             amount = state.game_state()['screen_state']['num_cards']
         for c in self.get_choices(state)[0:amount]:
+            if presentation_mode:
+                commands.append(p_delay)
             commands.append("choose " + str(c))
             commands.append("wait 30")
         return commands

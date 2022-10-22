@@ -1,5 +1,6 @@
 from typing import List
 
+from config import presentation_mode, p_delay, slow_pathing
 from rs.game.map import Map
 from rs.game.screen_type import ScreenType
 from rs.helper.logger import log
@@ -35,4 +36,6 @@ class SmartPathHandler(Handler):
         #"""
 
         # this will actually screw us with winged boots, as there are more choices and we'd be picking from a different list...
+        if presentation_mode or slow_pathing:
+            return [p_delay, "choose " + str(game_map.get_path_choice_from_choices(state.get_choice_list()))]
         return ["choose " + str(game_map.get_path_choice_from_choices(state.get_choice_list()))]

@@ -1,5 +1,6 @@
 from typing import List
 
+from config import presentation_mode, p_delay, p_delay_s
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -31,10 +32,14 @@ class NeowHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
         if "leave" in state.get_choice_list():
+            if presentation_mode:
+                return [p_delay_s, "choose 0"]
             return ["choose 0"]
 
         choice_list = state.game_state()["choice_list"]
 
         for choice in desired_choices:
             if choice in choice_list:
+                if presentation_mode:
+                    return [p_delay, "choose " + choice, "wait 30"]
                 return ["choose " + choice, "wait 30"]

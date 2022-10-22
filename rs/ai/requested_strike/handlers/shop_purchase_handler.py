@@ -1,5 +1,6 @@
 from typing import List
 
+from config import presentation_mode, p_delay, p_delay_s
 from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
@@ -50,7 +51,11 @@ class ShopPurchaseHandler(Handler):
         choice = self.find_choice(state)
         if choice:
             idx = state.get_choice_list().index(choice)
+            if presentation_mode:
+                return [p_delay, "choose " + str(idx), p_delay_s, "wait 30"]
             return ["choose " + str(idx), "wait 30"]
+        if presentation_mode:
+            return ["wait " + p_delay, "return", "proceed"]
         return ["return", "proceed"]
 
     def find_choice(self, state: GameState) -> str:

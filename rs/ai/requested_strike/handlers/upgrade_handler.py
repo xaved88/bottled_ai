@@ -1,5 +1,6 @@
 from typing import List
 
+from config import presentation_mode, p_delay, p_delay_s
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
@@ -46,5 +47,9 @@ class UpgradeHandler(Handler):
 
         for priority in self.priorities:
             if priority in choice_list:
+                if presentation_mode:
+                    return [p_delay, "choose " + priority, p_delay_s]
                 return ["choose " + priority]
+        if presentation_mode:
+            return [p_delay, "choose " + choice_list[0], p_delay_s]
         return ["choose " + choice_list[0]]
