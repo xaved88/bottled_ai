@@ -10,3 +10,15 @@ class CampfireHandlerTestCase(RsTestHandlerFixture):
 
     def test_smith(self):
         self.execute_handler_tests('/other/campfire_smith.json', ['choose 1'])
+
+    def test_rest_pantograph_boss(self):
+        self.execute_handler_tests('/other/campfire_rest_pantograph_boss.json', ['choose 0'])
+
+    def test_rest_pantograph_not_boss(self):
+        self.execute_handler_tests('/other/campfire_rest_pantograph_not_boss.json', ['choose 0'])
+
+    def test_smith_pantograph_boss(self):
+        self.execute_handler_tests('/other/campfire_smith_pantograph_boss.json', ['choose 1'])
+
+    def test_smith_pantograph_not_boss(self):
+        self.execute_handler_tests('/other/campfire_smith_pantograph_not_boss.json', ['choose 1'])
