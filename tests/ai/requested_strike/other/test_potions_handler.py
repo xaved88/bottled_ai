@@ -9,6 +9,13 @@ class PotionsHandlerTestCase(RsTestHandlerFixture):
         self.handler = PotionsEliteHandler
         self.execute_handler_tests('/other/potions_elite.json', ['wait 30', 'potion use 0 0', 'wait 30'])
 
+    def test_potions_dead_minions(self):
+        self.handler = PotionsEliteHandler
+        self.execute_handler_tests('/other/potions_dead_minions.json', ['wait 30', 'potion use 1 4', 'wait 30'])
+
+    def test_potions_reptomancer(self):
+        self.handler = PotionsEliteHandler
+        self.execute_handler_tests('/other/potions_reptomancer.json', ['wait 30', 'potion use 1 3', 'wait 30'])
 
 if __name__ == '__main__':
     unittest.main()

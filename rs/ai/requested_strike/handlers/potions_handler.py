@@ -25,7 +25,14 @@ class PotionsBaseHandler(Handler):
         pot = self.get_potions_to_play(state)[0]
         wait_command = "wait 30"
         if pot['requires_target']:
-            return [wait_command, "potion use " + str(pot['idx']) + " 0", wait_command]
+            target = 0
+            for m_index, monster in enumerate(state.get_monsters()):  # Find the back-est monster that isn't dead
+                if monster['name'] == 'Reptomancer':  # Special case since he might not be in the back
+                    target = m_index
+                    break
+                if not monster['is_gone']:
+                    target = m_index
+            return [wait_command, "potion use " + str(pot['idx']) + " " + str(target), wait_command]
         return [wait_command, "potion use " + str(pot['idx']), wait_command]
 
     def get_potions_to_play(self, state: GameState) -> List[dict]:
