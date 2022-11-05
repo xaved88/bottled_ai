@@ -11,6 +11,7 @@ from rs.ai.requested_strike.handlers.custom_battle.gremlin_nob_handler import Gr
 from rs.ai.requested_strike.handlers.custom_battle.lagavulin_handler import LagavulinHandler
 from rs.ai.requested_strike.handlers.custom_battle.sentries_handler import SentriesHandler
 from rs.ai.requested_strike.handlers.custom_battle.transient_handler import TransientHandler
+from rs.ai.requested_strike.handlers.discard_handler import DiscardHandler
 from rs.ai.requested_strike.handlers.event_handler import EventHandler
 from rs.ai.requested_strike.handlers.neow_handler import NeowHandler
 from rs.ai.requested_strike.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
@@ -58,4 +59,5 @@ REQUESTED_STRIKE: List[Handler] = requested_strike_custom_battle_handlers + [
     CampfireHandler(),
     ShopEntranceHandler(),
     ShopPurchaseHandler(),
+    DiscardHandler(),
 ]

@@ -8,7 +8,6 @@ from rs.machine.state import GameState
 # see also combat_reward_handler.py for discarding potions
 dont_play_potions = [
     'FairyInABottle',
-    'GamblersBrew',
     'SmokeBomb',
     'ElixirPotion',
     'LiquidMemories',

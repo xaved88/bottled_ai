@@ -7,7 +7,6 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 throw_away_potions = [
-    'GamblersBrew',
     'SmokeBomb',
     'ElixirPotion',
     'LiquidMemories',

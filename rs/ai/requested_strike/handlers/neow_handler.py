@@ -36,7 +36,7 @@ class NeowHandler(Handler):
                 return [p_delay_s, "choose 0"]
             return ["choose 0"]
 
-        choice_list = state.game_state()["choice_list"]
+        choice_list = state.get_choice_list()
 
         for choice in desired_choices:
             if choice in choice_list:
