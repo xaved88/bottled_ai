@@ -1,12 +1,13 @@
 import json
-from typing import List, Optional
+from typing import Optional
 
 from rs.api.client import Client
 from rs.controller.controller_window import ControllerWindow
 from rs.helper.general import can_handle_screenshots
-from rs.helper.logger import init_run_logging, log_to_run
+from rs.helper.logger import init_run_logging, log_to_run, log
 from rs.helper.seed import get_seed_string
 from rs.helper.snapshot_logger import log_snapshot
+from rs.machine.ai_strategy import AiStrategy
 from rs.machine.default_game_over import DefaultGameOverHandler
 from rs.machine.handlers.default_cancel import DefaultCancelHandler
 from rs.machine.handlers.default_choose import DefaultChooseHandler
@@ -16,7 +17,6 @@ from rs.machine.handlers.default_leave import DefaultLeaveHandler
 from rs.machine.handlers.default_play import DefaultPlayHandler
 from rs.machine.handlers.default_shop import DefaultShopHandler
 from rs.machine.handlers.default_wait import DefaultWaitHandler
-from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 DEFAULT_GAME_HANDLERS = [
@@ -33,9 +33,9 @@ DEFAULT_GAME_HANDLERS = [
 
 class Game:
 
-    def __init__(self, client: Client, ai_handlers: List[Handler]):
+    def __init__(self, client: Client, strategy: AiStrategy):
         self.client = client
-        self.handlers = ai_handlers + DEFAULT_GAME_HANDLERS
+        self.strategy = strategy
         self.last_state: Optional[GameState] = None
         self.game_over_handler: DefaultGameOverHandler = DefaultGameOverHandler()
 
@@ -45,8 +45,7 @@ class Game:
         self.run_bosses = []
         self.last_boss = ""
         self.take_snapshots = take_snapshots and can_handle_screenshots()
-
-        start_message = "start Ironclad"
+        start_message = f"start {self.strategy.character.value}"
         if seed:
             start_message += " 0 " + seed
         self.__send_command(start_message)
@@ -75,7 +74,7 @@ class Game:
                     self.__send_command(command)
                 break
             # All other behaviours
-            for handler in self.handlers:
+            for handler in self.strategy.handlers + DEFAULT_GAME_HANDLERS:
                 if handler.can_handle(self.last_state):
                     log_to_run("Handler: " + str(handler))
                     commands = handler.handle(self.last_state)
