@@ -1,3 +1,19 @@
+
+import sys
+import subprocess
+import pkg_resources
+
+required = {'PySimpleGUI'}
+installed = {pkg.key for pkg in pkg_resources.working_set}
+missing = required - installed
+
+if missing:
+    python = sys.executable
+    subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+
+# For some reason, the communication mod is sometimes not using globally installed packages or even the expected python
+# version. Therefore, it's simpler just to make sure here that it's installed :shrug:
+
 import PySimpleGUI as sg
 
 from rs.controller.control_points import ControlPoints
