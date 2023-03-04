@@ -48,7 +48,7 @@ class Game:
         start_message = f"start {self.strategy.character.value}"
         if seed:
             start_message += " 0 " + seed
-        self.__send_command(start_message)
+        self.__send_setup_command(start_message)
         state_seed = get_seed_string(self.last_state.game_state()['seed'])
         init_run_logging(state_seed)
         self.__send_command("choose 0")
@@ -96,6 +96,9 @@ class Game:
         self.last_state = GameState(json.loads(self.client.send_message(command)))
 
     def __send_silent_command(self, command: str):
+        self.last_state = GameState(json.loads(self.client.send_message(command, silent=True)))
+
+    def __send_setup_command(self, command: str):
         self.last_state = GameState(json.loads(self.client.send_message(command, silent=True)))
 
     def __handle_state_based_logging(self):
