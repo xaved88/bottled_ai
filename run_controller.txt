@@ -1,0 +1,7 @@
+[] - abort
+[] - pause
+
+Instructions:
+
+Mark an "x" inside the box [ ] when you want to perform that action. Unmark it when you're done.
+[x] with no spaces is what will trigger it.

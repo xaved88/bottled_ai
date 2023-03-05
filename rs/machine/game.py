@@ -2,6 +2,7 @@ import json
 from typing import Optional
 
 from rs.api.client import Client
+from rs.helper.controller import await_controller
 from rs.helper.general import can_handle_screenshots
 from rs.helper.logger import init_run_logging, log_to_run, log
 from rs.helper.seed import get_seed_string
@@ -55,6 +56,7 @@ class Game:
     def run(self):
         log_to_run("Starting Run")
         while self.last_state.is_game_running():
+            await_controller()
             self.__handle_state_based_logging()
             handled = False
             # Handle Game Over
