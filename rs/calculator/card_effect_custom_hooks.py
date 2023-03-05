@@ -106,3 +106,53 @@ def apotheosis_post_hook(state: HandStateInterface, effect: CardEffectsInterface
     for i in range(len(state.draw_pile)):
         c = state.draw_pile[i]
         state.draw_pile[i] = get_card(c.id, upgrade=c.upgrade + 1)
+
+
+def blade_dance_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    # this is hacky, we should actually have a way of drawing specific cards and overflowing...
+    shiv_amount = 3
+    available_shivs = min(shiv_amount, 10 - len(state.hand))
+    discarded_shivs = shiv_amount - available_shivs
+    for i in range(available_shivs):
+        state.hand.append(get_card(CardId.SHIV))
+    for i in range(discarded_shivs):
+        state.discard_pile.append(get_card(CardId.SHIV))
+
+
+def blade_dance_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    # this is hacky, we should actually have a way of drawing specific cards and overflowing...
+    shiv_amount = 4
+    available_shivs = min(shiv_amount, 10 - len(state.hand))
+    discarded_shivs = shiv_amount - available_shivs
+    for i in range(available_shivs):
+        state.hand.append(get_card(CardId.SHIV))
+    for i in range(discarded_shivs):
+        state.discard_pile.append(get_card(CardId.SHIV))
+
+
+def cloak_and_dagger_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    shiv_amount = 1
+    available_shivs = min(shiv_amount, 10 - len(state.hand))
+    discarded_shivs = shiv_amount - available_shivs
+    for i in range(available_shivs):
+        state.hand.append(get_card(CardId.SHIV))
+    for i in range(discarded_shivs):
+        state.discard_pile.append(get_card(CardId.SHIV))
+
+
+def cloak_and_dagger_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface,
+                                        target_index: int = -1):
+    shiv_amount = 2
+    available_shivs = min(shiv_amount, 10 - len(state.hand))
+    discarded_shivs = shiv_amount - available_shivs
+    for i in range(available_shivs):
+        state.hand.append(get_card(CardId.SHIV))
+    for i in range(discarded_shivs):
+        state.discard_pile.append(get_card(CardId.SHIV))
+
+
+def heel_hook_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    if target_index > -1:
+        if state.monsters[target_index].powers.get(PowerId.WEAKENED):
+            state.player.energy += 1
+            state.draw_cards(1)

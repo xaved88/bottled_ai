@@ -19,7 +19,16 @@ class CalculatorTestFixture(unittest.TestCase):
             relics=relics,
         )
 
-    def when_calculating_state_play(self, hand_state: HandState) -> PlayPath:
+    def when_playing_the_first_card(self, hand_state: HandState) -> PlayPath:
+        paths = {}
+        get_paths(PlayPath([], hand_state), paths)
+        plays = list(paths.values())
+        if len(plays) > 1:
+            return plays[1]
+        else:
+            return plays[0]
+
+    def when_playing_the_whole_hand(self, hand_state: HandState) -> PlayPath:
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
         return list(paths.values())[-1]

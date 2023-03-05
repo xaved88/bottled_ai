@@ -79,6 +79,22 @@ class CardId(Enum):
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
 
+    """New Cards added"""
+
+    SHIV = 'shiv'
+    TERROR = 'terror'
+    ADRENALINE = 'adrenaline'
+    DIE_DIE_DIE = 'die die die'
+    BLADE_DANCE = 'blade dance'
+    CLOAK_AND_DAGGER = 'cloak and dagger'
+    LEG_SWEEP = 'leg sweep'
+    SUCKER_PUNCH = 'sucker punch'
+    ESCAPE_PLAN = 'escape plan'
+    HEEL_HOOK = 'heel hook'
+    DAGGER_SPRAY = 'dagger spray'
+    BACKSTAB = 'backstab'
+    CALTROPS = 'caltrops'
+
 
 class Card:
     def __init__(self, card_id: CardId, upgrade: int, cost: int, needs_target: bool, card_type: CardType,
@@ -245,3 +261,46 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.NEUTRALIZE:
         return Card(card_id, upgrade, 0, True, CardType.ATTACK)
     # TODO -> logging or throw error or something if it gets here?
+
+    """New cards included"""
+
+    if card_id == CardId.SHIV:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    
+    if card_id == CardId.TERROR:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    
+    if card_id == CardId.ADRENALINE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    
+    if card_id == CardId.DIE_DIE_DIE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    
+    if card_id == CardId.BLADE_DANCE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+
+    if card_id == CardId.CLOAK_AND_DAGGER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+
+    if card_id == CardId.LEG_SWEEP:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+
+    if card_id == CardId.SUCKER_PUNCH:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+
+    if card_id == CardId.ESCAPE_PLAN:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    
+    if card_id == CardId.HEEL_HOOK:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+
+    if card_id == CardId.DAGGER_SPRAY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+
+    if card_id == CardId.BACKSTAB:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+
+    if card_id == CardId.CALTROPS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+
