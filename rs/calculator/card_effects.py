@@ -195,27 +195,25 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.APPARITION:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE: 1})]
 
-
-    #silent cards
+    # silent cards
     if card.id == CardId.NEUTRALIZE:
         return [CardEffects(damage=3 if not card.upgrade else 4, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
-    
-    
+
     """New Cards included"""
 
     if card.id == CardId.SHIV:
         return [CardEffects(damage=4, hits=1 if not card.upgrade else 6, target=TargetType.MONSTER)]
-    
+
     if card.id == CardId.TERROR:
-        amount = 99 
+        amount = 99
         return [CardEffects(target=TargetType.MONSTER,
                             applies_powers={PowerId.VULNERABLE: amount})]
-    
+
     if card.id == CardId.ADRENALINE:
-        return [CardEffects(energy_gain=1 if not card.upgrade else 2, draw=2, 
+        return [CardEffects(energy_gain=1 if not card.upgrade else 2, draw=2,
                             target=TargetType.SELF)]
-    
+
     if card.id == CardId.DIE_DIE_DIE:
         return [CardEffects(damage=13 if not card.upgrade else 17, hits=1, target=TargetType.ALL_MONSTERS)]
 
@@ -224,16 +222,38 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
                             post_hooks=[blade_dance_post_hook] if not card.upgrade
                             else [blade_dance_upgraded_post_hook])]
 
-    if card.id == CardId.BLADE_DANCE:
+    if card.id == CardId.CLOAK_AND_DAGGER:
         return [CardEffects(block=6, target=TargetType.SELF,
                             post_hooks=[cloak_and_dagger_post_hook] if not card.upgrade
                             else [cloak_and_dagger_upgraded_post_hook])]
 
+    if card.id == CardId.LEG_SWEEP:
+        weak_amount = 2 if not card.upgrade else 3
+        block_amount = 11 if not card.upgrade else 14
+        return [CardEffects(target=TargetType.MONSTER, block=block_amount,
+                            applies_powers={PowerId.WEAKENED: weak_amount})]
+
+    if card.id == CardId.SUCKER_PUNCH:
+        return [CardEffects(damage=7 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER,
+                            applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
+
+    if card.id == CardId.ESCAPE_PLAN:
+        return [CardEffects(draw=1, target=TargetType.SELF)]
+
+    if card.id == CardId.HEEL_HOOK:
+        return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER,
+                            post_hooks=[heel_hook_post_hook])]
+
+    if card.id == CardId.DAGGER_SPRAY:
+        return [CardEffects(damage=4 if not card.upgrade else 6, hits=2, target=TargetType.ALL_MONSTERS)]
+
+    if card.id == CardId.BACKSTAB:
+        return [CardEffects(damage=11, hits=1 if not card.upgrade else 15, target=TargetType.MONSTER)]
+
+    if card.id == CardId.CALTROPS:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.THORNS: 3 if not card.upgrade else 5})]
 
 
-# default case, todo maybe some logging or?
-    
-    
-    
-    
+    # default case, todo maybe some logging or?
+
     return [CardEffects()]

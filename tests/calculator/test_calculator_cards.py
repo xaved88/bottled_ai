@@ -648,20 +648,78 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 3)
         self.see_player_discard_count(play, 1)
 
-    """
+    def test_blade_dance_with_full_hand(self):
+        state = self.given_state(CardId.BLADE_DANCE)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_hand_count(play, 10)
+        self.see_player_discard_count(play, 3)
+
     def test_cloak_and_dagger_with_full_hand(self):
         state = self.given_state(CardId.CLOAK_AND_DAGGER)
         for i in range(9):
             state.hand.append(get_card(CardId.WOUND))
-        play = self.when_calculating_state_play(state)
-        self.see_player_hand_count(play, 3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_hand_count(play, 10)
         self.see_player_discard_count(play, 1)
 
     def test_cloak_and_dagger_upgraded_with_full_hand(self):
         state = self.given_state(CardId.CLOAK_AND_DAGGER, 1)
         for i in range(9):
             state.hand.append(get_card(CardId.WOUND))
-        play = self.when_calculating_state_play(state)
+        play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 10)
         self.see_player_discard_count(play, 2)
-        """
+
+    def test_leg_sweep(self):
+        state = self.given_state(CardId.LEG_SWEEP)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
+        self.see_player_has_block(play, 11)
+        self.see_player_spent_energy(play, 2)
+
+    def test_sucker_punch(self):
+        state = self.given_state(CardId.SUCKER_PUNCH)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        self.see_player_spent_energy(play, 1)
+
+    def test_escape_plan(self):
+        state = self.given_state(CardId.ESCAPE_PLAN)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_hand_count(play, 1)
+        self.see_player_discard_count(play, 1)
+        self.see_player_drew_cards(play, 1)
+
+    def test_heel_hook_vs_vulnerable(self):
+        state = self.given_state(CardId.HEEL_HOOK)
+        state.monsters[0].powers = {PowerId.WEAKENED: 1}
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_player_spent_energy(play, 0)
+        self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 1)
+        self.see_player_drew_cards(play, 1)
+
+    def test_dagger_spray(self):
+        state = self.given_state(CardId.DAGGER_SPRAY, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 8, enemy_index=0)
+        self.see_enemy_lost_hp(play, 8, enemy_index=1)
+        self.see_player_spent_energy(play, 1)
+
+    def test_backstab(self):
+        state = self.given_state(CardId.BACKSTAB)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 11)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_caltrops(self):
+        state = self.given_state(CardId.CALTROPS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.THORNS, 3)
+        self.see_player_spent_energy(play, 1)
+

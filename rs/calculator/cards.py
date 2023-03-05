@@ -87,6 +87,13 @@ class CardId(Enum):
     DIE_DIE_DIE = 'die die die'
     BLADE_DANCE = 'blade dance'
     CLOAK_AND_DAGGER = 'cloak and dagger'
+    LEG_SWEEP = 'leg sweep'
+    SUCKER_PUNCH = 'sucker punch'
+    ESCAPE_PLAN = 'escape plan'
+    HEEL_HOOK = 'heel hook'
+    DAGGER_SPRAY = 'dagger spray'
+    BACKSTAB = 'backstab'
+    CALTROPS = 'caltrops'
 
 
 class Card:
@@ -275,6 +282,25 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
 
     if card_id == CardId.CLOAK_AND_DAGGER:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
-    
 
+    if card_id == CardId.LEG_SWEEP:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+
+    if card_id == CardId.SUCKER_PUNCH:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+
+    if card_id == CardId.ESCAPE_PLAN:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    
+    if card_id == CardId.HEEL_HOOK:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+
+    if card_id == CardId.DAGGER_SPRAY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+
+    if card_id == CardId.BACKSTAB:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+
+    if card_id == CardId.CALTROPS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
 
