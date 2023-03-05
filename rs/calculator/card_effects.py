@@ -200,7 +200,40 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.NEUTRALIZE:
         return [CardEffects(damage=3 if not card.upgrade else 4, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
+    
+    
+    """New Cards included"""
+
+    if card.id == CardId.SHIV:
+        return [CardEffects(damage=4, hits=1 if not card.upgrade else 6, target=TargetType.MONSTER)]
+    
+    if card.id == CardId.TERROR:
+        amount = 99 
+        return [CardEffects(target=TargetType.MONSTER,
+                            applies_powers={PowerId.VULNERABLE: amount})]
+    
+    if card.id == CardId.ADRENALINE:
+        return [CardEffects(energy_gain=1 if not card.upgrade else 2, draw=2, 
+                            target=TargetType.SELF)]
+    
+    if card.id == CardId.DIE_DIE_DIE:
+        return [CardEffects(damage=13 if not card.upgrade else 17, hits=1, target=TargetType.ALL_MONSTERS)]
+
+    if card.id == CardId.BLADE_DANCE:
+        return [CardEffects(target=TargetType.SELF,
+                            post_hooks=[blade_dance_post_hook] if not card.upgrade
+                            else [blade_dance_upgraded_post_hook])]
+
+    if card.id == CardId.BLADE_DANCE:
+        return [CardEffects(block=6, target=TargetType.SELF,
+                            post_hooks=[cloak_and_dagger_post_hook] if not card.upgrade
+                            else [cloak_and_dagger_upgraded_post_hook])]
 
 
-        # default case, todo maybe some logging or?
+
+# default case, todo maybe some logging or?
+    
+    
+    
+    
     return [CardEffects()]
