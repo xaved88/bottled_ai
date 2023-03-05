@@ -9,10 +9,10 @@ class TransformHandler(Handler):
 
     def __init__(self):
         self.preferences: List[str] = [
-            'defend',
             'strike',
-            'defend+',
+            'defend',
             'strike+',
+            'defend+',
         ]
 
     def can_handle(self, state: GameState) -> bool:

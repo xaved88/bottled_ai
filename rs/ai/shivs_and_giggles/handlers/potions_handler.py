@@ -11,7 +11,9 @@ dont_play_potions = [
     'SmokeBomb',
     'ElixirPotion',
     'LiquidMemories',
-    'SneckoOil'
+    'SneckoOil',
+    'GhostInAJar',
+
 ]
 
 

@@ -11,9 +11,10 @@ class PurgeHandler(Handler):
 
     def __init__(self):
         self.preferences: List[str] = [
-            'defend',
             'strike',
+            'defend',
             'strike+',
+            'defend+',
         ]
 
     def can_handle(self, state: GameState) -> bool:
