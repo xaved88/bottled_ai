@@ -603,3 +603,65 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 3)
         self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
         self.see_player_spent_energy(play, 0)
+
+    """New Cards Included"""
+
+    def test_shiv(self):
+        state = self.given_state(CardId.SHIV)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 4)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_terror(self):
+        state = self.given_state(CardId.TERROR)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 99)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_terror_upgraded(self):
+        state = self.given_state(CardId.TERROR, 1)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 99)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_adrenaline(self):
+        state = self.given_state(CardId.ADRENALINE)
+        play = self.when_calculating_state_play(state)
+        self.see_player_spent_energy(play, -1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_drew_cards(play, 2)
+
+    def test_die_die_die(self):
+        state = self.given_state(CardId.DIE_DIE_DIE, targets=2)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 13, enemy_index=0)
+        self.see_enemy_lost_hp(play, 13, enemy_index=1)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_blade_dance(self):
+        state = self.given_state(CardId.BLADE_DANCE)
+        play = self.when_calculating_state_play(state)
+        self.see_player_hand_count(play, 3)
+        self.see_player_discard_count(play, 1)
+
+    """
+    def test_cloak_and_dagger_with_full_hand(self):
+        state = self.given_state(CardId.CLOAK_AND_DAGGER)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        self.see_player_hand_count(play, 3)
+        self.see_player_discard_count(play, 1)
+
+    def test_cloak_and_dagger_upgraded_with_full_hand(self):
+        state = self.given_state(CardId.CLOAK_AND_DAGGER, 1)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_calculating_state_play(state)
+        self.see_player_hand_count(play, 10)
+        self.see_player_discard_count(play, 2)
+        """
