@@ -44,9 +44,9 @@ class CardEffects:
 
 def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_pile: List[Card],
                      hand: List[Card]) -> List[CardEffects]:
-    if card.id == CardId.STRIKE_R:
+    if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G:
         return [CardEffects(damage=6 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER)]
-    if card.id == CardId.DEFEND_R:
+    if card.id == CardId.DEFEND_R or card.id == CardId.DEFEND_G:
         return [CardEffects(block=5 if not card.upgrade else 8, target=TargetType.SELF)]
     if card.id == CardId.BASH:
         return [CardEffects(damage=8 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
@@ -194,6 +194,13 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4)]
     if card.id == CardId.APPARITION:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE: 1})]
+
+
+    #silent cards
+    if card.id == CardId.NEUTRALIZE:
+        return [CardEffects(damage=3 if not card.upgrade else 4, hits=1, target=TargetType.MONSTER,
+                            applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
+
 
         # default case, todo maybe some logging or?
     return [CardEffects()]

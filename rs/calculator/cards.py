@@ -32,6 +32,7 @@ class CardId(Enum):
     DISARM = 'disarm'
     DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
+    DEFEND_G = 'defend_g'
     ENTRENCH = 'entrench'
     FEED = 'feed'
     FIEND_FIRE = 'fiend fire'
@@ -51,6 +52,7 @@ class CardId(Enum):
     LIMIT_BREAK = 'limit break'
     MASTER_OF_STRATEGY = 'master of strategy'
     METALLICIZE = 'metallicize'
+    NEUTRALIZE = 'neutralize'
     OFFERING = 'offering'
     PAIN = 'pain'
     PERFECTED_STRIKE = 'perfected strike'
@@ -68,6 +70,7 @@ class CardId(Enum):
     SLIMED = 'slimed'
     SPOT_WEAKNESS = 'spot weakness'
     STRIKE_R = 'strike_r'
+    STRIKE_G = 'strike_g'
     SWIFT_STRIKE = 'swift strike'
     THUNDERCLAP = 'thunderclap'
     TRIP = 'trip'
@@ -96,6 +99,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.STRIKE_R:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.DEFEND_R:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.STRIKE_G:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DEFEND_G:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.BASH:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
@@ -233,4 +240,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.REGRET:
         return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    #Silent
+    if card_id == CardId.NEUTRALIZE:
+        return Card(card_id, upgrade, 0, True, CardType.ATTACK)
     # TODO -> logging or throw error or something if it gets here?

@@ -31,6 +31,32 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_block(play, 8)
 
+    def test_strike_g(self):
+        state = self.given_state(CardId.STRIKE_G)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_spent_energy(play, 1)
+
+    def test_strike_g_upgraded(self):
+        state = self.given_state(CardId.STRIKE_G, 1)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_spent_energy(play, 1)
+
+    def test_defend_g(self):
+        state = self.given_state(CardId.DEFEND_G)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 5)
+
+    def test_defend_g_upgraded(self):
+        state = self.given_state(CardId.DEFEND_G, 1)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 8)
+
     def test_bash(self):
         state = self.given_state(CardId.BASH)
         play = self.when_calculating_state_play(state)
@@ -570,3 +596,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_calculating_state_play(state)
         play.state.end_turn()
         self.see_player_lost_hp(play, 5)
+
+    def test_neutralize(self):
+        state = self.given_state(CardId.NEUTRALIZE)
+        play = self.when_calculating_state_play(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        self.see_player_spent_energy(play, 0)

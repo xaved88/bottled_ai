@@ -27,7 +27,7 @@ from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
 from rs.machine.handlers.handler import Handler
 
-requested_strike_custom_battle_handlers: List[Handler] = [
+shivs_and_giggles_custom_battle_handlers: List[Handler] = [
     # Potions Handlers First
     PotionsBossHandler(),
     PotionsEventFightHandler(),
@@ -42,7 +42,7 @@ requested_strike_custom_battle_handlers: List[Handler] = [
 
 SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
     character=Character.SILENT,
-    handlers=requested_strike_custom_battle_handlers + [
+    handlers=shivs_and_giggles_custom_battle_handlers + [
         # Some edge cases
         AstrolabeHandler(),
 
