@@ -6,6 +6,8 @@ class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
     ANGRY = 'angry'
+    ACCURACY = 'accuracy'
+    AFTER_IMAGE = 'after image'
     ARTIFACT = 'artifact'
     BUFFER = 'buffer'
     CURL_UP = 'curl up'
@@ -14,6 +16,7 @@ class PowerId(Enum):
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'
     FRAIL = 'frail'
+    INFINITE_BLADES = 'infinite blades'
     INTANGIBLE = 'intangibleplayer'
     METALLICIZE = 'metallicize'
     MINION = 'minion'
@@ -29,9 +32,6 @@ class PowerId(Enum):
     VULNERABLE = 'vulnerable'
     WEAKENED = 'weakened'
     THOUSAND_CUTS = 'thousand cuts'
-    ACCURACY = 'accuracy'
-    INFINITE_BLADES = 'infinite blades'
-    AFTER_IMAGE = 'after image'
 
 
 Powers = dict[PowerId: int]
