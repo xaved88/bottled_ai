@@ -28,7 +28,6 @@ class CardRewardHandler(Handler):
             'heel hook': 2,
             'dagger spray': 2,
             'caltrops': 1,
-            'unload': 1,
             'backstab': 1,
         }
 
