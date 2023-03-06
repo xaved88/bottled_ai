@@ -12,7 +12,6 @@ class UpgradeHandler(Handler):
         self.priorities: List[str] = [
             'neutralize',
             'a thousand cuts',
-            'tools of the trade',
             'accuracy',
             'adrenaline',
             'storm of steel',

@@ -12,7 +12,6 @@ class CardRewardHandler(Handler):
     def __init__(self):
         self.desired_cards: dict[str, int] = {
             'a thousand cuts': 1,
-            'tools of the trade': 1,
             'accuracy': 2,
             'terror': 2,
             'adrenaline': 2,
