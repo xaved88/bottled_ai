@@ -3,17 +3,27 @@ from rs.calculator.synergies.synergy_beneficiaries import SynergyBeneficiaries
 from rs.calculator.synergies.synergy_providers import SynergyProviders
 
 
-def getSynergy(card):
+def getSynergy(card, deck):
+
+    deck_length = len(deck)
     if card in SynergyProviders:
         tags = SynergyProviders[card]
 
         # Count the number of times each tag appears in the beneficiaries
-        tag_counts = {}
+        final_count = {}
         for tag in tags:
-            tag_counts[tag] = 0
-            for beneficiary_tags in SynergyBeneficiaries.values():
-                tag_counts[tag] += beneficiary_tags.count(tag)
+            final_count[tag] = 0
+            element_count = 0
+            for element in deck:
+                #print(element)
+                if element in SynergyBeneficiaries:
+                    for synergy in SynergyBeneficiaries.get(element):
+                        #print(synergy)
+                        if synergy == tag:
+                            element_count += 1
+                final_count[tag] = element_count
+                #print(final_count)
 
         # Sum up the tag counts and return the result
-        print(sum(tag_counts.values()))
+        return sum(final_count.values()) / deck_length
 
