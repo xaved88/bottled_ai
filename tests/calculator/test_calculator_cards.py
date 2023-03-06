@@ -723,3 +723,42 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_power(play, PowerId.THORNS, 3)
         self.see_player_spent_energy(play, 1)
 
+    def test_a_thousand_cuts(self):
+        state = self.given_state(CardId.A_THOUSAND_CUTS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.THOUSAND_CUTS, 1)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_accuracy(self):
+        state = self.given_state(CardId.ACCURACY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.ACCURACY, 4)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_shiv_damage_with_accuracy(self):
+        state = self.given_state(CardId.SHIV)
+        state.player.powers = {PowerId.ACCURACY: 4}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.ACCURACY, 4)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 8)
+
+    def test_infinite_blades(self):
+        state = self.given_state(CardId.INFINITE_BLADES)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.INFINITE_BLADES, 1)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_after_image(self):
+        state = self.given_state(CardId.AFTER_IMAGE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.AFTER_IMAGE, 1)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted

@@ -389,3 +389,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_does_not_have_power(play, PowerId.MODE_SHIFT)
         self.see_enemy_lost_hp(play, 5)
         self.see_enemy_block_is(play, 15)
+
+    def test_a_thousand_cuts_damage(self):
+        state = self.given_state(CardId.DEFEND_G, player_powers={PowerId.THOUSAND_CUTS: 1})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 1)
+
+    def test_after_image_block(self):
+        state = self.given_state(CardId.STRIKE_G, player_powers={PowerId.AFTER_IMAGE: 1})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 0)

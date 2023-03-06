@@ -94,6 +94,10 @@ class CardId(Enum):
     DAGGER_SPRAY = 'dagger spray'
     BACKSTAB = 'backstab'
     CALTROPS = 'caltrops'
+    A_THOUSAND_CUTS = 'a thousand cuts'
+    ACCURACY = 'accuracy'
+    INFINITE_BLADES = 'infinite blades'
+    AFTER_IMAGE = 'after image'
 
 
 class Card:
@@ -302,5 +306,17 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
 
     if card_id == CardId.CALTROPS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+
+    if card_id == CardId.A_THOUSAND_CUTS:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.POWER)
+
+    if card_id == CardId.ACCURACY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+
+    if card_id == CardId.INFINITE_BLADES:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+
+    if card_id == CardId.AFTER_IMAGE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
 

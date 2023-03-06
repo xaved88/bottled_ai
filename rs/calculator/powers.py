@@ -28,6 +28,10 @@ class PowerId(Enum):
     VIGOR = 'vigor'
     VULNERABLE = 'vulnerable'
     WEAKENED = 'weakened'
+    THOUSAND_CUTS = 'thousand cuts'
+    ACCURACY = 'accuracy'
+    INFINITE_BLADES = 'infinite blades'
+    AFTER_IMAGE = 'after image'
 
 
 Powers = dict[PowerId: int]

@@ -70,6 +70,10 @@ class HandState:
         if card.type == CardType.ATTACK and self.player.powers.get(PowerId.VIGOR):
             damage_additive_bonus += self.player.powers.get(PowerId.VIGOR, 0)
             del self.player.powers[PowerId.VIGOR]
+        # Added accuracy as additive damage bonus only for shivs
+        if card.id == CardId.SHIV and self.player.powers.get(PowerId.ACCURACY):
+            damage_additive_bonus += self.player.powers.get(PowerId.ACCURACY, 0)
+
         if damage_additive_bonus:
             for effect in effects:
                 effect.damage += damage_additive_bonus
@@ -183,6 +187,20 @@ class HandState:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
                         monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
+
+        # Check if order is correct
+        if self.player.powers.get(PowerId.THOUSAND_CUTS):
+            thousand_cuts_damage = self.player.powers.get(PowerId.THOUSAND_CUTS, 0)
+            if thousand_cuts_damage > 0:
+                for monster in self.monsters:
+                    if monster.current_hp > 0:
+                        monster.inflict_damage(self.player, thousand_cuts_damage, 1, vulnerable_modifier=1,
+                                               is_attack=False)
+
+        if self.player.powers.get(PowerId.AFTER_IMAGE):
+            after_image_block = self.player.powers.get(PowerId.AFTER_IMAGE, 0)
+            if after_image_block > 0:
+                self.player.block += after_image_block
 
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
         if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
