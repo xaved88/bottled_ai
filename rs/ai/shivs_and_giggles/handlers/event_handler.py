@@ -31,7 +31,7 @@ class EventHandler(Handler):
         # ACT 1
 
         if event_name == "Big Fish":
-            return "choose 1"  # Max health
+            return "choose 2"  # Get relic
 
         # if event_name == "The Cleric":
         #    return ["choose 0"] # Heal
@@ -41,12 +41,10 @@ class EventHandler(Handler):
             return "choose 1"  # Escape. Could do: Add logic for sometimes taking the fight.
 
         if event_name == "Golden Idol":
-            if hp_per >= 90 and len(state.get_choice_list()) == 2:
-                return "choose 0"  # Go for it and take some damage
+            if len(state.get_choice_list()) == 2:
+                return "choose 0"  # Go for it
             if len(state.get_choice_list()) == 3:
-                return "choose 1"
-            else:
-                return "choose 1"  # Leave.
+                return "choose 0"  # Take the curse yeah
 
         if event_name == "Hypnotizing Colored Mushrooms":
             return "choose 0"  # Fuck 'em up
@@ -58,7 +56,7 @@ class EventHandler(Handler):
             return "choose 0"  # Yolo. We'll probably get it after a few tries? If not, we don't deserve to live!!
 
         if event_name == "Shining Light":
-            if hp_per >= 50:
+            if hp_per >= 70:
                 return "choose 0"  # Take the 2 random upgrades.
             else:
                 return "choose 1"  # Leave.
@@ -67,7 +65,7 @@ class EventHandler(Handler):
             return "choose 1"  # Leave
 
         if event_name == "World of Goop":
-            if hp_per >= 70:
+            if hp_per >= 80:
                 return "choose 0"  # Take the money and lose a little HP.
             else:
                 return "choose 1"  # Leave
@@ -160,7 +158,7 @@ class EventHandler(Handler):
             return "choose 1"  # Heal, but also because I don't know if we handle selection here.
 
         if event_name == "Masked Bandits":
-            if hp_per >= 60:
+            if hp_per >= 70:
                 return "choose 1"  # Fuck 'em up!
             else:
                 return "choose 0"  # Give up all money and leave.
@@ -194,7 +192,10 @@ class EventHandler(Handler):
         # Act 3
 
         if event_name == "Falling":
-            return "choose 0"  # Prefer losing skill, then power, then attack.
+            if len(state.get_choice_list()) == 3:
+                return "choose 3"  # Lose the attack
+            else:
+                return "choose 0"  # OK our deck is weird - whatever, just lose something
 
         if event_name == "Mind Bloom":
             return "choose 0"  # Fight an Act 1 boss for a relic.
