@@ -76,8 +76,8 @@ class GeneralComparator(SbcComparator):
             return challenger_state.player.relics[RelicId.NUNCHAKU] > best_state.player.relics[RelicId.NUNCHAKU]
         return False
 
-    def does_best_remain_the_best(self, best_state: HandState, challenger_state: HandState,
-                                  original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best_state: HandState, challenger_state: HandState,
+                                        original: HandState) -> bool:
         """
         - split
         """

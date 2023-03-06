@@ -1,7 +1,9 @@
+from typing import List
+
 from rs.calculator.cards import CardId
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.hand_state import HandState
-from rs.calculator.powers import PowerId
+from rs.calculator.powers import PowerId, get_power_count
 from rs.calculator.relics import RelicId
 
 
@@ -22,6 +24,7 @@ class GCValues:
             intangible: int,
             enemy_vulnerable: int,
             enemy_weak: int,
+            player_powers: int,
     ):
         self.battle_lost: bool = battle_lost
         self.battle_won: bool = battle_won
@@ -37,8 +40,24 @@ class GCValues:
         self.intangible: int = intangible
         self.enemy_vulnerable: int = enemy_vulnerable
         self.enemy_weak: int = enemy_weak
+        self.player_powers: int = player_powers
 
 
+powers_we_like: List[PowerId] = [
+    PowerId.ACCURACY,
+    PowerId.AFTER_IMAGE,
+    PowerId.ARTIFACT,
+    PowerId.BUFFER,
+    PowerId.DEXTERITY,
+    PowerId.FLAME_BARRIER,
+    PowerId.INFINITE_BLADES,
+    PowerId.INTANGIBLE,
+    PowerId.METALLICIZE,
+    PowerId.PLATED_ARMOR,
+    PowerId.STRENGTH,
+    PowerId.THORNS,
+    PowerId.THOUSAND_CUTS,
+]
 class GeneralComparator(SbcComparator):
 
     def get_values(self, state: HandState, original: HandState) -> GCValues:
@@ -60,6 +79,7 @@ class GeneralComparator(SbcComparator):
             intangible=state.player.powers.get(PowerId.INTANGIBLE, 0),
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
+            player_powers=get_power_count(state.player.powers, self.powers_we_like)
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -76,8 +96,8 @@ class GeneralComparator(SbcComparator):
             return challenger_state.player.relics[RelicId.NUNCHAKU] > best_state.player.relics[RelicId.NUNCHAKU]
         return False
 
-    def does_best_remain_the_best(self, best_state: HandState, challenger_state: HandState,
-                                  original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best_state: HandState, challenger_state: HandState,
+                                        original: HandState) -> bool:
         """
         - split
         """
@@ -115,6 +135,8 @@ class GeneralComparator(SbcComparator):
             return challenger.draw_pay_early > best.draw_pay_early
         if best.draw_pay != challenger.draw_pay:
             return challenger.draw_pay > best.draw_pay
+        if best.player_powers != challenger.player_powers:
+            return challenger.player_powers > best.player_powers
         if best.energy != challenger.energy:
             return challenger.energy > best.energy
         return False

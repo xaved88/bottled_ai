@@ -16,7 +16,7 @@ def get_best_battle_path(game_state: GameState, comparator: SbcComparator) -> Pl
         if best_path is None:
             best_path = path
         else:
-            if comparator.does_best_remain_the_best(best_path.state, path.state, original_state):
+            if comparator.does_challenger_defeat_the_best(best_path.state, path.state, original_state):
                 best_path = path
 
     return best_path

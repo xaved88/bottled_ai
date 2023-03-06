@@ -604,8 +604,6 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
         self.see_player_spent_energy(play, 0)
 
-    """New Cards Included"""
-
     def test_shiv(self):
         state = self.given_state(CardId.SHIV)
         play = self.when_playing_the_first_card(state)

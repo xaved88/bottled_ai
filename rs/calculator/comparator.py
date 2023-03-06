@@ -3,7 +3,7 @@ from rs.calculator.powers import PowerId
 
 
 class SbcComparator:  # Abstract class, just for signature for the kiddos.
-    def does_best_remain_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
         return True
 
 
@@ -21,7 +21,7 @@ class DefaultSbcComparator(SbcComparator):
         values['total_monster_health']: int = 0 if values['battle_won'] else sum(monsters_hp)
         return values
 
-    def does_best_remain_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
         best_values = self.get_values(best, original)
         challenger_values = self.get_values(challenger, original)
         

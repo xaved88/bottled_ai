@@ -48,3 +48,7 @@ DEBUFFS_WHEN_NEGATIVE: List[PowerId] = [
     PowerId.STRENGTH,
     PowerId.DEXTERITY,
 ]
+
+
+def get_power_count(powers: Powers, desired_powers: List[PowerId]) -> int:
+    return sum(powers[p] for p in powers.keys() if p in desired_powers)
