@@ -12,25 +12,28 @@ class BossRelicHandler(Handler):
     # maybe configure some preferences here
     def __init__(self):
         self.pref = [
+            "wrist blade",
             "sozu",
-            "runic dome",
-            "philosopher\u0027s stone",
-            "ectoplasm",
-            "velvet choker",
-            "cursed key",
-            "fusion hammer",
+            "hovering kite",
             "snecko eye",
-            "mark of pain",  # removed if already have another energy relic
-            "busted crown",  # removed if already have another energy relic or it's act 1
-            "coffee dripper",  # removed if already have another energy relic or it's act 1
-            "slaver\u0027s collar",
-            "runic cube",
-            "runic pyramid",
-            "black blood",
+            "busted crown",                         # removed if act 1 or already have energy
+            "cursed key",
+            "philosopher\u0027s stone",
             "calling bell",
-            "empty cage",
+            "runic cube",
+            "slaver\u0027s collar",
+            "fusion hammer",
+            "ectoplasm",
+            "ring of the serpent",
+            "runic pyramid",
             "black star",
+            "runic dome",
+            "tiny house",
+            "mark of pain",
+            "empty cage",
             "sacred bark",
+            "coffee dripper",
+            "velvet choker",
         ]
         self.energy_relics = [
             "sozu",
@@ -58,10 +61,6 @@ class BossRelicHandler(Handler):
 
         if act == 1 or has_energy_relic:
             prefs.remove('busted crown')
-            prefs.remove('coffee dripper')
-
-        if has_energy_relic:
-            prefs.remove('mark of pain')
 
         for p in prefs:
             if p in state.get_choice_list():
