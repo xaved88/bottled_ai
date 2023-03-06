@@ -203,7 +203,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     """New Cards included"""
 
     if card.id == CardId.SHIV:
-        return [CardEffects(damage=4, hits=1 if not card.upgrade else 6, target=TargetType.MONSTER)]
+        shiv_base_dmg = 4 if not card.upgrade else 6
+        return [CardEffects(damage=shiv_base_dmg, hits=1, target=TargetType.MONSTER)]
 
     if card.id == CardId.TERROR:
         amount = 99
@@ -253,6 +254,17 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.CALTROPS:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.THORNS: 3 if not card.upgrade else 5})]
 
+    if card.id == CardId.A_THOUSAND_CUTS:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.THOUSAND_CUTS: 1 if not card.upgrade else 2})]
+
+    if card.id == CardId.ACCURACY:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ACCURACY: 4 if not card.upgrade else 6})]
+
+    if card.id == CardId.INFINITE_BLADES:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INFINITE_BLADES: 1})]
+
+    if card.id == CardId.AFTER_IMAGE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.AFTER_IMAGE: 1})]
 
     # default case, todo maybe some logging or?
 
