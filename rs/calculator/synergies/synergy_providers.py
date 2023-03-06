@@ -1,11 +1,11 @@
 from rs.calculator.cards import CardId
-from synergy_tags import *
+from rs.calculator.synergies.synergy_tags import SynergyTag
 
-SinergyProviders = {
+SynergyProviders = {
 
-    CardId.INFLAME: [STRENGTH_TAG],
-    CardId.JAX: [STRENGTH_TAG],
-    CardId.LIMIT_BREAK: [STRENGTH_TAG],
-    CardId.SPOT_WEAKNESS: [STRENGTH_TAG]
+    CardId.INFLAME: [SynergyTag.STRENGTH],
+    CardId.JAX: [SynergyTag.STRENGTH],
+    CardId.LIMIT_BREAK: [SynergyTag.STRENGTH],
+    CardId.SPOT_WEAKNESS: [SynergyTag.STRENGTH]
 
 }
