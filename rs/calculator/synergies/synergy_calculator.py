@@ -1,13 +1,15 @@
+from typing import List
+
 from rs.calculator.cards import CardId
 from rs.calculator.synergies.synergy_beneficiaries import SynergyBeneficiaries
 from rs.calculator.synergies.synergy_providers import SynergyProviders
 
 
-def getSynergy(card, deck):
+def getSynergy(cardId: CardId, deck: List[CardId]):
 
     deck_length = len(deck)
-    if card in SynergyProviders:
-        tags = SynergyProviders[card]
+    if cardId in SynergyProviders:
+        tags = SynergyProviders[cardId]
 
         # Count the number of times each tag appears in the beneficiaries
         final_count = {}
