@@ -8,8 +8,7 @@ SynergyProviders = {
     CardId.INFLAME: [SynergyTag.STRENGTH],
     CardId.JAX: [SynergyTag.STRENGTH],
     CardId.LIMIT_BREAK: [SynergyTag.STRENGTH],
-    CardId.SPOT_WEAKNESS: [SynergyTag.STRENGTH],
-    CardId.BASH: [SynergyTag.STRENGTH],
+    CardId.SPOT_WEAKNESS: [SynergyTag.STRENGTH]
 
 }
 
