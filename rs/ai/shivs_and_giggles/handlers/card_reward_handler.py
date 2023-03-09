@@ -12,7 +12,7 @@ class CardRewardHandler(Handler):
     def __init__(self):
         self.desired_cards: dict[str, int] = {
             'a thousand cuts': 1,
-            'accuracy': 2,
+            'accuracy': 3,
             'terror': 2,
             'adrenaline': 2,
             'storm of steel': 2,

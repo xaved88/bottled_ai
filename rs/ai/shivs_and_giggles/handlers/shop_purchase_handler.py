@@ -12,36 +12,24 @@ class ShopPurchaseHandler(Handler):
 
     def __init__(self):
         self.relics = [
-            'Bag of Marbles',
-            'Pen Nib',
-            'Strike Dummy',
-            'Paper Phrog',
+            'Shuriken',
+            'Kunai',
             'Preserved Insect',
-            'Red Skull',
-            'Meat on the Bone',
-            'Eternal Feather',
-            'Regal Pillow',
-            'Lee’s Waffle',
+            'Ornamental Fan',
+            'Bag of Marbles',
+            'Vajra',
+            'Molten Egg',
             'Meal Ticket',
-            'Strawberry',
-            'Toy Ornithopter',
-            'Pantograph',
-            'Pear',
+            'Bronze Scales',
             'Orichalcum',
             'Anchor',
             'Horn Cleat',
-            'Self-Forming Clay',
-            'Thread and Needle',
-            'Lantern',
-            'Happy Flower',
-            'Bag of Preparation',
-            'Centennial Puzzle',
         ]
 
         self.cards = [
-            "Offering",
-            "Battle Trance",
-            "Shockwave"
+            "Accuracy",
+            "Blade Dance",
+            "Escape Plan",
         ]
 
     def can_handle(self, state: GameState) -> bool:
@@ -67,33 +55,39 @@ class ShopPurchaseHandler(Handler):
         if can_purge and state.deck.contains_type(CardType.CURSE):
             return "purge"
 
-        # 2. Perfected strike
-        for card in screen_state['cards']:
-            if card['id'] == 'Perfected Strike' and gold >= card['price']:
-                return card['name'].lower()
+        # 2. Shuriken
+        for relic in screen_state['relics']:
+            if relic['name'] == 'Shuriken' and gold >= relic['price']:
+                return "shuriken"
 
         # 3. Membership Card
         for relic in screen_state['relics']:
             if relic['name'] == 'Membership Card' and gold >= relic['price']:
                 return "membership card"
 
-        # 4. Purge in general
-        if can_purge and state.deck.contains_cards(["Strike", "Strike+", "Defend", "Defend+"]):
-            return "purge"
+        # 4. Shuriken
+        for relic in screen_state['relics']:
+            if relic['name'] == 'Shuriken' and gold >= relic['price']:
+                return "shuriken"
 
-        # 5. Relics based on list
-        for p in self.relics:
-            for relic in screen_state['relics']:
-                if relic['name'] == p and gold >= relic['price']:
-                    return relic['name'].lower()
-
-        # 6. Cards based on list
+        # 5. Cards based on list
         deck_card_list = state.get_deck_card_list()
         for p in self.cards:
             for card in screen_state['cards']:
                 if card['id'] == p and gold >= card['price']:
                     if p.lower not in deck_card_list:
                         return card['name'].lower()
+
+        # 6. Relics based on list
+        for p in self.relics:
+            for relic in screen_state['relics']:
+                if relic['name'] == p and gold >= relic['price']:
+                    return relic['name'].lower()
+
+        # 7. Purge in general
+        if can_purge and state.deck.contains_cards(["Strike"]):
+            return "purge"
+
 
         # Nothing we want / can afford, leave.
         return ''
