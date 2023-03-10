@@ -9,7 +9,10 @@ class GremlinNobHandler(BattleHandler):
 
     def __init__(self):
         super().__init__()
-        self.allowed_skills = self.always  # the card draw / energy stuff is pretty good, so let's allow it
+
+        self.allowed_skills: List[str] = [
+            'blade dance',
+        ]
 
     def can_handle(self, state: GameState) -> bool:
         return super().can_handle(state) and state.has_monster("Gremlin Nob")
