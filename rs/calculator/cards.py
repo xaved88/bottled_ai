@@ -99,6 +99,8 @@ class CardId(Enum):
     INFINITE_BLADES = 'infinite blades'
     AFTER_IMAGE = 'after image'
 
+    FINESSE = 'finesse'
+
 
 class Card:
     def __init__(self, card_id: CardId, upgrade: int, cost: int, needs_target: bool, card_type: CardType,
@@ -320,3 +322,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.AFTER_IMAGE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
 
+    if card_id == CardId.FINESSE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)

@@ -29,6 +29,9 @@ class CardRewardHandler(Handler):
             'dagger spray': 2,
             'caltrops': 1,
             'backstab': 1,
+            'master of strategy': 1,
+            'flash of steel': 1,
+            'finesse': 1,
         }
 
     def can_handle(self, state: GameState) -> bool:

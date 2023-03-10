@@ -238,7 +238,7 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(damage=7 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
 
-    if card.id == CardId.ESCAPE_PLAN:
+    if card.id == CardId.ESCAPE_PLAN:                              # Basically we consider block from this to be bonus.
         return [CardEffects(draw=1, target=TargetType.SELF)]
 
     if card.id == CardId.HEEL_HOOK:
@@ -249,7 +249,7 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(damage=4 if not card.upgrade else 6, hits=2, target=TargetType.ALL_MONSTERS)]
 
     if card.id == CardId.BACKSTAB:
-        return [CardEffects(damage=11, hits=1 if not card.upgrade else 15, target=TargetType.MONSTER)]
+        return [CardEffects(damage=11 if not card.upgrade else 15, hits=1, target=TargetType.MONSTER)]
 
     if card.id == CardId.CALTROPS:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.THORNS: 3 if not card.upgrade else 5})]
@@ -265,6 +265,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
 
     if card.id == CardId.AFTER_IMAGE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.AFTER_IMAGE: 1})]
+
+    if card.id == CardId.FINESSE:
+        return [CardEffects(block=2 if not card.upgrade else 4, draw=1, target=TargetType.SELF)]
 
     # default case, todo maybe some logging or?
 
