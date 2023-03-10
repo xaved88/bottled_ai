@@ -10,9 +10,9 @@ throw_away_potions = [
     'SmokeBomb',
     'ElixirPotion',
     'LiquidMemories',
-    'SneckoOil'
+    'SneckoOil',
+    'GhostInAJar',
 ]
-
 
 class CombatRewardHandler(Handler):
 
