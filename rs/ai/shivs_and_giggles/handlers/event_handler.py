@@ -193,7 +193,7 @@ class EventHandler(Handler):
 
         if event_name == "Falling":
             if len(state.get_choice_list()) == 3:
-                return "choose 3"  # Lose the attack
+                return "choose 2"  # Lose the attack
             else:
                 return "choose 0"  # OK our deck is weird - whatever, just lose something
 
