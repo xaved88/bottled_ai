@@ -228,9 +228,9 @@ class HandState:
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
         for monster in self.monsters:
             if monster.current_hp > 0 and monster.hits:
-                monster_weak_mod = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75
+                monster_weak_modifier = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75 if not self.relics.get(RelicId.PAPER_KRANE) else 0.6
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
-                damage = max(math.floor((monster.damage + monster_strength) * monster_weak_mod), 0)
+                damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.

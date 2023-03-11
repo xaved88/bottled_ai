@@ -12,6 +12,7 @@ class RelicId(Enum):
     ODD_MUSHROOM = 'odd mushroom'
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
+    PAPER_KRANE = 'paper krane'
     PEN_NIB = 'pen nib'
     STRIKE_DUMMY = 'strike dummy'
     THE_BOOT = 'the boot'
