@@ -90,10 +90,34 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 6)
 
     def test_weak_when_defending(self):
-        pass
+        state = self.given_state(CardId.NEUTRALIZE)
+        state.monsters[0].damage = 10
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        play.end_turn()
+        self.see_player_lost_hp(play, 7)
+
+    def test_weak_when_defending_no_rounding_needed(self):
+        state = self.given_state(CardId.NEUTRALIZE)
+        state.monsters[0].damage = 20
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        play.end_turn()
+        self.see_player_lost_hp(play, 15)
 
     def test_weak_with_multi_attack_when_defending(self):
-        pass
+        state = self.given_state(CardId.NEUTRALIZE)
+        state.monsters[0].damage = 20
+        state.monsters[0].hits = 2
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        play.end_turn()
+        self.see_player_lost_hp(play, 30)
 
     def test_frail(self):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.FRAIL: 1})
