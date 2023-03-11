@@ -30,9 +30,15 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 10)
 
     def test_paper_krane(self):
-        # state.monsters[0].powers[PowerId.WEAKENED] = 1
-        # state.relics[RelicId.PAPER_KRANE] = 1
-        pass
+        state = self.given_state(CardId.NEUTRALIZE)
+        state.relics[RelicId.PAPER_KRANE] = 1
+        state.monsters[0].damage = 10
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+        play.end_turn()
+        self.see_player_lost_hp(play, 6)
 
     def test_nunchaku_increments_with_attack(self):
         state = self.given_state(CardId.STRIKE_R)
