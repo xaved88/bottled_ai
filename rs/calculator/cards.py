@@ -30,6 +30,7 @@ class CardId(Enum):
     DARK_SHACKLES = 'dark shackles'
     DAZED = 'dazed'
     DISARM = 'disarm'
+    DRAMATIC_ENTRANCE = 'dramatic entrance'
     DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
     DEFEND_G = 'defend_g'
@@ -324,3 +325,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
 
     if card_id == CardId.FINESSE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+
+    if card_id == CardId.DRAMATIC_ENTRANCE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)

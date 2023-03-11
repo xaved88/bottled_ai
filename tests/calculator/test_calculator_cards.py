@@ -760,3 +760,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_discard_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_finesse(self):
+        state = self.given_state(CardId.FINESSE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_drew_cards(play, 1)
+        self.see_player_has_block(play, 2)
+
+    def test_dramatic_entrance(self):
+        state = self.given_state(CardId.DRAMATIC_ENTRANCE, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 8, enemy_index=0)
+        self.see_enemy_lost_hp(play, 8, enemy_index=1)

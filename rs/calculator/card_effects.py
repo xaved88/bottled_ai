@@ -269,6 +269,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.FINESSE:
         return [CardEffects(block=2 if not card.upgrade else 4, draw=1, target=TargetType.SELF)]
 
+    if card.id == CardId.DRAMATIC_ENTRANCE:
+        return [CardEffects(damage=8 if not card.upgrade else 12, hits=1, target=TargetType.ALL_MONSTERS)]
+
     # default case, todo maybe some logging or?
 
     return [CardEffects()]
