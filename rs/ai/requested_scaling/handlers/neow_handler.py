@@ -8,17 +8,19 @@ from rs.machine.state import GameState
 
 # We don't cover choice 2, which is an option constructed out of a buff AND a debuff. 3 is always relic swap.
 desired_choices = [
+    'enemies in your next three combats have 1 hp',
+    'choose a card to obtain',
     'upgrade a card',
     'obtain a random common relic',
+    'remove a card from your deck',
     'obtain 100 gold',
     'choose a card to obtain',
     'obtain 3 random potions',
     'choose a colorless card to obtain',
     'max hp +8',
     'obtain a random rare card',
-    'enemies in your next three combats have 1 hp',
-    'remove a card from your deck',
     'transform a card',
+    'obtain 3 random potions',
     'lose your starting relic obtain a random boss relic',
 ]
 

@@ -23,20 +23,28 @@ class CardId(Enum):
     BLUDGEON = 'bludgeon'
     BODY_SLAM = 'body slam'
     BURN = 'burn'
+    BURNING_PACT = 'burning pact'
     CARNAGE = 'carnage'
     CLASH = 'clash'
     CLEAVE = 'cleave'
     CLOTHESLINE = 'clothesline'
+    CLUMSY = 'clumsy'
+    CURSEOFTHEBELL = 'curseofthebell'
+    DARK_EMBRACE = 'dark embrace'
     DARK_SHACKLES = 'dark shackles'
     DAZED = 'dazed'
+    DECAY = 'decay'
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
     DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
     DEFEND_G = 'defend_g'
+    DOUBT = 'doubt'
     ENTRENCH = 'entrench'
+    EVOLVE = 'evolve'
     FEED = 'feed'
     FIEND_FIRE = 'fiend fire'
+    FIRE_BREATHING = 'fire breathing'
     FLAME_BARRIER = 'flame barrier'
     FLASH_OF_STEEL = 'flash of steel'
     FLEX = 'flex'
@@ -49,6 +57,7 @@ class CardId(Enum):
     INFLAME = 'inflame'
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
+    INJURY = 'injury'
     JAX = 'j.a.x.'
     LIMIT_BREAK = 'limit break'
     MASTER_OF_STRATEGY = 'master of strategy'
@@ -56,6 +65,7 @@ class CardId(Enum):
     NEUTRALIZE = 'neutralize'
     OFFERING = 'offering'
     PAIN = 'pain'
+    PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
     POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
@@ -68,6 +78,7 @@ class CardId(Enum):
     RECKLESS_CHARGE = 'reckless charge'
     SEEING_RED = 'seeing red'
     SHOCKWAVE = 'shockwave'
+    SHAME = 'shame'
     SHRUG_IT_OFF = 'shrug it off'
     SLIMED = 'slimed'
     SPOT_WEAKNESS = 'spot weakness'
@@ -81,6 +92,9 @@ class CardId(Enum):
     UPPERCUT = 'uppercut'
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
+
+    """Adding New Ironclad cards for Synergy testing"""
+    FEEL_NO_PAIN = 'feel no pain'
 
     """New Cards added"""
 
@@ -308,6 +322,39 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.FINESSE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.FEEL_NO_PAIN:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.DARK_EMBRACE:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.BURNING_PACT:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.EVOLVE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+
+    if card_id == CardId.FIRE_BREATHING:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+
+    if card_id == CardId.INJURY:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    if card_id == CardId.SHAME:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    if card_id == CardId.DECAY:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    if card_id == CardId.PARASITE:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    if card_id == CardId.DOUBT:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    if card_id == CardId.CURSEOFTHEBELL:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+
+    if card_id == CardId.CLUMSY:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.DRAMATIC_ENTRANCE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.POISONED_STAB:

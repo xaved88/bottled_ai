@@ -1,4 +1,5 @@
 import math
+import copy
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
@@ -29,6 +30,11 @@ class HandState:
         self.amount_to_discard: int = amount_to_discard
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
+
+        # Capturing a static image of the current exhaust pile
+        self.exhaust_pile_backup = len(self.exhaust_pile)
+        self.discard_pile_backup = len(self.exhaust_pile)  # can use this to activate discard synergies
+
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -102,6 +108,9 @@ class HandState:
         player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
         player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
         monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
+
+        """we can use this method to either send card to discard handler or exhaust handler?"""
+        effect_on_other_cards = card_effect_on_other_cards(card)
 
         # pre play stuff
         if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
@@ -273,6 +282,19 @@ class HandState:
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
+        # using backup of exhausted pile before using card
+        n_exhausted_cards = len(self.exhaust_pile) - self.exhaust_pile_backup
+
+        if self.player.powers.get(PowerId.FEEL_NO_PAN) and n_exhausted_cards > 0:
+            feel_no_pain_block = (self.player.powers.get(PowerId.FEEL_NO_PAN, 0) * n_exhausted_cards)
+            if feel_no_pain_block > 0:
+                self.player.block += feel_no_pain_block
+
+        if self.player.powers.get(PowerId.DARK_EMBRACE) and n_exhausted_cards > 0:
+            dark_embrace_draw_amount = (self.player.powers.get(PowerId.DARK_EMBRACE, 0) * n_exhausted_cards)
+            if dark_embrace_draw_amount > 0:
+                self.draw_cards(dark_embrace_draw_amount)
+
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
         for m in self.monsters:
@@ -342,3 +364,28 @@ def can_card_target_target(card: Card, target: Target) -> bool:
         return False
 
     return True
+
+
+def create_backup_of_piles(desired_backup_pile):
+    backup_pile = copy.deepcopy(desired_backup_pile)
+    return backup_pile
+
+
+def card_effect_on_other_cards(card: Card):
+    discard_others_list = [
+        'survivor',
+        'dagger throw'
+
+    ]
+
+    exhaust_others_list = [
+        'burning pact',
+        'true grit+'
+    ]
+
+    known_cards = [e.value for e in CardId]
+
+    if card.id in discard_others_list and card.id in known_cards:
+        return 'discard'
+    if card.id in exhaust_others_list and card.id in known_cards:
+        return 'exhaust'

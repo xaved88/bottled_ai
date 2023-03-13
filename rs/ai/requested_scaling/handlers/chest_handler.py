@@ -16,7 +16,7 @@ class ChestHandler(Handler):
                and state.game_state()['room_type'] == "TreasureRoom"
 
     def handle(self, state: GameState) -> List[str]:
-        if state.has_relic("Cursed Key") and state.deck.contains_type(CardType.CURSE):
+        if state.has_relic("Cursed Key"):
             return ["proceed"]
         if presentation_mode:
             return [p_delay_s, "choose 0", "wait 30"]

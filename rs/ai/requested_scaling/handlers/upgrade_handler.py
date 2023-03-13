@@ -12,7 +12,18 @@ class UpgradeHandler(Handler):
         self.priorities: List[str] = [
             'apotheosis',
             'inflame',
+            'limit break',
+            'feel no pain',
+            'dark embrace',
+            'spot weakness',
+            'hemokinesis',
+            'carnage',
+            'immolate',
+            'heavy blade',
+            'evolve',
+            'fire breathing',
             'bash',
+            'flex',
             'shockwave',
             'uppercut',  # Not in pickup list at time of writing
             'battle trance',

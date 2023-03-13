@@ -14,7 +14,6 @@ class ShopPurchaseHandler(Handler):
         self.relics = [
             'Bag of Marbles',
             'Pen Nib',
-            'Strike Dummy',
             'Paper Phrog',
             'Preserved Insect',
             'Red Skull',
@@ -42,7 +41,11 @@ class ShopPurchaseHandler(Handler):
             "Offering",
             "Battle Trance",
             "Shockwave",
-            "Inflame"
+            "Inflame",
+            "Feel No Pain",
+            "Disarm",
+            "Burning Pact",
+            "Evolve"
         ]
 
     def can_handle(self, state: GameState) -> bool:
@@ -67,11 +70,6 @@ class ShopPurchaseHandler(Handler):
         # 1. Purge curses
         if can_purge and state.deck.contains_type(CardType.CURSE):
             return "purge"
-
-        # 2. Perfected strike
-        for card in screen_state['cards']:
-            if card['id'] == 'Perfected Strike' and gold >= card['price']:
-                return card['name'].lower()
 
         # 3. Membership Card
         for relic in screen_state['relics']:

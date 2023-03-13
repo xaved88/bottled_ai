@@ -21,7 +21,9 @@ from rs.ai.requested_scaling.handlers.shop_entrance_handler import ShopEntranceH
 from rs.ai.requested_scaling.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.requested_scaling.handlers.smart_battle_handler import SmartBattleHandler
 from rs.ai.requested_scaling.handlers.smart_path_handler import SmartPathHandler
+from rs.ai.requested_scaling.handlers.synergy_handlers.exhaust_handler import ExhaustHandler
 from rs.ai.requested_scaling.handlers.synergy_handlers.scaling_battle_handler import ScalingBattleHandler
+from rs.ai.requested_scaling.handlers.synergy_handlers.synergy_card_reward_handler import SynergyCardRewardHandler
 from rs.ai.requested_scaling.handlers.transform_handler import TransformHandler
 from rs.ai.requested_scaling.handlers.upgrade_handler import UpgradeHandler
 from rs.machine.ai_strategy import AiStrategy
@@ -35,6 +37,7 @@ requested_scaling_custom_battle_handlers: List[Handler] = [
     PotionsEliteHandler(),
 
     #Inserting Scaling Handler as high as possible:
+    ExhaustHandler(),
     ScalingBattleHandler(),
 
     # Enemies After
@@ -52,6 +55,7 @@ REQUESTED_SCALING: AiStrategy = AiStrategy(
 
         # Temp for testing
         ScalingBattleHandler(),
+        ExhaustHandler(),
         SmartBattleHandler(),
 
         # General Stuff
@@ -61,6 +65,7 @@ REQUESTED_SCALING: AiStrategy = AiStrategy(
         TransformHandler(),
         PurgeHandler(),
         CombatRewardHandler(),
+        SynergyCardRewardHandler(),
         CardRewardHandler(),
         NeowHandler(),
         EventHandler(),
