@@ -7,7 +7,6 @@ SynergyProviders = {
     CardId.INFLAME: [SynergyTag.STRENGTH, SynergyTag.DEXTERITY],
     CardId.JAX: [SynergyTag.STRENGTH, SynergyTag.STRENGTH],
     CardId.SPOT_WEAKNESS: [SynergyTag.STRENGTH, SynergyTag.STRENGTH],
-    CardId.FLEX: [SynergyTag.STRENGTH, SynergyTag.STRENGTH],
     CardId.LIMIT_BREAK: [SynergyTag.STRENGTH],
 
     CardId.FEEL_NO_PAIN: [SynergyTag.EXHAUST, SynergyTag.EXHAUST, SynergyTag.EXHAUST, SynergyTag.EXHAUST],
@@ -16,7 +15,6 @@ SynergyProviders = {
     CardId.DISARM: [SynergyTag.DISARM, SynergyTag.EXHAUST, SynergyTag.EXHAUST, SynergyTag.EXHAUST],
 
     CardId.EVOLVE: [SynergyTag.STATUS, SynergyTag.STATUS],
-    CardId.FIRE_BREATHING: [SynergyTag.STATUS, SynergyTag.STATUS],
 
     CardId.ACCURACY: [SynergyTag.SHIVS]
 
