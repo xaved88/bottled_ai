@@ -8,5 +8,5 @@ class ScalingHandlerTest(ScalingHandlerFixture):
     handler = ScalingBattleHandler
 
     def test_plays_inflame(self):
-        self.execute_handler_tests('battles/Synergies/not_play_limit_break.json', [])
+        self.execute_handler_tests('battles/synergy_states/not_play_limit_break.json', [])
 

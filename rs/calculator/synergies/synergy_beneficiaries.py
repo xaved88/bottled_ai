@@ -77,7 +77,7 @@ SynergyBeneficiaries = {
     CardId.DARK_EMBRACE: [],
     CardId.BLADE_DANCE: [SynergyTag.SHIVS, SynergyTag.SHIVS, SynergyTag.SHIVS],
     CardId.EVOLVE: [SynergyTag.STATUS],
-    CardId.FIRE_BREATHING: [SynergyTag.STATUS, SynergyTag.STATUS, SynergyTag.STATUS, SynergyTag.STATUS],
+    CardId.FIRE_BREATHING: [SynergyTag.STATUS, SynergyTag.STATUS],
     CardId.BURNING_PACT: [SynergyTag.STATUS, SynergyTag.EXHAUST, SynergyTag.EXHAUST, SynergyTag.EXHAUST]
 }
 

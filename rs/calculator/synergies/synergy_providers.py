@@ -18,7 +18,6 @@ SynergyProviders = {
 
     CardId.ACCURACY: [SynergyTag.SHIVS]
 
-
 }
 
 def synergyProviderCardIdStrings():

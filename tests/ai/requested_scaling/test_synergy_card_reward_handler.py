@@ -7,5 +7,5 @@ class SynergyCardRewardHandlerTest(SynergyCardRewardHandlerFixture):
     handler = SynergyCardRewardHandler
 
     def test_plays_inflame(self):
-        self.execute_handler_tests('battles/Synergies/smarter_card_reward_testing.json', [])
+        self.execute_handler_tests('battles/synergy_states/smarter_card_reward_testing.json', [])
 
