@@ -8,4 +8,4 @@ class ExhaustHandlerTest(ExhaustHandlerFixture):
     handler = ExhaustHandler
 
     def test_exhaust_others(self):
-        self.execute_handler_tests('battles/synergy_states/learn_to_choose_cards.json', [])
+        self.execute_handler_tests('battles/synergy_statessynergy_states/learn_to_choose_cards.json', [])
