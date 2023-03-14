@@ -5,10 +5,9 @@ from rs.game.card import Card, CardType
 
 from config import presentation_mode, p_delay, p_delay_s
 from rs.calculator.cards import CardId
-from rs.calculator.synergies.synergy_beneficiaries import SynergyBeneficiaries, synergyBeneficiariesCardIdStrings
-from rs.calculator.synergies.synergy_calculator import get_beneficiary_scores, get_provider_scores
-from rs.calculator.synergies.synergy_providers import SynergyProviders, synergyProviderCardIdStrings
-from rs.calculator.synergies.synergy_tags import SynergyTag
+from rs.ai.requested_scaling.synergies.synergy_beneficiaries import synergyBeneficiariesCardIdStrings
+from rs.ai.requested_scaling.synergies.synergy_calculator import get_beneficiary_scores
+from rs.ai.requested_scaling.synergies.synergy_providers import synergyProviderCardIdStrings
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler

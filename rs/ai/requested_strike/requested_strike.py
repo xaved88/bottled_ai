@@ -48,7 +48,6 @@ REQUESTED_STRIKE: AiStrategy = AiStrategy(
         AstrolabeHandler(),
 
         # Temp for testing
-        ScalingBattleHandler(),
         SmartBattleHandler(),
 
         # General Stuff

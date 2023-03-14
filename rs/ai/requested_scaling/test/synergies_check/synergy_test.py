@@ -1,9 +1,7 @@
 from rs.calculator.cards import CardId
-from rs.calculator.synergies.synergy_calculator import getSynergy
+from rs.ai.requested_scaling.synergies.synergy_calculator import getSynergy
 
 import unittest
-
-from rs.helper.seed import get_seed_string, make_seed_string_number
 
 
 class SynergyTester(unittest.TestCase):

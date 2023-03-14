@@ -1,6 +1,6 @@
 
 from rs.calculator.cards import CardId
-from rs.calculator.synergies.synergy_tags import SynergyTag
+from rs.ai.requested_scaling.synergies.synergy_tags import SynergyTag
 
 SynergyProviders = {
 

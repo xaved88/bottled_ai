@@ -1,8 +1,8 @@
 from typing import List
 
 from rs.calculator.cards import CardId
-from rs.calculator.synergies.synergy_calculator import getSynergy
-from rs.calculator.synergies.synergy_providers import synergyProviderCardIdStrings
+from rs.ai.requested_scaling.synergies.synergy_calculator import getSynergy
+from rs.ai.requested_scaling.synergies.synergy_providers import synergyProviderCardIdStrings
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState

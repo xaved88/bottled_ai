@@ -38,11 +38,8 @@ cards_to_exhaust = [
 class ExhaustHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
-        screen_type = state.screen_type()
-        action = state.current_action()
-
         if state.screen_type() == ScreenType.HAND_SELECT.value and \
-                state.current_action() == CurrentAction.EXHAUSTACTION.value:
+                state.current_action() == CurrentAction.EXHAUST_ACTION.value:
             return True
 
     def handle(self, state: GameState) -> List[str]:

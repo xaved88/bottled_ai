@@ -1,9 +1,8 @@
 from typing import List
 
 from rs.calculator.cards import CardId
-from rs.calculator.synergies.synergy_beneficiaries import SynergyBeneficiaries
-from rs.calculator.synergies.synergy_providers import SynergyProviders
-from rs.calculator.synergies.synergy_tags import SynergyTag
+from rs.ai.requested_scaling.synergies.synergy_beneficiaries import SynergyBeneficiaries
+from rs.ai.requested_scaling.synergies.synergy_providers import SynergyProviders
 
 
 def getSynergy(cardId: CardId, deck: List[CardId]):

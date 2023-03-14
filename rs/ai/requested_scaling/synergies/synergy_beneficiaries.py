@@ -1,5 +1,4 @@
 from rs.calculator.cards import CardId
-from rs.calculator.synergies.synergy_tags import *
 
 SynergyBeneficiaries = {
     CardId.ANGER: [],
