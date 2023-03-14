@@ -1,7 +1,7 @@
 from typing import List
 
 from base_test_handler_fixture import BaseTestHandlerFixture
-from rs.ai.requested_scaling.requested_scaling import REQUESTED_SCALING
+from ai.requested_scaling import REQUESTED_SCALING
 from rs.machine.handlers.handler import Handler
 
 

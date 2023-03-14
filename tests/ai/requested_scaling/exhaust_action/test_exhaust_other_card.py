@@ -1,4 +1,4 @@
-from rs.ai.requested_scaling.handlers.synergy_handlers.exhaust_action.exhaust_test_fixture import ExhaustHandlerFixture
+from ai.requested_scaling.exhaust_action.exhaust_test_fixture import ExhaustHandlerFixture
 from rs.ai.requested_scaling.handlers.synergy_handlers.exhaust_action.exhaust_handler import ExhaustHandler
 
 

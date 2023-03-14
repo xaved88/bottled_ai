@@ -16,7 +16,7 @@ class PowerId(Enum):
     DEXTERITY = 'dexterity'
     ENTANGLED = 'entangled'
     EVOLVE = 'evolve'
-    FEEL_NO_PAN = 'feel no pain'
+    FEEL_NO_PAIN = 'feel no pain'
     FIRE_BREATHING = 'fire breathing'
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'

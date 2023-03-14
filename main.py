@@ -1,8 +1,6 @@
 import time
 import traceback
 
-from rs.ai.requested_scaling.requested_scaling import REQUESTED_SCALING
-from rs.ai.requested_strike.requested_strike import REQUESTED_STRIKE
 from rs.ai.shivs_and_giggles.shivs_and_giggles import SHIVS_AND_GIGGLES
 from rs.helper.seed import make_random_seed
 from rs.api.client import Client
