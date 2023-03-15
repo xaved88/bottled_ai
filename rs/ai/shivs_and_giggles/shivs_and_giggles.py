@@ -43,7 +43,7 @@ SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
         # Some edge cases
         AstrolabeHandler(),
 
-        # Temp for testing
+        # Battle Handler
         SmartBattleHandler(),
 
         # General Stuff

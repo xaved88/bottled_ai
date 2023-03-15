@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.ai.requested_strike.comparators.general_comparator import GeneralComparator
+from rs.ai.shivs_and_giggles.comparators.general_comparator import GeneralSilentComparator
 from rs.calculator.executor import get_best_battle_action
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -13,4 +13,5 @@ class SmartBattleHandler(Handler):
         return state.has_command(Command.PLAY)
 
     def handle(self, state: GameState) -> List[str]:
-        return get_best_battle_action(state, GeneralComparator())
+        actions = get_best_battle_action(state, GeneralSilentComparator())
+        return ["end"] if not actions else actions
