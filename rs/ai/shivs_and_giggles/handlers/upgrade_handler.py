@@ -32,6 +32,7 @@ class UpgradeHandler(Handler):
             'caltrops',
             'heel hook',
             'survivor',
+            'backstab',
         ]
 
     def can_handle(self, state: GameState) -> bool:
@@ -42,7 +43,16 @@ class UpgradeHandler(Handler):
     def handle(self, state: GameState) -> List[str]:
         choice_list = state.game_state()["choice_list"]
 
-        for priority in self.priorities:
+        # we have to copy this, otherwise it will modify the list until the bot is rerun
+        priorities_working_copy = self.priorities.copy()
+
+        if state.has_relic("Snecko Eye"):
+            priorities_working_copy.remove('terror')
+            priorities_working_copy.remove('escape plan')
+            priorities_working_copy.remove('flash of steel')
+            priorities_working_copy.remove('finesse')
+
+        for priority in priorities_working_copy:
             if priority in choice_list:
                 if presentation_mode:
                     return [p_delay, "choose " + priority, p_delay_s]

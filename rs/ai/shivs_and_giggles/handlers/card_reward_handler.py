@@ -24,14 +24,14 @@ class CardRewardHandler(Handler):
             'cloak and dagger': 2,
             'poisoned stab': 2,
             'sucker punch': 1,
-            'escape plan': 4,
+            'escape plan': 4,           # removed if we have snecko eye
             'heel hook': 2,
             'dagger spray': 2,
             'caltrops': 1,
-            'backstab': 1,
+            'backstab': 1,              # removed if we have snecko eye
             'master of strategy': 1,
-            'flash of steel': 1,
-            'finesse': 1,
+            'flash of steel': 1,        # removed if we have snecko eye
+            'finesse': 1,               # removed if we have snecko eye
         }
 
     def can_handle(self, state: GameState) -> bool:
@@ -47,10 +47,19 @@ class CardRewardHandler(Handler):
 
         deck_card_list = state.get_deck_card_list()
 
-        for desired_card in self.desired_cards.keys():
+        # we have to copy this, otherwise it will modify the list until the bot is rerun
+        desired_cards_working_copy = self.desired_cards.copy()
+
+        if state.has_relic("Snecko Eye"):
+            del desired_cards_working_copy['escape plan']
+            del desired_cards_working_copy['backstab']
+            del desired_cards_working_copy['flash of steel']
+            del desired_cards_working_copy['finesse']
+
+        for desired_card in desired_cards_working_copy:
             if desired_card not in choice_list:
                 continue
-            if desired_card in deck_card_list and deck_card_list[desired_card] >= self.desired_cards[desired_card]:
+            if desired_card in deck_card_list and deck_card_list[desired_card] >= desired_cards_working_copy[desired_card]:
                 continue
             if presentation_mode:
                 return [p_delay, "choose " + str(choice_list.index(desired_card)), "wait 30"]
