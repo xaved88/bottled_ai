@@ -13,6 +13,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 9)
 
+    def test_wrist_blade(self):
+        state = self.given_state(CardId.SHIV)
+        state.relics[RelicId.WRIST_BLADE] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 8)
+
+    def test_no_wrist_blade(self):
+        state = self.given_state(CardId.SHIV)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 4)
+
     def test_velvet_choker(self):
         state = self.given_state(CardId.STRIKE_R)
         state.hand.append(get_card(CardId.STRIKE_R))

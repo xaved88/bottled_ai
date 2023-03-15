@@ -19,6 +19,7 @@ class RelicId(Enum):
     TORII = 'torii'
     TUNGSTEN_ROD = 'tungsten rod'
     VELVET_CHOKER = 'velvet choker'
+    WRIST_BLADE = 'wrist blade'
 
 
 Relics = dict[RelicId: int]
