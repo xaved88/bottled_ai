@@ -427,3 +427,28 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_lost_hp(play, 0)
+
+    def test_time_warp_not_incremented_when_not_present(self):
+        state = self.given_state(CardId.STRIKE_R)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_does_not_have_power(play, PowerId.TIME_WARP)
+
+    def test_time_warp_incremented_by_card_plays(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.monsters[0].powers[PowerId.TIME_WARP] = 0
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 18)
+        self.see_enemy_has_power(play, PowerId.TIME_WARP, 3)
+
+    def test_time_warp_caps_card_plays(self):
+        state = self.given_state(CardId.CLEAVE)
+        state.hand.append(get_card(CardId.CLEAVE))
+        state.hand.append(get_card(CardId.CLEAVE))
+        state.monsters[0].powers[PowerId.TIME_WARP] = 10
+        play = self.when_playing_the_whole_hand(state)
+        # see that only 2 of the 3 cleaves are played because time warp stops it
+        self.see_enemy_lost_hp(play, 16)
+        self.see_enemy_has_power(play, PowerId.TIME_WARP, 12)
+

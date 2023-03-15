@@ -28,6 +28,7 @@ class PowerId(Enum):
     SPLIT = 'split'
     STRENGTH = 'strength'
     THORNS = 'thorns'
+    TIME_WARP = 'time warp'
     VIGOR = 'vigor'
     VULNERABLE = 'vulnerable'
     WEAKENED = 'weakened'

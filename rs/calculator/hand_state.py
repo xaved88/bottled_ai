@@ -31,8 +31,14 @@ class HandState:
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
 
-        # Turn-over conditions
-        if self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 or self.player.current_hp <= 0:
+        # Prep time warp
+        time_warp_full = False
+        for idx, monster in enumerate(self.monsters):
+            if monster.powers.get(PowerId.TIME_WARP, 0) >= 12:
+                time_warp_full = True
+
+        # Turn over conditions
+        if self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 or time_warp_full or self.player.current_hp <= 0:
             return plays
 
         for card_idx, card in enumerate(self.hand):
@@ -159,9 +165,13 @@ class HandState:
             for hook in effect.post_hooks:
                 hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
 
-        # post turn counter increments (we can make this more dynamic/clean as we get more of them)
+        # post card play counter increments (we can make this more dynamic/clean as we get more of them)
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
+
+        for idx, monster in enumerate(self.monsters):
+            if monster.powers.get(PowerId.TIME_WARP) is not None:
+                self.monsters[idx].powers[PowerId.TIME_WARP] += 1
 
         if RelicId.NUNCHAKU in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.NUNCHAKU] += 1
