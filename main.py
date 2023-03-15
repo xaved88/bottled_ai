@@ -13,8 +13,7 @@ run_seeds = [
    # '10HTDAVER34YR',
 ]
 run_amount = 20
-use_controller = False
-
+strategy = SHIVS_AND_GIGGLES
 
 if __name__ == "__main__":
     init_log()
@@ -22,7 +21,7 @@ if __name__ == "__main__":
     log_new_run_sequence()
     try:
         client = Client()
-        game = Game(client, SHIVS_AND_GIGGLES)
+        game = Game(client, strategy)
         if run_seeds:
             for seed in run_seeds:
                 game.start(seed, take_screenshots)

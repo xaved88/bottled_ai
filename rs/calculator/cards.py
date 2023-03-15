@@ -72,6 +72,7 @@ class CardId(Enum):
     SPOT_WEAKNESS = 'spot weakness'
     STRIKE_R = 'strike_r'
     STRIKE_G = 'strike_g'
+    SURVIVOR = 'survivor'
     SWIFT_STRIKE = 'swift strike'
     THUNDERCLAP = 'thunderclap'
     TRIP = 'trip'
@@ -264,12 +265,12 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.REGRET:
         return Card(card_id, 0, -1, False, CardType.CURSE)
 
-    #Silent
+    # Silent
     if card_id == CardId.NEUTRALIZE:
-        return Card(card_id, upgrade, 0, True, CardType.ATTACK)
-    # TODO -> logging or throw error or something if it gets here?
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
 
-    """New cards included"""
+    if card_id == CardId.SURVIVOR:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
 
     if card_id == CardId.SHIV:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)

@@ -9,7 +9,8 @@ from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Target, Player, Monster
 from rs.game.card import CardType
 
-Play = tuple[int, int]  # card index, target index (-1 for none/all)
+Play = tuple[int, int]  # card index, target index (-1 for none/all), (-2 for discard)
+PLAY_DISCARD = -2
 
 
 class HandState:
@@ -25,6 +26,7 @@ class HandState:
         self.draw_pile: List[Card] = [] if draw_pile is None else draw_pile
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
+        self.amount_to_discard: int = 0
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
 
@@ -53,12 +55,19 @@ class HandState:
 
         return plays
 
+    def get_discards(self) -> List[Play]:
+        return [(i, PLAY_DISCARD) for i, c in enumerate(self.hand)]
+
     def transform_from_play(self, play: Play, is_first_play: bool):
         self.__is_first_play = is_first_play
         self.__starting_energy = self.player.energy
 
         (card_index, target_index) = play
         card = self.hand[card_index]
+
+        if target_index == PLAY_DISCARD:
+            self.transform_from_discard(card, card_index)
+            return
 
         # play the card
         self.player.energy -= card.cost
@@ -154,6 +163,10 @@ class HandState:
             if effect.draw:
                 self.draw_cards(effect.draw)
 
+            # discard
+            if effect.amount_to_discard:
+                self.amount_to_discard += effect.amount_to_discard
+
         if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
             idx = self.hand.index(card)
             if card.exhausts:
@@ -219,6 +232,13 @@ class HandState:
             if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
                 for m in self.monsters:
                     m.current_hp = 0
+
+    def transform_from_discard(self, card: Card, index: int):
+        self.discard_pile.append(card)
+        del self.hand[index]
+        self.amount_to_discard -= 1
+        # any discard synergies/handlers -> To implement later
+        pass
 
     def end_turn(self):
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
