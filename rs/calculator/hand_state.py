@@ -17,7 +17,7 @@ class HandState:
 
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
-                 monsters: List[Monster] = None, relics: Relics = None):
+                 monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0):
 
         self.player: Player = player
         self.hand: List[Card] = [] if hand is None else hand
@@ -26,7 +26,7 @@ class HandState:
         self.draw_pile: List[Card] = [] if draw_pile is None else draw_pile
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
-        self.amount_to_discard: int = 0
+        self.amount_to_discard: int = amount_to_discard
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
 
