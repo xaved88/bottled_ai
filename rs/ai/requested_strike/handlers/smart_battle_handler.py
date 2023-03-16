@@ -10,7 +10,7 @@ from rs.machine.state import GameState
 class SmartBattleHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
-        return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
+        return state.has_command(Command.PLAY)
 
     def handle(self, state: GameState) -> List[str]:
         return get_best_battle_action(state, GeneralComparator())

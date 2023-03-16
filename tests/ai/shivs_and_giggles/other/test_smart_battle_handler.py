@@ -6,7 +6,4 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     handler = SmartBattleHandler
 
     def test_discard_works_correctly(self):
-        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard.json', ['choose 1'])
-
-    def test_smart_battle_says_confirm_after_discards_are_chosen(self):
-        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_confirm.json', ['confirm', 'wait 30'])
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard.json', ['choose 1', 'confirm', 'wait 30'])
