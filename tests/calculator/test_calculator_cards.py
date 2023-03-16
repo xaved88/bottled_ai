@@ -792,6 +792,21 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 0)
         self.see_player_discard_count(play, 1)
 
-    #todo - test survivor discards a card
-    #todo - test survivor is fine when it's the last card
+    def test_poisoned_stab(self):
+        state = self.given_state(CardId.POISONED_STAB)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 6)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 9)
 
+    def test_upgraded_poisoned_stab(self):
+        state = self.given_state(CardId.POISONED_STAB)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 12)
+
+    # todo - test survivor discards a card
+    # todo - test survivor is fine when it's the last card

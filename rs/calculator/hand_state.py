@@ -253,6 +253,13 @@ class HandState:
         if regret_count:
             self.player.inflict_damage(self.player, regret_count * len(self.hand), 1, False, vulnerable_modifier=1,
                                        is_attack=False)
+        # poison
+        for monster in self.monsters:
+            poison = monster.powers.get(PowerId.POISON, 0)
+            if poison > 0:
+                monster.powers[PowerId.POISON] -= 1
+                monster.inflict_damage(monster, poison, 1, blockable=False, is_attack=False)
+
         # todo - decrement buffs that should be counted down?
         # todo - increment relics that should be counted up
 
@@ -260,7 +267,8 @@ class HandState:
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
         for monster in self.monsters:
             if monster.current_hp > 0 and monster.hits:
-                monster_weak_modifier = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75 if not self.relics.get(RelicId.PAPER_KRANE) else 0.6
+                monster_weak_modifier = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75 if not self.relics.get(
+                    RelicId.PAPER_KRANE) else 0.6
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)

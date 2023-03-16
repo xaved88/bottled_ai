@@ -452,3 +452,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 16)
         self.see_enemy_has_power(play, PowerId.TIME_WARP, 12)
 
+    def test_poison_damages_and_decrements(self):
+        state = self.given_state(CardId.WOUND)
+        state.monsters[0].powers[PowerId.POISON] = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.POISON, 2)

@@ -23,6 +23,7 @@ class PowerId(Enum):
     MINION = 'minion'
     MODE_SHIFT = 'mode_shift'
     NO_DRAW = 'no draw'
+    POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'
     SHARP_HIDE = 'sharp hide'

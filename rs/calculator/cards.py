@@ -57,6 +57,7 @@ class CardId(Enum):
     OFFERING = 'offering'
     PAIN = 'pain'
     PERFECTED_STRIKE = 'perfected strike'
+    POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
     POWER_THROUGH = 'power through'
     PUMMEL = 'pummel'
@@ -268,64 +269,46 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     # Silent
     if card_id == CardId.NEUTRALIZE:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
-
     if card_id == CardId.SURVIVOR:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
-
     if card_id == CardId.SHIV:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
-    
     if card_id == CardId.TERROR:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
-    
     if card_id == CardId.ADRENALINE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
-    
     if card_id == CardId.DIE_DIE_DIE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
-    
     if card_id == CardId.BLADE_DANCE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
-
     if card_id == CardId.CLOAK_AND_DAGGER:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
-
     if card_id == CardId.LEG_SWEEP:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
-
     if card_id == CardId.SUCKER_PUNCH:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
-
     if card_id == CardId.ESCAPE_PLAN:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
-    
     if card_id == CardId.HEEL_HOOK:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
-
     if card_id == CardId.DAGGER_SPRAY:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
-
     if card_id == CardId.BACKSTAB:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
-
     if card_id == CardId.CALTROPS:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.A_THOUSAND_CUTS:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.ACCURACY:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.INFINITE_BLADES:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.AFTER_IMAGE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.FINESSE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
-
     if card_id == CardId.DRAMATIC_ENTRANCE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.POISONED_STAB:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
