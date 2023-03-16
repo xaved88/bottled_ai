@@ -801,12 +801,129 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 9)
 
     def test_upgraded_poisoned_stab(self):
-        state = self.given_state(CardId.POISONED_STAB)
+        state = self.given_state(CardId.POISONED_STAB, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 8)
         play.end_turn()
         self.see_enemy_lost_hp(play, 12)
 
-    # todo - test survivor discards a card
-    # todo - test survivor is fine when it's the last card
+    def test_tools_of_the_trade(self):
+        state = self.given_state(CardId.TOOLS_OF_THE_TRADE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.TOOLS_OF_THE_TRADE, 1)
+
+    def test_storm_of_steel_with_no_cards(self):
+        state = self.given_state(CardId.STORM_OF_STEEL)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 1)
+        self.see_player_hand_count(play, 0)
+
+    def test_storm_of_steel_with_many_cards(self):
+        state = self.given_state(CardId.STORM_OF_STEEL)
+        for _ in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 10)
+        self.see_player_hand_count(play, 9)
+        self.see_hand_card_is(play, CardId.SHIV)
+        self.see_hand_card_upgrade(play, 0)
+
+    def test_storm_of_steel_upgraded(self):
+        state = self.given_state(CardId.STORM_OF_STEEL, upgrade=1)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 2)
+        self.see_player_hand_count(play, 1)
+        self.see_hand_card_is(play, CardId.SHIV)
+        self.see_hand_card_upgrade(play, 1)
+
+    def test_eviscerate(self):
+        state = self.given_state(CardId.EVISCERATE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_enemy_lost_hp(play, 21)
+
+    def test_eviscerate_cost_goes_down_with_a_discard(self):
+        state = self.given_state(CardId.WOUND, amount_to_discard=1)
+        state.hand.append(get_card(CardId.EVISCERATE))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_discard_count(play, 1)
+        self.see_hand_card_is(play, CardId.EVISCERATE)
+        self.see_hand_card_cost(play, 2)
+
+    def test_sneaky_strike_without_discards(self):
+        state = self.given_state(CardId.SNEAKY_STRIKE)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_spent_energy(play, 2)
+
+    def test_sneaky_strike_when_cards_have_been_discarded(self):
+        state = self.given_state(CardId.SNEAKY_STRIKE, cards_discarded_this_turn=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_spent_energy(play, 0)
+
+    def test_sneaky_strike_when_cards_have_been_discarded_but_player_lacks_energy(self):
+        state = self.given_state(CardId.SNEAKY_STRIKE, cards_discarded_this_turn=1)
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_player_discard_count(play, 0)
+        self.see_player_hand_count(play, 1)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_has_energy(play, 0)
+
+    def test_prepared(self):
+        state = self.given_state(CardId.PREPARED)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_count(play, 2)
+        self.see_player_hand_count(play, 1)
+
+    def test_prepared_when_its_the_only_card(self):
+        state = self.given_state(CardId.PREPARED)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_count(play, 2)
+        self.see_player_hand_count(play, 0)
+
+    def test_dagger_throw(self):
+        state = self.given_state(CardId.DAGGER_THROW)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_count(play, 2)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_hand_count(play, 1)
+
+    def test_dagger_throw_when_its_the_only_card(self):
+        state = self.given_state(CardId.DAGGER_THROW)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_count(play, 2)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_hand_count(play, 0)
+
+    def test_unload_with_empty_hand(self):
+        state = self.given_state(CardId.UNLOAD)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_discard_count(play, 1)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 14)
+        self.see_player_hand_count(play, 0)
+
+    def test_unload_with_all_card_types(self):
+        state = self.given_state(CardId.UNLOAD)
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.AFTER_IMAGE))
+        state.hand.append(get_card(CardId.DEFEND_G))
+        state.hand.append(get_card(CardId.STRIKE_G))
+        state.hand.append(get_card(CardId.REGRET))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_discard_count(play, 5)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 14)
+        self.see_player_hand_count(play, 1)

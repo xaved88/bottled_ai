@@ -1,10 +1,12 @@
 from typing import Callable
 
-from rs.calculator.cards import get_card, CardId
+from rs.calculator.cards import get_card, CardId, Card
 from rs.calculator.interfaces_for_hooks import CardEffectsInterface, HandStateInterface
 from rs.calculator.powers import PowerId
+from rs.game.card import CardType
 
 CardEffectCustomHook = Callable[[HandStateInterface, CardEffectsInterface, int], None]
+CardEffectCustomHookWithCard = Callable[[Card], None]
 
 
 def dropkick_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -156,3 +158,32 @@ def heel_hook_post_hook(state: HandStateInterface, effect: CardEffectsInterface,
         if state.monsters[target_index].powers.get(PowerId.WEAKENED):
             state.player.energy += 1
             state.draw_cards(1)
+
+
+def storm_of_steel_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    amount = len(state.hand)
+    for _ in range(amount):
+        state.discard_card(state.hand[0])
+    state.hand = [get_card(CardId.SHIV) for _ in range(amount)]
+
+
+def storm_of_steel_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    amount = len(state.hand)
+    for _ in range(amount):
+        state.discard_card(state.hand[0])
+    state.hand = [get_card(CardId.SHIV, upgrade=1) for _ in range(amount)]
+
+
+def eviscerate_post_others_discarded_hook(card: Card):
+    card.cost = max(0, card.cost - 1)
+
+
+def sneaky_strike_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    if state.cards_discarded_this_turn:
+        state.player.energy += 2
+
+
+def unload_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    for idx in reversed(range(len(state.hand))):
+        if state.hand[idx].type != CardType.ATTACK:
+            state.discard_card(state.hand[idx])

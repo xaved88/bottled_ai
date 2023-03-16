@@ -27,6 +27,7 @@ class CardEffects:
             draw: int = 0,
             pre_hooks: List[CardEffectCustomHook] = None,
             post_hooks: List[CardEffectCustomHook] = None,
+            post_others_discarded_hooks: List[CardEffectCustomHookWithCard] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
     ):
@@ -40,6 +41,8 @@ class CardEffects:
         self.draw: int = draw
         self.pre_hooks: List[CardEffectCustomHook] = [] if pre_hooks is None else pre_hooks
         self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
+        self.post_others_discarded_hooks: List[
+            CardEffectCustomHookWithCard] = [] if post_others_discarded_hooks is None else post_others_discarded_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
 
@@ -256,4 +259,24 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.POISONED_STAB:
         return [CardEffects(damage=6 if not card.upgrade else 8, target=TargetType.MONSTER, hits=1,
                             applies_powers={PowerId.POISON: 3 if not card.upgrade else 4})]
+    if card.id == CardId.TOOLS_OF_THE_TRADE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.TOOLS_OF_THE_TRADE: 1})]
+    if card.id == CardId.STORM_OF_STEEL:
+        hook = storm_of_steel_post_hook if not card.upgrade else storm_of_steel_upgraded_post_hook
+        return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
+    if card.id == CardId.EVISCERATE:
+        return [CardEffects(damage=7 if not card.upgrade else 9, hits=3, target=TargetType.MONSTER,
+                            post_others_discarded_hooks=[eviscerate_post_others_discarded_hook])]
+    if card.id == CardId.SNEAKY_STRIKE:
+        return [CardEffects(damage=12 if not card.upgrade else 16, target=TargetType.MONSTER, hits=1,
+                            post_hooks=[sneaky_strike_post_hook])]
+    if card.id == CardId.PREPARED:
+        amount = 1 if not card.upgrade else 2
+        return [CardEffects(target=TargetType.SELF, draw=amount, amount_to_discard=amount)]
+    if card.id == CardId.DAGGER_THROW:
+        return [CardEffects(damage=9 if not card.upgrade else 12, target=TargetType.MONSTER, hits=1,
+                            amount_to_discard=1, draw=1)]
+    if card.id == CardId.UNLOAD:
+        return [CardEffects(damage=14 if not card.upgrade else 18, target=TargetType.MONSTER, hits=1,
+                            post_hooks=[unload_post_hook])]
     return [CardEffects()]

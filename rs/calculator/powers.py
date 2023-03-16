@@ -29,6 +29,7 @@ class PowerId(Enum):
     SHARP_HIDE = 'sharp hide'
     SPLIT = 'split'
     STRENGTH = 'strength'
+    TOOLS_OF_THE_TRADE = 'tools of the trade'
     THORNS = 'thorns'
     TIME_WARP = 'time warp'
     VIGOR = 'vigor'

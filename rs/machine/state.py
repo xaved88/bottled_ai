@@ -77,6 +77,10 @@ class GameState:
         if self.game_state()["screen_type"] == "HAND_SELECT":
             return self.game_state()["current_action"]
 
+    def get_cards_discarded_this_turn(self):
+        state = self.combat_state()
+        return 0 if not state else state["cards_discarded_this_turn"]
+
     def floor(self) -> int:
         return self.game_state()["floor"]
 

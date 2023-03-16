@@ -12,44 +12,61 @@ class CardId(Enum):
     DRAW_PAY = 'draw pay'
 
     # REAL CARDS
+    A_THOUSAND_CUTS = 'a thousand cuts'
+    ACCURACY = 'accuracy'
+    ADRENALINE = 'adrenaline'
+    AFTER_IMAGE = 'after image'
     ANGER = 'anger'
     APOTHEOSIS = 'apotheosis'
     APPARITION = 'ghostly'
+    BACKSTAB = 'backstab'
     BANDAGE_UP = 'bandage up'
     BASH = 'bash'
     BATTLE_TRANCE = 'battle trance'
+    BLADE_DANCE = 'blade dance'
     BLOODLETTING = 'bloodletting'
     BLOOD_FOR_BLOOD = 'blood for blood'
     BLUDGEON = 'bludgeon'
     BODY_SLAM = 'body slam'
     BURN = 'burn'
+    CALTROPS = 'caltrops'
     CARNAGE = 'carnage'
     CLASH = 'clash'
     CLEAVE = 'cleave'
+    CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'
+    DAGGER_THROW = 'dagger throw'
+    DAGGER_SPRAY = 'dagger spray'
     DARK_SHACKLES = 'dark shackles'
     DAZED = 'dazed'
+    DIE_DIE_DIE = 'die die die'
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
     DROPKICK = 'dropkick'
     DEFEND_R = 'defend_r'
     DEFEND_G = 'defend_g'
     ENTRENCH = 'entrench'
+    ESCAPE_PLAN = 'escape plan'
+    EVISCERATE = 'eviscerate'
     FEED = 'feed'
     FIEND_FIRE = 'fiend fire'
+    FINESSE = 'finesse'
     FLAME_BARRIER = 'flame barrier'
     FLASH_OF_STEEL = 'flash of steel'
     FLEX = 'flex'
     GHOSTLY_ARMOR = 'ghostly armor'
     HAND_OF_GREED = 'handofgreed'
     HEAVY_BLADE = 'heavy blade'
+    HEEL_HOOK = 'heel hook'
     HEMOKINESIS = 'hemokinesis'
     IMMOLATE = 'immolate'
     IMPERVIOUS = 'impervious'
+    INFINITE_BLADES = 'infinite blades'
     INFLAME = 'inflame'
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
     JAX = 'j.a.x.'
+    LEG_SWEEP = 'leg sweep'
     LIMIT_BREAK = 'limit break'
     MASTER_OF_STRATEGY = 'master of strategy'
     METALLICIZE = 'metallicize'
@@ -60,6 +77,7 @@ class CardId(Enum):
     POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
     POWER_THROUGH = 'power through'
+    PREPARED = 'prepared'
     PUMMEL = 'pummel'
     RAGE = 'rage'
     RAMPAGE = 'rampage'
@@ -67,42 +85,27 @@ class CardId(Enum):
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'
     SEEING_RED = 'seeing red'
+    SHIV = 'shiv'
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
     SLIMED = 'slimed'
+    SNEAKY_STRIKE = 'sneaky strike'
     SPOT_WEAKNESS = 'spot weakness'
+    STORM_OF_STEEL = 'storm of steel'
     STRIKE_R = 'strike_r'
     STRIKE_G = 'strike_g'
+    SUCKER_PUNCH = 'sucker punch'
     SURVIVOR = 'survivor'
     SWIFT_STRIKE = 'swift strike'
+    TERROR = 'terror'
+    TOOLS_OF_THE_TRADE = 'tools of the trade'
     THUNDERCLAP = 'thunderclap'
     TRIP = 'trip'
     TWIN_STRIKE = 'twin strike'
+    UNLOAD = 'unload'
     UPPERCUT = 'uppercut'
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
-
-    """New Cards added"""
-
-    SHIV = 'shiv'
-    TERROR = 'terror'
-    ADRENALINE = 'adrenaline'
-    DIE_DIE_DIE = 'die die die'
-    BLADE_DANCE = 'blade dance'
-    CLOAK_AND_DAGGER = 'cloak and dagger'
-    LEG_SWEEP = 'leg sweep'
-    SUCKER_PUNCH = 'sucker punch'
-    ESCAPE_PLAN = 'escape plan'
-    HEEL_HOOK = 'heel hook'
-    DAGGER_SPRAY = 'dagger spray'
-    BACKSTAB = 'backstab'
-    CALTROPS = 'caltrops'
-    A_THOUSAND_CUTS = 'a thousand cuts'
-    ACCURACY = 'accuracy'
-    INFINITE_BLADES = 'infinite blades'
-    AFTER_IMAGE = 'after image'
-
-    FINESSE = 'finesse'
 
 
 class Card:
@@ -311,4 +314,19 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.DRAMATIC_ENTRANCE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.POISONED_STAB:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.TOOLS_OF_THE_TRADE:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.STORM_OF_STEEL:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.EVISCERATE:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.SNEAKY_STRIKE:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.PREPARED:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DAGGER_THROW:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.UNLOAD:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)

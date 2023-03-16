@@ -17,7 +17,8 @@ class HandState:
 
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
-                 monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0):
+                 monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
+                 cards_discarded_this_turn: int = 0):
 
         self.player: Player = player
         self.hand: List[Card] = [] if hand is None else hand
@@ -27,6 +28,7 @@ class HandState:
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
         self.amount_to_discard: int = amount_to_discard
+        self.cards_discarded_this_turn: int = cards_discarded_this_turn
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
 
@@ -234,10 +236,8 @@ class HandState:
                     m.current_hp = 0
 
     def transform_from_discard(self, card: Card, index: int):
-        self.discard_pile.append(card)
-        del self.hand[index]
+        self.discard_card(card)
         self.amount_to_discard -= 1
-        # any discard synergies/handlers -> To implement later
         pass
 
     def end_turn(self):
@@ -314,6 +314,15 @@ class HandState:
         # can't draw more than 10 cards, will discard the played card tho
         amount = min(amount, 11 - len(self.draw_pile))
         self.hand += [get_card(card_type) for i in range(amount)]
+
+    def discard_card(self, card: Card):
+        self.hand.remove(card)
+        self.discard_pile.append(card)
+        for hand_card in self.hand:
+            for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):
+                for hook in effect.post_others_discarded_hooks:
+                    hook(hand_card)
+        self.cards_discarded_this_turn += 1
 
 
 def is_card_playable(card: Card, player: Player, hand: List[Card]) -> bool:

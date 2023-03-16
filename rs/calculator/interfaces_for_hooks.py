@@ -19,14 +19,17 @@ class HandStateInterface:
     draw_pile: List[Card]
     monsters: List[Monster]
     relics: Relics
-
+    cards_discarded_this_turn: int
+    # functions
     draw_cards: Callable[[int], None]
+    discard_card: Callable[[Card], None]
+
 
 class CardEffectsInterface:
-    damage: int 
-    hits: int 
-    blockable: bool 
+    damage: int
+    hits: int
+    blockable: bool
     block: int
-    applies_powers: Powers 
+    applies_powers: Powers
     energy_gain: int
     draw: int
