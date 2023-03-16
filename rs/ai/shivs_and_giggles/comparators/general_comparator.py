@@ -81,7 +81,7 @@ class GeneralSilentComparator(SbcComparator):
             intangible=state.player.powers.get(PowerId.INTANGIBLE, 0),
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
-            player_powers=get_power_count(state.player.powers, self.powers_we_like)
+            player_powers=get_power_count(state.player.powers, powers_we_like)
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,

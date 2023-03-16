@@ -31,9 +31,6 @@ class GameState:
     def has_command(self, command: Command) -> bool:
         return command.value in self.json.get("available_commands")
 
-    def has_action(self, action: str) -> bool:
-        return action == self.game_state()["available_commands"]
-
     def get_player_combat(self):
         return self.game_state()["combat_state"]["player"]
 
@@ -75,6 +72,10 @@ class GameState:
     def screen_state_max_cards(self):
         state = self.screen_state()
         return 0 if not state else state["max_cards"]
+
+    def current_action(self):
+        if self.game_state()["screen_type"] == "HAND_SELECT":
+            return self.game_state()["current_action"]
 
     def floor(self) -> int:
         return self.game_state()["floor"]

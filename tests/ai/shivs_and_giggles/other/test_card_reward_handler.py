@@ -1,8 +1,8 @@
-from ai.shivs_and_giggles.rs_test_handler_fixture import RsTestHandlerFixture
+from ai.shivs_and_giggles.sg_test_handler_fixture import SgTestHandlerFixture
 from rs.ai.shivs_and_giggles.handlers.card_reward_handler import CardRewardHandler
 
 
-class CardRewardHandlerTestCase(RsTestHandlerFixture):
+class CardRewardHandlerTestCase(SgTestHandlerFixture):
     handler = CardRewardHandler
 
     def test_take_card(self):
