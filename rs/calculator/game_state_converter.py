@@ -95,4 +95,7 @@ def create_hand_state(game_state: GameState) -> HandState:
     discard_pile = [make_card(card) for card in game_state.discard_pile.cards]
     exhaust_pile = [make_card(card) for card in game_state.exhaust_pile.cards]
 
-    return HandState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics)
+    # get discard action state
+    amount_to_discard = game_state.screen_state_max_cards()
+
+    return HandState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard)

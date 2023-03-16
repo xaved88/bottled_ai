@@ -774,3 +774,24 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 0)
         self.see_enemy_lost_hp(play, 8, enemy_index=0)
         self.see_enemy_lost_hp(play, 8, enemy_index=1)
+
+    def test_survivor(self):
+        state = self.given_state(CardId.SURVIVOR)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 8)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_count(play, 2)
+
+    def test_survivor_when_it_is_the_last_card(self):
+        state = self.given_state(CardId.SURVIVOR)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 8)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_count(play, 1)
+
+    #todo - test survivor discards a card
+    #todo - test survivor is fine when it's the last card
+

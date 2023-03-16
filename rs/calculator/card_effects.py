@@ -28,6 +28,7 @@ class CardEffects:
             pre_hooks: List[CardEffectCustomHook] = None,
             post_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
+            amount_to_discard: int = 0,
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -40,6 +41,7 @@ class CardEffects:
         self.pre_hooks: List[CardEffectCustomHook] = [] if pre_hooks is None else pre_hooks
         self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
         self.heal: int = heal
+        self.amount_to_discard: int = amount_to_discard
 
 
 def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_pile: List[Card],
@@ -200,8 +202,6 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(damage=3 if not card.upgrade else 4, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
 
-    """New Cards included"""
-
     if card.id == CardId.SHIV:
         shiv_base_dmg = 4 if not card.upgrade else 6
         return [CardEffects(damage=shiv_base_dmg, hits=1, target=TargetType.MONSTER)]
@@ -272,6 +272,7 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.DRAMATIC_ENTRANCE:
         return [CardEffects(damage=8 if not card.upgrade else 12, hits=1, target=TargetType.ALL_MONSTERS)]
 
-    # default case, todo maybe some logging or?
+    if card.id == CardId.SURVIVOR:
+        return [CardEffects(block=8 if not card.upgrade else 11, target=TargetType.SELF, amount_to_discard=1)]
 
     return [CardEffects()]

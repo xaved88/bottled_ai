@@ -2,7 +2,6 @@ from typing import List
 
 from rs.ai.shivs_and_giggles.handlers.chest_handler import ChestHandler
 from rs.ai.shivs_and_giggles.handlers.astrolabe_handler import AstrolabeHandler
-from rs.ai.shivs_and_giggles.handlers.battle_handler import BattleHandler
 from rs.ai.shivs_and_giggles.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.shivs_and_giggles.handlers.campfire_handler import CampfireHandler
 from rs.ai.shivs_and_giggles.handlers.card_reward_handler import CardRewardHandler
@@ -44,12 +43,11 @@ SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
         # Some edge cases
         AstrolabeHandler(),
 
-        # Temp for testing
+        # Battle Handler
         SmartBattleHandler(),
 
         # General Stuff
         BossRelicHandler(),
-        BattleHandler(),
         UpgradeHandler(),
         TransformHandler(),
         PurgeHandler(),

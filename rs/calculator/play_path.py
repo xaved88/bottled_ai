@@ -18,7 +18,12 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
     if path_state in paths:
         return
     paths[path_state] = path
-    for play in path.state.get_plays():
+    # resolve any open discards
+    if path.state.amount_to_discard:
+        plays = path.state.get_discards()
+    else:
+        plays = path.state.get_plays()
+    for play in plays:
         new_state: HandState = pickle_deepcopy(path.state)
         new_state.transform_from_play(play, is_first_play=not path.plays)
         new_plays: List[Play] = path.plays.copy()

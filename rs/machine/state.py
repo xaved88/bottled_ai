@@ -66,6 +66,17 @@ class GameState:
     def screen_type(self):
         return self.game_state()["screen_type"]
 
+    def screen_state(self):
+        return self.game_state()["screen_state"]
+
+    def screen_state_max_cards(self):
+        state = self.screen_state()
+        return 0 if not state else state["max_cards"]
+
+    def current_action(self):
+        if self.game_state()["screen_type"] == "HAND_SELECT":
+            return self.game_state()["current_action"]
+
     def floor(self) -> int:
         return self.game_state()["floor"]
 
