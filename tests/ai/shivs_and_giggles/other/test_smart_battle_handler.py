@@ -6,4 +6,8 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     handler = SmartBattleHandler
 
     def test_discard_works_correctly(self):
-        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard.json', ['choose 1', 'confirm', 'wait 30'])
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard.json',
+                                   ['choose 1', 'confirm', 'wait 30'])
+
+    def test_discard_is_okay_with_no_cards(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_no_cards.json', [])
