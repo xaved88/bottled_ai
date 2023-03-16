@@ -11,3 +11,6 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_discard_is_okay_with_no_cards(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_no_cards.json', [])
+
+    def test_attacks_into_block_when_barricade_is_up(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_attack_barricade.json', ['play 1'])

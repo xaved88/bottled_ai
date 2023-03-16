@@ -75,7 +75,7 @@ class GeneralSilentComparator(SbcComparator):
             dead_monsters=len([True for monster in state.monsters if monster.current_hp <= 0]),
             lowest_health_monster=0 if battle_won else min(monsters_vulnerable_hp),
             total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp),
-            barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) > 0]),
+            barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) != 0]),
             draw_free_early=len([True for c in state.hand if c.id == CardId.DRAW_FREE_EARLY]),
             draw_free=len([True for c in state.hand if c.id == CardId.DRAW_FREE or c.id == CardId.DRAW_FREE_EARLY]),
             draw_pay_early=len([True for c in state.hand if c.id == CardId.DRAW_PAY_EARLY]),
