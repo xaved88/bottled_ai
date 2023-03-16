@@ -9,6 +9,7 @@ class PowerId(Enum):
     ACCURACY = 'accuracy'
     AFTER_IMAGE = 'after image'
     ARTIFACT = 'artifact'
+    BARRICADE = 'barricade'
     BUFFER = 'buffer'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'

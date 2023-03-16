@@ -16,6 +16,7 @@ class GCValues:
             dead_monsters: int,
             lowest_health_monster: int,
             total_monster_health: int,
+            barricaded_block: int,
             draw_free_early: int,
             draw_free: int,
             draw_pay_early: int,
@@ -32,6 +33,7 @@ class GCValues:
         self.dead_monsters: int = dead_monsters
         self.lowest_health_monster: int = lowest_health_monster
         self.total_monster_health: int = total_monster_health
+        self.barricaded_block: int = barricaded_block
         self.draw_free_early: int = draw_free_early
         self.draw_free: int = draw_free
         self.draw_pay_early: int = draw_pay_early
@@ -73,6 +75,7 @@ class GeneralSilentComparator(SbcComparator):
             dead_monsters=len([True for monster in state.monsters if monster.current_hp <= 0]),
             lowest_health_monster=0 if battle_won else min(monsters_vulnerable_hp),
             total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp),
+            barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) > 0]),
             draw_free_early=len([True for c in state.hand if c.id == CardId.DRAW_FREE_EARLY]),
             draw_free=len([True for c in state.hand if c.id == CardId.DRAW_FREE or c.id == CardId.DRAW_FREE_EARLY]),
             draw_pay_early=len([True for c in state.hand if c.id == CardId.DRAW_PAY_EARLY]),
@@ -100,9 +103,6 @@ class GeneralSilentComparator(SbcComparator):
 
     def does_challenger_defeat_the_best(self, best_state: HandState, challenger_state: HandState,
                                         original: HandState) -> bool:
-        """
-        - split
-        """
         best = self.get_values(best_state, original)
         challenger = self.get_values(challenger_state, original)
 
@@ -133,6 +133,8 @@ class GeneralSilentComparator(SbcComparator):
             return challenger.lowest_health_monster < best.lowest_health_monster
         if best.total_monster_health != challenger.total_monster_health:
             return challenger.total_monster_health < best.total_monster_health
+        if best.barricaded_block != challenger.barricaded_block:
+            return challenger.barricaded_block < best.barricaded_block
         if best.draw_pay_early != challenger.draw_pay_early:
             return challenger.draw_pay_early > best.draw_pay_early
         if best.draw_pay != challenger.draw_pay:
