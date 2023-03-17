@@ -17,11 +17,11 @@ class ScalingBattleHandler(Handler):
 
     def get_scaling_cards(self, state: GameState) -> List[str]:
         scaling_cards = []
-        stuff = synergyProviderCardIdStrings()
+        synergy_providers_list_as_strings = synergyProviderCardIdStrings()
         allowed_stuff = [e.value for e in CardId]
 
         for card in state.hand.cards:
-            if card.id.lower() in stuff and card.id.lower() in allowed_stuff:
+            if card.id.lower() in synergy_providers_list_as_strings and card.id.lower() in allowed_stuff:
                 scaling_cards.append(card.id.lower())
         return scaling_cards
 
@@ -37,7 +37,7 @@ class ScalingBattleHandler(Handler):
         for scaler_as_string in scaling_cards:
             synergies[scaler_as_string] = getSynergy(CardId(scaler_as_string), [CardId(c.id.lower())
                                                                                 for c in allowed_synergy_deck])
-        # Remember to sort this so the highest synergy is the one we take in the end.
+        # Sorting and giving out the most synergistic cards first:
         synergies_to_play = sorted([key for key in synergies.keys() if synergies[key] >= 0.2],
                                    key=lambda x: synergies[x], reverse=True)
         return synergies_to_play

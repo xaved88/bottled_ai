@@ -38,9 +38,8 @@ cards_to_exhaust = [
 class ExhaustHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
-        if state.screen_type() == ScreenType.HAND_SELECT.value and \
-                state.current_action() == CurrentAction.EXHAUST_ACTION.value:
-            return True
+        return state.screen_type() == ScreenType.HAND_SELECT.value and \
+            state.current_action() == CurrentAction.EXHAUST_ACTION.value
 
     def handle(self, state: GameState) -> List[str]:
 
@@ -58,7 +57,7 @@ class ExhaustHandler(Handler):
             else:
                 pass
         
-        """For now, if no valid card is able to be exhausted, just exhaust the firs card"""
+        #if no valid card, just exhaust the first card
         for checked_card in choice_list:
             return ['choose ' + checked_card]
         
@@ -66,32 +65,3 @@ class ExhaustHandler(Handler):
         if presentation_mode:
             return [p_delay, 'confirm']
         return ['confirm']
-
-
-
-
-
-top_list = [0,1,2,3,4]
-bot_list = [0,1,2,3,4]
-
-choose index 0 -> 0
-
-bot_list = [1,2,3,4]
-
-choose index 0 -> 1
-
-bot_list = [1,2,3]
-
-choose index 0 -> 2
-
-top_list.index(bot_list[index])
-
-top_list.index(2)
-
-
-
-
-
-
-
-

@@ -801,7 +801,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 9)
 
     def test_upgraded_poisoned_stab(self):
-        state = self.given_state(CardId.POISONED_STAB)
+        state = self.given_state(CardId.POISONED_STAB, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 8)

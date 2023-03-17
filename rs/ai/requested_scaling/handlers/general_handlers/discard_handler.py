@@ -37,9 +37,8 @@ cards_to_discard = [
 class DiscardHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
-        if state.screen_type() == ScreenType.HAND_SELECT.value \
-                and state.game_state()["screen_state"]["can_pick_zero"]:
-            return True
+        return state.screen_type() == ScreenType.HAND_SELECT.value \
+                and state.game_state()["screen_state"]["can_pick_zero"]
 
     def handle(self, state: GameState) -> List[str]:
 

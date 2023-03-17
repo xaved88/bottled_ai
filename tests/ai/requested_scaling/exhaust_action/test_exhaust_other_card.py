@@ -5,5 +5,5 @@ from rs.ai.requested_scaling.handlers.synergy_handlers.exhaust_action.exhaust_ha
 class ExhaustHandlerTest(ExhaustHandlerFixture):
     handler = ExhaustHandler
 
-    def test_exhaust_others(self):
-        self.execute_handler_tests('battles/synergy_statessynergy_states/learn_to_choose_cards.json', [])
+    def test_exhaust_a_defend_which_is_not_first_card_in_the_hand(self):
+        self.execute_handler_tests('battles/synergy_states/exhaust_a_defend_which_is_not_first_card_in_hand.json', [])

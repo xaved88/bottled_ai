@@ -23,9 +23,9 @@ from rs.ai.requested_scaling.handlers.general_handlers.smart_battle_handler impo
 from rs.ai.requested_scaling.handlers.general_handlers.smart_path_handler import SmartPathHandler
 from rs.ai.requested_scaling.handlers.synergy_handlers.exhaust_action.exhaust_handler import ExhaustHandler
 from rs.ai.requested_scaling.handlers.synergy_handlers.scaling_battle_handler import ScalingBattleHandler
-from rs.ai.requested_scaling.handlers.synergy_handlers.synergy_card_reward_handler import SynergyCardRewardHandler
 from rs.ai.requested_scaling.handlers.general_handlers.transform_handler import TransformHandler
 from rs.ai.requested_scaling.handlers.general_handlers.upgrade_handler import UpgradeHandler
+from rs.ai.requested_scaling.handlers.synergy_handlers.synergy_card_reward_handler import SynergyCardRewardHandler
 from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
 from rs.machine.handlers.handler import Handler

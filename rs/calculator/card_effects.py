@@ -256,9 +256,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.POISONED_STAB:
         return [CardEffects(damage=6 if not card.upgrade else 8, target=TargetType.MONSTER, hits=1,
                             applies_powers={PowerId.POISON: 3 if not card.upgrade else 4})]
-
     if card.id == CardId.FEEL_NO_PAIN:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAN: 1})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAIN: 1})]
 
     if card.id == CardId.DARK_EMBRACE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ACCURACY: 1 if not card.upgrade else 2})]

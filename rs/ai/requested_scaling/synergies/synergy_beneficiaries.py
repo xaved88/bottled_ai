@@ -1,3 +1,4 @@
+from rs.ai.requested_scaling.synergies.synergy_tags import SynergyTag
 from rs.calculator.cards import CardId
 
 SynergyBeneficiaries = {
