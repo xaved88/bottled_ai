@@ -14,3 +14,6 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_attacks_into_block_when_barricade_is_up(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_attack_barricade.json', ['play 1'])
+
+    def test_plays_powers_when_nothing_better_to_do(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_play_powers.json', ['play 3'])
