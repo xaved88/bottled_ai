@@ -135,6 +135,8 @@ class Card:
 
 
 def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
+    if card_id == CardId.DRAMATIC_ENTRANCE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.STRIKE_R:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.DEFEND_R:
@@ -331,31 +333,21 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.EVOLVE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.FIRE_BREATHING:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
     if card_id == CardId.INJURY:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-
     if card_id == CardId.SHAME:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-
     if card_id == CardId.DECAY:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-
     if card_id == CardId.PARASITE:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-
     if card_id == CardId.DOUBT:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-
     if card_id == CardId.CURSEOFTHEBELL:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-
     if card_id == CardId.CLUMSY:
         return Card(card_id, 0, -1, False, CardType.CURSE)
-    if card_id == CardId.DRAMATIC_ENTRANCE:
-        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.POISONED_STAB:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)

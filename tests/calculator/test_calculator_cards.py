@@ -808,5 +808,37 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_lost_hp(play, 12)
 
+    def test_feel_no_pain(self):
+        state = self.given_state(CardId.FEEL_NO_PAIN)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.FEEL_NO_PAIN, 3)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_dark_embrace(self):
+        state = self.given_state(CardId.DARK_EMBRACE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.DARK_EMBRACE, 1)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_evolve(self):
+        state = self.given_state(CardId.EVOLVE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.EVOLVE, 1)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
+    def test_fire_breathing(self):
+        state = self.given_state(CardId.FIRE_BREATHING)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.FIRE_BREATHING, 6)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
+
     # todo - test survivor discards a card
     # todo - test survivor is fine when it's the last card

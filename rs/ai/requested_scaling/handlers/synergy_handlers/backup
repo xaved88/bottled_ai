@@ -518,8 +518,3 @@ class SynergyCardRewardHandler(Handler):
             score -= 2
 
         return round(score,2)
-
-
-
-
-

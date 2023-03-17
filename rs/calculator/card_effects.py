@@ -257,10 +257,10 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(damage=6 if not card.upgrade else 8, target=TargetType.MONSTER, hits=1,
                             applies_powers={PowerId.POISON: 3 if not card.upgrade else 4})]
     if card.id == CardId.FEEL_NO_PAIN:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAIN: 1})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAIN: 3 if not card.upgrade else 4})]
 
     if card.id == CardId.DARK_EMBRACE:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ACCURACY: 1 if not card.upgrade else 2})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DARK_EMBRACE: 1 if not card.upgrade else 2})]
 
     if card.id == CardId.BURNING_PACT:
         return [CardEffects(target=TargetType.SELF, draw=2 if not card.upgrade else 3)]
