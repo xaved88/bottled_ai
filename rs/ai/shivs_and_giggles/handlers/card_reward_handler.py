@@ -12,6 +12,7 @@ class CardRewardHandler(Handler):
     def __init__(self):
         self.desired_cards: dict[str, int] = {
             'a thousand cuts': 1,
+            'tools of the trade': 1,
             'accuracy': 3,
             'terror': 2,
             'adrenaline': 2,
@@ -20,14 +21,19 @@ class CardRewardHandler(Handler):
             'blade dance': 4,
             'infinite blades': 2,
             'after image': 1,
+            'eviscerate': 1,
             'leg sweep': 1,
             'cloak and dagger': 2,
             'poisoned stab': 2,
+            'sneaky strike': 2,
             'sucker punch': 1,
             'escape plan': 4,           # removed if we have snecko eye
+            'prepared': 2,              # removed if we have snecko eye
             'heel hook': 2,
             'dagger spray': 2,
+            'dagger throw': 1,
             'caltrops': 1,
+            'unload': 1,
             'backstab': 1,              # removed if we have snecko eye
             'master of strategy': 1,
             'flash of steel': 1,        # removed if we have snecko eye
@@ -52,6 +58,7 @@ class CardRewardHandler(Handler):
 
         if state.has_relic("Snecko Eye"):
             del desired_cards_working_copy['escape plan']
+            del desired_cards_working_copy['prepared']
             del desired_cards_working_copy['backstab']
             del desired_cards_working_copy['flash of steel']
             del desired_cards_working_copy['finesse']

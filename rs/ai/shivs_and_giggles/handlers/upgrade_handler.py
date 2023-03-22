@@ -9,25 +9,29 @@ from rs.machine.state import GameState
 class UpgradeHandler(Handler):
 
     def __init__(self):
-        self.priorities: List[str] = [
+        self.upgrade_priorities: List[str] = [
             'neutralize',
             'a thousand cuts',
+            'tools of the trade',   # removed if we have snecko eye
             'accuracy',
             'adrenaline',
             'storm of steel',
             'blade dance',
-            'terror',
+            'prepared',
+            'terror',               # removed if we have snecko eye
             'infinite blades',
             'cloak and dagger',
             'die die die',
             'after image',
+            'eviscerate',
             'leg sweep',
             'master of strategy',
-            'flash of steel',
-            'finesse',
+            'flash of steel',       # removed if we have snecko eye
+            'finesse',              # removed if we have snecko eye
             'poisoned stab',
+            'sneaky strike',
             'sucker punch',
-            'escape plan',
+            'escape plan',          # removed if we have snecko eye
             'dagger spray',
             'caltrops',
             'heel hook',
@@ -44,15 +48,16 @@ class UpgradeHandler(Handler):
         choice_list = state.game_state()["choice_list"]
 
         # we have to copy this, otherwise it will modify the list until the bot is rerun
-        priorities_working_copy = self.priorities.copy()
+        upgrade_priorities_working_copy = self.upgrade_priorities.copy()
 
         if state.has_relic("Snecko Eye"):
-            priorities_working_copy.remove('terror')
-            priorities_working_copy.remove('escape plan')
-            priorities_working_copy.remove('flash of steel')
-            priorities_working_copy.remove('finesse')
+            upgrade_priorities_working_copy.remove('tools of the trade')
+            upgrade_priorities_working_copy.remove('terror')
+            upgrade_priorities_working_copy.remove('escape plan')
+            upgrade_priorities_working_copy.remove('flash of steel')
+            upgrade_priorities_working_copy.remove('finesse')
 
-        for priority in priorities_working_copy:
+        for priority in upgrade_priorities_working_copy:
             if priority in choice_list:
                 if presentation_mode:
                     return [p_delay, "choose " + priority, p_delay_s]
