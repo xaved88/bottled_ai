@@ -21,7 +21,7 @@ class PowerId(Enum):
     INTANGIBLE = 'intangibleplayer'
     METALLICIZE = 'metallicize'
     MINION = 'minion'
-    MODE_SHIFT = 'mode_shift'
+    MODE_SHIFT = 'mode shift'
     NO_DRAW = 'no draw'
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
