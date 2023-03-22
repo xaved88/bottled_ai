@@ -55,7 +55,7 @@ class CardId(Enum):
     FLASH_OF_STEEL = 'flash of steel'
     FLEX = 'flex'
     GHOSTLY_ARMOR = 'ghostly armor'
-    HAND_OF_GREED = 'handofgreed'
+    HAND_OF_GREED = 'handofgreed'                   # Weird id alert!
     HEAVY_BLADE = 'heavy blade'
     HEEL_HOOK = 'heel hook'
     HEMOKINESIS = 'hemokinesis'
@@ -89,7 +89,7 @@ class CardId(Enum):
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
     SLIMED = 'slimed'
-    SNEAKY_STRIKE = 'sneaky strike'
+    SNEAKY_STRIKE = 'underhanded strike'            # Weird id alert!
     SPOT_WEAKNESS = 'spot weakness'
     STORM_OF_STEEL = 'storm of steel'
     STRIKE_R = 'strike_r'

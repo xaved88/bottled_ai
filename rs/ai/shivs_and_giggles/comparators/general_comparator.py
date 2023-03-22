@@ -59,6 +59,7 @@ powers_we_like: List[PowerId] = [
     PowerId.STRENGTH,
     PowerId.THORNS,
     PowerId.THOUSAND_CUTS,
+    PowerId.TOOLS_OF_THE_TRADE,
 ]
 
 
