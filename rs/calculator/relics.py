@@ -8,9 +8,11 @@ from enum import Enum
 # 'gremlin horn'
 # 'hovering kite'
 # 'ink bottle'
+# 'meat on the bone'
 # 'mercury hourglass'
 # 'runic cube'
 # 'sacred bark'
+# 'snecko skull'
 # 'tingsha'
 # 'tough bandages'
 # 'unceasing top'
@@ -21,6 +23,7 @@ class RelicId(Enum):
     FAKE = 'fake'  # We make anything we don't know into this "fake" type
 
     ANCHOR = 'anchor'                               # We get block from state
+    ANCIENT_TEA_SET = 'ancient tea set'             # N/A
     ART_OF_WAR = 'art of war'                       # We only look at current turn so far, so get this as bonus.
     BAG_OF_MARBLES = 'bag of marbles'               # N/A to battle calculations
     BLACK_STAR = 'black star'                       # N/A
@@ -29,12 +32,15 @@ class RelicId(Enum):
     BOTTLED_FLAME = 'bottled flame'                 # N/A
     BOTTLED_LIGHTNING = 'bottled lightning'         # N/A
     BOTTLED_TORNADO = 'bottled tornado'             # N/A
+    BRONZE_SCALES = 'bronze scales'                 # We know about the Thorns power
+    BURNING_BLOOD = 'burning blood'                 # N/A
     BUSTED_CROWN = 'busted crown'                   # N/A
     CALLING_BELL = 'calling bell'                   # N/A
     CAPTAINS_WHEEL = 'captain\u0027s wheel'         # We get block from state
     CHAMPION_BELT = 'champion belt'
     COFFEE_DRIPPER = 'coffee dripper'               # N/A
     CURSED_KEY = 'cursed key'                       # N/A
+    DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength knowledge
     EMPTY_CAGE = 'empty cage'                       # N/A
@@ -42,6 +48,7 @@ class RelicId(Enum):
     FOSSILIZED_HELIX = 'fossilized helix'
     FROZEN_EGG = 'frozen egg'                       # N/A
     FUSION_HAMMER = 'fusion hammer'                 # N/A
+    GIRYA = 'girya'                                 # Covered by Strength knowledge
     GOLDEN_IDOL = 'golden idol'                     # N/A
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
     HORN_CLEAT = 'horn cleat'                       # We get block from state
@@ -53,17 +60,24 @@ class RelicId(Enum):
     MAW_BANK = 'maw bank'                           # N/A
     MEAL_TICKET = 'meal ticket'                     # N/A
     MOLTEN_EGG = 'molten egg'                       # N/A
+    MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength knowledge
+    NINJA_SCROLL = 'ninja scroll'                   # N/A
     NUNCHAKU = 'nunchaku'
-    PAPER_PHROG = 'paper phrog'
-    PEAR = 'pear'                                   # N/A
-    PHILOSOPHERS_STONE = 'philosopher\u0027s stone' # N/A
-    PRESERVED_INSECT = 'preserved insect'           # N/A
     ODD_MUSHROOM = 'odd mushroom'
+    ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity knowledge
+    OMAMORI = 'omamori'                             # N/A
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
     PAPER_KRANE = 'paper krane'
+    PAPER_PHROG = 'paper phrog'
+    PEAR = 'pear'                                   # N/A
     PEN_NIB = 'pen nib'
+    PHILOSOPHERS_STONE = 'philosopher\u0027s stone' # N/A
+    PRESERVED_INSECT = 'preserved insect'           # N/A
+    QUESTION_CARD = 'question card'                 # N/A
     RED_MASK = 'red mask'                           # N/A
+    REGAL_PILLOW = 'regal pillow'                   # N/A
+    RING_OF_THE_SERPENT = 'ring of the serpent'     # We know how many cards we've got
     RING_OF_THE_SNAKE = 'ring of the snake'         # We know how many cards we've got
     RUNIC_DOME = 'runic dome'                       # We yolo everything since we see 0 incoming damage
     RUNIC_PYRAMID = 'runic pyramid'                 # But we don't keep in mind the implications for next turn
@@ -84,6 +98,7 @@ class RelicId(Enum):
     VELVET_CHOKER = 'velvet choker'
     WAR_PAINT = 'war paint'                         # N/A
     WARPED_TONGS = 'warped tongs'                   # Not relevant within a single turn
+    WHETSTONE = 'whetstone'                         # N/A
     WHITE_BEAST_STATUE = 'white beast statue'       # N/A
     WRIST_BLADE = 'wrist blade'
 

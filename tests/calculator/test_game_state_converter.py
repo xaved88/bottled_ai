@@ -25,8 +25,9 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
         hand_state = create_hand_state(state)
         self.assertIsNotNone(hand_state)
-        self.assertEqual(2, len(hand_state.relics))  # actually 3, this will break as we add more relic handling...
-        self.assertIn(RelicId.FAKE, hand_state.relics)
+        self.assertEqual(3, len(hand_state.relics))
+        self.assertIn(RelicId.BURNING_BLOOD, hand_state.relics)
+        self.assertIn(RelicId.BLOOD_VIAL, hand_state.relics)
         self.assertIn(RelicId.PEN_NIB, hand_state.relics)
 
     def test_hand_state_with_powers(self):
