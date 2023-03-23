@@ -9,7 +9,7 @@ from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Target, Player, Monster
 from rs.game.card import CardType
 
-Play = tuple[int, int]  # card index, target index (-1 for none/all), (-2 for discard)
+Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
 PLAY_DISCARD = -2
 
 
@@ -317,6 +317,8 @@ class HandState:
 
     def discard_card(self, card: Card):
         self.hand.remove(card)
+        if RelicId.TOUGH_BANDAGES in self.relics:
+            self.player.block += 3
         self.discard_pile.append(card)
         for hand_card in self.hand:
             for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):

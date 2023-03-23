@@ -241,6 +241,33 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 15)
 
+    def test_tough_bandages_blocks_from_discard(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.TOUGH_BANDAGES: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 11)
+
+    def test_tough_bandages_blocks_more_from_2_discards(self):
+        state = self.given_state(CardId.PREPARED, 1, relics={RelicId.TOUGH_BANDAGES: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 6)
+
+    def test_tough_bandages_blocks_more_from_X_discard(self):
+        state = self.given_state(CardId.UNLOAD, relics={RelicId.TOUGH_BANDAGES: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_count(play, 3)
+        self.see_player_has_block(play, 6)
+
+    def test_tough_bandages_no_extra_block_when_nothing_to_discard(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.TOUGH_BANDAGES: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_hand_count(play, 0)
+        self.see_player_has_block(play, 8)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))

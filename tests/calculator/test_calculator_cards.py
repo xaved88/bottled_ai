@@ -856,6 +856,15 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_hand_card_is(play, CardId.EVISCERATE)
         self.see_hand_card_cost(play, 2)
 
+    def test_eviscerate_cost_goes_down_with_multiple_discards(self):
+        state = self.given_state(CardId.UNLOAD)
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.EVISCERATE))
+        play = self.when_playing_the_first_card(state)
+        self.see_hand_card_is(play, CardId.EVISCERATE)
+        self.see_hand_card_cost(play, 1)
+
     def test_sneaky_strike_without_discards(self):
         state = self.given_state(CardId.SNEAKY_STRIKE)
         play = self.when_playing_the_first_card(state)

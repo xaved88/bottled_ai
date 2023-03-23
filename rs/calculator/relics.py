@@ -2,9 +2,10 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED
+# 'bird-faced urn'
 # 'blue candle'
 # 'centennial puzzle'
-# 'ectoplasm'  could take it into account when we do clever finishers
+# 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
 # 'gremlin horn'
 # 'hovering kite'
 # 'ink bottle'
@@ -14,7 +15,6 @@ from enum import Enum
 # 'sacred bark'
 # 'snecko skull'
 # 'tingsha'
-# 'tough bandages'
 # 'unceasing top'
 # and several others that aren't listed yet
 
@@ -22,79 +22,93 @@ from enum import Enum
 class RelicId(Enum):
     FAKE = 'fake'  # We make anything we don't know into this "fake" type
 
-    ANCHOR = 'anchor'                               # We get block from state
-    ANCIENT_TEA_SET = 'ancient tea set'             # N/A
+    AKABEKO = 'akabeko'                             # Covered by Vigor
+    ANCHOR = 'anchor'                               # We know current block
+    ANCIENT_TEA_SET = 'ancient tea set'             # N/A to battle calculations
     ART_OF_WAR = 'art of war'                       # We only look at current turn so far, so get this as bonus.
-    BAG_OF_MARBLES = 'bag of marbles'               # N/A to battle calculations
+    BAG_OF_MARBLES = 'bag of marbles'               # N/A
     BLACK_STAR = 'black star'                       # N/A
     BLOOD_VIAL = 'blood vial'                       # N/A
     BLOODY_IDOL = 'bloody idol'                     # N/A (except for rare combo with hand of gold)
     BOTTLED_FLAME = 'bottled flame'                 # N/A
     BOTTLED_LIGHTNING = 'bottled lightning'         # N/A
     BOTTLED_TORNADO = 'bottled tornado'             # N/A
-    BRONZE_SCALES = 'bronze scales'                 # We know about the Thorns power
+    BRONZE_SCALES = 'bronze scales'                 # Covered by Thorns
     BURNING_BLOOD = 'burning blood'                 # N/A
     BUSTED_CROWN = 'busted crown'                   # N/A
     CALLING_BELL = 'calling bell'                   # N/A
-    CAPTAINS_WHEEL = 'captain\u0027s wheel'         # We get block from state
+    CAPTAINS_WHEEL = 'captain\u0027s wheel'         # We know current block
+    CERAMIC_FISH = 'ceramic fish'                   # N/A
     CHAMPION_BELT = 'champion belt'
     COFFEE_DRIPPER = 'coffee dripper'               # N/A
     CURSED_KEY = 'cursed key'                       # N/A
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A
-    DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength knowledge
+    DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
     EMPTY_CAGE = 'empty cage'                       # N/A
     ETERNAL_FEATHER = 'eternal feather'             # N/A
     FOSSILIZED_HELIX = 'fossilized helix'
     FROZEN_EGG = 'frozen egg'                       # N/A
     FUSION_HAMMER = 'fusion hammer'                 # N/A
-    GIRYA = 'girya'                                 # Covered by Strength knowledge
+    GIRYA = 'girya'                                 # Covered by Strength
     GOLDEN_IDOL = 'golden idol'                     # N/A
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
     HORN_CLEAT = 'horn cleat'                       # We get block from state
     ICE_CREAM = 'ice cream'                         # We only look at current turn so far, so get this as bonus.
+    INCENSE_BURNER = 'incense burner'               # We know about Intangible
+    KUNAI = 'kunai'                                 # We don't specifically try to trigger it, results are covered by Dexterity.
     LETTER_OPENER = 'letter opener'
     LIZARD_TAIL = 'lizard tail'                     # N/A
     MANGO = 'mango'                                 # N/A
     MARK_OF_PAIN = 'mark of pain'                   # N/A
+    MATRYOSHKA = 'matryoshka'                       # N/A
     MAW_BANK = 'maw bank'                           # N/A
     MEAL_TICKET = 'meal ticket'                     # N/A
+    MEMBERSHIP_CARD = 'membership card'             # N/A
     MOLTEN_EGG = 'molten egg'                       # N/A
-    MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength knowledge
+    MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength
     NINJA_SCROLL = 'ninja scroll'                   # N/A
     NUNCHAKU = 'nunchaku'
     ODD_MUSHROOM = 'odd mushroom'
-    ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity knowledge
+    ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity
     OMAMORI = 'omamori'                             # N/A
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
+    PANTOGRAPH = 'pantograph'                       # N/A
     PAPER_KRANE = 'paper krane'
     PAPER_PHROG = 'paper phrog'
     PEAR = 'pear'                                   # N/A
     PEN_NIB = 'pen nib'
     PHILOSOPHERS_STONE = 'philosopher\u0027s stone' # N/A
+    PRAYER_WHEEL = 'prayer wheel'                   # N/A
     PRESERVED_INSECT = 'preserved insect'           # N/A
     QUESTION_CARD = 'question card'                 # N/A
     RED_MASK = 'red mask'                           # N/A
     REGAL_PILLOW = 'regal pillow'                   # N/A
-    RING_OF_THE_SERPENT = 'ring of the serpent'     # We know how many cards we've got
-    RING_OF_THE_SNAKE = 'ring of the snake'         # We know how many cards we've got
-    RUNIC_DOME = 'runic dome'                       # We yolo everything since we see 0 incoming damage
-    RUNIC_PYRAMID = 'runic pyramid'                 # But we don't keep in mind the implications for next turn
+    RING_OF_THE_SERPENT = 'ring of the serpent'     # N/A
+    RING_OF_THE_SNAKE = 'ring of the snake'         # N/A
+    RUNIC_DOME = 'runic dome'                       # We see 0 incoming damage so we yolo attack
+    RUNIC_PYRAMID = 'runic pyramid'                 # N/A
     SHOVEL = 'shovel'                               # N/A
+    SHURIKEN = 'shuriken'                           # We don't specifically try to trigger it, results are covered by Strength.
     SINGING_BOWL = 'singing bowl'                   # N/A
     SLAVERS_COLLAR = 'slaver\u0027s collar'         # N/A
     SMILING_MASK = 'smiling mask'                   # N/A
     SNECKO_EYE = 'snecko eye'                       # Calculator reads the costs itself
+    SOZU = 'sozu'                                   # N/A
     STRAWBERRY = 'strawberry'                       # N/A
     STRIKE_DUMMY = 'strike dummy'
-    SUNDIAL = 'sundial'                             # We only look at current turn so far, so get this as bonus.
+    SUNDIAL = 'sundial'                             # N/A
     THE_BOOT = 'the boot'
+    THE_COURIER = 'the courier'                     # N/A
+    THREAD_AND_NEEDLE = 'thread and needle'         # Covered by Plated Armor
     TINY_CHEST = 'tiny chest'                       # N/A
     TORII = 'torii'
+    TOUGH_BANDAGES = 'tough bandages'
     TOXIC_EGG = 'toxic egg'                         # N/A
+    TOY_ORNITHOPTER = 'toy ornithopter'             # N/A
     TUNGSTEN_ROD = 'tungsten rod'
-    VAJRA = 'vajra'                                 # Covered by Strength knowledge
+    VAJRA = 'vajra'                                 # Covered by Strength
     VELVET_CHOKER = 'velvet choker'
     WAR_PAINT = 'war paint'                         # N/A
     WARPED_TONGS = 'warped tongs'                   # Not relevant within a single turn

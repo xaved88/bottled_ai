@@ -2,6 +2,13 @@ from enum import Enum
 from typing import List
 
 
+# NOT IMPLEMENTED but probably should be
+# 'constricted'
+# 'explosive'
+# 'malleable'
+# there are many others that aren't listed
+
+
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
