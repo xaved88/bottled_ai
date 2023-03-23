@@ -136,7 +136,11 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.IMMOLATE:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=21 if not card.upgrade else 28, hits=1,
                             post_hooks=[immolate_post_hook])]
-    if card.id == CardId.BURN:  # TODO -> hook burn up with the -2 hp on end of turn thing...
+    if card.id == CardId.BURN:
+        return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.DECAY:
+        return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.REGRET:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.IMPERVIOUS:
         return [CardEffects(target=TargetType.SELF, block=30 if not card.upgrade else 40)]

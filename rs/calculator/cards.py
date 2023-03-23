@@ -43,6 +43,7 @@ class CardId(Enum):
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
     DROPKICK = 'dropkick'
+    DECAY = 'decay'
     DEFEND_R = 'defend_r'
     DEFEND_G = 'defend_g'
     ENTRENCH = 'entrench'
@@ -203,7 +204,7 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.IMMOLATE:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.BURN:
-        return Card(card_id, 0, -1, False, CardType.STATUS)
+        return Card(card_id, upgrade, -1, False, CardType.STATUS)
     if card_id == CardId.IMPERVIOUS:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.LIMIT_BREAK:
@@ -268,6 +269,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.PAIN:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.REGRET:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.DECAY:
         return Card(card_id, 0, -1, False, CardType.CURSE)
 
     # Silent

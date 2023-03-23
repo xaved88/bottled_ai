@@ -597,6 +597,36 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_lost_hp(play, 5)
 
+    def test_decay(self):
+        state = self.given_state(CardId.DECAY)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 2)
+
+    def test_decay_blockable(self):
+        state = self.given_state(CardId.DECAY)
+        state.hand.append(get_card(CardId.DEFEND_G))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 0)
+
+    def test_burn(self):
+        state = self.given_state(CardId.BURN)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 2)
+
+    def test_burn_and_burn_upgraded(self):
+        state = self.given_state(CardId.BURN, upgrade=1)
+        for i in range(3):
+            state.hand.append(get_card(CardId.BURN))
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 10)
+
     def test_neutralize(self):
         state = self.given_state(CardId.NEUTRALIZE)
         play = self.when_playing_the_first_card(state)

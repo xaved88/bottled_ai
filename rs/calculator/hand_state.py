@@ -249,19 +249,35 @@ class HandState:
         self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
         # regret
+        # i think this might technically be off by 1 if there are #manyregrets
         regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])
         if regret_count:
-            self.player.inflict_damage(self.player, regret_count * len(self.hand), 1, False, vulnerable_modifier=1,
+            self.player.inflict_damage(self.player, len(self.hand), regret_count, blockable=False, vulnerable_modifier=1,
                                        is_attack=False)
+
+        # decay
+        decay_count = len([1 for c in self.hand if c.id == CardId.DECAY])
+        if decay_count:
+            self.player.inflict_damage(self.player, 2, decay_count, vulnerable_modifier=1,
+                                       is_attack=False)
+
+        # burn
+        burn_count = len([1 for c in self.hand if c.id == CardId.BURN and c.upgrade == 0])
+        if burn_count:
+            self.player.inflict_damage(self.player, 2, burn_count, vulnerable_modifier=1,
+                                       is_attack=False)
+
+        burn_upgraded_count = len([1 for c in self.hand if c.id == CardId.BURN and c.upgrade == 1])
+        if burn_upgraded_count:
+            self.player.inflict_damage(self.player, 4, burn_upgraded_count, vulnerable_modifier=1,
+                                       is_attack=False)
+
         # poison
         for monster in self.monsters:
             poison = monster.powers.get(PowerId.POISON, 0)
             if poison > 0:
                 monster.powers[PowerId.POISON] -= 1
                 monster.inflict_damage(monster, poison, 1, blockable=False, is_attack=False)
-
-        # todo - decrement buffs that should be counted down?
-        # todo - increment relics that should be counted up
 
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
