@@ -10,7 +10,7 @@ from rs.machine.state import GameState
 class PurgeHandler(Handler):
 
     def __init__(self):
-        # Note: this list is duplicated to shop_purchase_handler.py
+        # Note: this list is essentially duplicated to shop_purchase_handler.py, but note we use IDs here, not names.
         self.preferences: List[str] = [
             'strike',
             'defend',
