@@ -106,7 +106,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.STRIKE_R)
         state.relics[RelicId.ORNAMENTAL_FAN] = 0
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_has_block(play, 0)
         self.see_relic_value(play, RelicId.ORNAMENTAL_FAN, 1)
 
@@ -114,7 +114,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.STRIKE_R)
         state.relics[RelicId.ORNAMENTAL_FAN] = 2
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_has_block(play, 4)
         self.see_relic_value(play, RelicId.ORNAMENTAL_FAN, 0)
 
@@ -259,7 +259,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.WOUND))
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
-        self.see_player_discard_count(play, 3)
+        self.see_player_discard_pile_count(play, 3)
         self.see_player_has_block(play, 6)
 
     def test_tough_bandages_no_extra_block_when_nothing_to_discard(self):
@@ -267,6 +267,39 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_player_hand_count(play, 0)
         self.see_player_has_block(play, 8)
+
+    def test_hovering_kite_1_extra_energy_on_first_discard(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.HOVERING_KITE: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_hand_count(play, 0)
+        self.see_player_has_energy(play, 5)
+
+    def test_hovering_kite_1_extra_energy_on_second_discard(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.HOVERING_KITE: 1})
+        state.hand.append(get_card(CardId.SURVIVOR))
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_energy(play, 4)
+
+    def test_hovering_kite_empty_hand(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.HOVERING_KITE: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_has_energy(play, 4)
+
+    def test_hovering_kite_no_discard(self):
+        state = self.given_state(CardId.STRIKE_G, relics={RelicId.HOVERING_KITE: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_has_energy(play, 4)
+
+    def test_hovering_kite_not_present_but_discarding(self):
+        state = self.given_state(CardId.SURVIVOR)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_energy(play, 4)
 
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):

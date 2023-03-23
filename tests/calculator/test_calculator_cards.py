@@ -198,7 +198,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_lost_hp(play, 6)
         self.see_enemy_has_power(play, PowerId.STRENGTH, -2)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 0)
+        self.see_player_discard_pile_count(play, 0)
         self.see_player_exhaust_count(play, 1)
 
     def test_dropkick_vs_normal(self):
@@ -252,7 +252,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.STRENGTH, 2)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
     def test_intimidate(self):
@@ -356,7 +356,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 21, 0)
         self.see_enemy_lost_hp(play, 21, 1)
         self.see_player_spent_energy(play, 2)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
 
     def test_impervious(self):
         state = self.given_state(CardId.IMPERVIOUS)
@@ -378,7 +378,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_power(play, PowerId.STRENGTH, 6)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 0)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
 
     def test_limit_break_no_strength(self):
         state = self.given_state(CardId.LIMIT_BREAK)
@@ -427,7 +427,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand[1].cost = 99
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 14)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
 
     def test_clash_with_a_skill(self):
         state = self.given_state(CardId.CLASH)
@@ -435,7 +435,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand[1].cost = 99
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
-        self.see_player_discard_count(play, 0)
+        self.see_player_discard_pile_count(play, 0)
 
     def test_flex(self):
         state = self.given_state(CardId.FLEX)
@@ -446,13 +446,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.WILD_STRIKE)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 12)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_draw_pile_count(play, 1)
 
     def test_battle_trance(self):
         state = self.given_state(CardId.BATTLE_TRANCE)
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_drew_cards(play, 3)
 
     def test_rage(self):
@@ -489,7 +489,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 15)
         self.see_player_hand_count(play, 10)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
 
     def test_spot_weakness_against_attacking_enemy(self):
         state = self.given_state(CardId.SPOT_WEAKNESS)
@@ -531,7 +531,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.FLASH_OF_STEEL)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 3)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_drew_cards(play, 1)
         self.see_player_spent_energy(play, 0)
 
@@ -539,7 +539,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.SWIFT_STRIKE)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 7)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_spent_energy(play, 0)
 
     def test_trip(self):
@@ -644,7 +644,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.BLADE_DANCE)
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 3)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
 
     def test_blade_dance_with_full_hand(self):
         state = self.given_state(CardId.BLADE_DANCE)
@@ -652,7 +652,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
             state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 10)
-        self.see_player_discard_count(play, 3)
+        self.see_player_discard_pile_count(play, 3)
 
     def test_cloak_and_dagger_with_full_hand(self):
         state = self.given_state(CardId.CLOAK_AND_DAGGER)
@@ -660,7 +660,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
             state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 10)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
 
     def test_cloak_and_dagger_upgraded_with_full_hand(self):
         state = self.given_state(CardId.CLOAK_AND_DAGGER, 1)
@@ -668,7 +668,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
             state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 10)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
 
     def test_leg_sweep(self):
         state = self.given_state(CardId.LEG_SWEEP)
@@ -688,7 +688,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.ESCAPE_PLAN)
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 1)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_drew_cards(play, 1)
 
     def test_heel_hook_vs_vulnerable(self):
@@ -726,7 +726,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.THOUSAND_CUTS, 1)
         self.see_player_spent_energy(play, 2)
-        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
     def test_accuracy(self):
@@ -734,7 +734,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.ACCURACY, 4)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
     def test_shiv_damage_with_accuracy(self):
@@ -750,7 +750,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.INFINITE_BLADES, 1)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
     def test_after_image(self):
@@ -758,7 +758,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.AFTER_IMAGE, 1)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 0)  # powers should not be discarded
+        self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
     def test_finesse(self):
@@ -782,7 +782,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_block(play, 8)
         self.see_player_hand_count(play, 0)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
 
     def test_survivor_when_it_is_the_last_card(self):
         state = self.given_state(CardId.SURVIVOR)
@@ -790,7 +790,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_block(play, 8)
         self.see_player_hand_count(play, 0)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
 
     def test_poisoned_stab(self):
         state = self.given_state(CardId.POISONED_STAB)
@@ -818,7 +818,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.STORM_OF_STEEL)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_hand_count(play, 0)
 
     def test_storm_of_steel_with_many_cards(self):
@@ -827,7 +827,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
             state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 10)
+        self.see_player_discard_pile_count(play, 10)
         self.see_player_hand_count(play, 9)
         self.see_hand_card_is(play, CardId.SHIV)
         self.see_hand_card_upgrade(play, 0)
@@ -837,7 +837,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
         self.see_player_hand_count(play, 1)
         self.see_hand_card_is(play, CardId.SHIV)
         self.see_hand_card_upgrade(play, 1)
@@ -852,7 +852,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.WOUND, amount_to_discard=1)
         state.hand.append(get_card(CardId.EVISCERATE))
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_hand_card_is(play, CardId.EVISCERATE)
         self.see_hand_card_cost(play, 2)
 
@@ -881,7 +881,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.SNEAKY_STRIKE, cards_discarded_this_turn=1)
         state.player.energy = 0
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 0)
+        self.see_player_discard_pile_count(play, 0)
         self.see_player_hand_count(play, 1)
         self.see_enemy_lost_hp(play, 0)
         self.see_player_has_energy(play, 0)
@@ -890,20 +890,20 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.PREPARED)
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
         self.see_player_hand_count(play, 1)
 
     def test_prepared_when_its_the_only_card(self):
         state = self.given_state(CardId.PREPARED)
         play = self.when_playing_the_whole_hand(state)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
         self.see_player_hand_count(play, 0)
 
     def test_dagger_throw(self):
         state = self.given_state(CardId.DAGGER_THROW)
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 9)
         self.see_player_hand_count(play, 1)
@@ -911,7 +911,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_dagger_throw_when_its_the_only_card(self):
         state = self.given_state(CardId.DAGGER_THROW)
         play = self.when_playing_the_whole_hand(state)
-        self.see_player_discard_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 9)
         self.see_player_hand_count(play, 0)
@@ -919,7 +919,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_unload_with_empty_hand(self):
         state = self.given_state(CardId.UNLOAD)
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 14)
         self.see_player_hand_count(play, 0)
@@ -932,7 +932,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.STRIKE_G))
         state.hand.append(get_card(CardId.REGRET))
         play = self.when_playing_the_first_card(state)
-        self.see_player_discard_count(play, 5)
+        self.see_player_discard_pile_count(play, 5)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 14)
         self.see_player_hand_count(play, 1)

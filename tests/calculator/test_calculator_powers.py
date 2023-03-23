@@ -346,13 +346,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.POMMEL_STRIKE, player_powers={PowerId.NO_DRAW: 1})
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 0)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
 
     def test_no_draw_blocked_by_artifact(self):
         state = self.given_state(CardId.BATTLE_TRANCE, player_powers={PowerId.ARTIFACT: 1})
         play = self.when_playing_the_first_card(state)
         self.see_player_hand_count(play, 3)
-        self.see_player_discard_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_does_not_have_power(play, PowerId.ARTIFACT)
         self.see_player_does_not_have_power(play, PowerId.NO_DRAW)
 

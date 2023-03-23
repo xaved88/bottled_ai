@@ -68,7 +68,7 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_cards_played(self, play: PlayPath, amount: int):
         self.assertEqual(amount, len(play.plays))
 
-    def see_player_discard_count(self, play: PlayPath, amount: int):
+    def see_player_discard_pile_count(self, play: PlayPath, amount: int):
         self.assertEqual(amount, len(play.state.discard_pile))
 
     def see_player_draw_pile_count(self, play: PlayPath, amount: int):
