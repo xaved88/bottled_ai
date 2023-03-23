@@ -7,7 +7,6 @@ from enum import Enum
 # 'centennial puzzle'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
 # 'gremlin horn'
-# 'hovering kite'
 # 'ink bottle'
 # 'meat on the bone'
 # 'mercury hourglass'
@@ -54,6 +53,7 @@ class RelicId(Enum):
     GOLDEN_IDOL = 'golden idol'                     # N/A
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
     HORN_CLEAT = 'horn cleat'                       # We get block from state
+    HOVERING_KITE = 'hovering kite'
     ICE_CREAM = 'ice cream'                         # We only look at current turn so far, so get this as bonus.
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
     KUNAI = 'kunai'                                 # We don't specifically try to trigger it, results are covered by Dexterity.
