@@ -10,7 +10,7 @@ class UpgradeHandler(Handler):
 
     def __init__(self):
         self.upgrade_priorities: List[str] = [
-            'neutralize',
+            'neutralize',           # removed if we have snecko eye
             'a thousand cuts',
             'tools of the trade',   # removed if we have snecko eye
             'accuracy',
@@ -51,6 +51,7 @@ class UpgradeHandler(Handler):
         upgrade_priorities_working_copy = self.upgrade_priorities.copy()
 
         if state.has_relic("Snecko Eye"):
+            upgrade_priorities_working_copy.remove('neutralize')
             upgrade_priorities_working_copy.remove('tools of the trade')
             upgrade_priorities_working_copy.remove('terror')
             upgrade_priorities_working_copy.remove('escape plan')

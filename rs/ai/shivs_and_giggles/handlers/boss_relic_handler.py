@@ -27,12 +27,12 @@ class BossRelicHandler(Handler):
             "ring of the serpent",
             "runic pyramid",
             "black star",
-            "runic dome",
             "tiny house",
             "mark of pain",
             "empty cage",
             "sacred bark",
             "coffee dripper",
+            "runic dome",
             "velvet choker",
         ]
         self.energy_relics = [

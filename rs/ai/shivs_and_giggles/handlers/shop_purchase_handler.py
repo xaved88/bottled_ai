@@ -85,7 +85,13 @@ class ShopPurchaseHandler(Handler):
                     return relic['name'].lower()
 
         # 7. Purge in general
-        if can_purge and state.deck.contains_cards(["Strike"]):
+        # Would be nicer to not duplicate the list from purge_handler.py here but oh well.
+        if can_purge and state.deck.contains_cards([
+            'strike',
+            'defend',
+            'strike+',
+            'defend+',
+        ]):
             return "purge"
 
 
