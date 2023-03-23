@@ -54,6 +54,7 @@ class CardId(Enum):
     FLAME_BARRIER = 'flame barrier'
     FLASH_OF_STEEL = 'flash of steel'
     FLEX = 'flex'
+    FOOTWORK = 'footwork'
     GHOSTLY_ARMOR = 'ghostly armor'
     HAND_OF_GREED = 'handofgreed'                   # Weird id alert!
     HEAVY_BLADE = 'heavy blade'
@@ -330,3 +331,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.UNLOAD:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.FOOTWORK:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)

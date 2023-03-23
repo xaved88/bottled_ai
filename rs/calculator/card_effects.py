@@ -279,4 +279,6 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.UNLOAD:
         return [CardEffects(damage=14 if not card.upgrade else 18, target=TargetType.MONSTER, hits=1,
                             post_hooks=[unload_post_hook])]
+    if card.id == CardId.FOOTWORK:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEXTERITY: 2 if not card.upgrade else 3})]
     return [CardEffects()]
