@@ -309,6 +309,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_lost_hp(play, 12)
 
+    def test_thorns_deals_damage_when_attacked_for_0(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.THORNS: 3})
+        state.monsters[0].damage = 0
+        state.monsters[0].hits = 2
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_thorns_will_not_prevent_damage(self):
+        state = self.given_state(CardId.WOUND)
+        state.monsters[0].current_hp = 3
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 5)
+
     def test_sharp_hide_deals_damage_only_on_attack_play(self):
         state = self.given_state(CardId.TWIN_STRIKE)
         state.monsters[0].powers[PowerId.SHARP_HIDE] = 4

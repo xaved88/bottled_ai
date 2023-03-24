@@ -282,7 +282,7 @@ class HandState:
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
         for monster in self.monsters:
-            if monster.current_hp > 0 and monster.hits:
+            if monster.current_hp > 0 and monster.hits and monster.damage != -1:
                 monster_weak_modifier = 1 if not monster.powers.get(PowerId.WEAKENED) else 0.75 if not self.relics.get(
                     RelicId.PAPER_KRANE) else 0.6
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
