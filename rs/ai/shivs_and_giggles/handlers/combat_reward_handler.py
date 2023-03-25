@@ -14,6 +14,7 @@ throw_away_potions = [
     'GhostInAJar',
 ]
 
+
 class CombatRewardHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
@@ -21,6 +22,14 @@ class CombatRewardHandler(Handler):
                and state.screen_type() == ScreenType.COMBAT_REWARD.value
 
     def handle(self, state: GameState) -> List[str]:
+
+        # Chug a Fruit Juice straight away
+        for idx, pot in enumerate(state.get_potions()):
+            if pot['id'] == 'Fruit Juice':
+                if presentation_mode:
+                    return [p_delay, "potion use " + str(idx), p_delay_s]
+                return ["wait 30", "potion use " + str(idx)]
+
         # Check if we've got a potion we don't like, and toss it out
         for idx, pot in enumerate(state.get_potions()):
             if pot['id'] in throw_away_potions:
