@@ -318,12 +318,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 6)
 
     def test_thorns_will_not_prevent_damage(self):
-        state = self.given_state(CardId.WOUND)
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.THORNS: 3})
         state.monsters[0].current_hp = 3
         state.monsters[0].damage = 5
         state.monsters[0].hits = 1
         play = self.when_playing_the_whole_hand(state)
         play.end_turn()
+        self.see_enemy_hp_is(play, 0)
         self.see_player_lost_hp(play, 5)
 
     def test_sharp_hide_deals_damage_only_on_attack_play(self):
