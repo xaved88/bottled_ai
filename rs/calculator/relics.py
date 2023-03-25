@@ -26,6 +26,7 @@ class RelicId(Enum):
     ANCIENT_TEA_SET = 'ancient tea set'             # N/A to battle calculations
     ART_OF_WAR = 'art of war'                       # We only look at current turn so far, so get this as bonus.
     BAG_OF_MARBLES = 'bag of marbles'               # N/A
+    BAG_OF_PREPARATION = 'bag of preparation'       # N/A
     BLACK_STAR = 'black star'                       # N/A
     BLOOD_VIAL = 'blood vial'                       # N/A
     BLOODY_IDOL = 'bloody idol'                     # N/A (except for rare combo with hand of gold)
@@ -49,6 +50,7 @@ class RelicId(Enum):
     FOSSILIZED_HELIX = 'fossilized helix'
     FROZEN_EGG = 'frozen egg'                       # N/A
     FUSION_HAMMER = 'fusion hammer'                 # N/A
+    GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
     GOLDEN_IDOL = 'golden idol'                     # N/A
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
@@ -56,6 +58,7 @@ class RelicId(Enum):
     HOVERING_KITE = 'hovering kite'
     ICE_CREAM = 'ice cream'                         # We only look at current turn so far, so get this as bonus.
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
+    JUZU_BRACELET = 'juzu bracelet'                 # N/A
     KUNAI = 'kunai'                                 # We don't specifically try to trigger it, results are covered by Dexterity.
     LETTER_OPENER = 'letter opener'
     LIZARD_TAIL = 'lizard tail'                     # N/A
@@ -78,6 +81,7 @@ class RelicId(Enum):
     PAPER_KRANE = 'paper krane'
     PAPER_PHROG = 'paper phrog'
     PEAR = 'pear'                                   # N/A
+    PEACE_PIPE = 'peace pipe'                       # N/A
     PEN_NIB = 'pen nib'
     PHILOSOPHERS_STONE = 'philosopher\u0027s stone' # N/A
     PRAYER_WHEEL = 'prayer wheel'                   # N/A
