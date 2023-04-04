@@ -144,6 +144,11 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.SHAME:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.CURSE_OF_THE_BELL:
+        return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.PARASITE:
+        return [CardEffects(target=TargetType.NONE)]
+
     if card.id == CardId.IMPERVIOUS:
         return [CardEffects(target=TargetType.SELF, block=30 if not card.upgrade else 40)]
     if card.id == CardId.LIMIT_BREAK:
@@ -287,4 +292,16 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
                             post_hooks=[unload_post_hook])]
     if card.id == CardId.FOOTWORK:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEXTERITY: 2 if not card.upgrade else 3})]
+    if card.id == CardId.RIDDLE_WITH_HOLES:
+        return [CardEffects(damage=3 if not card.upgrade else 4, hits=5, target=TargetType.MONSTER)]
+    if card.id == CardId.DEFLECT:
+        return [CardEffects(block=4 if not card.upgrade else 7, target=TargetType.SELF)]
+    if card.id == CardId.DASH:
+        amount = 10 if not card.upgrade else 13
+        return [CardEffects(damage=amount, hits=1, block=amount, target=TargetType.MONSTER)]
+    if card.id == CardId.SLICE:
+        return [CardEffects(target=TargetType.MONSTER, damage=6 if not card.upgrade else 9, hits=1)]
+    if card.id == CardId.QUICK_SLASH:
+        return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 12, hits=1, draw=1)]
+
     return [CardEffects()]

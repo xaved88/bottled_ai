@@ -5,11 +5,13 @@ from enum import Enum
 # 'bird-faced urn'
 # 'blue candle'
 # 'centennial puzzle'
+# 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
 # 'gremlin horn'
 # 'ink bottle'
 # 'meat on the bone'
 # 'mercury hourglass'
+# 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
 # 'snecko skull'
@@ -84,6 +86,7 @@ class RelicId(Enum):
     PEACE_PIPE = 'peace pipe'                       # N/A
     PEN_NIB = 'pen nib'
     PHILOSOPHERS_STONE = 'philosopher\u0027s stone' # N/A
+    POTION_BELT = 'potion belt'                     # N/A
     PRAYER_WHEEL = 'prayer wheel'                   # N/A
     PRESERVED_INSECT = 'preserved insect'           # N/A
     QUESTION_CARD = 'question card'                 # N/A

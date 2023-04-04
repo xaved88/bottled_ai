@@ -35,10 +35,13 @@ class CardId(Enum):
     CLEAVE = 'cleave'
     CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'
+    CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
     DAGGER_THROW = 'dagger throw'
     DAGGER_SPRAY = 'dagger spray'
     DARK_SHACKLES = 'dark shackles'
+    DASH = 'dash'
     DAZED = 'dazed'
+    DEFLECT = 'deflect'
     DIE_DIE_DIE = 'die die die'
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
@@ -57,7 +60,7 @@ class CardId(Enum):
     FLEX = 'flex'
     FOOTWORK = 'footwork'
     GHOSTLY_ARMOR = 'ghostly armor'
-    HAND_OF_GREED = 'handofgreed'                   # Weird id alert!
+    HAND_OF_GREED = 'handofgreed'  # Weird id alert!
     HEAVY_BLADE = 'heavy blade'
     HEEL_HOOK = 'heel hook'
     HEMOKINESIS = 'hemokinesis'
@@ -75,24 +78,28 @@ class CardId(Enum):
     NEUTRALIZE = 'neutralize'
     OFFERING = 'offering'
     PAIN = 'pain'
+    PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
     POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
     POWER_THROUGH = 'power through'
     PREPARED = 'prepared'
     PUMMEL = 'pummel'
+    QUICK_SLASH = 'quick slash'
     RAGE = 'rage'
     RAMPAGE = 'rampage'
     REAPER = 'reaper'
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'
+    RIDDLE_WITH_HOLES = 'riddle with holes'
     SEEING_RED = 'seeing red'
     SHAME = 'shame'
     SHIV = 'shiv'
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
+    SLICE = 'slice'
     SLIMED = 'slimed'
-    SNEAKY_STRIKE = 'underhanded strike'            # Weird id alert!
+    SNEAKY_STRIKE = 'underhanded strike'  # Weird id alert!
     SPOT_WEAKNESS = 'spot weakness'
     STORM_OF_STEEL = 'storm of steel'
     STRIKE_R = 'strike_r'
@@ -275,6 +282,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.SHAME:
         return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.CURSE_OF_THE_BELL:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.PARASITE:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
 
     # Silent
     if card_id == CardId.NEUTRALIZE:
@@ -339,3 +350,13 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.FOOTWORK:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.RIDDLE_WITH_HOLES:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DEFLECT:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DASH:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.SLICE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.QUICK_SLASH:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
