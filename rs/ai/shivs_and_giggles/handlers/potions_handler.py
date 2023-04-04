@@ -54,7 +54,7 @@ class PotionsEliteHandler(PotionsBaseHandler):
                and state.combat_state() \
                and state.screen_type() == ScreenType.NONE.value \
                and state.game_state()['room_type'] == "MonsterRoomElite" \
-               and ((hp_per <= 50 and state.combat_state()['turn'] == 1) or hp_per <= 30) \
+               and (hp_per <= 50 and state.combat_state()['turn'] == 1) \
                and self.get_potions_to_play(state)
 
 
@@ -69,7 +69,7 @@ class PotionsEventFightHandler(PotionsBaseHandler):  # Treat most Event Fights l
                and state.screen_type() == ScreenType.NONE.value \
                and state.game_state()['room_type'] == "EventRoom" \
                and not state.has_monster("Fungi Beast") \
-               and ((hp_per <= 50 and state.combat_state()['turn'] == 1) or hp_per <= 30) \
+               and (hp_per <= 50 and state.combat_state()['turn'] == 1) \
                and self.get_potions_to_play(state)
 
 

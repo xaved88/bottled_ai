@@ -30,9 +30,9 @@ class UpgradeHandler(Handler):
             'finesse',              # removed if we have snecko eye
             'poisoned stab',
             'sneaky strike',
+            'dagger spray',
             'sucker punch',
             'escape plan',          # removed if we have snecko eye
-            'dagger spray',
             'caltrops',
             'heel hook',
             'survivor',

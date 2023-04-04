@@ -87,6 +87,7 @@ class CardId(Enum):
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'
     SEEING_RED = 'seeing red'
+    SHAME = 'shame'
     SHIV = 'shiv'
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
@@ -271,6 +272,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.REGRET:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.DECAY:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.SHAME:
         return Card(card_id, 0, -1, False, CardType.CURSE)
 
     # Silent
