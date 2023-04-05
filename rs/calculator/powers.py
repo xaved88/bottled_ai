@@ -23,6 +23,7 @@ class PowerId(Enum):
     DEXTERITY = 'dexterity'
     DRAW_REDUCTION = 'draw reduction'   # We'll see what we get
     ENTANGLED = 'entangled'
+    FADING = 'fading'                   # N/A
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'
     FRAIL = 'frail'
@@ -37,6 +38,7 @@ class PowerId(Enum):
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'
     SHARP_HIDE = 'sharp hide'
+    SHIFTING = 'shifting'
     SPLIT = 'split'
     STRENGTH = 'strength'
     TOOLS_OF_THE_TRADE = 'tools of the trade'

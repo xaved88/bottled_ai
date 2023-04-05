@@ -8,7 +8,6 @@ from rs.ai.shivs_and_giggles.handlers.card_reward_handler import CardRewardHandl
 from rs.ai.shivs_and_giggles.handlers.combat_reward_handler import CombatRewardHandler
 from rs.ai.shivs_and_giggles.handlers.custom_battle.gremlin_nob_handler import GremlinNobHandler
 from rs.ai.shivs_and_giggles.handlers.custom_battle.sentries_handler import SentriesHandler
-from rs.ai.shivs_and_giggles.handlers.custom_battle.transient_handler import TransientHandler
 from rs.ai.shivs_and_giggles.handlers.discard_handler import DiscardHandler
 from rs.ai.shivs_and_giggles.handlers.event_handler import EventHandler
 from rs.ai.shivs_and_giggles.handlers.neow_handler import NeowHandler
@@ -34,7 +33,6 @@ shivs_and_giggles_custom_battle_handlers: List[Handler] = [
     # Enemies After
     GremlinNobHandler(),
     SentriesHandler(),
-    TransientHandler(),
 ]
 
 SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(

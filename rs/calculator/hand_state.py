@@ -133,6 +133,7 @@ class HandState:
                                                                                  vulnerable_modifier=monster_vulnerable_modifier,
                                                                                  min_hp_damage=player_min_attack_hp_damage)
                         effect.hp_damage = hp_damage
+
                     elif effect.target == TargetType.ALL_MONSTERS:
                         effect.hp_damage = 0
                         for target in self.monsters:
@@ -140,6 +141,10 @@ class HandState:
                                                                 monster_vulnerable_modifier,
                                                                 min_hp_damage=player_min_attack_hp_damage)
                             effect.hp_damage += hp_damage
+
+                    for target in self.monsters:
+                        if target.powers.get(PowerId.SHIFTING):
+                            target.add_powers({PowerId.STRENGTH: -effect.hp_damage})
 
             # block (always applies to player right?)
             if effect.block:
