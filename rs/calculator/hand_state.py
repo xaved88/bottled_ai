@@ -142,10 +142,6 @@ class HandState:
                                                                 min_hp_damage=player_min_attack_hp_damage)
                             effect.hp_damage += hp_damage
 
-                    for target in self.monsters:
-                        if target.powers.get(PowerId.SHIFTING):
-                            target.add_powers({PowerId.STRENGTH: -effect.hp_damage})
-
             # block (always applies to player right?)
             if effect.block:
                 block = max(effect.block + self.player.powers.get(PowerId.DEXTERITY, 0), 0)

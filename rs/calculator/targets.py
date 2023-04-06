@@ -117,6 +117,8 @@ class Target:
             self.damage = 0
             self.hits = 0
             del self.powers[PowerId.SPLIT]
+        if self.powers.get(PowerId.SHIFTING):
+            self.add_powers({PowerId.STRENGTH: -health_damage_dealt})
         return (health_damage_dealt)
 
     # returns a list of powerIds that were applied and not blocked by artifacts
