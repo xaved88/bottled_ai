@@ -26,8 +26,8 @@ class CardRewardHandler(Handler):
             'cloak and dagger': 2,
             'poisoned stab': 2,
             'sneaky strike': 2,
-            'dagger spray': 2,
             'sucker punch': 1,
+            'dagger spray': 2,
             'escape plan': 4,           # removed if we have snecko eye
             'prepared': 2,              # removed if we have snecko eye
             'heel hook': 2,

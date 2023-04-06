@@ -478,7 +478,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 3)
         self.see_enemy_has_power(play, PowerId.POISON, 2)
 
-    def test_damaging_transient_reduces_incoming_damage(self):
+    def test_damaging_shifter_reduces_incoming_damage(self):
         state = self.given_state(CardId.STRIKE_R)
         state.monsters[0].powers[PowerId.SHIFTING] = 1
         state.monsters[0].damage = 7
@@ -488,7 +488,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 6)
         self.see_player_lost_hp(play, 1)
 
-    def test_damaging_transient_more_complicated(self):
+    def test_damaging_shifter_more_complicated(self):
         state = self.given_state(CardId.NEUTRALIZE)
         state.monsters[0].powers[PowerId.SHIFTING] = 1
         state.monsters[0].powers[PowerId.STRENGTH] = 0
@@ -499,3 +499,42 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 3)
         self.see_enemy_has_power(play, PowerId.STRENGTH, -3)
         self.see_player_lost_hp(play, 12)
+
+    def test_damaging_shifter_reduces_incoming_damage_in_bigger_fight(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2)
+        state.monsters[0].powers[PowerId.SHIFTING] = 1
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        state.monsters[1].damage = 1
+        state.monsters[1].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 6, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_player_lost_hp(play, 1)
+
+    def test_damaging_non_shifter_does_not_reduces_incoming_damage_in_bigger_fight(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        state.monsters[1].powers[PowerId.SHIFTING] = 1
+        state.monsters[1].damage = 1
+        state.monsters[1].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 6, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_player_lost_hp(play, 2)
+
+    def test_damaging_all_in_bigger_fight_that_includes_shifter_does_reduce_damage(self):
+        state = self.given_state(CardId.CLEAVE, targets=2)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        state.monsters[1].powers[PowerId.SHIFTING] = 1
+        state.monsters[1].damage = 1
+        state.monsters[1].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 8, enemy_index=0)
+        self.see_enemy_lost_hp(play, 8, enemy_index=1)
+        self.see_player_lost_hp(play, 1)
