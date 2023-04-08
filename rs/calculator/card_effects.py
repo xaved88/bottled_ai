@@ -148,6 +148,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.PARASITE:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.INJURY:
+        return [CardEffects(target=TargetType.NONE)]
 
     if card.id == CardId.IMPERVIOUS:
         return [CardEffects(target=TargetType.SELF, block=30 if not card.upgrade else 40)]

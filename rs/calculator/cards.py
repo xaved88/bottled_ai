@@ -68,6 +68,7 @@ class CardId(Enum):
     IMPERVIOUS = 'impervious'
     INFINITE_BLADES = 'infinite blades'
     INFLAME = 'inflame'
+    INJURY = 'injury'
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
     JAX = 'j.a.x.'
@@ -285,6 +286,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.CURSE_OF_THE_BELL:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.PARASITE:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.INJURY:
         return Card(card_id, 0, -1, False, CardType.CURSE)
 
     # Silent

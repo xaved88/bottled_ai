@@ -62,6 +62,7 @@ class RelicId(Enum):
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
     JUZU_BRACELET = 'juzu bracelet'                 # N/A
     KUNAI = 'kunai'                                 # We don't specifically try to trigger it, results are covered by Dexterity.
+    LANTERN = 'lantern'                             # N/A
     LETTER_OPENER = 'letter opener'
     LIZARD_TAIL = 'lizard tail'                     # N/A
     MANGO = 'mango'                                 # N/A
@@ -76,6 +77,7 @@ class RelicId(Enum):
     NUNCHAKU = 'nunchaku'
     ODD_MUSHROOM = 'odd mushroom'
     ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity
+    OLD_COIN = 'old coin'                           # N/A
     OMAMORI = 'omamori'                             # N/A
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
@@ -115,6 +117,7 @@ class RelicId(Enum):
     TOXIC_EGG = 'toxic egg'                         # N/A
     TOY_ORNITHOPTER = 'toy ornithopter'             # N/A
     TUNGSTEN_ROD = 'tungsten rod'
+    TURNIP = 'turnip'                               # N/A
     VAJRA = 'vajra'                                 # Covered by Strength
     VELVET_CHOKER = 'velvet choker'
     WAR_PAINT = 'war paint'                         # N/A
