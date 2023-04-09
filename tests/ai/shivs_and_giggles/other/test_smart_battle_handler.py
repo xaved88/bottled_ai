@@ -23,3 +23,6 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_do_not_block_against_non_attack_even_though_enemy_is_strong(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_monster_not_attacking_but_has_strength_up.json', ['play 2 1'])
+
+    def test_plays_slimeds_when_nothing_better_to_do(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_play_slimed.json', ['play 1'])

@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.calculator.cards import CardId
+from rs.calculator.cards import CardId, CardType
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.hand_state import HandState
 from rs.calculator.powers import PowerId, get_power_count
@@ -26,6 +26,7 @@ class GCValues:
             enemy_vulnerable: int,
             enemy_weak: int,
             player_powers: int,
+            undesired_cards: int,
     ):
         self.battle_lost: bool = battle_lost
         self.battle_won: bool = battle_won
@@ -43,6 +44,7 @@ class GCValues:
         self.enemy_vulnerable: int = enemy_vulnerable
         self.enemy_weak: int = enemy_weak
         self.player_powers: int = player_powers
+        self.undesired_cards: int = undesired_cards
 
 
 powers_we_like: List[PowerId] = [
@@ -85,7 +87,8 @@ class GeneralSilentComparator(SbcComparator):
             intangible=state.player.powers.get(PowerId.INTANGIBLE, 0),
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
-            player_powers=get_power_count(state.player.powers, powers_we_like)
+            player_powers=get_power_count(state.player.powers, powers_we_like),
+            undesired_cards=len([True for c in state.hand or state.discard_pile if c.id == CardId.SLIMED]),  # Should be expanded
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -144,6 +147,8 @@ class GeneralSilentComparator(SbcComparator):
             return challenger.player_powers > best.player_powers
         if best.incoming_damage != challenger.incoming_damage:
             return challenger.incoming_damage < best.incoming_damage
+        if best.undesired_cards != challenger.undesired_cards:
+            return challenger.undesired_cards < best.undesired_cards
         if best.energy != challenger.energy:
             return challenger.energy > best.energy
         return False
