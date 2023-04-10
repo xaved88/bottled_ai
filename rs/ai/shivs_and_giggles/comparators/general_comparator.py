@@ -90,7 +90,7 @@ class GeneralSilentComparator(SbcComparator):
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
             player_powers=get_power_count(state.player.powers, powers_we_like),
-            bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # Exhaust isn't fully implemented yet though.
+            bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS or c.id == CardId.SHIV]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
         )
 
