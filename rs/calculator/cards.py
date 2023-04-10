@@ -19,6 +19,7 @@ class CardId(Enum):
     ANGER = 'anger'
     APOTHEOSIS = 'apotheosis'
     APPARITION = 'ghostly'
+    ASCENDERS_BANE = 'ascender\u0027s bane'
     BACKSTAB = 'backstab'
     BANDAGE_UP = 'bandage up'
     BASH = 'bash'
@@ -35,6 +36,7 @@ class CardId(Enum):
     CLEAVE = 'cleave'
     CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'
+    CLUMSY = 'clumsy'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
     DAGGER_THROW = 'dagger throw'
     DAGGER_SPRAY = 'dagger spray'
@@ -115,6 +117,7 @@ class CardId(Enum):
     TWIN_STRIKE = 'twin strike'
     UNLOAD = 'unload'
     UPPERCUT = 'uppercut'
+    VOID = 'void'
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
 
@@ -208,6 +211,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, 0, -1, False, CardType.STATUS)
     if card_id == CardId.DAZED:
         return Card(card_id, 0, -1, False, CardType.STATUS, ethereal=True)
+    if card_id == CardId.VOID:
+        return Card(card_id, 0, -1, False, CardType.STATUS, ethereal=True)
     if card_id == CardId.SLIMED:
         return Card(card_id, 0, 1 if cost is None else cost, False, CardType.STATUS, exhausts=True)
     if card_id == CardId.IMMOLATE:
@@ -289,6 +294,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.INJURY:
         return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.ASCENDERS_BANE:
+        return Card(card_id, 0, -1, False, CardType.CURSE, ethereal=True)
+    if card_id == CardId.CLUMSY:
+        return Card(card_id, 0, -1, False, CardType.CURSE, ethereal=True)
 
     # Silent
     if card_id == CardId.NEUTRALIZE:

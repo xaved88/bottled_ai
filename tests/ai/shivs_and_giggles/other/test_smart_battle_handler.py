@@ -26,3 +26,12 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_plays_slimeds_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_play_slimed.json', ['play 1'])
+
+    def test_do_not_discard_bad_ethereal_cards(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_hold_on_to_bad_ethereals.json',
+                                   ['choose 2', 'confirm', 'wait 30'])
+
+    def test_save_unnecessary_apparition_for_later(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_save_unnecessary_apparition_for_later.json',
+                                   ['choose 1', 'confirm', 'wait 30'])
+

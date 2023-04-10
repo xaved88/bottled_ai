@@ -255,6 +255,11 @@ class HandState:
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
         self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
+        # get rid of ethereals
+        for c in self.hand:
+            if c.ethereal:
+                self.exhaust_pile.append(c)
+
         # regret
         # I think this might technically be off by 1 if there are #manyregrets
         regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])

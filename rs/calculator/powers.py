@@ -4,6 +4,7 @@ from typing import List
 
 # NOT IMPLEMENTED but probably should be
 # 'constricted'
+# 'duplicationpower'
 # 'explosive'
 # 'malleable'
 # there are many others that aren't listed

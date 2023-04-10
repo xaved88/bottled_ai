@@ -133,6 +133,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
                             pre_hooks=[fiend_fire_pre_hook], post_hooks=[fiend_fire_post_hook])]
     if card.id == CardId.WOUND:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.VOID:
+        return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.IMMOLATE:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=21 if not card.upgrade else 28, hits=1,
                             post_hooks=[immolate_post_hook])]
@@ -149,6 +151,10 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.PARASITE:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.INJURY:
+        return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.CLUMSY:
+        return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.ASCENDERS_BANE:
         return [CardEffects(target=TargetType.NONE)]
 
     if card.id == CardId.IMPERVIOUS:
