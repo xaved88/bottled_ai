@@ -82,7 +82,7 @@
       "limbo": [],
       "hand": [
         {
-          "exhausts": false,
+          "exhausts": true,
           "is_playable": true,
           "cost": 1,
           "name": "Slimed",

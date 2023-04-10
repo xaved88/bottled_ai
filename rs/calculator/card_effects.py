@@ -140,6 +140,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
                             post_hooks=[immolate_post_hook])]
     if card.id == CardId.BURN:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.SLIMED:
+        return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.DECAY:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.REGRET:

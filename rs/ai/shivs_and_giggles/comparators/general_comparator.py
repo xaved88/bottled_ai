@@ -26,7 +26,6 @@ class GCValues:
             enemy_vulnerable: int,
             enemy_weak: int,
             player_powers: int,
-            slimeds: int,
             bad_cards_exhausted: int,
             saved_for_later: int,
     ):
@@ -46,7 +45,6 @@ class GCValues:
         self.enemy_vulnerable: int = enemy_vulnerable
         self.enemy_weak: int = enemy_weak
         self.player_powers: int = player_powers
-        self.slimeds: int = slimeds
         self.bad_cards_exhausted: int = bad_cards_exhausted
         self.saved_for_later: int = saved_for_later
 
@@ -92,9 +90,8 @@ class GeneralSilentComparator(SbcComparator):
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
             player_powers=get_power_count(state.player.powers, powers_we_like),
-            slimeds=len([True for c in state.hand if c.id == CardId.SLIMED]),  # Think I can replace this if we'd know about slimeds exhausting when played
-            bad_cards_exhausted=len([True for c in state.exhaust_pile if (c.type == CardType.STATUS or c.type == CardType.CURSE) and c.ethereal]),
-            saved_for_later=len([True for c in state.discard_pile if c.type != CardType.STATUS and c.type != CardType.CURSE and c.ethereal]),
+            bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # Exhaust isn't fully implemented yet though.
+            saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -155,8 +152,6 @@ class GeneralSilentComparator(SbcComparator):
             return challenger.player_powers > best.player_powers
         if best.incoming_damage != challenger.incoming_damage:
             return challenger.incoming_damage < best.incoming_damage
-        if best.slimeds != challenger.slimeds:
-            return challenger.slimeds < best.slimeds
         if best.bad_cards_exhausted != challenger.bad_cards_exhausted:
             return challenger.bad_cards_exhausted > best.bad_cards_exhausted
         if best.saved_for_later != challenger.saved_for_later:

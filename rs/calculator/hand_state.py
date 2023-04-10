@@ -170,6 +170,7 @@ class HandState:
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
 
+        # dispose of cards being played
         if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
             idx = self.hand.index(card)
             if card.exhausts:
