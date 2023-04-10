@@ -28,4 +28,4 @@ class BattleHandlerTestCase(RsTestHandlerFixture):
 
     def test_another_simple_case(self):
         state = load_resource_state('battles/smart_battle/smart_battle_another_simple.json')
-        self.assertEqual(['play 2 0'], SmartBattleHandler().handle(state))
+        self.assertEqual(['play 5'], SmartBattleHandler().handle(state))

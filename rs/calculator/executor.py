@@ -3,16 +3,12 @@ from typing import List
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.game_state_converter import create_hand_state
 from rs.calculator.hand_state import PLAY_DISCARD, Play
-from rs.calculator.helper import pickle_deepcopy
-from rs.calculator.play_path import PlayPath, get_paths, get_paths_bfs
+from rs.calculator.play_path import PlayPath, get_paths_bfs
 from rs.machine.state import GameState
 
 
 def get_best_battle_path(game_state: GameState, comparator: SbcComparator, max_path_count) -> PlayPath:
     original_state = create_hand_state(game_state)
-    # paths = {}
-    # get_paths(PlayPath([], pickle_deepcopy(original_state)), paths)
-
     paths = get_paths_bfs(original_state, max_path_count)
     best_path = None
     for path in paths.values():
@@ -26,7 +22,7 @@ def get_best_battle_path(game_state: GameState, comparator: SbcComparator, max_p
     return best_path
 
 
-def get_best_battle_action(game_state: GameState, comparator: SbcComparator, max_path_count: int = 10_000) -> List[str]:
+def get_best_battle_action(game_state: GameState, comparator: SbcComparator, max_path_count: int = 40_000) -> List[str]:
     path = get_best_battle_path(game_state, comparator, max_path_count)
 
     if path.plays:

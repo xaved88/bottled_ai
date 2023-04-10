@@ -13,7 +13,7 @@ class SmartBattleHandler(Handler):
         return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
 
     def handle(self, state: GameState) -> List[str]:
-        actions = get_best_battle_action(state, GeneralSilentComparator(), 10_000)
+        actions = get_best_battle_action(state, GeneralSilentComparator(), 40_000)
         if actions:
             return actions
         if state.has_command(Command.PLAY):
