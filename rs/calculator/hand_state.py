@@ -235,6 +235,12 @@ class HandState:
                 for m in self.monsters:
                     m.current_hp = 0
 
+        # "kill" enemies with 0 hp:
+        for m in self.monsters:
+            if m.current_hp <= 0:
+                m.damage = 0
+                m.hits = 0
+
     def transform_from_discard(self, card: Card, index: int):
         self.discard_card(card)
         self.amount_to_discard -= 1
@@ -249,7 +255,7 @@ class HandState:
         self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
         # regret
-        # i think this might technically be off by 1 if there are #manyregrets
+        # I think this might technically be off by 1 if there are #manyregrets
         regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])
         if regret_count:
             self.player.inflict_damage(self.player, len(self.hand), regret_count, blockable=False, vulnerable_modifier=1,
