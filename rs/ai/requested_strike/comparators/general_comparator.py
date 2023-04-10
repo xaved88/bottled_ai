@@ -74,6 +74,8 @@ class GeneralComparator(SbcComparator):
         if RelicId.NUNCHAKU in best_state.player.relics and \
                 best_state.player.relics[RelicId.NUNCHAKU] != challenger_state.player.relics[RelicId.NUNCHAKU]:
             return challenger_state.player.relics[RelicId.NUNCHAKU] > best_state.player.relics[RelicId.NUNCHAKU]
+        if best.energy != challenger.energy:
+            return challenger.energy > best.energy
         return False
 
     def does_challenger_defeat_the_best(self, best_state: HandState, challenger_state: HandState,
