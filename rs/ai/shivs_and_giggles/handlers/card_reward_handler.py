@@ -43,7 +43,7 @@ class CardRewardHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \
                and state.screen_type() == ScreenType.CARD_REWARD.value \
-               and (state.game_state()["room_phase"] == "COMPLETE" or state.game_state()["room_phase"] == "EVENT")
+               and (state.game_state()["room_phase"] == "COMPLETE" or state.game_state()["room_phase"] == "EVENT" or state.game_state()["room_phase"] == "COMBAT")
 
     def handle(self, state: GameState) -> List[str]:
         choice_list = state.game_state()["choice_list"]
@@ -81,6 +81,11 @@ class CardRewardHandler(Handler):
             if presentation_mode:
                 return [p_delay, "skip", p_delay_s]
             return ["skip"]  # There isn't a `proceed` available after skipping Neow's card obtain for example.
+
+        if state.game_state()["room_phase"] == "COMBAT":
+            if presentation_mode:
+                return [p_delay, "skip", p_delay_s]
+            return ["skip"]
 
         if presentation_mode:
             return [p_delay, "skip", p_delay_s, "proceed"]
