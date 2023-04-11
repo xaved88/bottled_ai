@@ -342,6 +342,26 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_lost_hp(play, 14)
 
+    def test_playing_a_skill_when_anger_nob_present_gives_strength(self):
+        state = self.given_state(CardId.DEFEND_G)
+        state.monsters[0].powers[PowerId.ANGER_NOB] = 2
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 2)
+
+    def test_only_the_monster_with_anger_nob_gets_strength_up(self):
+        state = self.given_state(CardId.DEFEND_G, targets=2)
+        state.monsters[0].powers[PowerId.ANGER_NOB] = 2
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 1
+        state.monsters[1].damage = 5
+        state.monsters[1].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 7)
+
     def test_flight_reduces_damage(self):
         state = self.given_state(CardId.TWIN_STRIKE)
         state.monsters[0].powers[PowerId.FLIGHT] = 3

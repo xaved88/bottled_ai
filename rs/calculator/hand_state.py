@@ -188,6 +188,7 @@ class HandState:
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
 
+        # time warp
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP) is not None:
                 self.monsters[idx].powers[PowerId.TIME_WARP] += 1
@@ -216,6 +217,14 @@ class HandState:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
                         monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
+
+        # anger nob
+        if CardType.SKILL:
+            for idx, monster in enumerate(self.monsters):
+                if monster.powers.get(PowerId.ANGER_NOB) is not None:
+                    if not monster.powers.get(PowerId.STRENGTH):
+                        monster.powers[PowerId.STRENGTH] = 0
+                    self.monsters[idx].powers[PowerId.STRENGTH] += monster.powers.get(PowerId.ANGER_NOB)
 
         # Check if order is correct
         if self.player.powers.get(PowerId.THOUSAND_CUTS):

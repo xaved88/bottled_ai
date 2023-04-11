@@ -13,6 +13,7 @@ from typing import List
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
+    ANGER_NOB = 'anger'                 # Non-standard naming to distinguish it from Angry
     ANGRY = 'angry'
     ACCURACY = 'accuracy'
     AFTER_IMAGE = 'after image'
