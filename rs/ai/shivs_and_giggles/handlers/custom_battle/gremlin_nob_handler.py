@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
+from rs.ai.shivs_and_giggles.handlers.battle_handler import BattleHandler
 from rs.game.card import CardType
 from rs.machine.state import GameState
 

@@ -36,6 +36,7 @@ class BattleHandler(Handler):
         self.always_3v: List[str] = self.always_1v
 
         self.attack_preferences: List[str] = [
+            'blade dance',
             'bash',
             'thunderclap',
             'perfected strike',
@@ -46,6 +47,7 @@ class BattleHandler(Handler):
             'cleave',
         ]
         self.attack_preferences_1v: List[str] = [
+            'blade dance',
             'dropkick',
             'perfected strike',
             'bash',
@@ -57,6 +59,7 @@ class BattleHandler(Handler):
             'cleave',
         ]
         self.attack_preferences_3v: List[str] = [
+            'blade dance',
             'dropkick',
             'perfected strike',
             'reaper',
@@ -68,9 +71,11 @@ class BattleHandler(Handler):
 
         self.attack_shuns: List[str] = [
             'strike_r',
+            'strike_g'
             'dropkick',
         ]
         self.attack_shuns_1v: List[str] = [
+            'strike_g'
             'strike_r'
         ]
         self.attack_shuns_3v: List[str] = [
