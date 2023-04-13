@@ -10,4 +10,5 @@ class Command(Enum):
     PLAY = "play"
     POTION = "potion"
     PROCEED = "proceed"
+    SKIP = "skip"
     WAIT = "wait"
