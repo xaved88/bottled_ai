@@ -35,3 +35,5 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_save_unnecessary_apparition_for_later.json',
                                    ['choose 1', 'confirm', 'wait 30'])
 
+    def test_discard_doubt(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_doubt_specifically.json', ['play 1'])

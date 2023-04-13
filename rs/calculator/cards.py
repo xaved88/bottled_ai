@@ -51,6 +51,7 @@ class CardId(Enum):
     DECAY = 'decay'
     DEFEND_R = 'defend_r'
     DEFEND_G = 'defend_g'
+    DOUBT = 'doubt'
     ENTRENCH = 'entrench'
     ESCAPE_PLAN = 'escape plan'
     EVISCERATE = 'eviscerate'
@@ -285,6 +286,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.REGRET:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.DECAY:
+        return Card(card_id, 0, -1, False, CardType.CURSE)
+    if card_id == CardId.DOUBT:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.SHAME:
         return Card(card_id, 0, -1, False, CardType.CURSE)

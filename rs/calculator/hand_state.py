@@ -294,6 +294,16 @@ class HandState:
             self.player.inflict_damage(self.player, 4, burn_upgraded_count, vulnerable_modifier=1,
                                        is_attack=False)
 
+        # doubt
+        doubt_count = len([1 for c in self.hand if c.id == CardId.DOUBT])
+        if doubt_count:
+            self.player.add_powers({PowerId.WEAKENED: doubt_count})
+
+        # shame
+        shame_count = len([1 for c in self.hand if c.id == CardId.SHAME])
+        if shame_count:
+            self.player.add_powers({PowerId.FRAIL: shame_count})
+
         # poison
         for monster in self.monsters:
             poison = monster.powers.get(PowerId.POISON, 0)

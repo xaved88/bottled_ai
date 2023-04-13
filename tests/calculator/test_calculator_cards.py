@@ -627,6 +627,20 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_lost_hp(play, 10)
 
+    def test_doubt(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.DOUBT))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_has_power(play, PowerId.WEAKENED, 1)
+
+    def test_shame(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.SHAME))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_has_power(play, PowerId.FRAIL, 1)
+
     def test_neutralize(self):
         state = self.given_state(CardId.NEUTRALIZE)
         play = self.when_playing_the_first_card(state)

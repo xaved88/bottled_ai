@@ -148,6 +148,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.SHAME:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.DOUBT:
+        return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.CURSE_OF_THE_BELL:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.PARASITE:
