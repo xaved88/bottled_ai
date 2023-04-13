@@ -37,3 +37,18 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_discard_doubt(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_doubt_specifically.json', ['play 1'])
+
+    def test_against_gremlin_nob_defensive_skill_not_worth_it(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_defend_early.json', ['end'])
+
+    def test_against_gremlin_nob_defensive_skill_worth_it(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_defend_late.json', ['play 5'])
+
+    def test_against_gremlin_nob_damaging_skill_not_worth_it(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_cloak_and_dagger_early.json', ['end'])
+
+    def test_against_gremlin_nob_indirectly_damaging_skill_not_worth_it(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_terror_and_thousand_cuts_late.json', ['end'])
+
+    def test_against_gremlin_nob_damaging_skill_worth_it(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_cloak_and_dagger_late.json', ['play 1'])

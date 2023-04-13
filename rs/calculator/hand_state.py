@@ -219,7 +219,7 @@ class HandState:
                         monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
 
         # anger nob
-        if CardType.SKILL:
+        if card.type == CardType.SKILL:
             for idx, monster in enumerate(self.monsters):
                 if monster.powers.get(PowerId.ANGER_NOB) is not None:
                     if not monster.powers.get(PowerId.STRENGTH):
