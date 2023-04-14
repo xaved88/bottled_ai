@@ -35,6 +35,12 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_save_unnecessary_apparition_for_later.json',
                                    ['choose 1', 'confirm', 'wait 30'])
 
+    def test_avoid_shivs_in_discard_play_shiv_despite_high_block(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_play_shivs_despite_high_block.json', ['play 4'])
+
+    def test_avoid_shivs_in_discard_play_storm_of_steel_later(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_play_storm_of_steel_later.json', ['play 1'])
+
     def test_discard_doubt(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_doubt_specifically.json', ['play 1'])
 

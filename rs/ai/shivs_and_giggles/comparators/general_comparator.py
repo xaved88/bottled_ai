@@ -29,6 +29,7 @@ class GCValues:
             player_powers_bad: int,
             bad_cards_exhausted: int,
             saved_for_later: int,
+            awkward_shivs: int,
     ):
         self.battle_lost: bool = battle_lost
         self.battle_won: bool = battle_won
@@ -49,6 +50,7 @@ class GCValues:
         self.player_powers_bad: int = player_powers_bad
         self.bad_cards_exhausted: int = bad_cards_exhausted
         self.saved_for_later: int = saved_for_later
+        self.awkward_shivs: int = awkward_shivs
 
 
 powers_we_like: List[PowerId] = [
@@ -100,6 +102,7 @@ class GeneralSilentComparator(SbcComparator):
             player_powers_bad=get_power_count(state.player.powers, powers_we_dislike),
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
+            awkward_shivs=len([True for c in state.hand or state.discard_pile if c.id == CardId.SHIV]),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -166,6 +169,8 @@ class GeneralSilentComparator(SbcComparator):
             return challenger.bad_cards_exhausted > best.bad_cards_exhausted
         if best.saved_for_later != challenger.saved_for_later:
             return challenger.saved_for_later > best.saved_for_later
+        if best.awkward_shivs != challenger.awkward_shivs:
+            return challenger.awkward_shivs < best.awkward_shivs
         if best.energy != challenger.energy:
             return challenger.energy > best.energy
         return False
