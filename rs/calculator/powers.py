@@ -3,7 +3,6 @@ from typing import List
 
 
 # NOT IMPLEMENTED but probably should be
-# 'constricted'
 # 'duplicationpower'
 # 'explosive'
 # 'malleable'
@@ -20,7 +19,8 @@ class PowerId(Enum):
     ARTIFACT = 'artifact'
     BARRICADE = 'barricade'
     BUFFER = 'buffer'
-    CONFUSED = 'confusion'              # Calculator takes the new costs into account
+    CONFUSED = 'confusion'              # Bot takes the new costs into account
+    CONSTRICTED = 'constricted'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'
     DRAW_REDUCTION = 'draw reduction'   # We'll see what we get
@@ -39,6 +39,7 @@ class PowerId(Enum):
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'
+    SHACKLED = 'shackled'               # Enemy regains strength at end of turn, not currently relevant
     SHARP_HIDE = 'sharp hide'
     SHIFTING = 'shifting'
     SPLIT = 'split'
@@ -56,6 +57,9 @@ class PowerId(Enum):
 Powers = dict[PowerId: int]
 
 DEBUFFS: List[PowerId] = [
+    PowerId.CONFUSED,
+    PowerId.CONSTRICTED,
+    PowerId.DRAW_REDUCTION,
     PowerId.FRAIL,
     PowerId.ENTANGLED,
     PowerId.VULNERABLE,

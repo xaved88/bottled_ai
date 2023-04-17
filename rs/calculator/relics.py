@@ -3,7 +3,7 @@ from enum import Enum
 
 # NOT IMPLEMENTED
 # 'bird-faced urn'
-# 'blue candle'
+# 'blue candle' # uh we seem to use this one already despite not having it implemented
 # 'centennial puzzle'
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold

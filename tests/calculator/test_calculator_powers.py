@@ -558,3 +558,11 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 8, enemy_index=0)
         self.see_enemy_lost_hp(play, 8, enemy_index=1)
         self.see_player_lost_hp(play, 1)
+
+    def test_constricted_does_damage(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.CONSTRICTED: 10})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 11)

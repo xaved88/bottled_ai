@@ -294,6 +294,11 @@ class HandState:
             self.player.inflict_damage(self.player, 4, burn_upgraded_count, vulnerable_modifier=1,
                                        is_attack=False)
 
+        # constricted
+        if self.player.powers.get(PowerId.CONSTRICTED, 0):
+            self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
+                                       vulnerable_modifier=1, is_attack=False)
+
         # doubt
         doubt_count = len([1 for c in self.hand if c.id == CardId.DOUBT])
         if doubt_count:
