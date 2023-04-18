@@ -19,10 +19,8 @@ class UpgradeHandler(Handler):
             'blade dance',
             'prepared',
             'terror',               # removed if we have snecko eye
-            'infinite blades',
             'cloak and dagger',
             'die die die',
-            'after image',
             'eviscerate',
             'leg sweep',
             'master of strategy',
@@ -37,6 +35,8 @@ class UpgradeHandler(Handler):
             'heel hook',
             'survivor',
             'backstab',
+            'infinite blades',
+            'after image',
         ]
 
     def can_handle(self, state: GameState) -> bool:

@@ -3,7 +3,6 @@ from typing import List
 from config import presentation_mode, p_delay, p_delay_s
 from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
-from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
@@ -12,24 +11,26 @@ class ShopPurchaseHandler(Handler):
 
     def __init__(self):
         self.relics = [
-            'Shuriken',
             'Kunai',
-            'Preserved Insect',
+            'Shuriken',
             'Ornamental Fan',
+            'Preserved Insect',
             'Bag of Marbles',
-            'Vajra',
-            'Molten Egg',
-            'Meal Ticket',
-            'Bronze Scales',
+            'Pen Nib',
+            'Toxic Egg',
             'Orichalcum',
+            'Torii',
+            'Vajra',
+            'Eternal Feather',
+            'Meal Ticket',
             'Anchor',
             'Horn Cleat',
+            'Bronze Scales',
         ]
 
         self.cards = [
             "Accuracy",
             "Blade Dance",
-            "Escape Plan",
         ]
 
     def can_handle(self, state: GameState) -> bool:
@@ -51,26 +52,43 @@ class ShopPurchaseHandler(Handler):
         screen_state = state.game_state()['screen_state']
         can_purge = screen_state['purge_available'] and gold >= screen_state['purge_cost']
 
-        # 1. Purge curses
-        if can_purge and state.deck.contains_type(CardType.CURSE):
-            return "purge"
+        # 1. Kunai/Shuriken
+        for relic in screen_state['relics']:
+            if relic['name'] == 'Kunai' and gold >= relic['price']:
+                return "kunai"
 
-        # 2. Shuriken
         for relic in screen_state['relics']:
             if relic['name'] == 'Shuriken' and gold >= relic['price']:
                 return "shuriken"
 
-        # 3. Membership Card
+        # 2. Purge curses
+        if can_purge and state.deck.contains_type(CardType.CURSE):
+            return "purge"
+
+        # 3. Kunai/Shuriken
+        for relic in screen_state['relics']:
+            if relic['name'] == 'Kunai' and gold >= relic['price']:
+                return "kunai"
+
+        for relic in screen_state['relics']:
+            if relic['name'] == 'Shuriken' and gold >= relic['price']:
+                return "shuriken"
+
+        # 4. Membership Card
         for relic in screen_state['relics']:
             if relic['name'] == 'Membership Card' and gold >= relic['price']:
                 return "membership card"
 
-        # 4. Shuriken
+        # 5. Kunai/Shuriken
+        for relic in screen_state['relics']:
+            if relic['name'] == 'Kunai' and gold >= relic['price']:
+                return "kunai"
+
         for relic in screen_state['relics']:
             if relic['name'] == 'Shuriken' and gold >= relic['price']:
                 return "shuriken"
 
-        # 5. Cards based on list
+        # 6. Cards based on list
         deck_card_list = state.get_deck_card_list()
         for p in self.cards:
             for card in screen_state['cards']:
@@ -78,13 +96,13 @@ class ShopPurchaseHandler(Handler):
                     if p.lower not in deck_card_list:
                         return card['name'].lower()
 
-        # 6. Relics based on list
+        # 7. Relics based on list
         for p in self.relics:
             for relic in screen_state['relics']:
                 if relic['name'] == p and gold >= relic['price']:
                     return relic['name'].lower()
 
-        # 7. Purge in general
+        # 8. Purge in general
         # Would be nicer to not essentially duplicate the list from purge_handler.py here but oh well. Note: NAMES here, not IDs.
         if can_purge and state.deck.contains_cards([
             'Strike',
@@ -93,7 +111,6 @@ class ShopPurchaseHandler(Handler):
             'Defend+',
         ]):
             return "purge"
-
 
         # Nothing we want / can afford, leave.
         return ''
