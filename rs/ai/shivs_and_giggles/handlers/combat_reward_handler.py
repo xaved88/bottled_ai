@@ -23,6 +23,7 @@ class CombatRewardHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
 
+        # POTIONS
         # Chug a Fruit Juice straight away
         for idx, pot in enumerate(state.get_potions()):
             if pot['id'] == 'Fruit Juice':
@@ -37,9 +38,20 @@ class CombatRewardHandler(Handler):
                     return [p_delay, "potion discard " + str(idx), p_delay_s]
                 return ["wait 30", "potion discard " + str(idx)]
 
-        # If a potion is waiting for us, but we're full, toss out the first one
-        if state.get_choice_list()[0] == "potion" and state.are_potions_full():
+        choice = 'choose 0'
+
+        if 'gold' in state.get_choice_list():
+            choice = 'gold'
+        elif 'relic' in state.get_choice_list():
+            choice = 'relic'
+        elif 'potion' in state.get_choice_list() and not state.are_potions_full():
+            choice = 'potion'
+        elif 'card' in state.get_choice_list():
+            choice = 'card'
+
+        if choice != 'choose 0':
             if presentation_mode:
-                return [p_delay, "potion discard 0", p_delay_s]
-            return ["potion discard 0"]
-        return []
+                return [p_delay, "choose " + choice, p_delay_s]
+            return ["choose " + choice]
+
+        return ["proceed"]

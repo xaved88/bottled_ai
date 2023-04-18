@@ -6,4 +6,4 @@ class CombatRewardHandlerTestCase(RsTestHandlerFixture):
     handler = CombatRewardHandler
 
     def test_discards_potions_when_full(self):
-        self.execute_handler_tests('/other/combat_reward_full_potions.json', ['potion discard 0'])
+        self.execute_handler_tests('/combat_reward/combat_reward_full_potions.json', ['potion discard 0'])
