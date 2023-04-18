@@ -8,6 +8,9 @@ class CardRewardHandlerTestCase(SgTestHandlerFixture):
     def test_take_gold(self):
         self.execute_handler_tests('/combat_reward/combat_reward_gold.json', ['choose gold'])
 
+    def test_take_stolen_gold(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_stolen_gold.json', ['choose stolen_gold'])
+
     def test_take_potion(self):
         self.execute_handler_tests('/combat_reward/combat_reward_potion.json', ['choose potion'])
 

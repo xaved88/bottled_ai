@@ -42,6 +42,8 @@ class CombatRewardHandler(Handler):
 
         if 'gold' in state.get_choice_list():
             choice = 'gold'
+        elif 'stolen_gold' in state.get_choice_list():
+            choice = 'stolen_gold'
         elif 'relic' in state.get_choice_list():
             choice = 'relic'
         elif 'potion' in state.get_choice_list() and not state.are_potions_full():
