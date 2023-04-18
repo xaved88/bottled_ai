@@ -13,7 +13,6 @@ class GCValues:
             battle_lost: bool,
             battle_won: bool,
             incoming_damage: int,
-            nob_adjusted_incoming_damage: int,
             dead_monsters: int,
             lowest_health_monster: int,
             total_monster_health: int,
@@ -31,11 +30,11 @@ class GCValues:
             bad_cards_exhausted: int,
             saved_for_later: int,
             awkward_shivs: int,
+            enemy_artifacts: int,
     ):
         self.battle_lost: bool = battle_lost
         self.battle_won: bool = battle_won
         self.incoming_damage: int = incoming_damage
-        self.nob_adjusted_incoming_damage: int = nob_adjusted_incoming_damage
         self.dead_monsters: int = dead_monsters
         self.lowest_health_monster: int = lowest_health_monster
         self.total_monster_health: int = total_monster_health
@@ -53,6 +52,7 @@ class GCValues:
         self.bad_cards_exhausted: int = bad_cards_exhausted
         self.saved_for_later: int = saved_for_later
         self.awkward_shivs: int = awkward_shivs
+        self.enemy_artifacts: int = enemy_artifacts
 
 
 powers_we_like: List[PowerId] = [
@@ -77,20 +77,17 @@ powers_we_dislike: List[PowerId] = [
     PowerId.WEAKENED,
 ]
 
-# Difference to normal comparator:
-# Penalize ourselves with nob_adjusted_incoming_damage for playing skills based on how long the fight will still go.
+# Differences to normal comparator:
+# Care quite strongly about getting rid of enemy_artifacts.
+# Note: We might want soon want to generally get more aggressive on these though, not just here.
 
 
-class GremlinNobSilentComparator(SbcComparator):
+class DonuDecaSilentComparator(SbcComparator):
 
     def get_values(self, state: HandState, original: HandState) -> GCValues:
         battle_won = not [True for m in state.monsters if m.current_hp > 0]
         monsters_vulnerable_hp = [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3)
                                   for monster in state.monsters if monster.current_hp > 0]
-
-        anger_strength_up = sum([m.powers.get(PowerId.STRENGTH, 0) for m in state.monsters if m.powers.get(PowerId.ANGER_NOB, 0)]) # Probably going too high!!
-        gremlin_nob_hp = sum([m.current_hp for m in state.monsters if m.powers.get(PowerId.ANGER_NOB, 0)])
-
         return GCValues(
             battle_lost=state.player.current_hp <= 0,
             battle_won=battle_won,
@@ -109,10 +106,10 @@ class GremlinNobSilentComparator(SbcComparator):
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
             player_powers_good=get_power_count(state.player.powers, powers_we_like),
             player_powers_bad=get_power_count(state.player.powers, powers_we_dislike),
-            bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
+            bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
-            nob_adjusted_incoming_damage=original.player.current_hp - state.player.current_hp + (int(gremlin_nob_hp / 20) * anger_strength_up),
             awkward_shivs=len([True for c in state.hand or state.discard_pile if c.id == CardId.SHIV]),
+            enemy_artifacts=sum([m.powers.get(PowerId.ARTIFACT, 0) for m in state.monsters]),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -151,12 +148,14 @@ class GremlinNobSilentComparator(SbcComparator):
             return challenger.draw_free > best.draw_free
         if max(1, best.intangible) != max(1, challenger.intangible):
             return challenger.intangible > best.intangible
-        if best.nob_adjusted_incoming_damage != challenger.nob_adjusted_incoming_damage:
-            return challenger.nob_adjusted_incoming_damage < best.nob_adjusted_incoming_damage
+        if max(2, best.incoming_damage) != max(2, challenger.incoming_damage):
+            return challenger.incoming_damage < best.incoming_damage
         if best.dead_monsters != challenger.dead_monsters:
             return challenger.dead_monsters > best.dead_monsters
         if max(1, best.enemy_vulnerable) != max(1, challenger.enemy_vulnerable):
             return challenger.enemy_vulnerable > best.enemy_vulnerable
+        if best.enemy_artifacts != challenger.enemy_artifacts:
+            return challenger.enemy_artifacts < best.enemy_artifacts
         if max(1, best.enemy_weak) != max(1, challenger.enemy_weak):
             return challenger.enemy_weak > best.enemy_weak
         if best.lowest_health_monster != challenger.lowest_health_monster:
