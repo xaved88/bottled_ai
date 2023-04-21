@@ -44,7 +44,7 @@ class EventHandler(Handler):
             if len(state.get_choice_list()) == 2:
                 return "choose 0"  # Go for it
             if len(state.get_choice_list()) == 3:
-                return "choose 0"  # Take the curse yeah
+                return "choose 2"  # Take max hp loss
 
         if event_name == "Hypnotizing Colored Mushrooms":
             return "choose 0"  # Fuck 'em up
