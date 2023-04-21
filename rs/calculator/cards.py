@@ -321,7 +321,7 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.CLOAK_AND_DAGGER:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.LEG_SWEEP:
-        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.SKILL)
     if card_id == CardId.SUCKER_PUNCH:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.ESCAPE_PLAN:
