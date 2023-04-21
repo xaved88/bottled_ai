@@ -63,8 +63,12 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     def test_multiple_vulnerable_over_straight_damage(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_terror_vs_strike.json', ['play 1 0'])
 
-    def test_remove_artifacts_aggressively_against_donu_deca(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_donu_deca_prioritize_artifact_removal.json', ['play 1 0'])
-
     def test_normal_artifact_aggression(self):  # We might want soon want to generally get more aggressive on these though
         self.execute_handler_tests('battles/smart_battle/smart_battle_normal_artifact_removal.json', ['play 2 1'])
+
+    def test_big_fight_remove_artifacts_aggressively(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_artifact_removal.json', ['play 1 0'])
+
+    def test_big_fight_prioritize_powers_aggressively(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_power_over_damage.json', ['play 0'])
+

@@ -61,7 +61,7 @@ powers_we_like: List[PowerId] = [
     PowerId.ARTIFACT,
     PowerId.BUFFER,
     PowerId.DEXTERITY,
-    PowerId.FLAME_BARRIER,
+    # PowerId.FLAME_BARRIER,
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE,
     PowerId.METALLICIZE,
@@ -78,11 +78,12 @@ powers_we_dislike: List[PowerId] = [
 ]
 
 # Differences to normal comparator:
-# Care quite strongly about getting rid of enemy_artifacts.
-# Note: We might want soon want to generally get more aggressive on these though, not just here.
+# Prefer playing powers over dealing damage.
+# Care quite strongly about getting rid of enemy_artifacts. Side-note: We might want soon want to generally get more aggressive on these though, not just here.
 
 
-class DonuDecaSilentComparator(SbcComparator):
+
+class BigFightSilentComparator(SbcComparator):
 
     def get_values(self, state: HandState, original: HandState) -> GCValues:
         battle_won = not [True for m in state.monsters if m.current_hp > 0]
@@ -152,6 +153,8 @@ class DonuDecaSilentComparator(SbcComparator):
             return challenger.incoming_damage < best.incoming_damage
         if best.dead_monsters != challenger.dead_monsters:
             return challenger.dead_monsters > best.dead_monsters
+        if best.player_powers_good != challenger.player_powers_good:
+            return challenger.player_powers_good > best.player_powers_good
         if max(1, best.enemy_vulnerable) != max(1, challenger.enemy_vulnerable):
             return challenger.enemy_vulnerable > best.enemy_vulnerable
         if best.enemy_artifacts != challenger.enemy_artifacts:
@@ -168,8 +171,6 @@ class DonuDecaSilentComparator(SbcComparator):
             return challenger.draw_pay_early > best.draw_pay_early
         if best.draw_pay != challenger.draw_pay:
             return challenger.draw_pay > best.draw_pay
-        if best.player_powers_good != challenger.player_powers_good:
-            return challenger.player_powers_good > best.player_powers_good
         if best.player_powers_bad != challenger.player_powers_bad:
             return challenger.player_powers_bad < best.player_powers_bad
         if best.incoming_damage != challenger.incoming_damage:
