@@ -15,7 +15,7 @@ throw_away_potions = [
 ]
 
 undesired_relics = [
-    'dead branch',
+    'Dead Branch',
 ]
 
 
