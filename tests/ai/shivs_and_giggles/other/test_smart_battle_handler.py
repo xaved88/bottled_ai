@@ -45,30 +45,30 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     def test_discard_doubt(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_doubt_specifically.json', ['play 1'])
 
-    def test_against_gremlin_nob_defensive_skill_not_worth_it(self):
+    def test_gremlin_nob_defensive_skill_not_worth_it(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_defend_early.json', ['end'])
 
-    def test_against_gremlin_nob_defensive_skill_worth_it(self):
+    def test_gremlin_nob_defensive_skill_worth_it(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_defend_late.json', ['play 5'])
 
-    def test_against_gremlin_nob_damaging_skill_not_worth_it(self):
+    def test_gremlin_nob_damaging_skill_not_worth_it(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_cloak_and_dagger_early.json', ['end'])
 
-    def test_against_gremlin_nob_indirectly_damaging_skill_not_worth_it(self):
+    def test_gremlin_nob_indirectly_damaging_skill_not_worth_it(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_terror_and_thousand_cuts_late.json', ['end'])
 
-    def test_against_gremlin_nob_damaging_skill_worth_it(self):
+    def test_gremlin_nob_damaging_skill_worth_it(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_cloak_and_dagger_late.json', ['play 1'])
 
-    def test_multiple_vulnerable_over_straight_damage(self):
+    def test_prefer_multiple_vulnerable_over_straight_damage(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_terror_vs_strike.json', ['play 1 0'])
 
-    def test_normal_artifact_aggression(self):  # We might want soon want to generally get more aggressive on these though
+    def test_general_artifact_prio(self):  # We might want soon want to generally get more aggressive on these though
         self.execute_handler_tests('battles/smart_battle/smart_battle_normal_artifact_removal.json', ['play 2 1'])
 
-    def test_big_fight_remove_artifacts_aggressively(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_artifact_removal.json', ['play 1 0'])
+    def test_big_fight_higher_prio_remove_artifacts(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_artifact_removal_over_damage.json', ['play 1 0'])
 
-    def test_big_fight_prioritize_powers_aggressively(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_power_over_damage.json', ['play 0'])
+    def test_big_fight_higher_prio_powers(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_power_over_damage.json', ['play 1'])
 

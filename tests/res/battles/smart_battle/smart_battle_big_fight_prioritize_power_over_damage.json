@@ -170,7 +170,7 @@
           "uuid": "85c01f08-ffe6-4468-8fa0-444282d94b32",
           "upgrades": 0,
           "rarity": "UNCOMMON",
-          "has_target": true
+          "has_target": false
         },
         {
           "exhausts": false,
@@ -364,7 +364,7 @@
     "act_boss": "The Guardian",
     "gold": 169,
     "action_phase": "WAITING_ON_USER",
-    "act": 1,
+    "act": 3,
     "screen_name": "NONE",
     "room_phase": "COMBAT",
     "is_screen_up": false,
@@ -392,7 +392,7 @@
       }
     ],
     "current_hp": 78,
-    "floor": 2,
+    "floor": 50,
     "ascension_level": 0,
     "class": "IRONCLAD",
     "map": [
