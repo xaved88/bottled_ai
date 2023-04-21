@@ -14,6 +14,10 @@ throw_away_potions = [
     'GhostInAJar',
 ]
 
+undesired_relics = [
+    'dead branch',
+]
+
 
 class CombatRewardHandler(Handler):
 
@@ -38,20 +42,29 @@ class CombatRewardHandler(Handler):
                     return [p_delay, "potion discard " + str(idx), p_delay_s]
                 return ["wait 30", "potion discard " + str(idx)]
 
-        choice = 'choose 0'
+        choice = 'did not choose'
 
         if 'gold' in state.get_choice_list():
             choice = 'gold'
+
         elif 'stolen_gold' in state.get_choice_list():
             choice = 'stolen_gold'
-        elif 'relic' in state.get_choice_list():
+
+        elif 'relic' in state.get_choice_list() and state.game_state()["screen_state"]["rewards"][0]["relic"]["id"] not in undesired_relics:
             choice = 'relic'
+
+        # potentially too fragile check for if the second relic might be desirable even though the first one isn't that I'll leave disabled for safety
+        # elif state.get_choice_list().count('relic') >= 1 and \
+        #         state.game_state()["screen_state"]["rewards"][1]["relic"]["id"] not in undesired_relics:
+        #     choice = '1'
+
         elif 'potion' in state.get_choice_list() and not state.are_potions_full():
             choice = 'potion'
+
         elif 'card' in state.get_choice_list():
             choice = 'card'
 
-        if choice != 'choose 0':
+        if choice != 'did not choose':
             if presentation_mode:
                 return [p_delay, "choose " + choice, p_delay_s]
             return ["choose " + choice]
