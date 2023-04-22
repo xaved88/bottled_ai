@@ -11,28 +11,27 @@ class UpgradeHandler(Handler):
     def __init__(self):
         self.upgrade_priorities: List[str] = [
             'neutralize',           # removed if we have snecko eye
-            'a thousand cuts',
             'tools of the trade',   # removed if we have snecko eye
             'accuracy',
+            'footwork',
             'adrenaline',
-            'storm of steel',
             'blade dance',
             'prepared',
             'terror',               # removed if we have snecko eye
             'cloak and dagger',
+            'storm of steel',
             'die die die',
             'eviscerate',
             'leg sweep',
             'master of strategy',
             'flash of steel',       # removed if we have snecko eye
             'finesse',              # removed if we have snecko eye
-            'poisoned stab',
             'sneaky strike',
             'dagger spray',
             'sucker punch',
+            'dash',
             'escape plan',          # removed if we have snecko eye
             'caltrops',
-            'heel hook',
             'survivor',
             'backstab',
             'infinite blades',

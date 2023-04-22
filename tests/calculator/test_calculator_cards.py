@@ -980,3 +980,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 14)
         self.see_player_hand_count(play, 1)
+
+    def test_crippling_cloud(self):
+        state = self.given_state(CardId.CRIPPLING_CLOUD)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.POISON, 4)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
+

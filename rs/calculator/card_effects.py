@@ -315,5 +315,7 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.MONSTER, damage=6 if not card.upgrade else 9, hits=1)]
     if card.id == CardId.QUICK_SLASH:
         return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 12, hits=1, draw=1)]
+    if card.id == CardId.CRIPPLING_CLOUD:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, applies_powers={PowerId.POISON: 4 if not card.upgrade else 7, PowerId.WEAKENED: 2})]
 
     return [CardEffects()]

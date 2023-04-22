@@ -16,6 +16,7 @@ throw_away_potions = [
 
 undesired_relics = [
     'Dead Branch',
+    'Bottled Flame',
 ]
 
 

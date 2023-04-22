@@ -38,6 +38,7 @@ class CardId(Enum):
     CLOTHESLINE = 'clothesline'
     CLUMSY = 'clumsy'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
+    CRIPPLING_CLOUD = 'crippling cloud'
     DAGGER_THROW = 'dagger throw'
     DAGGER_SPRAY = 'dagger spray'
     DARK_SHACKLES = 'dark shackles'
@@ -375,3 +376,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.QUICK_SLASH:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.CRIPPLING_CLOUD:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)

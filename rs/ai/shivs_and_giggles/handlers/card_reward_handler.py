@@ -11,7 +11,6 @@ class CardRewardHandler(Handler):
 
     def __init__(self):
         self.desired_cards: dict[str, int] = {
-            'a thousand cuts': 1,
             'tools of the trade': 1,    # removed if we have snecko eye
             'accuracy': 4,
             'terror': 2,
@@ -23,16 +22,15 @@ class CardRewardHandler(Handler):
             'infinite blades': 2,
             'eviscerate': 1,
             'leg sweep': 1,
-            'cloak and dagger': 2,
-            'poisoned stab': 2,
+            'cloak and dagger': 3,
             'sneaky strike': 2,
             'sucker punch': 1,
             'dagger spray': 2,
+            'dash': 1,
             'escape plan': 2,           # removed if we have snecko eye
             'prepared': 1,              # removed if we have snecko eye
-            'heel hook': 2,
             'dagger throw': 1,
-            'caltrops': 1,
+            'footwork': 1,
             'unload': 1,
             'backstab': 1,              # removed if we have snecko eye
             'master of strategy': 1,

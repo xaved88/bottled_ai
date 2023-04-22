@@ -82,7 +82,6 @@ powers_we_dislike: List[PowerId] = [
 # Care quite strongly about getting rid of enemy_artifacts. Side-note: We might want soon want to generally get more aggressive on these though, not just here.
 
 
-
 class BigFightSilentComparator(SbcComparator):
 
     def get_values(self, state: HandState, original: HandState) -> GCValues:

@@ -131,7 +131,10 @@ class EventHandler(Handler):
         #    return ["choose 2", "choose 0"] # This event is weird, I'll just let the current logic handle this.
 
         if event_name == "Council of Ghosts":
-            return "choose 0"  # Become a spooky ghost!
+            if state.has_relic("Snecko Eye"):
+                return "choose 1"  # No ghosts if we're already Snecko
+            else:
+                return "choose 0"  # Become a spooky ghost!
 
         if event_name == "Cursed Tome":
             return "choose 1"  # Leave, we don't currently make good use of the possible relics.
