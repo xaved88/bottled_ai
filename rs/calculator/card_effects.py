@@ -204,6 +204,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
                             post_hooks=[reaper_post_hook])]
     if card.id == CardId.BANDAGE_UP:
         return [CardEffects(target=TargetType.SELF, heal=4 if not card.upgrade else 6)]
+    if card.id == CardId.BITE:
+        return [CardEffects(damage=7 if not card.upgrade else 8, hits=1, target=TargetType.MONSTER),
+                CardEffects(heal=2 if not card.upgrade else 3, target=TargetType.SELF)]
     if card.id == CardId.DARK_SHACKLES:
         return [CardEffects(target=TargetType.MONSTER,
                             applies_powers={PowerId.STRENGTH: -9 if not card.upgrade else -15})]
@@ -317,5 +320,16 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 12, hits=1, draw=1)]
     if card.id == CardId.CRIPPLING_CLOUD:
         return [CardEffects(target=TargetType.ALL_MONSTERS, applies_powers={PowerId.POISON: 4 if not card.upgrade else 7, PowerId.WEAKENED: 2})]
-
+    if card.id == CardId.PANACEA:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1 if not card.upgrade else 2})]
+    if card.id == CardId.MIND_BLAST:
+        return [CardEffects(damage=len(draw_pile), hits=1, target=TargetType.MONSTER)]
+    if card.id == CardId.GOOD_INSTINCTS:
+        return [CardEffects(block=6 if not card.upgrade else 9, target=TargetType.SELF)]
+    if card.id == CardId.ACROBATICS:
+        return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4, amount_to_discard=1)]
+    if card.id == CardId.BACKFLIP:
+        return [CardEffects(target=TargetType.SELF, block=5 if not card.upgrade else 8, draw=2)]
+    if card.id == CardId.DEADLY_POISON:
+        return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 5 if not card.upgrade else 7})]
     return [CardEffects()]

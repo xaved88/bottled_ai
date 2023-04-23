@@ -987,3 +987,59 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.POISON, 4)
         self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
 
+    def test_panacea(self):
+        state = self.given_state(CardId.PANACEA)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_power(play, PowerId.ARTIFACT, 1)
+
+    def test_backflip(self):
+        state = self.given_state(CardId.BACKFLIP)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 5)
+        self.see_player_hand_count(play, 2)
+
+    def test_acrobatics(self):
+        state = self.given_state(CardId.ACROBATICS)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 2)
+
+    def test_deadly_poison(self):
+        state = self.given_state(CardId.DEADLY_POISON)
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 5)
+        self.see_enemy_has_power(play, PowerId.POISON, 4)
+
+    def test_bite(self):
+        state = self.given_state(CardId.BITE)
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_player_lost_hp(play, -2)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 7)
+
+    def test_good_instincts(self):
+        state = self.given_state(CardId.GOOD_INSTINCTS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 6)
+        self.see_player_spent_energy(play, 0)
+
+    def test_mind_blast_nothing_in_draw(self):
+        state = self.given_state(CardId.MIND_BLAST)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_draw_pile_count(play, 0)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_mind_blast_one_in_draw(self):
+        state = self.given_state(CardId.MIND_BLAST)
+        state.hand.append(get_card(CardId.RECKLESS_CHARGE))  # This will get played first and put something in the draw pile :D
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_enemy_lost_hp(play, 8)

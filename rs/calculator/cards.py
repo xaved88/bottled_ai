@@ -14,16 +14,19 @@ class CardId(Enum):
     # REAL CARDS
     A_THOUSAND_CUTS = 'a thousand cuts'
     ACCURACY = 'accuracy'
+    ACROBATICS = 'acrobatics'
     ADRENALINE = 'adrenaline'
     AFTER_IMAGE = 'after image'
     ANGER = 'anger'
     APOTHEOSIS = 'apotheosis'
     APPARITION = 'ghostly'
     ASCENDERS_BANE = 'ascender\u0027s bane'
+    BACKFLIP = 'backflip'
     BACKSTAB = 'backstab'
     BANDAGE_UP = 'bandage up'
     BASH = 'bash'
     BATTLE_TRANCE = 'battle trance'
+    BITE = 'bite'
     BLADE_DANCE = 'blade dance'
     BLOODLETTING = 'bloodletting'
     BLOOD_FOR_BLOOD = 'blood for blood'
@@ -38,20 +41,21 @@ class CardId(Enum):
     CLOTHESLINE = 'clothesline'
     CLUMSY = 'clumsy'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
-    CRIPPLING_CLOUD = 'crippling cloud'
+    CRIPPLING_CLOUD = 'crippling poison'
     DAGGER_THROW = 'dagger throw'
     DAGGER_SPRAY = 'dagger spray'
     DARK_SHACKLES = 'dark shackles'
     DASH = 'dash'
     DAZED = 'dazed'
+    DEADLY_POISON = 'deadly poison'
+    DECAY = 'decay'
+    DEFEND_R = 'defend_r'
+    DEFEND_G = 'defend_g'
     DEFLECT = 'deflect'
     DIE_DIE_DIE = 'die die die'
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
     DROPKICK = 'dropkick'
-    DECAY = 'decay'
-    DEFEND_R = 'defend_r'
-    DEFEND_G = 'defend_g'
     DOUBT = 'doubt'
     ENTRENCH = 'entrench'
     ESCAPE_PLAN = 'escape plan'
@@ -64,6 +68,7 @@ class CardId(Enum):
     FLEX = 'flex'
     FOOTWORK = 'footwork'
     GHOSTLY_ARMOR = 'ghostly armor'
+    GOOD_INSTINCTS = 'good instincts'
     HAND_OF_GREED = 'handofgreed'  # Weird id alert!
     HEAVY_BLADE = 'heavy blade'
     HEEL_HOOK = 'heel hook'
@@ -80,9 +85,11 @@ class CardId(Enum):
     LIMIT_BREAK = 'limit break'
     MASTER_OF_STRATEGY = 'master of strategy'
     METALLICIZE = 'metallicize'
+    MIND_BLAST = 'mind blast'
     NEUTRALIZE = 'neutralize'
     OFFERING = 'offering'
     PAIN = 'pain'
+    PANACEA = 'panacea'
     PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
     POISONED_STAB = 'poisoned stab'
@@ -378,3 +385,18 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.CRIPPLING_CLOUD:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.BITE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.PANACEA:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.MIND_BLAST:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.GOOD_INSTINCTS:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.ACROBATICS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.BACKFLIP:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DEADLY_POISON:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
