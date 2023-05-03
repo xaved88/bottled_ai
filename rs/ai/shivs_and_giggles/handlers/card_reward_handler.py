@@ -83,7 +83,7 @@ class CardRewardHandler(Handler):
         if not state.has_command(Command.SKIP):  # Mainly relevant for the Colorless potion from what I've seen
             if presentation_mode:
                 return [p_delay, "choose 0", p_delay_s]
-            return ["wait 30", "choose 0", "wait 30"]  # There isn't a `proceed` available after skipping Neow's card obtain for example.
+            return ["wait 30", "choose 0", "wait 30"]
 
         if state.game_state()["room_phase"] == "EVENT" or state.game_state()["room_phase"] == "COMBAT":
             if presentation_mode:

@@ -566,3 +566,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_lost_hp(play, 11)
+
+    def test_malleable_blocks(self):
+        state = self.given_state(CardId.CLEAVE)
+        state.monsters[0].powers[PowerId.MALLEABLE] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.MALLEABLE, 4)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_enemy_block_is(play, 4)
+
+    def test_malleable_blocks_after_double_attack(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers[PowerId.MALLEABLE] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.MALLEABLE, 5)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_enemy_block_is(play, 9)
+
+    def test_malleable_blocks_after_triple_attack(self):
+        state = self.given_state(CardId.EVISCERATE)
+        state.monsters[0].powers[PowerId.MALLEABLE] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.MALLEABLE, 6)
+        self.see_enemy_lost_hp(play, 21)
+        self.see_enemy_block_is(play, 15)

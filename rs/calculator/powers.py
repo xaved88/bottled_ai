@@ -5,7 +5,6 @@ from typing import List
 # NOT IMPLEMENTED but probably should be
 # 'duplicationpower'
 # 'explosive'
-# 'malleable'
 # there are many others that aren't listed
 
 
@@ -31,6 +30,7 @@ class PowerId(Enum):
     FRAIL = 'frail'
     INFINITE_BLADES = 'infinite blades'
     INTANGIBLE = 'intangibleplayer'
+    MALLEABLE = 'malleable'
     METALLICIZE = 'metallicize'
     MINION = 'minion'
     MODE_SHIFT = 'mode shift'

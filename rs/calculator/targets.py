@@ -26,6 +26,7 @@ class Target:
             damage = math.floor(damage * vulnerable_modifier)
 
         health_damage_dealt = 0
+        trigger_malleable_block = 0
 
         # inflict self damage from sharp_hide
         if is_attack and (self.powers.get(PowerId.SHARP_HIDE)):
@@ -88,6 +89,9 @@ class Target:
                     if is_attack and self.powers.get(PowerId.CURL_UP):
                         self.block = self.powers.get(PowerId.CURL_UP)
                         del self.powers[PowerId.CURL_UP]
+                    if is_attack and self.powers.get(PowerId.MALLEABLE):
+                        self.powers[PowerId.MALLEABLE] += 1
+                        trigger_malleable_block += 1
 
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
@@ -113,6 +117,13 @@ class Target:
                 self.hits = 0
                 self.block = 20
                 del self.powers[PowerId.MODE_SHIFT]
+
+        if trigger_malleable_block:
+            block_to_add = self.powers.get(PowerId.MALLEABLE)
+            for i in range(trigger_malleable_block):
+                self.block += block_to_add
+                block_to_add -= 1
+
         if self.powers.get(PowerId.SPLIT) and self.current_hp <= self.max_hp / 2:
             self.damage = 0
             self.hits = 0
