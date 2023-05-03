@@ -301,6 +301,11 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_player_has_energy(play, 4)
 
+    def test_heal_from_bird_faced_urn(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.BIRD_FACED_URN: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_lost_hp(play, -2)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))

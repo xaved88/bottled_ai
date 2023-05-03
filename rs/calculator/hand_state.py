@@ -188,7 +188,6 @@ class HandState:
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
 
-        # time warp
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP) is not None:
                 self.monsters[idx].powers[PowerId.TIME_WARP] += 1
@@ -217,6 +216,9 @@ class HandState:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
                         monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
+
+        if RelicId.BIRD_FACED_URN in self.relics and card.type == CardType.POWER:
+            self.player.heal(2)
 
         # anger nob
         if card.type == CardType.SKILL:

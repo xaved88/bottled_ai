@@ -2,7 +2,6 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED
-# 'bird-faced urn'
 # 'blue candle' # uh we seem to use this one already despite not having it implemented
 # 'centennial puzzle'
 # 'dead branch'
@@ -29,6 +28,7 @@ class RelicId(Enum):
     ART_OF_WAR = 'art of war'                       # We only look at current turn so far, so get this as bonus.
     BAG_OF_MARBLES = 'bag of marbles'               # N/A
     BAG_OF_PREPARATION = 'bag of preparation'       # N/A
+    BIRD_FACED_URN = 'bird-faced urn'
     BLACK_STAR = 'black star'                       # N/A
     BLOOD_VIAL = 'blood vial'                       # N/A
     BLOODY_IDOL = 'bloody idol'                     # N/A (except for rare combo with hand of gold)
