@@ -770,6 +770,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.THOUSAND_CUTS, 1)
         self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 0)
         self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
@@ -802,6 +803,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_power(play, PowerId.AFTER_IMAGE, 1)
         self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 0)
         self.see_player_discard_pile_count(play, 0)  # powers should not be discarded
         self.see_player_exhaust_count(play, 0)  # powers should not be exhausted
 
@@ -1053,6 +1055,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_reflex(self):
         state = self.given_state(CardId.REFLEX, amount_to_discard=1)
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
         self.see_player_discard_pile_count(play, 1)
         self.see_player_hand_count(play, 2)
         self.see_player_drew_cards(play, 2)
@@ -1070,6 +1073,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.FLECHETTES)
         state.hand.append(get_card(CardId.STRIKE_R))
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 0)
 
     def test_flechettes_multiple_skills(self):
@@ -1078,12 +1082,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.DEFEND_R))
         state.hand.append(get_card(CardId.DEFEND_R))
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 12)
 
     def test_expertise(self):
         state = self.given_state(CardId.EXPERTISE)
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
         self.see_player_drew_cards(play, 5)
 
     def test_expertise_draws_0(self):
@@ -1091,17 +1097,20 @@ class CalculatorCardsTest(CalculatorTestFixture):
         for i in range(6):
             state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
         self.see_player_drew_cards(play, 0)
 
     def test_bane_no_poison(self):
         state = self.given_state(CardId.BANE)
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 7)
 
     def test_bane_yes_poison(self):
         state = self.given_state(CardId.BANE)
         state.monsters[0].powers[PowerId.POISON] = 1
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 14)
 
     def test_bullet_time(self):
@@ -1110,3 +1119,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.BLUDGEON))
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 32)
+
+    def test_choke(self):
+        state = self.given_state(CardId.CHOKE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.CHOKED, 3)
+        self.see_enemy_lost_hp(play, 12)

@@ -590,3 +590,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.MALLEABLE, 6)
         self.see_enemy_lost_hp(play, 21)
         self.see_enemy_block_is(play, 15)
+
+    def test_choked_causes_card_plays_to_damage(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.monsters[0].powers[PowerId.CHOKED] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 3)
+
+    def test_only_the_monster_with_choked_gets_damaged_by_it(self):
+        state = self.given_state(CardId.DEFEND_G, targets=2)
+        state.monsters[0].powers[PowerId.CHOKED] = 2
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 2, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)

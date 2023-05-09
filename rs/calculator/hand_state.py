@@ -186,6 +186,9 @@ class HandState:
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP) is not None:
                 self.monsters[idx].powers[PowerId.TIME_WARP] += 1
+            if monster.powers.get(PowerId.CHOKED):
+                self.monsters[idx].inflict_damage(self.player, monster.powers.get(PowerId.CHOKED), 1,
+                                                  vulnerable_modifier=1, is_attack=False)
             if monster.powers.get(PowerId.ANGER_NOB):
                 if card.type == CardType.SKILL:
                     if not monster.powers.get(PowerId.STRENGTH):

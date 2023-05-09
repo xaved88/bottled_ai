@@ -348,4 +348,6 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, pre_hooks=[bane_pre_hook])]
     if card.id == CardId.BULLET_TIME:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1}, post_hooks=[bullet_time_post_hook])]
+    if card.id == CardId.CHOKE:
+        return [CardEffects(target=TargetType.MONSTER, damage=12, hits=1, applies_powers={PowerId.CHOKED: 3 if not card.upgrade else 5})]
     return [CardEffects()]

@@ -37,6 +37,7 @@ class CardId(Enum):
     BURN = 'burn'
     CALTROPS = 'caltrops'
     CARNAGE = 'carnage'
+    CHOKE = 'choke'
     CLASH = 'clash'
     CLEAVE = 'cleave'
     CLOAK_AND_DAGGER = 'cloak and dagger'
@@ -422,3 +423,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.BULLET_TIME:
         base_cost = 3 if not upgrade else 2
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.CHOKE:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)

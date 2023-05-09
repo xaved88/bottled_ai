@@ -18,6 +18,7 @@ class PowerId(Enum):
     ARTIFACT = 'artifact'
     BARRICADE = 'barricade'
     BUFFER = 'buffer'
+    CHOKED = 'choked'
     CONFUSED = 'confusion'              # Bot takes the new costs into account
     CONSTRICTED = 'constricted'
     CURL_UP = 'curl up'
@@ -57,6 +58,7 @@ class PowerId(Enum):
 Powers = dict[PowerId: int]
 
 DEBUFFS: List[PowerId] = [
+    PowerId.CHOKED,
     PowerId.CONFUSED,
     PowerId.CONSTRICTED,
     PowerId.DRAW_REDUCTION,
