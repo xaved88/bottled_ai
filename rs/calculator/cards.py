@@ -24,6 +24,7 @@ class CardId(Enum):
     BACKFLIP = 'backflip'
     BACKSTAB = 'backstab'
     BANDAGE_UP = 'bandage up'
+    BANE = 'bane'
     BASH = 'bash'
     BATTLE_TRANCE = 'battle trance'
     BITE = 'bite'
@@ -32,6 +33,7 @@ class CardId(Enum):
     BLOOD_FOR_BLOOD = 'blood for blood'
     BLUDGEON = 'bludgeon'
     BODY_SLAM = 'body slam'
+    BULLET_TIME = 'bullet time'
     BURN = 'burn'
     CALTROPS = 'caltrops'
     CARNAGE = 'carnage'
@@ -40,6 +42,7 @@ class CardId(Enum):
     CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'
     CLUMSY = 'clumsy'
+    CONCENTRATE = 'concentrate'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
     CRIPPLING_CLOUD = 'crippling poison'
     DAGGER_THROW = 'dagger throw'
@@ -60,11 +63,13 @@ class CardId(Enum):
     ENTRENCH = 'entrench'
     ESCAPE_PLAN = 'escape plan'
     EVISCERATE = 'eviscerate'
+    EXPERTISE = 'expertise'
     FEED = 'feed'
     FIEND_FIRE = 'fiend fire'
     FINESSE = 'finesse'
     FLAME_BARRIER = 'flame barrier'
     FLASH_OF_STEEL = 'flash of steel'
+    FLECHETTES = 'flechettes'
     FLEX = 'flex'
     FOOTWORK = 'footwork'
     GHOSTLY_ARMOR = 'ghostly armor'
@@ -101,6 +106,7 @@ class CardId(Enum):
     RAGE = 'rage'
     RAMPAGE = 'rampage'
     REAPER = 'reaper'
+    REFLEX = 'reflex'
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'
     RIDDLE_WITH_HOLES = 'riddle with holes'
@@ -119,6 +125,7 @@ class CardId(Enum):
     SUCKER_PUNCH = 'sucker punch'
     SURVIVOR = 'survivor'
     SWIFT_STRIKE = 'swift strike'
+    TACTICIAN = 'tactician'
     TERROR = 'terror'
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     THUNDERCLAP = 'thunderclap'
@@ -400,3 +407,18 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.DEADLY_POISON:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
+    if card_id == CardId.TACTICIAN:
+        return Card(card_id, upgrade, -1, False, CardType.SKILL)
+    if card_id == CardId.REFLEX:
+        return Card(card_id, upgrade, -1, False, CardType.SKILL)
+    if card_id == CardId.CONCENTRATE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.FLECHETTES:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.EXPERTISE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.BANE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.BULLET_TIME:
+        base_cost = 3 if not upgrade else 2
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)

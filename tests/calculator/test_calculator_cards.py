@@ -1043,3 +1043,70 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 2)
         self.see_player_draw_pile_count(play, 1)
         self.see_enemy_lost_hp(play, 8)
+
+    def test_tactician(self):
+        state = self.given_state(CardId.TACTICIAN, amount_to_discard=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_spent_energy(play, -1)
+
+    def test_reflex(self):
+        state = self.given_state(CardId.REFLEX, amount_to_discard=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_drew_cards(play, 2)
+
+    def test_concentrate(self):
+        state = self.given_state(CardId.CONCENTRATE, upgrade=1)
+        state.player.energy = 0
+        state.hand.append(get_card(CardId.DEFEND_R))  # On top so the others are discarded rather than this one
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 5)
+
+    def test_flechettes_no_skills(self):
+        state = self.given_state(CardId.FLECHETTES)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_flechettes_multiple_skills(self):
+        state = self.given_state(CardId.FLECHETTES)
+        state.hand.append(get_card(CardId.DEFEND_R))
+        state.hand.append(get_card(CardId.DEFEND_R))
+        state.hand.append(get_card(CardId.DEFEND_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+
+    def test_expertise(self):
+        state = self.given_state(CardId.EXPERTISE)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_drew_cards(play, 5)
+
+    def test_expertise_draws_0(self):
+        state = self.given_state(CardId.EXPERTISE)
+        for i in range(6):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_drew_cards(play, 0)
+
+    def test_bane_no_poison(self):
+        state = self.given_state(CardId.BANE)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 7)
+
+    def test_bane_yes_poison(self):
+        state = self.given_state(CardId.BANE)
+        state.monsters[0].powers[PowerId.POISON] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 14)
+
+    def test_bullet_time(self):
+        state = self.given_state(CardId.BULLET_TIME, upgrade=1)
+        state.player.energy = 2
+        state.hand.append(get_card(CardId.BLUDGEON))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 32)

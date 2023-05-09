@@ -110,7 +110,7 @@ class HandState:
             self.player.block += self.player.powers[PowerId.RAGE]
 
         for effect in effects:
-            # custom post hooks
+            # custom pre hooks
             for hook in effect.pre_hooks:
                 hook(self, effect, target_index)
 
@@ -373,6 +373,11 @@ class HandState:
     def discard_card(self, card: Card):
         self.hand.remove(card)
         self.discard_pile.append(card)
+        # self_discarded hook
+        for effect in get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand):
+            for hook in effect.post_self_discarded_hooks:
+                hook(self, effect)
+        # others_discarded hook
         for hand_card in self.hand:
             for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):
                 for hook in effect.post_others_discarded_hooks:

@@ -28,6 +28,7 @@ class CardEffects:
             pre_hooks: List[CardEffectCustomHook] = None,
             post_hooks: List[CardEffectCustomHook] = None,
             post_others_discarded_hooks: List[CardEffectCustomHookWithCard] = None,
+            post_self_discarded_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
     ):
@@ -43,6 +44,7 @@ class CardEffects:
         self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
         self.post_others_discarded_hooks: List[
             CardEffectCustomHookWithCard] = [] if post_others_discarded_hooks is None else post_others_discarded_hooks
+        self.post_self_discarded_hooks: List[CardEffectCustomHook] = [] if post_self_discarded_hooks is None else post_self_discarded_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
 
@@ -332,4 +334,18 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, block=5 if not card.upgrade else 8, draw=2)]
     if card.id == CardId.DEADLY_POISON:
         return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 5 if not card.upgrade else 7})]
+    if card.id == CardId.TACTICIAN:
+        return [CardEffects(target=TargetType.NONE, post_self_discarded_hooks=[tactician_post_self_discarded_hook] if not card.upgrade else [tactician_upgraded_post_self_discarded_hook])]
+    if card.id == CardId.REFLEX:
+        return [CardEffects(target=TargetType.NONE, post_self_discarded_hooks=[reflex_post_self_discarded_hook] if not card.upgrade else [reflex_upgraded_post_self_discarded_hook])]
+    if card.id == CardId.CONCENTRATE:
+        return [CardEffects(target=TargetType.SELF, energy_gain=2, amount_to_discard=3 if not card.upgrade else 2)]
+    if card.id == CardId.FLECHETTES:
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=len([1 for c in hand if c.type == CardType.SKILL]))]
+    if card.id == CardId.EXPERTISE:
+        return [CardEffects(target=TargetType.SELF, draw=6-len(hand)+1 if not card.upgrade else 7-len(hand)+1)]  # The +1 is for accounting for the EXPERTISE that doesn't disappear until after we've resolved the play.
+    if card.id == CardId.BANE:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, pre_hooks=[bane_pre_hook])]
+    if card.id == CardId.BULLET_TIME:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1}, post_hooks=[bullet_time_post_hook])]
     return [CardEffects()]
