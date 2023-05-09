@@ -148,17 +148,6 @@ class HandState:
                 frail_mod = 0.75 if self.player.powers.get(PowerId.FRAIL, 0) else 1
                 self.player.block += math.floor(block * frail_mod)
 
-            # Apply any powers from the card
-            if effect.applies_powers:
-                if effect.target == TargetType.SELF:
-                    self.player.add_powers(effect.applies_powers)
-                else:
-                    targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
-                    for target in targets:
-                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
-                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
-                            target.add_powers({PowerId.WEAKENED: 1})
-
             # energy gain
             self.player.energy += effect.energy_gain
 
@@ -179,18 +168,33 @@ class HandState:
                 self.discard_pile.append(card)
             del self.hand[idx]
 
-        for effect in effects:
-            # custom post hooks
-            for hook in effect.post_hooks:
-                hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
+        # post card play PLAYER power checks
+        if self.player.powers.get(PowerId.THOUSAND_CUTS):
+            thousand_cuts_damage = self.player.powers.get(PowerId.THOUSAND_CUTS, 0)
+            if thousand_cuts_damage > 0:
+                for monster in self.monsters:
+                    if monster.current_hp > 0:
+                        monster.inflict_damage(self.player, thousand_cuts_damage, 1, vulnerable_modifier=1,
+                                               is_attack=False)
 
-        # post card play counter increments (we can make this more dynamic/clean as we get more of them)
-        if RelicId.VELVET_CHOKER in self.relics:
-            self.relics[RelicId.VELVET_CHOKER] += 1
+        if self.player.powers.get(PowerId.AFTER_IMAGE):
+            after_image_block = self.player.powers.get(PowerId.AFTER_IMAGE, 0)
+            if after_image_block > 0:
+                self.player.block += after_image_block
 
+        # post card play MONSTER power checks
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP) is not None:
                 self.monsters[idx].powers[PowerId.TIME_WARP] += 1
+            if monster.powers.get(PowerId.ANGER_NOB):
+                if card.type == CardType.SKILL:
+                    if not monster.powers.get(PowerId.STRENGTH):
+                        monster.powers[PowerId.STRENGTH] = 0
+                    self.monsters[idx].powers[PowerId.STRENGTH] += monster.powers.get(PowerId.ANGER_NOB)
+
+        # post card play relic checks
+        if RelicId.VELVET_CHOKER in self.relics:
+            self.relics[RelicId.VELVET_CHOKER] += 1
 
         if RelicId.NUNCHAKU in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.NUNCHAKU] += 1
@@ -220,27 +224,21 @@ class HandState:
         if RelicId.BIRD_FACED_URN in self.relics and card.type == CardType.POWER:
             self.player.heal(2)
 
-        # anger nob
-        if card.type == CardType.SKILL:
-            for idx, monster in enumerate(self.monsters):
-                if monster.powers.get(PowerId.ANGER_NOB) is not None:
-                    if not monster.powers.get(PowerId.STRENGTH):
-                        monster.powers[PowerId.STRENGTH] = 0
-                    self.monsters[idx].powers[PowerId.STRENGTH] += monster.powers.get(PowerId.ANGER_NOB)
+        for effect in effects:
+            # custom post hooks
+            for hook in effect.post_hooks:
+                hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
 
-        # Check if order is correct
-        if self.player.powers.get(PowerId.THOUSAND_CUTS):
-            thousand_cuts_damage = self.player.powers.get(PowerId.THOUSAND_CUTS, 0)
-            if thousand_cuts_damage > 0:
-                for monster in self.monsters:
-                    if monster.current_hp > 0:
-                        monster.inflict_damage(self.player, thousand_cuts_damage, 1, vulnerable_modifier=1,
-                                               is_attack=False)
-
-        if self.player.powers.get(PowerId.AFTER_IMAGE):
-            after_image_block = self.player.powers.get(PowerId.AFTER_IMAGE, 0)
-            if after_image_block > 0:
-                self.player.block += after_image_block
+            # Apply any powers from the card
+            if effect.applies_powers:
+                if effect.target == TargetType.SELF:
+                    self.player.add_powers(effect.applies_powers)
+                else:
+                    targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
+                    for target in targets:
+                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
+                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
+                            target.add_powers({PowerId.WEAKENED: 1})
 
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
         if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
