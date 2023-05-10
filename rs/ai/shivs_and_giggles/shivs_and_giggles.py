@@ -6,7 +6,6 @@ from rs.ai.shivs_and_giggles.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.shivs_and_giggles.handlers.campfire_handler import CampfireHandler
 from rs.ai.shivs_and_giggles.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.shivs_and_giggles.handlers.combat_reward_handler import CombatRewardHandler
-from rs.ai.shivs_and_giggles.handlers.custom_battle.sentries_handler import SentriesHandler
 from rs.ai.shivs_and_giggles.handlers.discard_handler import DiscardHandler
 from rs.ai.shivs_and_giggles.handlers.event_handler import EventHandler
 from rs.ai.shivs_and_giggles.handlers.neow_handler import NeowHandler
@@ -23,19 +22,16 @@ from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
 from rs.machine.handlers.handler import Handler
 
-shivs_and_giggles_custom_battle_handlers: List[Handler] = [
+shivs_and_giggles_battle_potion_handlers: List[Handler] = [
     # Potions Handlers First
     PotionsBossHandler(),
     PotionsEventFightHandler(),
     PotionsEliteHandler(),
-
-    # Enemies After
-    SentriesHandler(),
 ]
 
 SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
     character=Character.SILENT,
-    handlers=shivs_and_giggles_custom_battle_handlers + [
+    handlers=shivs_and_giggles_battle_potion_handlers + [
         # Some edge cases
         AstrolabeHandler(),
 

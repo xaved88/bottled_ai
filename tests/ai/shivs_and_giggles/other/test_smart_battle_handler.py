@@ -46,19 +46,19 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_discard_doubt_specifically.json', ['play 1'])
 
     def test_gremlin_nob_defensive_skill_not_worth_it(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_defend_early.json', ['end'])
+        self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_defend_early.json', ['end'])
 
     def test_gremlin_nob_defensive_skill_worth_it(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_defend_late.json', ['play 5'])
+        self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_defend_late.json', ['play 5'])
 
     def test_gremlin_nob_damaging_skill_not_worth_it(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_cloak_and_dagger_early.json', ['end'])
+        self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_cloak_and_dagger_early.json', ['end'])
 
     def test_gremlin_nob_indirectly_damaging_skill_not_worth_it(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_terror_and_thousand_cuts_late.json', ['end'])
+        self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_terror_and_thousand_cuts_late.json', ['end'])
 
     def test_gremlin_nob_damaging_skill_worth_it(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_gremlin_nob_cloak_and_dagger_late.json', ['play 1'])
+        self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_cloak_and_dagger_late.json', ['play 1'])
 
     def test_prefer_multiple_vulnerable_over_straight_damage(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_terror_vs_strike.json', ['play 1 0'])
@@ -67,11 +67,20 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
         self.execute_handler_tests('battles/smart_battle/smart_battle_normal_artifact_removal.json', ['play 2 1'])
 
     def test_big_fight_higher_prio_remove_artifacts(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_artifact_removal_over_damage.json', ['play 1 0'])
+        self.execute_handler_tests('battles/smart_battle/big_fight/smart_battle_big_fight_prioritize_artifact_removal_over_damage.json', ['play 1 0'])
 
     def test_big_fight_higher_prio_powers(self):
-        self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_power_over_damage.json', ['play 1'])
+        self.execute_handler_tests('battles/smart_battle/big_fight/smart_battle_big_fight_prioritize_power_over_damage.json', ['play 1'])
 
     def test_some_powers_higher_prio_than_others(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_prioritize_accuracy_over_energized.json', ['play 2'])
+
+    def test_three_sentries_attacks_edge_sentry_even_when_mid_is_lower_health(self):
+        self.execute_handler_tests('battles/smart_battle/three_sentries/smart_battle_sentry_low_middle_health.json', ['play 4 0'])
+
+    def test_three_sentries_aggression_over_defense(self):
+        self.execute_handler_tests('battles/smart_battle/three_sentries/smart_battle_sentry_yolo_state_with_three.json', ['play 4 0'])
+
+    def test_three_sentries_use_normal_comparator_priorities_when_one_dead(self):
+        self.execute_handler_tests('battles/smart_battle/three_sentries/smart_battle_sentry_one_dead.json', ['play 6'])
 
