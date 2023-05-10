@@ -60,6 +60,7 @@ class CardId(Enum):
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
     DROPKICK = 'dropkick'
+    DODGE_AND_ROLL = 'dodge and roll'
     DOUBT = 'doubt'
     ENTRENCH = 'entrench'
     ESCAPE_PLAN = 'escape plan'
@@ -72,6 +73,7 @@ class CardId(Enum):
     FLASH_OF_STEEL = 'flash of steel'
     FLECHETTES = 'flechettes'
     FLEX = 'flex'
+    FLYING_KNEE = 'flying knee'
     FOOTWORK = 'footwork'
     GHOSTLY_ARMOR = 'ghostly armor'
     GOOD_INSTINCTS = 'good instincts'
@@ -94,6 +96,7 @@ class CardId(Enum):
     MIND_BLAST = 'mind blast'
     NEUTRALIZE = 'neutralize'
     OFFERING = 'offering'
+    OUTMANEUVER = 'outmaneuver'
     PAIN = 'pain'
     PANACEA = 'panacea'
     PARASITE = 'parasite'
@@ -101,6 +104,7 @@ class CardId(Enum):
     POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
     POWER_THROUGH = 'power through'
+    PREDATOR = 'predator'
     PREPARED = 'prepared'
     PUMMEL = 'pummel'
     QUICK_SLASH = 'quick slash'
@@ -363,22 +367,22 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.DRAMATIC_ENTRANCE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.POISONED_STAB:
-        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.TOOLS_OF_THE_TRADE:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.STORM_OF_STEEL:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.EVISCERATE:
-        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.ATTACK)
+        return Card(card_id, upgrade, 3 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.SNEAKY_STRIKE:
-        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.PREPARED:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.DAGGER_THROW:
-        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.UNLOAD:
-        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.FOOTWORK:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.RIDDLE_WITH_HOLES:
@@ -425,3 +429,11 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.CHOKE:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.FLYING_KNEE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.PREDATOR:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DODGE_AND_ROLL:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.OUTMANEUVER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)

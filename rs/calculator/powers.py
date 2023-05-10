@@ -23,7 +23,9 @@ class PowerId(Enum):
     CONSTRICTED = 'constricted'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'
-    DRAW_REDUCTION = 'draw reduction'   # We'll see what we get
+    DRAW_CARD = 'draw card'     # It affects a future turn though, so we mostly don't do anything with it.
+    DRAW_REDUCTION = 'draw reduction'   # It affects a future turn though, so we mostly don't do anything with it.
+    ENERGIZED = 'energized'           # It affects a future turn though, so we mostly don't do anything with it.
     ENTANGLED = 'entangled'
     FADING = 'fading'                   # N/A
     FLAME_BARRIER = 'flame barrier'
@@ -35,6 +37,7 @@ class PowerId(Enum):
     METALLICIZE = 'metallicize'
     MINION = 'minion'
     MODE_SHIFT = 'mode shift'
+    NEXT_TURN_BLOCK = 'next turn block' # It affects a future turn though, so we mostly don't do anything with it.
     NO_DRAW = 'no draw'
     PEN_NIB_POWER = 'pen nib'           # Covered by Pen Nib relic counting
     POISON = 'poison'

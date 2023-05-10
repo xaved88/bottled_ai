@@ -1118,11 +1118,39 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.player.energy = 2
         state.hand.append(get_card(CardId.BLUDGEON))
         play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_energy(play, 0)
         self.see_enemy_lost_hp(play, 32)
 
     def test_choke(self):
         state = self.given_state(CardId.CHOKE)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
-        self.see_enemy_has_power(play, PowerId.CHOKED, 3)
         self.see_enemy_lost_hp(play, 12)
+        self.see_enemy_has_power(play, PowerId.CHOKED, 3)
+
+    def test_flying_knee(self):
+        state = self.given_state(CardId.FLYING_KNEE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_player_has_power(play, PowerId.ENERGIZED, 1)
+
+    def test_predator(self):
+        state = self.given_state(CardId.PREDATOR)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 15)
+        self.see_player_has_power(play, PowerId.DRAW_CARD, 2)
+
+    def test_dodge_and_roll(self):
+        state = self.given_state(CardId.DODGE_AND_ROLL)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 4)
+        self.see_player_has_power(play, PowerId.NEXT_TURN_BLOCK, 4)
+
+    def test_outmaneuver(self):
+        state = self.given_state(CardId.OUTMANEUVER)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.ENERGIZED, 2)

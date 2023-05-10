@@ -26,6 +26,7 @@ class GCValues:
             enemy_vulnerable: int,
             enemy_weak: int,
             player_powers_good: int,
+            player_powers_less_good: int,
             player_powers_bad: int,
             bad_cards_exhausted: int,
             saved_for_later: int,
@@ -47,6 +48,7 @@ class GCValues:
         self.enemy_vulnerable: int = enemy_vulnerable
         self.enemy_weak: int = enemy_weak
         self.player_powers_good: int = player_powers_good
+        self.player_powers_less_good: int = player_powers_less_good
         self.player_powers_bad: int = player_powers_bad
         self.bad_cards_exhausted: int = bad_cards_exhausted
         self.saved_for_later: int = saved_for_later
@@ -68,6 +70,12 @@ powers_we_like: List[PowerId] = [
     PowerId.THORNS,
     PowerId.THOUSAND_CUTS,
     PowerId.TOOLS_OF_THE_TRADE,
+]
+
+powers_we_like_less: List[PowerId] = [
+    PowerId.DRAW_CARD,
+    PowerId.ENERGIZED,
+    PowerId.NEXT_TURN_BLOCK,
 ]
 
 powers_we_dislike: List[PowerId] = [
@@ -99,6 +107,7 @@ class GeneralSilentComparator(SbcComparator):
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
             player_powers_good=get_power_count(state.player.powers, powers_we_like),
+            player_powers_less_good=get_power_count(state.player.powers, powers_we_like_less),
             player_powers_bad=get_power_count(state.player.powers, powers_we_dislike),
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
@@ -163,10 +172,12 @@ class GeneralSilentComparator(SbcComparator):
             return challenger.player_powers_good > best.player_powers_good
         if best.player_powers_bad != challenger.player_powers_bad:
             return challenger.player_powers_bad < best.player_powers_bad
-        if best.incoming_damage != challenger.incoming_damage:
-            return challenger.incoming_damage < best.incoming_damage
+        if best.player_powers_less_good != challenger.player_powers_less_good:
+            return challenger.player_powers_less_good > best.player_powers_less_good
         if best.bad_cards_exhausted != challenger.bad_cards_exhausted:
             return challenger.bad_cards_exhausted > best.bad_cards_exhausted
+        if best.incoming_damage != challenger.incoming_damage:
+            return challenger.incoming_damage < best.incoming_damage
         if best.saved_for_later != challenger.saved_for_later:
             return challenger.saved_for_later > best.saved_for_later
         if best.awkward_shivs != challenger.awkward_shivs:

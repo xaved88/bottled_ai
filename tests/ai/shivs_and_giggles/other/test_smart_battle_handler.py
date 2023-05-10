@@ -72,3 +72,6 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     def test_big_fight_higher_prio_powers(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_big_fight_prioritize_power_over_damage.json', ['play 1'])
 
+    def test_some_powers_higher_prio_than_others(self):
+        self.execute_handler_tests('battles/smart_battle/smart_battle_prioritize_accuracy_over_energized.json', ['play 2'])
+

@@ -195,6 +195,22 @@ class HandState:
                         monster.powers[PowerId.STRENGTH] = 0
                     self.monsters[idx].powers[PowerId.STRENGTH] += monster.powers.get(PowerId.ANGER_NOB)
 
+        for effect in effects:
+            # custom post hooks
+            for hook in effect.post_hooks:
+                hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
+
+            # Apply any powers from the card
+            if effect.applies_powers:
+                if effect.target == TargetType.SELF:
+                    self.player.add_powers(effect.applies_powers)
+                else:
+                    targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
+                    for target in targets:
+                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
+                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
+                            target.add_powers({PowerId.WEAKENED: 1})
+
         # post card play relic checks
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
@@ -226,22 +242,6 @@ class HandState:
 
         if RelicId.BIRD_FACED_URN in self.relics and card.type == CardType.POWER:
             self.player.heal(2)
-
-        for effect in effects:
-            # custom post hooks
-            for hook in effect.post_hooks:
-                hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
-
-            # Apply any powers from the card
-            if effect.applies_powers:
-                if effect.target == TargetType.SELF:
-                    self.player.add_powers(effect.applies_powers)
-                else:
-                    targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
-                    for target in targets:
-                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
-                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
-                            target.add_powers({PowerId.WEAKENED: 1})
 
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
         if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:

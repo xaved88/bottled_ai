@@ -350,4 +350,15 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1}, post_hooks=[bullet_time_post_hook])]
     if card.id == CardId.CHOKE:
         return [CardEffects(target=TargetType.MONSTER, damage=12, hits=1, applies_powers={PowerId.CHOKED: 3 if not card.upgrade else 5})]
+    if card.id == CardId.FLYING_KNEE:
+        return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1),
+                CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 1})]
+    if card.id == CardId.PREDATOR:
+        return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1),
+                CardEffects(target=TargetType.SELF, applies_powers={PowerId.DRAW_CARD: 2})]
+    if card.id == CardId.DODGE_AND_ROLL:
+        amount = 4 if not card.upgrade else 6
+        return [CardEffects(target=TargetType.SELF, block=amount, applies_powers={PowerId.NEXT_TURN_BLOCK: amount})]
+    if card.id == CardId.OUTMANEUVER:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 2} if not card.upgrade else {PowerId.ENERGIZED: 3})]
     return [CardEffects()]
