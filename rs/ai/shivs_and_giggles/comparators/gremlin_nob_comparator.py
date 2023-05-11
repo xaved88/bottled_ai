@@ -18,8 +18,7 @@ class GCValues:
             lowest_health_monster: int,
             total_monster_health: int,
             barricaded_block: int,
-            draw_free_early: int,
-            draw_free: int,
+            draw_acceptable_against_nob: int,
             draw_pay_early: int,
             draw_pay: int,
             energy: int,
@@ -41,8 +40,7 @@ class GCValues:
         self.lowest_health_monster: int = lowest_health_monster
         self.total_monster_health: int = total_monster_health
         self.barricaded_block: int = barricaded_block
-        self.draw_free_early: int = draw_free_early
-        self.draw_free: int = draw_free
+        self.draw_acceptable_against_nob: int = draw_acceptable_against_nob
         self.draw_pay_early: int = draw_pay_early
         self.draw_pay: int = draw_pay
         self.energy: int = energy
@@ -85,8 +83,9 @@ powers_we_dislike: List[PowerId] = [
     PowerId.WEAKENED,
 ]
 
-# Difference to normal comparator:
-# Penalize ourselves with nob_adjusted_incoming_damage for playing skills based on how long the fight will still go.
+# Differences to normal comparator:
+# * Penalize ourselves with nob_adjusted_incoming_damage for playing skills based on how long the fight will still go.
+# * Mostly ignore draw_free_early and draw_acceptable_against_nob possibilities (because e.g. Prepared is not a good card here).
 
 
 class GremlinNobSilentComparator(SbcComparator):
@@ -107,8 +106,7 @@ class GremlinNobSilentComparator(SbcComparator):
             lowest_health_monster=0 if battle_won else min(monsters_vulnerable_hp),
             total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp),
             barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) != 0]),
-            draw_free_early=len([True for c in state.hand if c.id == CardId.DRAW_FREE_EARLY]),
-            draw_free=len([True for c in state.hand if c.id == CardId.DRAW_FREE or c.id == CardId.DRAW_FREE_EARLY]),
+            draw_acceptable_against_nob=len([True for c in state.hand if c.id == CardId.OFFERING]),
             draw_pay_early=len([True for c in state.hand if c.id == CardId.DRAW_PAY_EARLY]),
             draw_pay=len([True for c in state.hand if c.id == CardId.DRAW_PAY or c.id == CardId.DRAW_PAY_EARLY]),
             energy=state.player.energy,
@@ -154,10 +152,8 @@ class GremlinNobSilentComparator(SbcComparator):
             return self.optimize_battle_won(best, challenger, best_state, challenger_state, original)
 
         # normal conditions
-        if best.draw_free_early != challenger.draw_free_early:
-            return challenger.draw_free_early > best.draw_free_early
-        if best.draw_free != challenger.draw_free:
-            return challenger.draw_free > best.draw_free
+        if best.draw_acceptable_against_nob != challenger.draw_acceptable_against_nob:
+            return challenger.draw_acceptable_against_nob > best.draw_acceptable_against_nob
         if max(1, best.intangible) != max(1, challenger.intangible):
             return challenger.intangible > best.intangible
         if best.nob_adjusted_incoming_damage != challenger.nob_adjusted_incoming_damage:

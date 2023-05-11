@@ -60,6 +60,9 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     def test_gremlin_nob_damaging_skill_worth_it(self):
         self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_cloak_and_dagger_late.json', ['play 1'])
 
+    def test_gremlin_nob_avoid_prepared_draw_free_early(self):
+        self.execute_handler_tests('battles/smart_battle/gremlin_nob/smart_battle_gremlin_nob_prepared.json', ['play 5'])
+
     def test_prefer_multiple_vulnerable_over_straight_damage(self):
         self.execute_handler_tests('battles/smart_battle/smart_battle_terror_vs_strike.json', ['play 1 0'])
 
