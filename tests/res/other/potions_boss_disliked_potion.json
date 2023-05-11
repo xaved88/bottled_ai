@@ -122,10 +122,10 @@
           "max_hp": 86,
           "intent": "DEBUG",
           "move_id": 3,
-          "name": "Gremlin Nob",
+          "name": "Cultist",
           "current_hp": 86,
           "block": 0,
-          "id": "GremlinNob",
+          "id": "Cultist",
           "powers": []
         }
       ],
