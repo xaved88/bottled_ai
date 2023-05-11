@@ -6,12 +6,12 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 # see also combat_reward_handler.py for discarding potions
+# these potions might still sneak into our slots with entropric brew
 dont_play_potions = [
-    'FairyInABottle',
-    'SmokeBomb',
-    'ElixirPotion',
-    'LiquidMemories',
-    'SneckoOil',
+    'Smoke Bomb',
+    'Elixir Potion',
+    'Liquid Memories',
+    'Snecko Oil',
 ]
 
 
@@ -38,7 +38,7 @@ class PotionsBaseHandler(Handler):
     def get_potions_to_play(self, state: GameState) -> List[dict]:
         to_play = []
         for idx, pot in enumerate(state.get_potions()):
-            if pot['can_use'] and pot['id'] not in dont_play_potions:
+            if pot['can_use'] and pot['name'] not in dont_play_potions:
                 pot['idx'] = idx
                 to_play.append(pot)
         return to_play

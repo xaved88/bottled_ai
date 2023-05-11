@@ -20,10 +20,10 @@
         {
           "potion": {
             "requires_target": false,
-            "can_use": false,
+            "can_use": true,
             "can_discard": true,
-            "name": "Ancient Potion",
-            "id": "Ancient Potion"
+            "name": "Speed Potion",
+            "id": "SpeedPotion"
           },
           "reward_type": "POTION"
         }
@@ -308,8 +308,8 @@
         "requires_target": false,
         "can_use": true,
         "can_discard": true,
-        "name": "Speed Potion",
-        "id": "SpeedPotion"
+        "name": "Ancient Potion",
+        "id": "AncientPotion"
       },
       {
         "requires_target": false,

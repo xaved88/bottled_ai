@@ -308,8 +308,8 @@
         "requires_target": false,
         "can_use": true,
         "can_discard": true,
-        "name": "Speed Potion",
-        "id": "SpeedPotion"
+        "name": "Fruit Juice",
+        "id": "FruitJuice"
       },
       {
         "requires_target": false,
