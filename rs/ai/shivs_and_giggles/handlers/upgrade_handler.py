@@ -11,10 +11,10 @@ class UpgradeHandler(Handler):
     def __init__(self):
         self.upgrade_priorities: List[str] = [
             'neutralize',           # removed if we have snecko eye
-            'tools of the trade',   # removed if we have snecko eye
             'accuracy',
             'footwork',
             'adrenaline',
+            'tools of the trade',   # removed if we have snecko eye
             'blade dance',
             'prepared',
             'terror',               # removed if we have snecko eye

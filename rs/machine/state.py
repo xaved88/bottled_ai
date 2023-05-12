@@ -54,6 +54,12 @@ class GameState:
                 return True
         return False
 
+    def get_relic_counter(self, relic_name: str) -> int:
+        for relic in self.get_relics():
+            if relic['name'] == relic_name:
+                return relic['counter']
+        return False
+
     def get_potions(self):
         return self.game_state()["potions"]
 
