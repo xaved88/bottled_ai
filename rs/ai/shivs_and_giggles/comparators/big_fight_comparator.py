@@ -169,6 +169,8 @@ class BigFightSilentComparator(SbcComparator):
             return challenger.enemy_artifacts < best.enemy_artifacts
         if max(1, best.enemy_weak) != max(1, challenger.enemy_weak):
             return challenger.enemy_weak > best.enemy_weak
+        if best.awkward_shivs != challenger.awkward_shivs:
+            return challenger.awkward_shivs < best.awkward_shivs
         if best.lowest_health_monster != challenger.lowest_health_monster:
             return challenger.lowest_health_monster < best.lowest_health_monster
         if best.total_monster_health != challenger.total_monster_health:
@@ -189,8 +191,6 @@ class BigFightSilentComparator(SbcComparator):
             return challenger.player_powers_less_good > best.player_powers_less_good
         if best.saved_for_later != challenger.saved_for_later:
             return challenger.saved_for_later > best.saved_for_later
-        if best.awkward_shivs != challenger.awkward_shivs:
-            return challenger.awkward_shivs < best.awkward_shivs
         if best.energy != challenger.energy:
             return challenger.energy > best.energy
         return False

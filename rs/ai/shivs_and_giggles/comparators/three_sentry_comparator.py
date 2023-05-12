@@ -166,6 +166,8 @@ class ThreeSentriesSilentComparator(SbcComparator):
             return challenger.enemy_vulnerable > best.enemy_vulnerable
         if max(1, best.enemy_weak) != max(1, challenger.enemy_weak):
             return challenger.enemy_weak > best.enemy_weak
+        if best.awkward_shivs != challenger.awkward_shivs:
+            return challenger.awkward_shivs < best.awkward_shivs
         if best.total_monster_health != challenger.total_monster_health:
             return challenger.total_monster_health < best.total_monster_health
         if best.barricaded_block != challenger.barricaded_block:
@@ -186,8 +188,6 @@ class ThreeSentriesSilentComparator(SbcComparator):
             return challenger.incoming_damage < best.incoming_damage
         if best.saved_for_later != challenger.saved_for_later:
             return challenger.saved_for_later > best.saved_for_later
-        if best.awkward_shivs != challenger.awkward_shivs:
-            return challenger.awkward_shivs < best.awkward_shivs
         if best.energy != challenger.energy:
             return challenger.energy > best.energy
         return False
