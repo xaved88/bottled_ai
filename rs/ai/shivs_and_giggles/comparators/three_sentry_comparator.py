@@ -1,5 +1,5 @@
-from typing import List
-
+from rs.ai.shivs_and_giggles.comparators.general_comparator import powers_we_like, powers_we_like_less, \
+    powers_we_dislike
 from rs.calculator.cards import CardId, CardType
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.hand_state import HandState
@@ -53,35 +53,6 @@ class GCValues:
         self.bad_cards_exhausted: int = bad_cards_exhausted
         self.saved_for_later: int = saved_for_later
         self.awkward_shivs: int = awkward_shivs
-
-
-powers_we_like: List[PowerId] = [
-    PowerId.ACCURACY,
-    PowerId.AFTER_IMAGE,
-    PowerId.ARTIFACT,
-    PowerId.BUFFER,
-    PowerId.DEXTERITY,
-    PowerId.FLAME_BARRIER,
-    PowerId.INFINITE_BLADES,
-    PowerId.INTANGIBLE,
-    PowerId.METALLICIZE,
-    PowerId.PLATED_ARMOR,
-    PowerId.STRENGTH,
-    PowerId.THORNS,
-    PowerId.THOUSAND_CUTS,
-    PowerId.TOOLS_OF_THE_TRADE,
-]
-
-powers_we_like_less: List[PowerId] = [
-    PowerId.DRAW_CARD,
-    PowerId.ENERGIZED,
-    PowerId.NEXT_TURN_BLOCK,
-]
-
-powers_we_dislike: List[PowerId] = [
-    PowerId.FRAIL,
-    PowerId.WEAKENED,
-]
 
 # Difference to normal comparator:
 # Go very aggressive on killing either the front or back sentry for as long as there are 3 sentries alive.

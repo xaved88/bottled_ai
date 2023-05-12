@@ -61,7 +61,6 @@ powers_we_like: List[PowerId] = [
     PowerId.ARTIFACT,
     PowerId.BUFFER,
     PowerId.DEXTERITY,
-    PowerId.FLAME_BARRIER,
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE,
     PowerId.METALLICIZE,
@@ -75,6 +74,7 @@ powers_we_like: List[PowerId] = [
 powers_we_like_less: List[PowerId] = [
     PowerId.DRAW_CARD,
     PowerId.ENERGIZED,
+    PowerId.FLAME_BARRIER,
     PowerId.NEXT_TURN_BLOCK,
 ]
 
