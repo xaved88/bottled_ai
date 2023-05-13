@@ -126,6 +126,9 @@ class GeneralSilentComparator(SbcComparator):
         if RelicId.NUNCHAKU in best_state.player.relics and \
                 best_state.player.relics[RelicId.NUNCHAKU] != challenger_state.player.relics[RelicId.NUNCHAKU]:
             return challenger_state.player.relics[RelicId.NUNCHAKU] > best_state.player.relics[RelicId.NUNCHAKU]
+        if RelicId.INK_BOTTLE in best_state.player.relics and \
+                best_state.player.relics[RelicId.INK_BOTTLE] != challenger_state.player.relics[RelicId.INK_BOTTLE]:
+            return challenger_state.player.relics[RelicId.INK_BOTTLE] > best_state.player.relics[RelicId.INK_BOTTLE]
         if best.energy != challenger.energy:
             return challenger.energy > best.energy
         return False

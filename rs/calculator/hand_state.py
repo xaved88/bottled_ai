@@ -215,6 +215,12 @@ class HandState:
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
 
+        if RelicId.INK_BOTTLE in self.relics:
+            self.relics[RelicId.INK_BOTTLE] += 1
+            if self.relics[RelicId.INK_BOTTLE] >= 10:
+                self.draw_cards(1)
+                self.relics[RelicId.INK_BOTTLE] -= 10
+
         if RelicId.NUNCHAKU in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.NUNCHAKU] += 1
             if self.relics[RelicId.NUNCHAKU] >= 10:
@@ -243,6 +249,9 @@ class HandState:
         if RelicId.BIRD_FACED_URN in self.relics and card.type == CardType.POWER:
             self.player.heal(2)
 
+        if RelicId.UNCEASING_TOP in self.relics and len(self.hand) == 0:
+            self.draw_cards(1)
+
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
         if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
             if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
@@ -254,6 +263,9 @@ class HandState:
             if m.current_hp <= 0:
                 m.damage = 0
                 m.hits = 0
+                if RelicId.GREMLIN_HORN in self.relics:
+                    self.player.energy += 1
+                    self.draw_cards(1)
 
     def transform_from_discard(self, card: Card, index: int):
         self.discard_card(card)

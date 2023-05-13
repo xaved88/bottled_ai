@@ -2,12 +2,10 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED
-# 'blue candle' # uh we seem to use this one already despite not having it implemented
+# 'blue candle' # uh we seem to use this one already despite not having it implemented, i guess because cost changes to 0 or so when we've got it
 # 'centennial puzzle'
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
-# 'gremlin horn'
-# 'ink bottle'
 # 'meat on the bone'
 # 'mercury hourglass'
 # 'mummified hand'
@@ -15,7 +13,6 @@ from enum import Enum
 # 'sacred bark'
 # 'snecko skull'
 # 'tingsha'
-# 'unceasing top'
 # and several others that aren't listed yet
 
 
@@ -55,11 +52,13 @@ class RelicId(Enum):
     GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
     GOLDEN_IDOL = 'golden idol'                     # N/A
+    GREMLIN_HORN = 'gremlin horn'
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
     HORN_CLEAT = 'horn cleat'                       # We get block from state
     HOVERING_KITE = 'hovering kite'
     ICE_CREAM = 'ice cream'                         # We only look at current turn so far, so get this as bonus.
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
+    INK_BOTTLE = 'ink bottle'
     JUZU_BRACELET = 'juzu bracelet'                 # N/A
     KUNAI = 'kunai'                                 # We don't specifically try to trigger it, results are covered by Dexterity.
     LANTERN = 'lantern'                             # N/A
@@ -118,6 +117,7 @@ class RelicId(Enum):
     TOY_ORNITHOPTER = 'toy ornithopter'             # N/A
     TUNGSTEN_ROD = 'tungsten rod'
     TURNIP = 'turnip'                               # N/A
+    UNCEASING_TOP = 'unceasing top'
     VAJRA = 'vajra'                                 # Covered by Strength
     VELVET_CHOKER = 'velvet choker'
     WAR_PAINT = 'war paint'                         # N/A

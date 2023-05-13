@@ -301,10 +301,60 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_player_has_energy(play, 4)
 
-    def test_heal_from_bird_faced_urn(self):
+    def test_bird_faced_urn(self):
         state = self.given_state(CardId.INFLAME, relics={RelicId.BIRD_FACED_URN: 1})
         play = self.when_playing_the_whole_hand(state)
         self.see_player_lost_hp(play, -2)
+
+    def test_gremlin_horn_triggers_on_kill(self):
+        state = self.given_state(CardId.ANGER, relics={RelicId.GREMLIN_HORN: 1})
+        state.monsters[0].current_hp = 1
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_player_spent_energy(play, -1)
+        self.see_player_hand_count(play, 1)
+
+    def test_gremlin_horn_multi_kill(self):
+        state = self.given_state(CardId.DEFLECT, targets=2, relics={RelicId.LETTER_OPENER: 2, RelicId.GREMLIN_HORN: 1})
+        state.monsters[0].current_hp = 1
+        state.monsters[1].current_hp = 1
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_hp_is(play, amount=0, enemy_index=0)
+        self.see_enemy_hp_is(play, amount=0, enemy_index=1)
+        self.see_relic_value(play, RelicId.LETTER_OPENER, 0)
+        self.see_player_spent_energy(play, -2)
+        self.see_player_hand_count(play, 2)
+
+    def test_gremlin_horn_only_get_energy_on_kill(self):
+        state = self.given_state(CardId.ANGER, relics={RelicId.GREMLIN_HORN: 1})
+        state.monsters[0].current_hp = 7
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_hp_is(play, 1)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_hand_count(play, 0)
+
+    def test_unceasing_top_triggers_when_hand_empty(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.UNCEASING_TOP: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_hand_count(play, 1)
+
+    def test_unceasing_top_no_trigger_when_not_empty(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.UNCEASING_TOP: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_hand_count(play, 2)
+
+    def test_ink_bottle_increments(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.INK_BOTTLE: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 2)
+        self.see_player_hand_count(play, 0)
+
+    def test_ink_bottle_triggers_and_resets(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.INK_BOTTLE: 9})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 0)
+        self.see_player_hand_count(play, 1)
 
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
