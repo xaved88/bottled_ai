@@ -49,6 +49,7 @@ class RelicId(Enum):
     FOSSILIZED_HELIX = 'fossilized helix'
     FROZEN_EGG = 'frozen egg'                       # N/A
     FUSION_HAMMER = 'fusion hammer'                 # N/A
+    GAMBLING_CHIP = 'gambling chip'                 # Handled outside of calculator by a Discard Handler
     GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
     GOLDEN_IDOL = 'golden idol'                     # N/A
@@ -104,6 +105,7 @@ class RelicId(Enum):
     SMILING_MASK = 'smiling mask'                   # N/A
     SNECKO_EYE = 'snecko eye'                       # Calculator reads the costs itself
     SOZU = 'sozu'                                   # N/A
+    STONE_CALENDAR = 'stone calendar'
     STRAWBERRY = 'strawberry'                       # N/A
     STRIKE_DUMMY = 'strike dummy'
     SUNDIAL = 'sundial'                             # N/A

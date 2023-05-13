@@ -276,6 +276,11 @@ class HandState:
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
             self.player.block += 6
 
+        if RelicId.STONE_CALENDAR in self.relics and self.relics[RelicId.STONE_CALENDAR] == 7:
+            for monster in self.monsters:
+                if monster.current_hp > 0:
+                    monster.inflict_damage(self.player, 52, 1, vulnerable_modifier=1, is_attack=False)
+
         # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
         self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)

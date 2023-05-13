@@ -356,6 +356,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_relic_value(play, RelicId.INK_BOTTLE, 0)
         self.see_player_hand_count(play, 1)
 
+    def test_stone_calendar_triggers_after_turn_7(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.STONE_CALENDAR: 7})
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 52)
+
+    def test_stone_calendar_triggers_needs_turn_end_on_turn_7(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.STONE_CALENDAR: 7})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_stone_calendar_does_not_trigger_earlier(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.STONE_CALENDAR: 6})
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 0)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))
