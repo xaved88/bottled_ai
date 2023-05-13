@@ -31,11 +31,16 @@ class EventHandler(Handler):
         # ACT 1
 
         if event_name == "Big Fish":
-            return "choose 2"  # Get relic
+            return "choose 2"  # Get relic and curse
 
-        # if event_name == "The Cleric":
-        #    return ["choose 0"] # Heal
-        # Add handling for skipping heal if we're fine.
+        if event_name == "The Cleric":
+            if hp_per <= 65 and 'heal' in state.get_choice_list():
+                return "choose heal"
+            if 'purify' in state.get_choice_list():
+                return "choose purify"  # Purge
+            if hp_per >= 90:
+                return "choose leave"  # Heal not worth the money and can't purify apparently
+            return "choose 0"
 
         if event_name == "Dead Adventurer":
             return "choose 1"  # Escape. Could do: Add logic for sometimes taking the fight.
