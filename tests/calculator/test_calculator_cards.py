@@ -575,7 +575,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_apparition(self):
         state = self.given_state(CardId.APPARITION)
         play = self.when_playing_the_first_card(state)
-        self.see_player_has_power(play, PowerId.INTANGIBLE, 1)
+        self.see_player_has_power(play, PowerId.INTANGIBLE_PLAYER, 1)
 
     def test_slimed(self):
         state = self.given_state(CardId.SLIMED)

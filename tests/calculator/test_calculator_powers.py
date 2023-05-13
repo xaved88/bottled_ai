@@ -250,8 +250,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_has_block(play, 9)
 
-    def test_intangible_blocks_all_but_one_damage(self):
-        state = self.given_state(CardId.STRIKE_R, targets=2, player_powers={PowerId.INTANGIBLE: 1})
+    def test_intangible_player_blocks_all_but_one_damage(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2, player_powers={PowerId.INTANGIBLE_PLAYER: 1})
         state.monsters[0].damage = 999
         state.monsters[0].hits = 1
         state.monsters[1].damage = 1
@@ -260,8 +260,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_lost_hp(play, 6)
 
-    def test_intangible_with_tungsten_rod_blocks_all_damage(self):
-        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.INTANGIBLE: 1},
+    def test_intangible_player_with_tungsten_rod_blocks_all_damage(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.INTANGIBLE_PLAYER: 1},
                                  relics={RelicId.TUNGSTEN_ROD: 1})
         state.monsters[0].damage = 999
         state.monsters[0].hits = 20
@@ -269,10 +269,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_lost_hp(play, 0)
 
-    def test_intangible_blocks_self_damage(self):
-        state = self.given_state(CardId.BLOODLETTING, targets=2, player_powers={PowerId.INTANGIBLE: 1})
+    def test_intangible_player_blocks_self_damage(self):
+        state = self.given_state(CardId.BLOODLETTING, targets=2, player_powers={PowerId.INTANGIBLE_PLAYER: 1})
         play = self.when_playing_the_first_card(state)
         self.see_player_lost_hp(play, 1)
+
+    def test_intangible_enemy_blocks_all_but_one_damage(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers[PowerId.INTANGIBLE_ENEMY] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 2)
 
     def test_flame_barrier_deals_damage_to_attacker(self):
         state = self.given_state(CardId.FLAME_BARRIER)

@@ -62,7 +62,9 @@ class Target:
             if hit_damage > 0:
                 if self.relics.get(RelicId.TORII) and hit_damage < 6:
                     hit_damage = 1
-                if self.powers.get(PowerId.INTANGIBLE):
+                if self.powers.get(PowerId.INTANGIBLE_PLAYER):
+                    hit_damage = 1
+                if self.powers.get(PowerId.INTANGIBLE_ENEMY):
                     hit_damage = 1
                 if self.relics.get(RelicId.TUNGSTEN_ROD):
                     hit_damage -= 1

@@ -226,7 +226,7 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.MASTER_OF_STRATEGY:
         return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4)]
     if card.id == CardId.APPARITION:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE: 1})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE_PLAYER: 1})]
 
     # silent cards
     if card.id == CardId.NEUTRALIZE:

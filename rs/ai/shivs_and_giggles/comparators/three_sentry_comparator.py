@@ -80,7 +80,7 @@ class ThreeSentriesSilentComparator(SbcComparator):
             draw_pay_early=len([True for c in state.hand if c.id == CardId.DRAW_PAY_EARLY]),
             draw_pay=len([True for c in state.hand if c.id == CardId.DRAW_PAY or c.id == CardId.DRAW_PAY_EARLY]),
             energy=state.player.energy,
-            intangible=state.player.powers.get(PowerId.INTANGIBLE, 0),
+            intangible=state.player.powers.get(PowerId.INTANGIBLE_PLAYER, 0),
             enemy_vulnerable=min(max([m.powers.get(PowerId.VULNERABLE, 0) for m in state.monsters]), 4),
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
             player_powers_good=get_power_count(state.player.powers, powers_we_like),
