@@ -11,14 +11,14 @@ class CardRewardHandler(Handler):
 
     def __init__(self):
         self.desired_cards: dict[str, int] = {
-            'tools of the trade': 1,    # removed if we have snecko eye
             'accuracy': 4,
+            'after image': 1,
+            'tools of the trade': 1,    # removed if we have snecko eye
             'terror': 2,
             'adrenaline': 2,
             'storm of steel': 2,
             'die die die': 2,
             'blade dance': 4,
-            'after image': 1,
             'infinite blades': 2,
             'eviscerate': 1,
             'leg sweep': 1,
