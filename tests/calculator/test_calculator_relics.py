@@ -373,6 +373,11 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_lost_hp(play, 0)
 
+    def test_snecko_skull(self):
+        state = self.given_state(CardId.DEADLY_POISON, relics={RelicId.SNECKO_SKULL: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.POISON, 6)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))

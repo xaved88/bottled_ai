@@ -104,6 +104,7 @@ class RelicId(Enum):
     SLAVERS_COLLAR = 'slaver\u0027s collar'         # N/A
     SMILING_MASK = 'smiling mask'                   # N/A
     SNECKO_EYE = 'snecko eye'                       # Calculator reads the costs itself
+    SNECKO_SKULL = 'snecko skull'
     SOZU = 'sozu'                                   # N/A
     STONE_CALENDAR = 'stone calendar'
     STRAWBERRY = 'strawberry'                       # N/A

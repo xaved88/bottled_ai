@@ -1,4 +1,5 @@
 import math
+from itertools import count
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
@@ -210,6 +211,8 @@ class HandState:
                         applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
                         if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
                             target.add_powers({PowerId.WEAKENED: 1})
+                        if self.relics.get(RelicId.SNECKO_SKULL) and PowerId.POISON in applied_powers:
+                            target.add_powers({PowerId.POISON: applied_powers.count(PowerId.POISON)})
 
         # post card play relic checks
         if RelicId.VELVET_CHOKER in self.relics:
