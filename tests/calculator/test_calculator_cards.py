@@ -1154,3 +1154,15 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.ENERGIZED, 2)
+
+    def test_envenom(self):
+        state = self.given_state(CardId.ENVENOM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.ENVENOM_POWER, 1)
+
+    def test_noxious_fumes(self):
+        state = self.given_state(CardId.NOXIOUS_FUMES)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.NOXIOUS_FUMES_POWER, 2)

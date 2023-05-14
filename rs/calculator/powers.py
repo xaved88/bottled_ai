@@ -27,6 +27,7 @@ class PowerId(Enum):
     DRAW_REDUCTION = 'draw reduction'   # It affects a future turn though, so we mostly don't do anything with it.
     ENERGIZED = 'energized'           # It affects a future turn though, so we mostly don't do anything with it.
     ENTANGLED = 'entangled'
+    ENVENOM_POWER = 'envenom'
     FADING = 'fading'                   # N/A
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'
@@ -40,6 +41,7 @@ class PowerId(Enum):
     MODE_SHIFT = 'mode shift'
     NEXT_TURN_BLOCK = 'next turn block' # It affects a future turn though, so we mostly don't do anything with it.
     NO_DRAW = 'no draw'
+    NOXIOUS_FUMES_POWER = 'noxious fumes'
     PEN_NIB_POWER = 'pen nib'           # Covered by Pen Nib relic counting
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
@@ -66,11 +68,12 @@ DEBUFFS: List[PowerId] = [
     PowerId.CONFUSED,
     PowerId.CONSTRICTED,
     PowerId.DRAW_REDUCTION,
-    PowerId.FRAIL,
     PowerId.ENTANGLED,
+    PowerId.FRAIL,
+    PowerId.NO_DRAW,
+    PowerId.POISON,
     PowerId.VULNERABLE,
     PowerId.WEAKENED,
-    PowerId.NO_DRAW,
 ]
 
 DEBUFFS_WHEN_NEGATIVE: List[PowerId] = [

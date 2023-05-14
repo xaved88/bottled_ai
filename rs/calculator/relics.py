@@ -11,7 +11,6 @@ from enum import Enum
 # 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
-# 'snecko skull'
 # 'tingsha'
 # and several others that aren't listed yet
 

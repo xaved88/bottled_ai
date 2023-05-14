@@ -361,4 +361,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, block=amount, applies_powers={PowerId.NEXT_TURN_BLOCK: amount})]
     if card.id == CardId.OUTMANEUVER:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 2} if not card.upgrade else {PowerId.ENERGIZED: 3})]
+    if card.id == CardId.ENVENOM:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENVENOM_POWER: 1})]
+    if card.id == CardId.NOXIOUS_FUMES:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NOXIOUS_FUMES_POWER: 2 if not card.upgrade else 3})]
     return [CardEffects()]

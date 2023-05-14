@@ -63,6 +63,7 @@ class CardId(Enum):
     DODGE_AND_ROLL = 'dodge and roll'
     DOUBT = 'doubt'
     ENTRENCH = 'entrench'
+    ENVENOM = 'envenom'
     ESCAPE_PLAN = 'escape plan'
     EVISCERATE = 'eviscerate'
     EXPERTISE = 'expertise'
@@ -95,6 +96,7 @@ class CardId(Enum):
     METALLICIZE = 'metallicize'
     MIND_BLAST = 'mind blast'
     NEUTRALIZE = 'neutralize'
+    NOXIOUS_FUMES = 'noxious fumes'
     OFFERING = 'offering'
     OUTMANEUVER = 'outmaneuver'
     PAIN = 'pain'
@@ -437,3 +439,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.OUTMANEUVER:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.ENVENOM:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.NOXIOUS_FUMES:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)

@@ -610,3 +610,36 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_lost_hp(play, 2, enemy_index=0)
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
+
+    def test_envenom_power_does_not_work_on_blocked_hit(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.ENVENOM_POWER: 1})
+        state.monsters[0].block = 10
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.ENVENOM_POWER, 1)
+        self.see_enemy_block_is(play, 4)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_enemy_does_not_have_power(play, PowerId.POISON)
+
+    def test_envenom_power_applies_poison_on_unblocked_hit(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.ENVENOM_POWER: 1})
+        state.monsters[0].block = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.ENVENOM_POWER, 1)
+        self.see_enemy_block_is(play, 0)
+        self.see_enemy_lost_hp(play, 1)
+        self.see_enemy_has_power(play, PowerId.POISON, 1)
+
+    def test_envenom_power_applies_poison_on_unblocked_multi_hit(self):
+        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.ENVENOM_POWER: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.ENVENOM_POWER, 1)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_enemy_has_power(play, PowerId.POISON, 2)
+
+    def test_envenom_power_stacks_onto_existing_poison(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.ENVENOM_POWER: 1})
+        state.monsters[0].powers[PowerId.POISON] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.ENVENOM_POWER, 1)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_enemy_has_power(play, PowerId.POISON, 2)
