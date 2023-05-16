@@ -378,6 +378,38 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_has_power(play, PowerId.POISON, 6)
 
+    def test_shuriken_increments(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.SHURIKEN: 0})
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.SHURIKEN, 1)
+
+    def test_shuriken_triggers_and_gives_strength(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.SHURIKEN: 2})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 1)
+        self.see_relic_value(play, RelicId.SHURIKEN, 0)
+
+    def test_shuriken_does_not_increment(self):
+        state = self.given_state(CardId.DEADLY_POISON, relics={RelicId.SHURIKEN: 0})
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.SHURIKEN, 0)
+
+    def test_kunai_increments(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.KUNAI: 0})
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.KUNAI, 1)
+
+    def test_kunai_triggers_and_gives_dexterity(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.KUNAI: 2})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.DEXTERITY, 1)
+        self.see_relic_value(play, RelicId.KUNAI, 0)
+
+    def test_kunai_does_not_increment(self):
+        state = self.given_state(CardId.DEADLY_POISON, relics={RelicId.KUNAI: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.KUNAI, 1)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))

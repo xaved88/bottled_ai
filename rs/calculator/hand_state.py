@@ -224,6 +224,18 @@ class HandState:
                 self.draw_cards(1)
                 self.relics[RelicId.INK_BOTTLE] -= 10
 
+        if RelicId.SHURIKEN in self.relics and card.type == CardType.ATTACK:
+            self.relics[RelicId.SHURIKEN] += 1
+            if self.relics[RelicId.SHURIKEN] >= 3:
+                self.player.add_powers({PowerId.STRENGTH: 1})
+                self.relics[RelicId.SHURIKEN] -= 3
+
+        if RelicId.KUNAI in self.relics and card.type == CardType.ATTACK:
+            self.relics[RelicId.KUNAI] += 1
+            if self.relics[RelicId.KUNAI] >= 3:
+                self.player.add_powers({PowerId.DEXTERITY: 1})
+                self.relics[RelicId.KUNAI] -= 3
+
         if RelicId.NUNCHAKU in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.NUNCHAKU] += 1
             if self.relics[RelicId.NUNCHAKU] >= 10:

@@ -60,7 +60,7 @@ class RelicId(Enum):
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
     INK_BOTTLE = 'ink bottle'
     JUZU_BRACELET = 'juzu bracelet'                 # N/A
-    KUNAI = 'kunai'                                 # We don't specifically try to trigger it, results are covered by Dexterity.
+    KUNAI = 'kunai'
     LANTERN = 'lantern'                             # N/A
     LETTER_OPENER = 'letter opener'
     LIZARD_TAIL = 'lizard tail'                     # N/A
@@ -98,7 +98,7 @@ class RelicId(Enum):
     RUNIC_DOME = 'runic dome'                       # We see 0 incoming damage so we yolo attack
     RUNIC_PYRAMID = 'runic pyramid'                 # N/A
     SHOVEL = 'shovel'                               # N/A
-    SHURIKEN = 'shuriken'                           # We don't specifically try to trigger it, results are covered by Strength.
+    SHURIKEN = 'shuriken'
     SINGING_BOWL = 'singing bowl'                   # N/A
     SLAVERS_COLLAR = 'slaver\u0027s collar'         # N/A
     SMILING_MASK = 'smiling mask'                   # N/A
