@@ -449,4 +449,7 @@ def can_card_target_target(card: Card, target: Target) -> bool:
     if target.current_hp <= 0:
         return False
 
+    if target.is_gone == 1:
+        return False
+
     return True

@@ -87,3 +87,5 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     def test_three_sentries_use_normal_comparator_priorities_when_one_dead(self):
         self.execute_handler_tests('battles/smart_battle/three_sentries/smart_battle_sentry_one_dead.json', ['play 6'])
 
+    def test_do_not_attack_escaped_mugger(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_escaped_mugger.json', ['play 2 1'])
