@@ -25,7 +25,7 @@ class SmartBattleHandler(Handler):
         if state.floor() == 33 or state.floor() == 50:
             comparator = BigFightSilentComparator()
 
-        actions = get_best_battle_action(state, comparator, 40_000)
+        actions = get_best_battle_action(state, comparator, 10_000)
         if actions:
             return actions
         if state.has_command(Command.PLAY):
