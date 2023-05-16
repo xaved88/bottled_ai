@@ -85,11 +85,10 @@ class HandState:
         damage_additive_bonus = 0
         if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
             damage_additive_bonus += 3
-        if card.type == CardType.ATTACK and self.player.powers.get(PowerId.VIGOR):
+        if self.player.powers.get(PowerId.VIGOR) and card.type == CardType.ATTACK:
             damage_additive_bonus += self.player.powers.get(PowerId.VIGOR, 0)
             del self.player.powers[PowerId.VIGOR]
-        # Added accuracy as additive damage bonus only for shivs
-        if card.id == CardId.SHIV and self.player.powers.get(PowerId.ACCURACY):
+        if self.player.powers.get(PowerId.ACCURACY) and card.id == CardId.SHIV:
             damage_additive_bonus += self.player.powers.get(PowerId.ACCURACY, 0)
         if RelicId.WRIST_BLADE in self.relics and card.cost == 0 and card.type == CardType.ATTACK:
             damage_additive_bonus += 4

@@ -68,10 +68,6 @@ class Target:
                     hit_damage = 1
                 if self.relics.get(RelicId.TUNGSTEN_ROD):
                     hit_damage -= 1
-                if self.powers.get(PowerId.ANGRY):
-                    if not self.powers.get(PowerId.STRENGTH):
-                        self.powers[PowerId.STRENGTH] = 0
-                    self.powers[PowerId.STRENGTH] += self.powers.get(PowerId.ANGRY)
 
                 if hit_damage > 0:
                     hit_damage = max(hit_damage, min_hp_damage)
@@ -86,6 +82,10 @@ class Target:
                         self.powers[PowerId.PLATED_ARMOR] -= 1
                     if is_attack and self.powers.get(PowerId.FLIGHT):
                         self.powers[PowerId.FLIGHT] -= 1
+                    if is_attack and self.powers.get(PowerId.ANGRY):
+                        if not self.powers.get(PowerId.STRENGTH):
+                            self.powers[PowerId.STRENGTH] = 0
+                        self.powers[PowerId.STRENGTH] += self.powers.get(PowerId.ANGRY)
                     if is_attack and self.powers.get(PowerId.MODE_SHIFT):
                         self.powers[PowerId.MODE_SHIFT] -= hit_damage
                     if is_attack and self.powers.get(PowerId.CURL_UP):
