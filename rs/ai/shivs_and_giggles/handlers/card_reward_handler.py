@@ -12,7 +12,7 @@ class CardRewardHandler(Handler):
     def __init__(self):
         self.desired_cards: dict[str, int] = {
             'accuracy': 4,
-            'after image': 1,
+            'after image': 2,
             'tools of the trade': 1,    # removed if we have snecko eye
             'terror': 2,
             'adrenaline': 2,

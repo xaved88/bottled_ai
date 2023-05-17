@@ -22,6 +22,8 @@ class SmartBattleHandler(Handler):
             comparator = GremlinNobSilentComparator()
         if state.has_monster("Sentry") and len(list(filter(lambda m: not m['is_gone'], state.get_monsters()))) == 3:
             comparator = ThreeSentriesSilentComparator()
+        if state.has_monster("Lagavulin"):
+            comparator = BigFightSilentComparator()
         if state.floor() == 33 or state.floor() == 50:
             comparator = BigFightSilentComparator()
 

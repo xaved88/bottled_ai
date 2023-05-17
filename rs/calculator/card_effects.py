@@ -253,8 +253,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.LEG_SWEEP:
         weak_amount = 2 if not card.upgrade else 3
         block_amount = 11 if not card.upgrade else 14
-        return [CardEffects(target=TargetType.MONSTER, block=block_amount,
-                            applies_powers={PowerId.WEAKENED: weak_amount})]
+        return [
+            CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.WEAKENED: weak_amount}),
+            CardEffects(target=TargetType.SELF, block=block_amount)]
     if card.id == CardId.SUCKER_PUNCH:
         return [CardEffects(damage=7 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.WEAKENED: 1} if not card.upgrade else {PowerId.WEAKENED: 2})]
