@@ -88,7 +88,7 @@ class ThreeSentriesSilentComparator(SbcComparator):
             player_powers_bad=get_power_count(state.player.powers, powers_we_dislike),
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
-            awkward_shivs=len([True for c in state.hand or state.discard_pile if c.id == CardId.SHIV]),
+            awkward_shivs=len([True for c in state.hand if c.id == CardId.SHIV])+len([True for c in state.discard_pile if c.id == CardId.SHIV]),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,

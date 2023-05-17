@@ -5,7 +5,6 @@ from rs.ai.shivs_and_giggles.comparators.gremlin_nob_comparator import GremlinNo
 from rs.ai.shivs_and_giggles.comparators.big_fight_comparator import BigFightSilentComparator
 from rs.ai.shivs_and_giggles.comparators.waiting_lagavulin_comparator import WaitingLagavulinSilentComparator
 from rs.ai.shivs_and_giggles.comparators.three_sentry_comparator import ThreeSentriesSilentComparator
-from rs.calculator.cards import CardId
 from rs.calculator.executor import get_best_battle_action
 from rs.game.card import CardType
 from rs.machine.command import Command

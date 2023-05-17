@@ -88,7 +88,7 @@ class BigFightSilentComparator(SbcComparator):
             player_powers_bad=get_power_count(state.player.powers, powers_we_dislike),
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
-            awkward_shivs=len([True for c in state.hand or state.discard_pile if c.id == CardId.SHIV]),
+            awkward_shivs=len([True for c in state.hand if c.id == CardId.SHIV])+len([True for c in state.discard_pile if c.id == CardId.SHIV]),
             enemy_artifacts=sum([m.powers.get(PowerId.ARTIFACT, 0) for m in state.monsters]),
         )
 

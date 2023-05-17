@@ -90,7 +90,7 @@ class GremlinNobSilentComparator(SbcComparator):
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
             nob_adjusted_incoming_damage=original.player.current_hp - state.player.current_hp + (int(gremlin_nob_hp / 20) * anger_strength_up),
-            awkward_shivs=len([True for c in state.hand or state.discard_pile if c.id == CardId.SHIV]),
+            awkward_shivs=len([True for c in state.hand if c.id == CardId.SHIV])+len([True for c in state.discard_pile if c.id == CardId.SHIV]),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
