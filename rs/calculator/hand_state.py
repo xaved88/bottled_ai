@@ -399,7 +399,7 @@ class HandState:
             else CardId.DRAW_PAY
 
         # can't draw more than 10 cards, will discard the played card tho
-        amount = min(amount, 11 - len(self.draw_pile))
+        amount = min(amount, 11 - len(self.hand))
         self.hand += [get_card(card_type) for i in range(amount)]
 
     def discard_card(self, card: Card):

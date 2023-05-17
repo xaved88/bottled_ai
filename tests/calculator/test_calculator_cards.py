@@ -1219,3 +1219,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 50, enemy_index=0)
         self.see_enemy_lost_hp(play, 50, enemy_index=1)
 
+    def test_draw_uncapped_by_hand_amount(self):
+        state = self.given_state(CardId.OFFERING)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_hand_count(play, 3)
+        self.see_player_drew_cards(play, 3)
+        self.see_player_discard_pile_count(play, 0)
+
+    def test_draw_capped_by_hand_amount(self):
+        state = self.given_state(CardId.OFFERING)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_hand_count(play, 10)
+        self.see_player_drew_cards(play, 1)
