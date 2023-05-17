@@ -37,3 +37,9 @@ class CampfireHandlerTestCase(SgTestHandlerFixture):
 
     def test_default_because_nothing_matches(self):
         self.execute_handler_tests('/campfire/campfire_default_because_options_blocked.json', ['choose 0'])
+
+    def test_dig(self):
+        self.execute_handler_tests('/campfire/campfire_dig.json', ['choose dig'])
+
+    def test_toke(self):
+        self.execute_handler_tests('/campfire/campfire_toke.json', ['choose toke'])
