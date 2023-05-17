@@ -95,7 +95,9 @@ class Target:
                         self.powers[PowerId.MALLEABLE] += 1
                         trigger_malleable_block += 1
                     if is_attack and source.powers.get(PowerId.ENVENOM_POWER):
-                        self.add_powers({PowerId.POISON: 1})
+                        applied_powers = self.add_powers({PowerId.POISON: 1})
+                        if source.relics.get(RelicId.SNECKO_SKULL) and PowerId.POISON in applied_powers:
+                            self.add_powers({PowerId.POISON: 1})
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
                         self.current_hp = 0
