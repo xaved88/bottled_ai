@@ -19,7 +19,7 @@ class HandState:
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
                  monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
-                 cards_discarded_this_turn: int = 0):
+                 cards_discarded_this_turn: int = 0, attacks_played_this_turn: int = 0):
 
         self.player: Player = player
         self.hand: List[Card] = [] if hand is None else hand
@@ -30,6 +30,7 @@ class HandState:
         self.relics: Relics = {} if relics is None else relics
         self.amount_to_discard: int = amount_to_discard
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
+        self.attacks_played_this_turn: int = attacks_played_this_turn
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
 
@@ -47,7 +48,7 @@ class HandState:
             return plays
 
         for card_idx, card in enumerate(self.hand):
-            if not is_card_playable(card, self.player, self.hand):
+            if not is_card_playable(card, self.player, self.hand, len(self.draw_pile)):
                 continue
             if card.needs_target:
                 for target_idx, target in enumerate(self.monsters):
@@ -213,6 +214,9 @@ class HandState:
                         if self.relics.get(RelicId.SNECKO_SKULL) and PowerId.POISON in applied_powers:
                             target.add_powers({PowerId.POISON: applied_powers.count(PowerId.POISON)})
 
+        if card.type == CardType.ATTACK:
+            self.attacks_played_this_turn += 1
+
         # post card play relic checks
         if RelicId.VELVET_CHOKER in self.relics:
             self.relics[RelicId.VELVET_CHOKER] += 1
@@ -272,14 +276,7 @@ class HandState:
                 for m in self.monsters:
                     m.current_hp = 0
 
-        # "kill" enemies with 0 hp:
-        for m in self.monsters:
-            if m.current_hp <= 0:
-                m.damage = 0
-                m.hits = 0
-                if RelicId.GREMLIN_HORN in self.relics:
-                    self.player.energy += 1
-                    self.draw_cards(1)
+        self.kill_monsters()
 
     def transform_from_discard(self, card: Card, index: int):
         self.discard_card(card)
@@ -360,6 +357,9 @@ class HandState:
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
+        # last check in case there were some more monsters that died
+        self.kill_monsters()
+
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
         for m in self.monsters:
@@ -423,8 +423,25 @@ class HandState:
         if RelicId.HOVERING_KITE in self.relics and self.cards_discarded_this_turn == 1:
             self.player.energy += 1
 
+    def kill_monsters(self):
+        for m in self.monsters:
+            if m.current_hp <= 0 and not m.is_gone:
+                m.damage = 0
+                m.hits = 0
+                m.is_gone = True
+                if RelicId.GREMLIN_HORN in self.relics:
+                    self.player.energy += 1
+                    self.draw_cards(1)
+                if m.powers.get(PowerId.CORPSE_EXPLOSION_POWER, 0):
+                    corpse_explosion_damage = m.max_hp
+                    corpse_explosion_hits = m.powers.get(PowerId.CORPSE_EXPLOSION_POWER)
+                    for monster in self.monsters:
+                        if monster.current_hp > 0:
+                            monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits, vulnerable_modifier=1,
+                                                   is_attack=False)
 
-def is_card_playable(card: Card, player: Player, hand: List[Card]) -> bool:
+
+def is_card_playable(card: Card, player: Player, hand: List[Card], draw_pile_count: int) -> bool:
     # unplayable cards like burn, wound, and reflex
     if card.cost == -1:
         return False
@@ -434,9 +451,10 @@ def is_card_playable(card: Card, player: Player, hand: List[Card]) -> bool:
     # entangled case
     if card.type == CardType.ATTACK and player.powers.get(PowerId.ENTANGLED):
         return False
-
     # special card-specific logic, like clash
     if card.id == CardId.CLASH and len([1 for c in hand if c.type != CardType.ATTACK]):
+        return False
+    if card.id == CardId.GRAND_FINALE and draw_pile_count != 0:
         return False
 
     return True
@@ -449,7 +467,7 @@ def can_card_target_target(card: Card, target: Target) -> bool:
     if target.current_hp <= 0:
         return False
 
-    if target.is_gone == 1:
+    if target.is_gone:
         return False
 
     return True

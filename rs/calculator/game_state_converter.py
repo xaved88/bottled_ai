@@ -85,7 +85,7 @@ def create_hand_state(game_state: GameState) -> HandState:
             powers=make_powers(monster['powers']),
             damage=monster['move_base_damage'] if 'move_base_damage' in monster else 0,
             hits=monster['move_hits'] if 'move_hits' in monster else 0,
-            is_gone=0 if monster['is_gone'] is False else 1,
+            is_gone=False if not monster['is_gone'] else True,
         )
         for monster in cs['monsters']
     ]

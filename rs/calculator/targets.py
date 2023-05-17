@@ -182,11 +182,11 @@ class Player(Target):
 
 class Monster(Target):
 
-    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, damage: int = 0, hits: int = 0, is_gone: int = 0):
+    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, damage: int = 0, hits: int = 0, is_gone: bool = False):
         super().__init__(current_hp, max_hp, block, powers)
         self.damage: int = damage
         self.hits: int = hits
-        self.is_gone: int = is_gone
+        self.is_gone: bool = is_gone
 
     def get_state_string(self) -> str:
         return super().get_state_string() + f"{self.damage},{self.hits},"

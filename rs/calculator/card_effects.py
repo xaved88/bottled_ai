@@ -365,4 +365,12 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENVENOM_POWER: 1})]
     if card.id == CardId.NOXIOUS_FUMES:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NOXIOUS_FUMES_POWER: 2 if not card.upgrade else 3})]
+    if card.id == CardId.FINISHER:
+        return [CardEffects(target=TargetType.MONSTER, damage=6 if not card.upgrade else 8, hits=0, pre_hooks=[finisher_pre_hook])]
+    if card.id == CardId.ENDLESS_AGONY:
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
+    if card.id == CardId.CORPSE_EXPLOSION:
+        return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 6 if not card.upgrade else 9, PowerId.CORPSE_EXPLOSION_POWER: 1})]
+    if card.id == CardId.GRAND_FINALE:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=50 if not card.upgrade else 60, hits=1)]
     return [CardEffects()]

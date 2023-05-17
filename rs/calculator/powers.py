@@ -21,6 +21,7 @@ class PowerId(Enum):
     CHOKED = 'choked'
     CONFUSED = 'confusion'              # Bot takes the new costs into account
     CONSTRICTED = 'constricted'
+    CORPSE_EXPLOSION_POWER = 'corpse explosion'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'
     DRAW_CARD = 'draw card'     # It affects a future turn though, so we mostly don't do anything with it.

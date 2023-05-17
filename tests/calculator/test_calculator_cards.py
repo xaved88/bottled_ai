@@ -1040,7 +1040,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_mind_blast_one_in_draw(self):
         state = self.given_state(CardId.MIND_BLAST)
-        state.hand.append(get_card(CardId.RECKLESS_CHARGE))  # This will get played first and put something in the draw pile :D
+        state.hand.append(
+            get_card(CardId.RECKLESS_CHARGE))  # This will get played first and put something in the draw pile :D
         play = self.when_playing_the_whole_hand(state)
         self.see_player_spent_energy(play, 2)
         self.see_player_draw_pile_count(play, 1)
@@ -1166,3 +1167,55 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.NOXIOUS_FUMES_POWER, 2)
+
+    def test_finisher_no_attacks(self):
+        state = self.given_state(CardId.FINISHER)
+        state.hand.append(get_card(CardId.DEFEND_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_finisher_one_attack(self):
+        state = self.given_state(CardId.FINISHER)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_spent_energy(play, 2)
+
+    def test_finisher_two_attacks(self):
+        state = self.given_state(CardId.FINISHER)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 24)
+        self.see_player_spent_energy(play, 3)
+
+    def test_endless_agony(self):
+        state = self.given_state(CardId.ENDLESS_AGONY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 4)
+
+    def test_corpse_explosion(self):
+        state = self.given_state(CardId.CORPSE_EXPLOSION)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.POISON, 6)
+        self.see_enemy_has_power(play, PowerId.CORPSE_EXPLOSION_POWER, 1)
+
+    def test_grand_finale_is_not_playable(self):
+        state = self.given_state(CardId.GRAND_FINALE, targets=2)
+        state.draw_pile.append(get_card(CardId.DEFEND_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_enemy_lost_hp(play, 0, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+
+    def test_grand_finale_is_playable(self):
+        state = self.given_state(CardId.GRAND_FINALE, targets=2)
+        state.draw_pile.clear()
+        play = self.when_playing_the_first_card(state)
+        self.see_player_draw_pile_count(play, 0)
+        self.see_enemy_lost_hp(play, 50, enemy_index=0)
+        self.see_enemy_lost_hp(play, 50, enemy_index=1)
+

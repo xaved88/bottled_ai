@@ -2,7 +2,7 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED
-# 'blue candle' # uh we seem to use this one already despite not having it implemented, i guess because cost changes to 0 or so when we've got it
+# 'blue candle' # uh we seem to use this one already despite not having it implemented, i guess because cost changes to 0 or so when we've got it. make sure comparator likes exhausting curses when we add this
 # 'centennial puzzle'
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
@@ -102,9 +102,9 @@ class RelicId(Enum):
     SINGING_BOWL = 'singing bowl'                   # N/A
     SLAVERS_COLLAR = 'slaver\u0027s collar'         # N/A
     SMILING_MASK = 'smiling mask'                   # N/A
-    SNECKO_EYE = 'snecko eye'                       # Calculator reads the costs itself
+    SNECKO_EYE = 'snecko eye'
     SNECKO_SKULL = 'snecko skull'
-    SOZU = 'sozu'                                   # N/A
+    SPIRIT_POOP = 'spirit poop'                     # N/A
     STONE_CALENDAR = 'stone calendar'
     STRAWBERRY = 'strawberry'                       # N/A
     STRIKE_DUMMY = 'strike dummy'

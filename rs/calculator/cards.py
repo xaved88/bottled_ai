@@ -44,6 +44,7 @@ class CardId(Enum):
     CLOTHESLINE = 'clothesline'
     CLUMSY = 'clumsy'
     CONCENTRATE = 'concentrate'
+    CORPSE_EXPLOSION = 'corpse explosion'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
     CRIPPLING_CLOUD = 'crippling poison'
     DAGGER_THROW = 'dagger throw'
@@ -62,6 +63,7 @@ class CardId(Enum):
     DROPKICK = 'dropkick'
     DODGE_AND_ROLL = 'dodge and roll'
     DOUBT = 'doubt'
+    ENDLESS_AGONY = 'endless agony'  # Note: the special bits of this card aren't relevant for our current calculator.
     ENTRENCH = 'entrench'
     ENVENOM = 'envenom'
     ESCAPE_PLAN = 'escape plan'
@@ -70,6 +72,7 @@ class CardId(Enum):
     FEED = 'feed'
     FIEND_FIRE = 'fiend fire'
     FINESSE = 'finesse'
+    FINISHER = 'finisher'
     FLAME_BARRIER = 'flame barrier'
     FLASH_OF_STEEL = 'flash of steel'
     FLECHETTES = 'flechettes'
@@ -78,6 +81,7 @@ class CardId(Enum):
     FOOTWORK = 'footwork'
     GHOSTLY_ARMOR = 'ghostly armor'
     GOOD_INSTINCTS = 'good instincts'
+    GRAND_FINALE = 'grand finale'
     HAND_OF_GREED = 'handofgreed'  # Weird id alert!
     HEAVY_BLADE = 'heavy blade'
     HEEL_HOOK = 'heel hook'
@@ -444,3 +448,11 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.NOXIOUS_FUMES:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.FINISHER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.ENDLESS_AGONY:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.CORPSE_EXPLOSION:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.SKILL)
+    if card_id == CardId.GRAND_FINALE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)

@@ -193,7 +193,8 @@ def tactician_post_self_discarded_hook(state: HandStateInterface, effect: CardEf
     state.player.energy += 1
 
 
-def tactician_upgraded_post_self_discarded_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+def tactician_upgraded_post_self_discarded_hook(state: HandStateInterface, effect: CardEffectsInterface,
+                                                target_index: int = -1):
     state.player.energy += 2
 
 
@@ -201,7 +202,8 @@ def reflex_post_self_discarded_hook(state: HandStateInterface, effect: CardEffec
     state.draw_cards(2)
 
 
-def reflex_upgraded_post_self_discarded_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+def reflex_upgraded_post_self_discarded_hook(state: HandStateInterface, effect: CardEffectsInterface,
+                                             target_index: int = -1):
     state.draw_cards(3)
 
 
@@ -215,3 +217,7 @@ def bullet_time_post_hook(state: HandStateInterface, effect: CardEffectsInterfac
     for card in state.hand:
         if card.cost != -1:
             card.cost = 0
+
+
+def finisher_pre_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    effect.hits = state.attacks_played_this_turn
