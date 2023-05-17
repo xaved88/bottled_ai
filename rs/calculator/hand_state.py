@@ -212,7 +212,8 @@ class HandState:
                         if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
                             target.add_powers({PowerId.WEAKENED: 1})
                         if self.relics.get(RelicId.SNECKO_SKULL) and PowerId.POISON in applied_powers:
-                            target.add_powers({PowerId.POISON: applied_powers.count(PowerId.POISON)})
+                            for i in range(applied_powers.count(PowerId.POISON)):
+                                target.add_powers({PowerId.POISON: 1})
 
         if card.type == CardType.ATTACK:
             self.attacks_played_this_turn += 1

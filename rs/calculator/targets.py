@@ -95,11 +95,7 @@ class Target:
                         self.powers[PowerId.MALLEABLE] += 1
                         trigger_malleable_block += 1
                     if is_attack and source.powers.get(PowerId.ENVENOM_POWER):
-                        if self.powers.get(PowerId.POISON):
-                            self.powers[PowerId.POISON] += 1
-                        if not self.powers.get(PowerId.POISON):
-                            self.powers[PowerId.POISON] = 1
-
+                        self.add_powers({PowerId.POISON: 1})
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
                         self.current_hp = 0
