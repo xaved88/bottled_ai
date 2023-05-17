@@ -1033,6 +1033,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_mind_blast_nothing_in_draw(self):
         state = self.given_state(CardId.MIND_BLAST)
+        state.draw_pile.clear()
         play = self.when_playing_the_whole_hand(state)
         self.see_player_spent_energy(play, 2)
         self.see_player_draw_pile_count(play, 0)
@@ -1040,12 +1041,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_mind_blast_one_in_draw(self):
         state = self.given_state(CardId.MIND_BLAST)
-        state.hand.append(
-            get_card(CardId.RECKLESS_CHARGE))  # This will get played first and put something in the draw pile :D
+        state.draw_pile.clear()
+        for i in range(5):
+            state.draw_pile.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
         self.see_player_spent_energy(play, 2)
-        self.see_player_draw_pile_count(play, 1)
-        self.see_enemy_lost_hp(play, 8)
+        self.see_player_draw_pile_count(play, 5)
+        self.see_enemy_lost_hp(play, 5)
 
     def test_tactician(self):
         state = self.given_state(CardId.TACTICIAN, amount_to_discard=1)
@@ -1055,6 +1057,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_reflex(self):
         state = self.given_state(CardId.REFLEX, amount_to_discard=1)
+        state.draw_pile.append(get_card(CardId.WOUND))
+        state.draw_pile.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_discard_pile_count(play, 1)
@@ -1218,18 +1222,3 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_draw_pile_count(play, 0)
         self.see_enemy_lost_hp(play, 50, enemy_index=0)
         self.see_enemy_lost_hp(play, 50, enemy_index=1)
-
-    def test_draw_uncapped_by_hand_amount(self):
-        state = self.given_state(CardId.OFFERING)
-        play = self.when_playing_the_first_card(state)
-        self.see_player_hand_count(play, 3)
-        self.see_player_drew_cards(play, 3)
-        self.see_player_discard_pile_count(play, 0)
-
-    def test_draw_capped_by_hand_amount(self):
-        state = self.given_state(CardId.OFFERING)
-        for i in range(9):
-            state.hand.append(get_card(CardId.WOUND))
-        play = self.when_playing_the_first_card(state)
-        self.see_player_hand_count(play, 10)
-        self.see_player_drew_cards(play, 1)

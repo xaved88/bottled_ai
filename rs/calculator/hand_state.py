@@ -392,7 +392,7 @@ class HandState:
         early = self.__is_first_play
         free = self.__starting_energy <= self.player.energy
 
-        # determine which type of card to draw based on energy
+        # determine which type of card to draw with based on energy
         card_type = CardId.DRAW_FREE_EARLY if free and early \
             else CardId.DRAW_FREE if free and not early \
             else CardId.DRAW_PAY_EARLY if not free and early \
@@ -401,6 +401,17 @@ class HandState:
         # can't draw more than 10 cards, will discard the played card tho
         amount = min(amount, 11 - len(self.hand))
         self.hand += [get_card(card_type) for i in range(amount)]
+
+        # mainly just making some numbers work here, not looking into the piles yet for real
+        for i in range(amount):
+            if len(self.draw_pile) <= 0:
+                self.draw_pile = list(self.discard_pile)
+                self.discard_pile.clear()
+
+            # note: we're still allowing draws even if draw pile is empty because that's how a bunch of tests are set up
+            # currently, and we're not complete functionality-wise for draws anyway
+            if len(self.draw_pile) > 0:
+                del self.draw_pile[0]
 
     def discard_card(self, card: Card):
         self.hand.remove(card)

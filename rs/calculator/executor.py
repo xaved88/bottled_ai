@@ -22,7 +22,7 @@ def get_best_battle_path(game_state: GameState, comparator: SbcComparator, max_p
     return best_path
 
 
-def get_best_battle_action(game_state: GameState, comparator: SbcComparator, max_path_count: int = 10_000) -> List[str]:
+def get_best_battle_action(game_state: GameState, comparator: SbcComparator, max_path_count: int = 11_000) -> List[str]:
     path = get_best_battle_path(game_state, comparator, max_path_count)
 
     if path.plays:
