@@ -135,6 +135,8 @@ class WaitingLagavulinSilentComparator(SbcComparator):
             return challenger.incoming_damage < best.incoming_damage
         if best.dead_monsters != challenger.dead_monsters:
             return challenger.dead_monsters > best.dead_monsters
+        if best.lowest_health_monster != challenger.lowest_health_monster:
+            return challenger.lowest_health_monster > best.lowest_health_monster
         if best.player_powers_good != challenger.player_powers_good:
             return challenger.player_powers_good > best.player_powers_good
         if max(1, best.enemy_vulnerable) != max(1, challenger.enemy_vulnerable):
@@ -145,8 +147,6 @@ class WaitingLagavulinSilentComparator(SbcComparator):
             return challenger.enemy_weak > best.enemy_weak
         if best.awkward_shivs != challenger.awkward_shivs:
             return challenger.awkward_shivs < best.awkward_shivs
-        if best.lowest_health_monster != challenger.lowest_health_monster:
-            return challenger.lowest_health_monster > best.lowest_health_monster
         if best.barricaded_block != challenger.barricaded_block:
             return challenger.barricaded_block < best.barricaded_block
         if best.draw_pay_early != challenger.draw_pay_early:
