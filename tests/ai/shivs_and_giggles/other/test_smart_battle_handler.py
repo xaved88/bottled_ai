@@ -89,3 +89,21 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_do_not_attack_escaped_mugger(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_escaped_mugger.json', ['play 2 1'])
+
+    def test_waiting_lagavulin_wait_for_powers(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_with_powers_in_deck.json', ['end'])
+
+    def test_waiting_lagavulin_use_power(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_with_powers_in_hand.json', ['play 4'])
+
+    def test_waiting_lagavulin_no_powers(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_without_powers.json', ['play 3 0'])
+
+    def test_waiting_lagavulin_turn_4(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_4_with_powers.json', ['play 3 0'])
+
+    def test_waiting_lagavulin_event_lagavulin(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_event_lagavulin_with_powers.json', ['play 3 0'])
+
+    def test_waiting_lagavulin_no_powers_but_relic(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_without_powers_but_relic.json', ['end'])
