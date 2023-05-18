@@ -28,9 +28,9 @@ class CardRewardHandler(Handler):
             'dagger spray': 2,
             'dash': 1,
             'escape plan': 2,           # removed if we have snecko eye
-            'prepared': 1,              # removed if we have snecko eye
             'dagger throw': 1,
             'footwork': 1,
+            'prepared': 1,              # removed if we have snecko eye
             'unload': 1,
             'backstab': 1,              # removed if we have snecko eye
             'master of strategy': 1,

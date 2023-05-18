@@ -25,7 +25,7 @@ class SmartBattleHandler(Handler):
         if state.has_monster("Sentry") and len(list(filter(lambda m: not m['is_gone'], state.get_monsters()))) == 3:
             comparator = ThreeSentriesSilentComparator()
         if state.has_monster("Lagavulin") \
-                and state.combat_state()['turn'] <= 3 \
+                and state.combat_state()['turn'] <= 2 \
                 and (state.deck.contains_type(CardType.POWER)
                      or state.deck.contains_cards(["Terror", "Terror+"])
                      or state.has_relic("Warped Tongs")
