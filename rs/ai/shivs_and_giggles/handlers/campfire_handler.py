@@ -20,7 +20,7 @@ class CampfireHandler(Handler):
     def handle(self, state: GameState) -> List[str]:
 
         if 'rest' in state.get_choice_list() \
-                and (state.get_player_health_percentage() <= 0.6 and not pentagraph_will_cover_it(state)) \
+                and (state.get_player_health_percentage() <= 0.6 and not pantograph_will_cover_it(state)) \
                 or state.floor() == 49:
             choice = "rest"
 
@@ -48,7 +48,9 @@ class CampfireHandler(Handler):
         return ["choose " + choice]
 
 
-def pentagraph_will_cover_it(state: GameState) -> bool:
-    if (state.floor() == 15 or state.floor() == 32) and state.get_player_health_percentage() >= 0.4:
+def pantograph_will_cover_it(state: GameState) -> bool:
+    if state.has_relic("Pantograph") \
+            and (state.floor() == 15 or state.floor() == 32) \
+            and state.get_player_health_percentage() >= 0.4:
         return True
     return False

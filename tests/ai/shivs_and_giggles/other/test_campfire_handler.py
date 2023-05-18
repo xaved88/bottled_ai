@@ -8,6 +8,9 @@ class CampfireHandlerTestCase(SgTestHandlerFixture):
     def test_rest(self):
         self.execute_handler_tests('/campfire/campfire_rest.json', ['choose rest'])
 
+    def test_rest_we_do_not_have_pantograph(self):
+        self.execute_handler_tests('/campfire/campfire_rest_without_pantograph_boss.json', ['choose rest'])
+
     def test_smith(self):
         self.execute_handler_tests('/campfire/campfire_smith.json', ['choose smith'])
 
