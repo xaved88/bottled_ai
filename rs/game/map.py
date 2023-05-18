@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.game.path import Path
+from rs.game.path import Path, PathHandlerConfig
 from rs.game.room import RoomType, Room
 from rs.machine.state import GameState
 
@@ -74,9 +74,9 @@ class Map:
     def sort_paths_by_questions_and_shops(self):
         self.paths.sort(key=question_and_shop_count)
 
-    def sort_paths_by_reward_to_survivability(self, state: GameState):
+    def sort_paths_by_reward_to_survivability(self, state: GameState, config: PathHandlerConfig):
         for path in self.paths:
-            path.calculate_reward_survivability(state)
+            path.calculate_reward_survivability(state, config)
         self.paths.sort(key=reward_and_survivability)
 
 

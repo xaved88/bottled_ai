@@ -2,14 +2,32 @@ from typing import List
 
 from config import presentation_mode, p_delay, slow_pathing
 from rs.game.map import Map
+from rs.game.path import PathHandlerConfig
 from rs.game.screen_type import ScreenType
-from rs.helper.logger import log
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 
 class SmartPathHandler(Handler):
+    config = PathHandlerConfig(
+        hallway_fight_base_reward=1,
+        hallway_fight_prayer_wheel=0.3,
+        hallway_question_card_reward=0.15,
+        hallway_fight_gold=15,
+        hallway_fight_health_loss=lambda state: state.game_state()['act'] * 5,
+        elite_base_reward=1,  # this does not include the relic, that's added separately
+        elite_question_card_reward=0.15,
+        elite_fight_gold=30,
+        elite_fight_health_loss=lambda state: (state.game_state()['act'] + 1) * 15,
+        relic_reward=1.5,
+        curse_reward_loss=1.5,
+        upgrade_reward=1.1,
+        event_value_reward=lambda state: 1 if state.game_state()['act'] == 1 else 1.5,
+        gold_at_shop_reward=lambda state, gold_to_spend: gold_to_spend / 100,
+        gold_after_boss_reward=lambda state: state.game_state()['gold'] / 200,
+        survivability_reward_calculation=lambda reward, survivability: reward + (survivability - 1) * 15,
+    )
 
     # maybe configure some preferences here
     def __init__(self):
@@ -25,7 +43,7 @@ class SmartPathHandler(Handler):
         game_map = Map(state.get_map(), current_position, state.game_state()['floor'])
 
         # Sort the paths by our priorities
-        game_map.sort_paths_by_reward_to_survivability(state)
+        game_map.sort_paths_by_reward_to_survivability(state, self.config)
 
         """
         log("---------------", "path_analysis")
