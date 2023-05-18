@@ -6,11 +6,18 @@ from rs.game.screen_type import ScreenType
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
+standard_cards_to_purge: list[str] = [
+        'Strike',
+        'Defend',
+        'Strike+',
+        'Defend+',
+    ]
+
 
 class ShopPurchaseHandler(Handler):
 
     def __init__(self):
-        self.relics = [
+        self.relics_to_buy = [
             'Kunai',
             'Shuriken',
             'Ornamental Fan',
@@ -28,7 +35,7 @@ class ShopPurchaseHandler(Handler):
             'Bronze Scales',
         ]
 
-        self.cards = [
+        self.cards_to_buy = [
             "Accuracy",
             "Blade Dance",
         ]
@@ -90,26 +97,21 @@ class ShopPurchaseHandler(Handler):
 
         # 6. Cards based on list
         deck_card_list = state.get_deck_card_list()
-        for p in self.cards:
+        for p in self.cards_to_buy:
             for card in screen_state['cards']:
                 if card['id'] == p and gold >= card['price']:
                     if p.lower not in deck_card_list:
                         return card['name'].lower()
 
         # 7. Relics based on list
-        for p in self.relics:
+        for p in self.relics_to_buy:
             for relic in screen_state['relics']:
                 if relic['name'] == p and gold >= relic['price']:
                     return relic['name'].lower()
 
         # 8. Purge in general
         # Would be nicer to not essentially duplicate the list from purge_handler.py here but oh well. Note: NAMES here, not IDs.
-        if can_purge and state.deck.contains_cards([
-            'Strike',
-            'Defend',
-            'Strike+',
-            'Defend+',
-        ]):
+        if can_purge and state.deck.contains_cards(standard_cards_to_purge):
             return "purge"
 
         # Nothing we want / can afford, leave.

@@ -1,6 +1,7 @@
 from typing import List
 
 from config import presentation_mode, p_delay
+from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import standard_cards_to_purge
 from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
@@ -39,6 +40,11 @@ class CampfireHandler(Handler):
 
         elif 'smith' in state.get_choice_list():
             choice = 'smith'
+
+        elif 'toke' in state.get_choice_list() \
+                and 'smith' not in state.get_choice_list() \
+                and state.deck.contains_cards(standard_cards_to_purge):
+            choice = "toke"
 
         else:
             choice = "0"
