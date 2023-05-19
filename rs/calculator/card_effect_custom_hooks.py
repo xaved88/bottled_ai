@@ -47,20 +47,6 @@ def immolate_post_hook(state: HandStateInterface, effect: CardEffectsInterface, 
     state.discard_pile.append(get_card(CardId.BURN))
 
 
-def jax_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    if state.player.powers.get(PowerId.STRENGTH):
-        state.player.powers[PowerId.STRENGTH] += 2
-    else:
-        state.player.powers[PowerId.STRENGTH] = 2
-
-
-def jax_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    if state.player.powers.get(PowerId.STRENGTH):
-        state.player.powers[PowerId.STRENGTH] += 3
-    else:
-        state.player.powers[PowerId.STRENGTH] = 3
-
-
 def limit_break_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     if state.player.powers.get(PowerId.STRENGTH):
         state.player.powers[PowerId.STRENGTH] *= 2
@@ -75,13 +61,7 @@ def reckless_charge_post_hook(state: HandStateInterface, effect: CardEffectsInte
 
 
 def power_through_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    # this is hacky, we should actually have a way of drawing specific cards and overflowing...
-    hand_amount = min(2, 10 - len(state.hand))
-    discard_amount = 2 - hand_amount
-    for i in range(hand_amount):
-        state.hand.append(get_card(CardId.WOUND))
-    for i in range(discard_amount):
-        state.discard_pile.append(get_card(CardId.WOUND))
+    state.add_cards_to_hand(get_card(CardId.WOUND), 2)
 
 
 def spot_weakness_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -94,9 +74,7 @@ def spot_weakness_upgraded_post_hook(state: HandStateInterface, effect: CardEffe
 
 def __spot_weakness_post_hook(state: HandStateInterface, target_index: int, amount: int):
     if state.monsters[target_index].hits:
-        if not state.player.powers.get(PowerId.STRENGTH):
-            state.player.powers[PowerId.STRENGTH] = 0
-        state.player.powers[PowerId.STRENGTH] += amount
+        state.player.add_powers({PowerId.STRENGTH: amount}, state.player.relics)
 
 
 def reaper_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -111,46 +89,20 @@ def apotheosis_post_hook(state: HandStateInterface, effect: CardEffectsInterface
 
 
 def blade_dance_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    # this is hacky, we should actually have a way of drawing specific cards and overflowing...
-    shiv_amount = 3
-    available_shivs = min(shiv_amount, 10 - len(state.hand))
-    discarded_shivs = shiv_amount - available_shivs
-    for i in range(available_shivs):
-        state.hand.append(get_card(CardId.SHIV))
-    for i in range(discarded_shivs):
-        state.discard_pile.append(get_card(CardId.SHIV))
+    state.add_cards_to_hand(get_card(CardId.SHIV), 3)
 
 
 def blade_dance_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    # this is hacky, we should actually have a way of drawing specific cards and overflowing...
-    shiv_amount = 4
-    available_shivs = min(shiv_amount, 10 - len(state.hand))
-    discarded_shivs = shiv_amount - available_shivs
-    for i in range(available_shivs):
-        state.hand.append(get_card(CardId.SHIV))
-    for i in range(discarded_shivs):
-        state.discard_pile.append(get_card(CardId.SHIV))
+    state.add_cards_to_hand(get_card(CardId.SHIV), 4)
 
 
 def cloak_and_dagger_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    shiv_amount = 1
-    available_shivs = min(shiv_amount, 10 - len(state.hand))
-    discarded_shivs = shiv_amount - available_shivs
-    for i in range(available_shivs):
-        state.hand.append(get_card(CardId.SHIV))
-    for i in range(discarded_shivs):
-        state.discard_pile.append(get_card(CardId.SHIV))
+    state.add_cards_to_hand(get_card(CardId.SHIV), 1)
 
 
 def cloak_and_dagger_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface,
                                         target_index: int = -1):
-    shiv_amount = 2
-    available_shivs = min(shiv_amount, 10 - len(state.hand))
-    discarded_shivs = shiv_amount - available_shivs
-    for i in range(available_shivs):
-        state.hand.append(get_card(CardId.SHIV))
-    for i in range(discarded_shivs):
-        state.discard_pile.append(get_card(CardId.SHIV))
+    state.add_cards_to_hand(get_card(CardId.SHIV), 2)
 
 
 def heel_hook_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -164,14 +116,14 @@ def storm_of_steel_post_hook(state: HandStateInterface, effect: CardEffectsInter
     amount = len(state.hand)
     for _ in range(amount):
         state.discard_card(state.hand[0])
-    state.hand = [get_card(CardId.SHIV) for _ in range(amount)]
+    state.add_cards_to_hand(get_card(CardId.SHIV), amount)
 
 
 def storm_of_steel_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     amount = len(state.hand)
     for _ in range(amount):
         state.discard_card(state.hand[0])
-    state.hand = [get_card(CardId.SHIV, upgrade=1) for _ in range(amount)]
+    state.add_cards_to_hand(get_card(CardId.SHIV, upgrade=1), amount)
 
 
 def eviscerate_post_others_discarded_hook(card: Card):

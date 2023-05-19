@@ -23,6 +23,7 @@ class HandStateInterface:
     attacks_played_this_turn: int
     # functions
     draw_cards: Callable[[int], None]
+    add_cards_to_hand: Callable[[Card, int], None]
     discard_card: Callable[[Card], None]
 
 

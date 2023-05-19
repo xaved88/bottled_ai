@@ -172,7 +172,7 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
                             draw=3 if not card.upgrade else 5, energy_gain=2)]
     if card.id == CardId.JAX:
         return [CardEffects(target=TargetType.SELF, damage=3, hits=1, blockable=False,
-                            post_hooks=[jax_post_hook if not card.upgrade else jax_upgraded_post_hook])]
+                            applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 3})]
     if card.id == CardId.BODY_SLAM:
         return [CardEffects(target=TargetType.MONSTER, damage=player.block, hits=1)]
     if card.id == CardId.CLASH:

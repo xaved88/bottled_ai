@@ -415,6 +415,15 @@ class HandState:
             if len(self.draw_pile) > 0:
                 del self.draw_pile[0]
 
+    def add_cards_to_hand(self, card: Card, amount: int):
+        amount_that_fits = min(amount, 10 - len(self.hand))
+        amount_that_does_not_fit = amount - amount_that_fits
+
+        for i in range(amount_that_fits):
+            self.hand.append(card)
+        for i in range(amount_that_does_not_fit):
+            self.discard_pile.append(card)
+
     def discard_card(self, card: Card):
         self.hand.remove(card)
         self.discard_pile.append(card)
