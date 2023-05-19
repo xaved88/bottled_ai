@@ -134,17 +134,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 1)
 
     def test_odd_mushroom_reduces_incoming_damage(self):
-        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1})
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1}, relics={RelicId.ODD_MUSHROOM: 1})
         state.monsters[0].damage = 10
         state.monsters[0].hits = 1
-        state.relics[RelicId.ODD_MUSHROOM] = 1
+        # state.relics[RelicId.ODD_MUSHROOM] = 1
         play = self.when_playing_the_first_card(state)
         play.state.end_turn()
         self.see_player_lost_hp(play, 12)
 
     def test_champion_belt_applies_weak(self):
-        state = self.given_state(CardId.BASH)
-        state.relics[RelicId.CHAMPION_BELT] = 1
+        state = self.given_state(CardId.BASH, relics={RelicId.CHAMPION_BELT: 1})
         play = self.when_playing_the_first_card(state)
         self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
         self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
