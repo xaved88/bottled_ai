@@ -32,11 +32,13 @@ class CardId(Enum):
     BLOODLETTING = 'bloodletting'
     BLOOD_FOR_BLOOD = 'blood for blood'
     BLUDGEON = 'bludgeon'
+    BLUR = 'blur'
     BODY_SLAM = 'body slam'
     BULLET_TIME = 'bullet time'
     BURN = 'burn'
     CALTROPS = 'caltrops'
     CARNAGE = 'carnage'
+    CATALYST = 'catalyst'
     CHOKE = 'choke'
     CLASH = 'clash'
     CLEAVE = 'cleave'
@@ -462,3 +464,7 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.PIERCING_WAIL:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.BLUR:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.CATALYST:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL, exhausts=True)

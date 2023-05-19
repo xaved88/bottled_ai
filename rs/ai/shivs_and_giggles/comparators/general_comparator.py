@@ -61,11 +61,11 @@ powers_we_like: List[PowerId] = [
     PowerId.ARTIFACT,
     PowerId.BUFFER,
     PowerId.DEXTERITY,
-    PowerId.ENVENOM_POWER,
+    PowerId.ENVENOM,
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE_PLAYER,
     PowerId.METALLICIZE,
-    PowerId.NOXIOUS_FUMES_POWER,
+    PowerId.NOXIOUS_FUMES,
     PowerId.PLATED_ARMOR,
     PowerId.STRENGTH,
     PowerId.THORNS,
@@ -74,6 +74,7 @@ powers_we_like: List[PowerId] = [
 ]
 
 powers_we_like_less: List[PowerId] = [
+    PowerId.BLUR,
     PowerId.DRAW_CARD,
     PowerId.ENERGIZED,
     PowerId.FLAME_BARRIER,
@@ -82,6 +83,7 @@ powers_we_like_less: List[PowerId] = [
 
 powers_we_dislike: List[PowerId] = [
     PowerId.FRAIL,
+    PowerId.VULNERABLE,
     PowerId.WEAKENED,
 ]
 

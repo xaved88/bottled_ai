@@ -378,16 +378,22 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.POISON, 6)
 
     def test_snecko_skull_and_envenom_power_interaction_simple(self):
-        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.ENVENOM_POWER: 1}, relics={RelicId.SNECKO_SKULL: 1})
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.ENVENOM: 1}, relics={RelicId.SNECKO_SKULL: 1})
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 6)
         self.see_enemy_has_power(play, PowerId.POISON, 2)
 
     def test_snecko_skull_and_envenom_power_interaction_advanced(self):
-        state = self.given_state(CardId.POISONED_STAB, player_powers={PowerId.ENVENOM_POWER: 1}, relics={RelicId.SNECKO_SKULL: 1})
+        state = self.given_state(CardId.POISONED_STAB, player_powers={PowerId.ENVENOM: 1}, relics={RelicId.SNECKO_SKULL: 1})
         state.monsters[0].powers[PowerId.POISON] = 1
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 6)
+        self.see_enemy_has_power(play, PowerId.POISON, 7)
+
+    def test_snecko_skull_and_catalyst_interaction(self):
+        state = self.given_state(CardId.CATALYST, relics={RelicId.SNECKO_SKULL: 1})
+        state.monsters[0].powers[PowerId.POISON] = 3
+        play = self.when_playing_the_first_card(state)
         self.see_enemy_has_power(play, PowerId.POISON, 7)
 
     def test_shuriken_increments(self):

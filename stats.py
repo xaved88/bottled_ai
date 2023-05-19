@@ -14,6 +14,7 @@ colorless_cards = 45
 cards_total = cards_per_character * characters_total + colorless_cards
 powers_total = 133
 relics_total = 177
+
 print("\n")
 print("Implementation status:")
 print("Chars:    " + str(characters_implemented) + " (" + str(int(characters_implemented/characters_total*100)) + "%)")

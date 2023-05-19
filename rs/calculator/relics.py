@@ -3,6 +3,7 @@ from enum import Enum
 
 # NOT IMPLEMENTED
 # 'blue candle' # uh we seem to use this one already despite not having it implemented, i guess because cost changes to 0 or so when we've got it. make sure comparator likes exhausting curses when we add this
+# 'calipers'
 # 'centennial puzzle'
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold

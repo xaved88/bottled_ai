@@ -1167,13 +1167,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.ENVENOM)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
-        self.see_player_has_power(play, PowerId.ENVENOM_POWER, 1)
+        self.see_player_has_power(play, PowerId.ENVENOM, 1)
 
     def test_noxious_fumes(self):
         state = self.given_state(CardId.NOXIOUS_FUMES)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_has_power(play, PowerId.NOXIOUS_FUMES_POWER, 2)
+        self.see_player_has_power(play, PowerId.NOXIOUS_FUMES, 2)
 
     def test_finisher_no_attacks(self):
         state = self.given_state(CardId.FINISHER)
@@ -1239,3 +1239,24 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_enemy_has_power(play, PowerId.STRENGTH, -6, enemy_index=0)
         self.see_enemy_has_power(play, PowerId.STRENGTH, -6, enemy_index=1)
+
+    def test_blur(self):
+        state = self.given_state(CardId.BLUR)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 5)
+        self.see_player_has_power(play, PowerId.BLUR, 1)
+
+    def test_catalyst(self):
+        state = self.given_state(CardId.CATALYST)
+        state.monsters[0].powers[PowerId.POISON] = 2
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_has_power(play, PowerId.POISON, 4)
+
+    def test_catalyst_upgraded(self):
+        state = self.given_state(CardId.CATALYST, upgrade=1)
+        state.monsters[0].powers[PowerId.POISON] = 2
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_has_power(play, PowerId.POISON, 6)

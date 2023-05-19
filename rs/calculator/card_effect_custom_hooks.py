@@ -221,3 +221,17 @@ def bullet_time_post_hook(state: HandStateInterface, effect: CardEffectsInterfac
 
 def finisher_pre_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     effect.hits = state.attacks_played_this_turn
+
+
+def catalyst_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    if target_index > -1:
+        if state.monsters[target_index].powers.get(PowerId.POISON):
+            base_poison = state.monsters[target_index].powers.get(PowerId.POISON)
+            state.monsters[target_index].add_powers({PowerId.POISON: base_poison}, state.player.relics)
+
+
+def catalyst_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    if target_index > -1:
+        if state.monsters[target_index].powers.get(PowerId.POISON):
+            base_poison = state.monsters[target_index].powers.get(PowerId.POISON)
+            state.monsters[target_index].add_powers({PowerId.POISON: base_poison * 2}, state.player.relics)

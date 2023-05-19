@@ -363,9 +363,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.OUTMANEUVER:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 2} if not card.upgrade else {PowerId.ENERGIZED: 3})]
     if card.id == CardId.ENVENOM:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENVENOM_POWER: 1})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENVENOM: 1})]
     if card.id == CardId.NOXIOUS_FUMES:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NOXIOUS_FUMES_POWER: 2 if not card.upgrade else 3})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NOXIOUS_FUMES: 2 if not card.upgrade else 3})]
     if card.id == CardId.FINISHER:
         return [CardEffects(target=TargetType.MONSTER, damage=6 if not card.upgrade else 8, hits=0, pre_hooks=[finisher_pre_hook])]
     if card.id == CardId.ENDLESS_AGONY:
@@ -379,4 +379,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.PIERCING_WAIL:
         return [CardEffects(target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.STRENGTH: -6 if not card.upgrade else -8})]
+    if card.id == CardId.BLUR:
+        return [CardEffects(target=TargetType.SELF, block=5 if not card.upgrade else 8, applies_powers={PowerId.BLUR: 1})]
+    if card.id == CardId.CATALYST:
+        return [CardEffects(target=TargetType.MONSTER, post_hooks=[catalyst_post_hook] if not card.upgrade else [catalyst_upgraded_post_hook])]
     return [CardEffects()]

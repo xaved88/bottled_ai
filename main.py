@@ -12,7 +12,7 @@ take_screenshots = False  # Functionality is disabled on Mac and this value won'
 run_seeds = [
    # '10HTDAVER34YR',
 ]
-run_amount = 20
+run_amount = 1
 strategy = SHIVS_AND_GIGGLES
 
 if __name__ == "__main__":
