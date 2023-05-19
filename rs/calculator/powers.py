@@ -25,6 +25,7 @@ class PowerId(Enum):
     CORPSE_EXPLOSION_POWER = 'corpse explosion'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'
+    DOUBLE_DAMAGE = 'double damage'
     DRAW_CARD = 'draw card'     # It affects a future turn though, so we mostly don't do anything with it.
     DRAW_REDUCTION = 'draw reduction'   # It affects a future turn though, so we mostly don't do anything with it.
     ENERGIZED = 'energized'           # It affects a future turn though, so we mostly don't do anything with it.
@@ -45,6 +46,7 @@ class PowerId(Enum):
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
     PEN_NIB_POWER = 'pen nib'           # Covered by Pen Nib relic counting
+    PHANTASMAL = 'phantasmal'
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'

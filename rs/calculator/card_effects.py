@@ -383,4 +383,6 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, block=5 if not card.upgrade else 8, applies_powers={PowerId.BLUR: 1})]
     if card.id == CardId.CATALYST:
         return [CardEffects(target=TargetType.MONSTER, post_hooks=[catalyst_post_hook] if not card.upgrade else [catalyst_upgraded_post_hook])]
+    if card.id == CardId.PHANTASMAL_KILLER:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.PHANTASMAL: 1})]
     return [CardEffects()]

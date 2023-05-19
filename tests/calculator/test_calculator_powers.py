@@ -686,3 +686,19 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_has_power(play, PowerId.DEXTERITY, -4)
+
+    def test_double_damage_doubles_damage(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.DOUBLE_DAMAGE: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+
+    def test_double_damage_doubles_damage_multi_hit(self):
+        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.DOUBLE_DAMAGE: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 20)
+
+    def test_double_damage_against_intagible(self):
+        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.DOUBLE_DAMAGE: 1})
+        state.monsters[0].powers[PowerId.INTANGIBLE_ENEMY] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 2)

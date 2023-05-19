@@ -96,6 +96,9 @@ class HandState:
         if damage_additive_bonus:
             for effect in effects:
                 effect.damage += damage_additive_bonus
+        if self.player.powers.get(PowerId.DOUBLE_DAMAGE, 0) and card.type == CardType.ATTACK:
+            for effect in effects:
+                effect.damage *= 2
         if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
             for effect in effects:
                 effect.damage *= 2

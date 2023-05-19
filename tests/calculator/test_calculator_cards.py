@@ -1260,3 +1260,9 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_has_power(play, PowerId.POISON, 6)
+
+    def test_phantasmal_killer(self):
+        state = self.given_state(CardId.PHANTASMAL_KILLER)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.PHANTASMAL, 1)

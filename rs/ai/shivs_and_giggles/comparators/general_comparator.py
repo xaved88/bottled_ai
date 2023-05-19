@@ -66,6 +66,7 @@ powers_we_like: List[PowerId] = [
     PowerId.INTANGIBLE_PLAYER,
     PowerId.METALLICIZE,
     PowerId.NOXIOUS_FUMES,
+    PowerId.PHANTASMAL,
     PowerId.PLATED_ARMOR,
     PowerId.STRENGTH,
     PowerId.THORNS,
