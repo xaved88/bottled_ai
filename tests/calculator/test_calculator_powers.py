@@ -674,3 +674,15 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_hp_is(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play, state.monsters[0].max_hp * state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER], enemy_index=1)
+
+    def test_wraith_form_power_decreases_dexterity_on_turn_end(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.WRAITH_FORM_POWER: 1})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_power(play, PowerId.DEXTERITY, -1)
+
+    def test_wraith_form_power_dexterity_losses_stack(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.WRAITH_FORM_POWER: 1, PowerId.DEXTERITY: -3})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_power(play, PowerId.DEXTERITY, -4)

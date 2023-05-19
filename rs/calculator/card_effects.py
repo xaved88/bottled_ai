@@ -374,4 +374,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 6 if not card.upgrade else 9, PowerId.CORPSE_EXPLOSION_POWER: 1})]
     if card.id == CardId.GRAND_FINALE:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=50 if not card.upgrade else 60, hits=1)]
+    if card.id == CardId.WRAITH_FORM:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE_PLAYER: 2 if not card.upgrade else 3, PowerId.WRAITH_FORM_POWER: 1})]
+    if card.id == CardId.PIERCING_WAIL:
+        return [CardEffects(target=TargetType.ALL_MONSTERS,
+                            applies_powers={PowerId.STRENGTH: -6 if not card.upgrade else -8})]
     return [CardEffects()]

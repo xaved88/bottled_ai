@@ -506,6 +506,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_reaper(self):
         state = self.given_state(CardId.REAPER, targets=2)
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
         self.see_enemy_lost_hp(play, 4)
         self.see_enemy_lost_hp(play, 4, 1)
         self.see_player_lost_hp(play, -8)
@@ -520,11 +521,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
     def test_bandage_up(self):
         state = self.given_state(CardId.BANDAGE_UP)
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
         self.see_player_lost_hp(play, -4)
 
     def test_dark_shackles(self):
         state = self.given_state(CardId.DARK_SHACKLES)
         play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
         self.see_enemy_has_power(play, PowerId.STRENGTH, -9)
 
     def test_flash_of_steel(self):
@@ -1222,3 +1225,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_draw_pile_count(play, 0)
         self.see_enemy_lost_hp(play, 50, enemy_index=0)
         self.see_enemy_lost_hp(play, 50, enemy_index=1)
+
+    def test_wraith_form(self):
+        state = self.given_state(CardId.WRAITH_FORM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_has_power(play, PowerId.INTANGIBLE_PLAYER, 2)
+        self.see_player_has_power(play, PowerId.WRAITH_FORM_POWER, 1)
+
+    def test_piercing_wail(self):
+        state = self.given_state(CardId.PIERCING_WAIL, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, -6, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, -6, enemy_index=1)

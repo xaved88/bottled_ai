@@ -348,6 +348,10 @@ class HandState:
                 monster.powers[PowerId.POISON] -= 1
                 monster.inflict_damage(monster, poison, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
 
+        # wraith form
+        if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
+            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)})
+
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
         for monster in self.monsters:

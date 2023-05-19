@@ -55,11 +55,12 @@ class PowerId(Enum):
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     THIEVERY = 'thievery'               # N/A
     THORNS = 'thorns'
+    THOUSAND_CUTS = 'thousand cuts'
     TIME_WARP = 'time warp'
     VIGOR = 'vigor'
     VULNERABLE = 'vulnerable'
     WEAKENED = 'weakened'
-    THOUSAND_CUTS = 'thousand cuts'
+    WRAITH_FORM_POWER = 'wraith form'
 
 
 Powers = dict[PowerId: int]
@@ -75,6 +76,7 @@ DEBUFFS: List[PowerId] = [
     PowerId.POISON,
     PowerId.VULNERABLE,
     PowerId.WEAKENED,
+    PowerId.WRAITH_FORM_POWER
 ]
 
 DEBUFFS_WHEN_NEGATIVE: List[PowerId] = [

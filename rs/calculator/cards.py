@@ -107,6 +107,7 @@ class CardId(Enum):
     PANACEA = 'panacea'
     PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
+    PIERCING_WAIL = 'piercing wail'
     POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
     POWER_THROUGH = 'power through'
@@ -147,6 +148,7 @@ class CardId(Enum):
     VOID = 'void'
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
+    WRAITH_FORM = 'wraith form v2'  # Weird id alert!
 
 
 class Card:
@@ -456,3 +458,7 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.SKILL)
     if card_id == CardId.GRAND_FINALE:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.WRAITH_FORM:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.PIERCING_WAIL:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL, exhausts=True)
