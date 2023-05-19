@@ -1,5 +1,4 @@
 import math
-from itertools import count
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
@@ -7,7 +6,7 @@ from rs.calculator.cards import Card, CardId, get_card
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
-from rs.calculator.targets import Target, Player, Monster
+from rs.calculator.targets import Player, Monster
 from rs.game.card import CardType
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
@@ -51,9 +50,9 @@ class HandState:
             if not is_card_playable(card, self.player, self.hand, len(self.draw_pile)):
                 continue
             if card.needs_target:
-                for target_idx, target in enumerate(self.monsters):
-                    if can_card_target_target(card, target):
-                        plays.append((card_idx, target_idx))
+                for monster_idx, monster in enumerate(self.monsters):
+                    if can_card_target_monster(card, monster):
+                        plays.append((card_idx, monster_idx))
             else:
                 plays.append((card_idx, -1))
 
@@ -410,7 +409,7 @@ class HandState:
         # mainly just making some numbers work here, not looking into the piles yet for real
         for i in range(amount):
             if len(self.draw_pile) <= 0:
-                self.draw_pile = list(self.discard_pile)
+                self.draw_pile = self.discard_pile.copy()
                 self.discard_pile.clear()
 
             # note: we're still allowing draws even if draw pile is empty because that's how a bunch of tests are set up
@@ -476,14 +475,14 @@ def is_card_playable(card: Card, player: Player, hand: List[Card], draw_pile_cou
     return True
 
 
-def can_card_target_target(card: Card, target: Target) -> bool:
+def can_card_target_monster(card: Card, monster: Monster) -> bool:
     if not card.needs_target:
         return False  # should never be reached, but still :shrug:
 
-    if target.current_hp <= 0:
+    if monster.current_hp <= 0:
         return False
 
-    if target.is_gone:
+    if monster.is_gone:
         return False
 
     return True
