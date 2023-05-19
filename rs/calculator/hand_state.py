@@ -203,16 +203,11 @@ class HandState:
             # Apply any powers from the card
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
-                    self.player.add_powers(effect.applies_powers)
+                    self.player.add_powers(effect.applies_powers, self.player.relics)
                 else:
                     targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
                     for target in targets:
-                        applied_powers = target.add_powers(pickle_deepcopy(effect.applies_powers))
-                        if self.relics.get(RelicId.CHAMPION_BELT) and PowerId.VULNERABLE in applied_powers:
-                            target.add_powers({PowerId.WEAKENED: 1})
-                        if self.relics.get(RelicId.SNECKO_SKULL) and PowerId.POISON in applied_powers:
-                            for i in range(applied_powers.count(PowerId.POISON)):
-                                target.add_powers({PowerId.POISON: 1})
+                        target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics)
 
         if card.type == CardType.ATTACK:
             self.attacks_played_this_turn += 1
@@ -230,13 +225,13 @@ class HandState:
         if RelicId.SHURIKEN in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.SHURIKEN] += 1
             if self.relics[RelicId.SHURIKEN] >= 3:
-                self.player.add_powers({PowerId.STRENGTH: 1})
+                self.player.add_powers({PowerId.STRENGTH: 1}, self.player.relics)
                 self.relics[RelicId.SHURIKEN] -= 3
 
         if RelicId.KUNAI in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.KUNAI] += 1
             if self.relics[RelicId.KUNAI] >= 3:
-                self.player.add_powers({PowerId.DEXTERITY: 1})
+                self.player.add_powers({PowerId.DEXTERITY: 1}, self.player.relics)
                 self.relics[RelicId.KUNAI] -= 3
 
         if RelicId.NUNCHAKU in self.relics and card.type == CardType.ATTACK:
@@ -333,12 +328,12 @@ class HandState:
         # doubt
         doubt_count = len([1 for c in self.hand if c.id == CardId.DOUBT])
         if doubt_count:
-            self.player.add_powers({PowerId.WEAKENED: doubt_count})
+            self.player.add_powers({PowerId.WEAKENED: doubt_count}, self.player.relics)
 
         # shame
         shame_count = len([1 for c in self.hand if c.id == CardId.SHAME])
         if shame_count:
-            self.player.add_powers({PowerId.FRAIL: shame_count})
+            self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics)
 
         # poison
         for monster in self.monsters:
@@ -349,7 +344,7 @@ class HandState:
 
         # wraith form
         if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
-            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)})
+            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics)
 
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25

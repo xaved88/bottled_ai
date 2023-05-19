@@ -94,10 +94,8 @@ class Target:
                     if is_attack and self.powers.get(PowerId.MALLEABLE):
                         self.powers[PowerId.MALLEABLE] += 1
                         trigger_malleable_block += 1
-                    if is_attack and source.powers.get(PowerId.ENVENOM_POWER):
-                        applied_powers = self.add_powers({PowerId.POISON: 1})
-                        if source.relics.get(RelicId.SNECKO_SKULL) and PowerId.POISON in applied_powers:
-                            self.add_powers({PowerId.POISON: 1})
+                    if is_attack and source.powers.get(PowerId.ENVENOM):
+                        self.add_powers({PowerId.POISON: 1}, source.relics)
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
                         self.current_hp = 0
@@ -134,11 +132,11 @@ class Target:
             self.hits = 0
             del self.powers[PowerId.SPLIT]
         if self.powers.get(PowerId.SHIFTING):
-            self.add_powers({PowerId.STRENGTH: -health_damage_dealt})
+            self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics)
         return (health_damage_dealt)
 
     # returns a list of powerIds that were applied and not blocked by artifacts
-    def add_powers(self, powers: Powers) -> List[PowerId]:
+    def add_powers(self, powers: Powers, relics: Relics) -> List[PowerId]:
         applied_powers = []
         for power in powers:
             if self.powers.get(PowerId.ARTIFACT) and \
@@ -149,10 +147,21 @@ class Target:
                     self.powers[PowerId.ARTIFACT] -= 1
                 continue
             applied_powers.append(power)
+
             if power in self.powers:
                 self.powers[power] += powers[power]
             else:
                 self.powers[power] = powers[power]
+
+            if relics:
+                if relics.get(RelicId.SNECKO_SKULL) and power == PowerId.POISON:
+                    self.powers[PowerId.POISON] += 1
+                if relics.get(RelicId.CHAMPION_BELT) and power == PowerId.VULNERABLE:
+                    if PowerId.WEAKENED in self.powers:
+                        self.powers[PowerId.WEAKENED] += 1
+                    else:
+                        self.powers[PowerId.WEAKENED] = 1
+
         return applied_powers
 
     def get_state_string(self) -> str:
