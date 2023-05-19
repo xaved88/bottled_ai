@@ -155,14 +155,14 @@ class BigFightSilentComparator(SbcComparator):
             return challenger.draw_pay_early > best.draw_pay_early
         if best.draw_pay != challenger.draw_pay:
             return challenger.draw_pay > best.draw_pay
+        if best.player_powers_less_good != challenger.player_powers_less_good:
+            return challenger.player_powers_less_good > best.player_powers_less_good
         if best.player_powers_bad != challenger.player_powers_bad:
             return challenger.player_powers_bad < best.player_powers_bad
         if best.incoming_damage != challenger.incoming_damage:
             return challenger.incoming_damage < best.incoming_damage
         if best.bad_cards_exhausted != challenger.bad_cards_exhausted:
             return challenger.bad_cards_exhausted > best.bad_cards_exhausted
-        if best.player_powers_less_good != challenger.player_powers_less_good:
-            return challenger.player_powers_less_good > best.player_powers_less_good
         if best.saved_for_later != challenger.saved_for_later:
             return challenger.saved_for_later > best.saved_for_later
         if best.energy != challenger.energy:
