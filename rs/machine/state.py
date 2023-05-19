@@ -63,25 +63,15 @@ class GameState:
     def get_potions(self):
         return self.game_state()["potions"]
 
-    def get_potions_by_name(self):
+    def get_held_potion_names(self):
         potion_names = []
         for pot in self.game_state()["potions"]:
             potion_names.append(pot["name"])
         potion_names = [potion_name.lower() for potion_name in potion_names]
         return potion_names
 
-    def get_reward_potions_by_name(self):
+    def get_reward_potion_names(self):
         potion_names = []
-        for reward in self.game_state()["screen_state"]["rewards"]:
-            if reward["reward_type"] == "POTION":
-                potion_names.append(reward["potion"]["name"])
-        potion_names = [potion_name.lower() for potion_name in potion_names]
-        return potion_names
-
-    def get_all_available_potions_by_name(self):
-        potion_names = []
-        for pot in self.game_state()["potions"]:
-            potion_names.append(pot["name"])
         for reward in self.game_state()["screen_state"]["rewards"]:
             if reward["reward_type"] == "POTION":
                 potion_names.append(reward["potion"]["name"])

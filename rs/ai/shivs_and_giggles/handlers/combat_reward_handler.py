@@ -63,7 +63,7 @@ class CombatRewardHandler(Handler):
 
         all_available_potions = []
         # Chug a Fruit Juice straight away
-        for idx, pot in enumerate(state.get_potions_by_name()):
+        for idx, pot in enumerate(state.get_held_potion_names()):
             if pot == 'fruit juice':
                 if presentation_mode:
                     return [p_delay, "potion use " + str(idx), p_delay_s]
@@ -88,12 +88,13 @@ class CombatRewardHandler(Handler):
 
         elif 'potion' in state.get_choice_list():
             if state.are_potions_full():
+                all_potions = state.get_held_potion_names() + state.get_reward_potion_names()
                 for least_desired_potion in desired_potions:
-                    if least_desired_potion not in state.get_all_available_potions_by_name():
+                    if least_desired_potion not in all_potions:
                         continue
-                    if least_desired_potion in state.get_reward_potions_by_name():
+                    if least_desired_potion in state.get_reward_potion_names():
                         break
-                    for idx, pot in enumerate(state.get_potions_by_name()):
+                    for idx, pot in enumerate(state.get_held_potion_names()):
                         if pot == least_desired_potion:
                             return ["wait 30", "potion discard " + str(idx)]
 
