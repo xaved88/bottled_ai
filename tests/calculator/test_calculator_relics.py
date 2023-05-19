@@ -428,6 +428,47 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_relic_value(play, RelicId.KUNAI, 1)
 
+    def test_hand_drill_provides_vulnerable_on_block_break(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.HAND_DRILL: 1})
+        state.monsters[0].block = 6
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_block_is(play, 0)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
+
+    def test_hand_drill_provides_vulnerable_on_block_over_break(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.HAND_DRILL: 1})
+        state.monsters[0].block = 4
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_block_is(play, 0)
+        self.see_enemy_lost_hp(play, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
+
+    def test_hand_drill_provides_no_vulnerable_when_block_unsuccessfully_broken(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.HAND_DRILL: 1})
+        state.monsters[0].block = 8
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_block_is(play, 2)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+
+    def test_hand_drill_provides_no_vulnerable_when_block_was_not_present(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.HAND_DRILL: 1})
+        state.monsters[0].block = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_block_is(play, 0)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+
+    def test_hand_drill_provides_no_vulnerable_when_block_bypassed(self):
+        state = self.given_state(CardId.DEADLY_POISON, relics={RelicId.HAND_DRILL: 1})
+        state.monsters[0].block = 8
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_block_is(play, 8)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))

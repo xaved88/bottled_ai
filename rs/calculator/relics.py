@@ -55,6 +55,7 @@ class RelicId(Enum):
     GOLDEN_IDOL = 'golden idol'                     # N/A
     GREMLIN_HORN = 'gremlin horn'
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
+    HAND_DRILL = 'hand drill'
     HORN_CLEAT = 'horn cleat'                       # We get block from state
     HOVERING_KITE = 'hovering kite'
     ICE_CREAM = 'ice cream'                         # We only look at current turn so far, so get this as bonus.

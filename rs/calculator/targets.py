@@ -58,6 +58,8 @@ class Target:
                 else:
                     hit_damage -= self.block
                     self.block = 0
+                    if source.relics.get(RelicId.HAND_DRILL):
+                        self.add_powers({PowerId.VULNERABLE: 2}, source.relics)
 
             if hit_damage > 0:
                 if self.relics.get(RelicId.TORII) and hit_damage < 6:
