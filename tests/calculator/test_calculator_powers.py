@@ -504,6 +504,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 3)
         self.see_enemy_has_power(play, PowerId.POISON, 2)
 
+    def test_poison_kills_and_so_prevents_damage(self):
+        state = self.given_state(CardId.WOUND)
+        state.monsters[0].powers[PowerId.POISON] = 3
+        state.monsters[0].current_hp = 3
+        state.monsters[0].damage = 7
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_hp_is(play, 0)
+        self.see_player_lost_hp(play, 0)
+
     def test_damaging_shifter_reduces_incoming_damage(self):
         state = self.given_state(CardId.STRIKE_R)
         state.monsters[0].powers[PowerId.SHIFTING] = 1

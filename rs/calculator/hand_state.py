@@ -268,12 +268,6 @@ class HandState:
         if RelicId.UNCEASING_TOP in self.relics and len(self.hand) == 0:
             self.draw_cards(1)
 
-        # minion battles -> make sure a non-minion is alive, otherwise kill them all.
-        if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
-            if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
-                for m in self.monsters:
-                    m.current_hp = 0
-
         self.kill_monsters()
 
     def transform_from_discard(self, card: Card, index: int):
@@ -282,6 +276,8 @@ class HandState:
         pass
 
     def end_turn(self):
+
+        # relics and powers
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
             self.player.block += 6
 
@@ -290,50 +286,40 @@ class HandState:
                 if monster.current_hp > 0:
                     monster.inflict_damage(self.player, 52, 1, vulnerable_modifier=1, is_attack=False)
 
-        # special end of turn
         self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
         self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
 
-        # get rid of ethereals
-        for c in self.hand:
-            if c.ethereal:
-                self.exhaust_pile.append(c)
+        if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
+            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics)
 
-        # regret
-        # I think this might technically be off by 1 if there are #manyregrets
-        regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])
+        if self.player.powers.get(PowerId.CONSTRICTED, 0):
+            self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
+                                       vulnerable_modifier=1, is_attack=False)
+
+        # curses and burns
+        regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])  # might technically be off by 1 if there are #manyregrets
         if regret_count:
             self.player.inflict_damage(self.player, len(self.hand), regret_count, blockable=False, vulnerable_modifier=1,
                                        is_attack=False)
 
-        # decay
         decay_count = len([1 for c in self.hand if c.id == CardId.DECAY])
         if decay_count:
             self.player.inflict_damage(self.player, 2, decay_count, vulnerable_modifier=1,
                                        is_attack=False)
 
-        # burn
         burn_count = len([1 for c in self.hand if c.id == CardId.BURN and c.upgrade == 0])
         if burn_count:
             self.player.inflict_damage(self.player, 2, burn_count, vulnerable_modifier=1,
                                        is_attack=False)
-
         burn_upgraded_count = len([1 for c in self.hand if c.id == CardId.BURN and c.upgrade == 1])
         if burn_upgraded_count:
             self.player.inflict_damage(self.player, 4, burn_upgraded_count, vulnerable_modifier=1,
                                        is_attack=False)
 
-        # constricted
-        if self.player.powers.get(PowerId.CONSTRICTED, 0):
-            self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
-                                       vulnerable_modifier=1, is_attack=False)
-
-        # doubt
         doubt_count = len([1 for c in self.hand if c.id == CardId.DOUBT])
         if doubt_count:
             self.player.add_powers({PowerId.WEAKENED: doubt_count}, self.player.relics)
 
-        # shame
         shame_count = len([1 for c in self.hand if c.id == CardId.SHAME])
         if shame_count:
             self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics)
@@ -345,9 +331,10 @@ class HandState:
                 monster.powers[PowerId.POISON] -= 1
                 monster.inflict_damage(monster, poison, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
 
-        # wraith form
-        if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
-            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics)
+        # get rid of ethereal cards
+        for c in self.hand:
+            if c.ethereal:
+                self.exhaust_pile.append(c)
 
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
@@ -359,7 +346,7 @@ class HandState:
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
-        # last check in case there were some more monsters that died
+        # last check in case there were some more monsters that should die
         self.kill_monsters()
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
@@ -446,6 +433,13 @@ class HandState:
             self.player.energy += 1
 
     def kill_monsters(self):
+        # minion battles -> make sure a non-minion is alive, otherwise kill them all.
+        if [m for m in self.monsters if m.powers.get(PowerId.MINION)]:
+            if not [m for m in self.monsters if not m.powers.get(PowerId.MINION) and m.current_hp > 0]:
+                for m in self.monsters:
+                    m.current_hp = 0
+
+        # normal killing
         for m in self.monsters:
             if m.current_hp <= 0 and not m.is_gone:
                 m.damage = 0
