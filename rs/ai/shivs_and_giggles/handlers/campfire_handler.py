@@ -20,43 +20,33 @@ class CampfireHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
 
-        if 'rest' in state.get_choice_list() \
-                and (state.get_player_health_percentage() <= 0.6 and not pantograph_will_cover_it(state)) \
-                or state.floor() == 49:
+        can_rest = 'rest' in state.get_choice_list()
+        can_toke = 'toke' in state.get_choice_list()
+        can_lift = 'lift' in state.get_choice_list()
+        can_dig = 'dig' in state.get_choice_list()
+        can_smith = 'smith' in state.get_choice_list()
+
+        worth_healing = state.get_player_health_percentage() <= 0.6
+        pantograph_will_cover_it = state.has_relic("Pantograph") \
+                                   and (state.floor() == 15 or state.floor() == 32) \
+                                   and state.get_player_health_percentage() >= 0.4
+        important_upgrade_available = state.deck.contains_cards(high_prio_upgrades) and can_smith
+
+        choice = "0"
+
+        if can_rest and (worth_healing and not pantograph_will_cover_it) or state.floor() == 49:
             choice = "rest"
-
-        elif 'toke' in state.get_choice_list() \
-                and state.deck.contains_type(CardType.CURSE):
+        elif can_toke and state.deck.contains_curses():
             choice = "toke"
-
-        elif 'lift' in state.get_choice_list() \
-                and state.get_relic_counter("Girya") < 2 \
-                and not (state.deck.contains_cards(high_prio_upgrades) and 'smith' in state.get_choice_list()):
+        elif can_lift and not important_upgrade_available and state.get_relic_counter("Girya") < 2:
             choice = "lift"
-
-        elif 'dig' in state.get_choice_list() \
-                and not (state.deck.contains_cards(high_prio_upgrades) and 'smith' in state.get_choice_list()):
+        elif can_dig and not important_upgrade_available:
             choice = "dig"
-
-        elif 'smith' in state.get_choice_list():
+        elif can_smith:
             choice = 'smith'
-
-        elif 'toke' in state.get_choice_list() \
-                and 'smith' not in state.get_choice_list() \
-                and state.deck.contains_cards(standard_cards_to_purge):
+        elif can_toke and state.deck.contains_cards(standard_cards_to_purge):
             choice = "toke"
-
-        else:
-            choice = "0"
 
         if presentation_mode:
             return [p_delay, "choose " + choice, p_delay]
         return ["choose " + choice]
-
-
-def pantograph_will_cover_it(state: GameState) -> bool:
-    if state.has_relic("Pantograph") \
-            and (state.floor() == 15 or state.floor() == 32) \
-            and state.get_player_health_percentage() >= 0.4:
-        return True
-    return False

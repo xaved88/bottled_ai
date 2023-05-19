@@ -13,6 +13,12 @@ class Deck:
                 return True
         return False
 
+    def contains_curses(self) -> bool:
+        for card in self.cards:
+            if card.type == CardType.CURSE:
+                return True
+        return False
+
     def contains_cards(self, names: List[str]) -> bool:
         for card in self.cards:
             if card.name in names:

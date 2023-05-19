@@ -69,7 +69,7 @@ class ShopPurchaseHandler(Handler):
                 return "shuriken"
 
         # 2. Purge curses
-        if can_purge and state.deck.contains_type(CardType.CURSE):
+        if can_purge and state.deck.contains_curses():
             return "purge"
 
         # 3. Kunai/Shuriken

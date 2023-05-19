@@ -18,7 +18,7 @@ class ChestHandler(Handler):
     def handle(self, state: GameState) -> List[str]:
         if state.has_relic("Cursed Key") and state.get_relic_counter("Omamori") >= 1:
             return ["choose 0", "wait 30"]
-        if state.has_relic("Cursed Key") and state.deck.contains_type(CardType.CURSE):
+        if state.has_relic("Cursed Key") and state.deck.contains_curses():
             return ["proceed"]
         if presentation_mode:
             return [p_delay_s, "choose 0", "wait 30"]
