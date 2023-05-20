@@ -90,25 +90,23 @@ class CardRewardHandler(Handler):
                 continue
             if presentation_mode:
                 return [p_delay, "choose " + str(choice_list.index(desired_card)), "wait 30"]
-            return ["wait 30", "choose " + str(choice_list.index(desired_card)), "wait 30"]
+            return ["choose " + str(choice_list.index(desired_card)), "wait 30"]
 
         # exiting after not finding what we want
+        exit_choice = "undecided"
 
         if 'bowl' in choice_list:
-            if presentation_mode:
-                return [p_delay, "choose bowl", p_delay_s]
-            return ["wait 30", "choose bowl"]
+            exit_choice = "choose bowl"
+        elif not state.has_command(Command.SKIP):  # Mainly (only?) relevant for the Colorless potion
+            exit_choice = "choose 0"
+        elif state.game_state()["room_phase"] == "EVENT" or state.game_state()["room_phase"] == "COMBAT":
+            exit_choice = "skip"  # There isn't a `proceed` available after skipping Neow's card obtain for example.
 
-        if not state.has_command(Command.SKIP):  # Mainly relevant for the Colorless potion from what I've seen
+        if exit_choice != "undecided":
             if presentation_mode:
-                return [p_delay, "choose 0", p_delay_s]
-            return ["wait 30", "choose 0", "wait 30"]
-
-        if state.game_state()["room_phase"] == "EVENT" or state.game_state()["room_phase"] == "COMBAT":
-            if presentation_mode:
-                return [p_delay, "skip", p_delay_s]
-            return ["skip"]  # There isn't a `proceed` available after skipping Neow's card obtain for example.
+                return [p_delay, exit_choice, "wait 30"]
+            return [exit_choice, "wait 30"]
 
         if presentation_mode:
-            return [p_delay, "skip", p_delay_s, "proceed"]
+            return [p_delay, "skip", "proceed"]
         return ["skip", "proceed"]  # This 'proceed' is for avoiding looking at the card rewards again.
