@@ -50,6 +50,9 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_enemy_does_not_have_power(self, play: PlayPath, power_id: PowerId, enemy_index: int = 0):
         self.assertEqual(None, play.state.monsters[enemy_index].powers.get(power_id, None))
 
+    def see_random_damage_dealt(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, play.state.total_random_damage_dealt)
+
     def see_player_lost_hp(self, play: PlayPath, amount: int):
         self.assertEqual(amount, 50 - play.state.player.current_hp)
 

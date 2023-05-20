@@ -75,7 +75,7 @@ class ThreeSentriesSilentComparator(SbcComparator):
             incoming_damage=original.player.current_hp - state.player.current_hp,
             dead_monsters=len([True for monster in state.monsters if monster.current_hp <= 0]),
             lowest_health_preferred_sentry=0 if battle_won else min(front_sentry_vulnerable_hp, back_sentry_vulnerable_hp),
-            total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp),
+            total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp)-state.total_random_damage_dealt,
             barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) != 0]),
             draw_free_early=len([True for c in state.hand if c.id == CardId.DRAW_FREE_EARLY]),
             draw_free=len([True for c in state.hand if c.id == CardId.DRAW_FREE or c.id == CardId.DRAW_FREE_EARLY]),

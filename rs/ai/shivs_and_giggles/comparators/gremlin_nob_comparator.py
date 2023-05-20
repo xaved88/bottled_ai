@@ -75,7 +75,7 @@ class GremlinNobSilentComparator(SbcComparator):
             incoming_damage=original.player.current_hp - state.player.current_hp,
             dead_monsters=len([True for monster in state.monsters if monster.current_hp <= 0]),
             lowest_health_monster=0 if battle_won else min(monsters_vulnerable_hp),
-            total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp),
+            total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp)-state.total_random_damage_dealt,
             barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) != 0]),
             draw_acceptable_against_nob=len([True for c in state.hand if c.id == CardId.OFFERING]),
             draw_pay_early=len([True for c in state.hand if c.id == CardId.DRAW_PAY_EARLY]),

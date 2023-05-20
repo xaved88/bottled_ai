@@ -107,3 +107,6 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_waiting_lagavulin_no_powers_but_relic(self):
         self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_without_powers_but_relic.json', ['end'])
+
+    def test_playing_random_damage_is_desirable(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_play_random_damage_card.json', ['play 1'])

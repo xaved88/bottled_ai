@@ -1267,18 +1267,22 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.PHANTASMAL, 1)
 
-    def test_sword_boomerang_deals_damage_if_single_target(self):
+    def test_sword_boomerang_deals_damage_with_single_target(self):
         state = self.given_state(CardId.SWORD_BOOMERANG)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 9)
+        self.see_random_damage_dealt(play, 0)
 
     def test_sword_boomerang_upgraded(self):
         state = self.given_state(CardId.SWORD_BOOMERANG, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 12)
+        self.see_random_damage_dealt(play, 0)
 
-    def test_sword_boomerang_assume_no_damage_if_multiple_targets(self):
+    def test_sword_boomerang_see_random_damage_with_multiple_targets(self):
         state = self.given_state(CardId.SWORD_BOOMERANG, targets=2)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_random_damage_dealt(play, 9)
+
