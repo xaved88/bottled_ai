@@ -23,6 +23,7 @@ class RelicId(Enum):
     ANCHOR = 'anchor'                               # We know current block
     ANCIENT_TEA_SET = 'ancient tea set'             # N/A to battle calculations
     ART_OF_WAR = 'art of war'                       # We only look at current turn so far, so get this as bonus.
+    ASTROLABE = 'astrolabe'                         # N/A
     BAG_OF_MARBLES = 'bag of marbles'               # N/A
     BAG_OF_PREPARATION = 'bag of preparation'       # N/A
     BIRD_FACED_URN = 'bird-faced urn'
@@ -82,6 +83,7 @@ class RelicId(Enum):
     OMAMORI = 'omamori'                             # N/A
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
+    PANDORAS_BOX = 'pandora\u0027s box'             # N/A
     PANTOGRAPH = 'pantograph'                       # N/A
     PAPER_KRANE = 'paper krane'
     PAPER_PHROG = 'paper phrog'
@@ -115,6 +117,7 @@ class RelicId(Enum):
     THE_COURIER = 'the courier'                     # N/A
     THREAD_AND_NEEDLE = 'thread and needle'         # Covered by Plated Armor
     TINY_CHEST = 'tiny chest'                       # N/A
+    TINY_HOUSE = 'tiny house'                       # N/A
     TORII = 'torii'
     TOUGH_BANDAGES = 'tough bandages'
     TOXIC_EGG = 'toxic egg'                         # N/A

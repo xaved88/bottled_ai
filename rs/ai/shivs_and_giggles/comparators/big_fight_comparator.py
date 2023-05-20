@@ -58,7 +58,7 @@ class GCValues:
 
 # Differences to normal comparator:
 # Prefer playing powers over dealing damage.
-# Care quite strongly about getting rid of enemy_artifacts. Side-note: We might want soon want to generally get more aggressive on these though, not just here.
+# Care quite strongly about getting rid of enemy_artifacts.
 
 
 class BigFightSilentComparator(SbcComparator):

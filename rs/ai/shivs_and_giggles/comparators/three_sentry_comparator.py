@@ -31,6 +31,7 @@ class GCValues:
             bad_cards_exhausted: int,
             saved_for_later: int,
             awkward_shivs: int,
+            enemy_artifacts: int,
     ):
         self.battle_lost: bool = battle_lost
         self.battle_won: bool = battle_won
@@ -53,6 +54,7 @@ class GCValues:
         self.bad_cards_exhausted: int = bad_cards_exhausted
         self.saved_for_later: int = saved_for_later
         self.awkward_shivs: int = awkward_shivs
+        self.enemy_artifacts: int = enemy_artifacts
 
 # Difference to normal comparator:
 # Go very aggressive on killing either the front or back sentry for as long as there are 3 sentries alive.
@@ -89,6 +91,7 @@ class ThreeSentriesSilentComparator(SbcComparator):
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
             awkward_shivs=len([True for c in state.hand if c.id == CardId.SHIV])+len([True for c in state.discard_pile if c.id == CardId.SHIV]),
+            enemy_artifacts=sum([m.powers.get(PowerId.ARTIFACT, 0) for m in state.monsters]),
         )
 
     def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
@@ -156,6 +159,8 @@ class ThreeSentriesSilentComparator(SbcComparator):
             return challenger.player_powers_bad < best.player_powers_bad
         if best.player_powers_less_good != challenger.player_powers_less_good:
             return challenger.player_powers_less_good > best.player_powers_less_good
+        if best.enemy_artifacts != challenger.enemy_artifacts:
+            return challenger.enemy_artifacts < best.enemy_artifacts
         if best.bad_cards_exhausted != challenger.bad_cards_exhausted:
             return challenger.bad_cards_exhausted > best.bad_cards_exhausted
         if best.incoming_damage != challenger.incoming_damage:
