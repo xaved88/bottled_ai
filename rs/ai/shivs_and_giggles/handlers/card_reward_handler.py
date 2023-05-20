@@ -10,7 +10,7 @@ from rs.machine.state import GameState
 class CardRewardHandler(Handler):
 
     def __init__(self):
-        self.desired_cards: dict[str, int] = {
+        self.cards_desired_for_deck: dict[str, int] = {
             'accuracy': 4,
             'after image': 2,
             'tools of the trade': 1,    # removed if we have snecko eye
@@ -38,6 +38,21 @@ class CardRewardHandler(Handler):
             'finesse': 1,               # removed if we have snecko eye
         }
 
+        self.additional_cards_desired_if_from_a_potion: dict[str, int] = {
+            'envenom': 3,
+            'a thousand cuts': 3,
+            'noxious fumes': 3,
+            'caltrops': 3,
+            'corpse explosion': 3,
+            'crippling cloud': 3,
+            'apotheosis': 1,
+            # 'panache': 3,             # not implemented yet
+            # 'sadistic nature': 3,     # not implemented yet
+            'panacea': 3,
+            'bandage up': 3,
+            'dramatic entrance': 3,
+        }
+
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \
                and state.screen_type() == ScreenType.CARD_REWARD.value \
@@ -53,7 +68,11 @@ class CardRewardHandler(Handler):
         deck_card_list = state.get_deck_card_list()
 
         # we have to copy this, otherwise it will modify the list until the bot is rerun
-        desired_cards_working_copy = self.desired_cards.copy()
+        desired_cards_working_copy = self.cards_desired_for_deck.copy()
+
+        # check if we're selecting from a potion
+        if state.game_state()["room_phase"] == "COMBAT":
+            desired_cards_working_copy.update(self.additional_cards_desired_if_from_a_potion)
 
         if state.has_relic("Snecko Eye"):
             del desired_cards_working_copy['tools of the trade']

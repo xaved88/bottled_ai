@@ -61,7 +61,6 @@ class CombatRewardHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
 
-        all_available_potions = []
         # Chug a Fruit Juice straight away
         for idx, pot in enumerate(state.get_held_potion_names()):
             if pot == 'fruit juice':
@@ -78,7 +77,7 @@ class CombatRewardHandler(Handler):
         elif 'stolen_gold' in state.get_choice_list():
             choice = 'stolen_gold'
 
-        elif 'relic' in state.get_choice_list() and state.game_state()["screen_state"]["rewards"][0]["relic"]["id"] not in undesired_relics:
+        elif 'relic' in state.get_choice_list() and state.game_state()["screen_state"]["rewards"][0]["relic"]["name"] not in undesired_relics:
             choice = 'relic'
 
         # potentially too fragile check for if the second relic might be desirable even though the first one isn't that I'll leave disabled for safety

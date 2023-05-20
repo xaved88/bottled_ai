@@ -17,5 +17,11 @@ class CardRewardHandlerTestCase(SgTestHandlerFixture):
     def test_take_card_from_potion(self):
         self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_potion_take.json', ['wait 30', 'choose 1', 'wait 30'])
 
+    def test_take_card_from_potion_from_expanded_potion_list(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_potion_take_from_expanded_potion_list.json', ['wait 30', 'choose 1', 'wait 30'])
+
+    def test_take_card_from_potion_prefer_original_deck_list(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_potion_prefer_original_deck_list.json', ['wait 30', 'choose 0', 'wait 30'])
+
     def test_forced_to_take_card_from_potion(self):
         self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_potion_cannot_skip.json', ['wait 30', 'choose 0', 'wait 30'])
