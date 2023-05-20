@@ -708,8 +708,31 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 20)
 
-    def test_double_damage_against_intagible(self):
+    def test_double_damage_against_intangible(self):
         state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.DOUBLE_DAMAGE: 1})
         state.monsters[0].powers[PowerId.INTANGIBLE_ENEMY] = 1
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 2)
+
+    def test_juggernaut_block_from_card(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.JUGGERNAUT: 5})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_random_damage_dealt(play, 0)
+
+    def test_juggernaut_block_from_power(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.JUGGERNAUT: 7, PowerId.METALLICIZE: 4}, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_random_damage_dealt(play, 0)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 0, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_random_damage_dealt(play, 7)
+
+    def test_juggernaut_does_not_damage_when_0_block_gained(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.JUGGERNAUT: 5, PowerId.DEXTERITY: -5})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_random_damage_dealt(play, 0)

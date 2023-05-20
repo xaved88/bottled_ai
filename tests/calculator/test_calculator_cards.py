@@ -1286,3 +1286,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
         self.see_random_damage_dealt(play, 9)
 
+    def test_juggernaut(self):
+        state = self.given_state(CardId.JUGGERNAUT)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.JUGGERNAUT, 5)
+
+    def test_juggernaut_upgraded(self):
+        state = self.given_state(CardId.JUGGERNAUT, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.JUGGERNAUT, 7)
+
+

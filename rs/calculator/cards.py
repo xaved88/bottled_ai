@@ -96,6 +96,7 @@ class CardId(Enum):
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
     JAX = 'j.a.x.'
+    JUGGERNAUT = 'juggernaut'
     LEG_SWEEP = 'leg sweep'
     LIMIT_BREAK = 'limit break'
     MASTER_OF_STRATEGY = 'master of strategy'
@@ -285,6 +286,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.SWORD_BOOMERANG:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.JUGGERNAUT:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.METALLICIZE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.RECKLESS_CHARGE:

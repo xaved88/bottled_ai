@@ -65,6 +65,7 @@ powers_we_like: List[PowerId] = [
     PowerId.ENVENOM,
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE_PLAYER,
+    PowerId.JUGGERNAUT,
     PowerId.METALLICIZE,
     PowerId.NOXIOUS_FUMES,
     PowerId.PHANTASMAL,

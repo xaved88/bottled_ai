@@ -112,7 +112,7 @@ class HandState:
 
         # pre play stuff
         if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
-            self.player.block += self.player.powers[PowerId.RAGE]
+            self.add_player_block(self.player.powers[PowerId.RAGE])
 
         for effect in effects:
             # custom pre hooks
@@ -151,7 +151,7 @@ class HandState:
             if effect.block:
                 block = max(effect.block + self.player.powers.get(PowerId.DEXTERITY, 0), 0)
                 frail_mod = 0.75 if self.player.powers.get(PowerId.FRAIL, 0) else 1
-                self.player.block += math.floor(block * frail_mod)
+                self.add_player_block(math.floor(block * frail_mod))
 
             # energy gain
             self.player.energy += effect.energy_gain
@@ -185,7 +185,7 @@ class HandState:
         if self.player.powers.get(PowerId.AFTER_IMAGE):
             after_image_block = self.player.powers.get(PowerId.AFTER_IMAGE, 0)
             if after_image_block > 0:
-                self.player.block += after_image_block
+                self.add_player_block(after_image_block)
 
         # post card play MONSTER power checks
         for idx, monster in enumerate(self.monsters):
@@ -254,7 +254,7 @@ class HandState:
             self.relics[RelicId.ORNAMENTAL_FAN] += 1
             if self.relics[RelicId.ORNAMENTAL_FAN] >= 3:
                 self.relics[RelicId.ORNAMENTAL_FAN] -= 3
-                self.player.block += 4
+                self.add_player_block(4)
 
         if RelicId.LETTER_OPENER in self.relics and card.type == CardType.SKILL:
             self.relics[RelicId.LETTER_OPENER] += 1
@@ -281,15 +281,15 @@ class HandState:
 
         # relics and powers
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
-            self.player.block += 6
+            self.add_player_block(6)
 
         if RelicId.STONE_CALENDAR in self.relics and self.relics[RelicId.STONE_CALENDAR] == 7:
             for monster in self.monsters:
                 if monster.current_hp > 0:
                     monster.inflict_damage(self.player, 52, 1, vulnerable_modifier=1, is_attack=False)
 
-        self.player.block += self.player.powers.get(PowerId.PLATED_ARMOR, 0)
-        self.player.block += self.player.powers.get(PowerId.METALLICIZE, 0)
+        self.add_player_block(self.player.powers.get(PowerId.PLATED_ARMOR, 0))
+        self.add_player_block(self.player.powers.get(PowerId.METALLICIZE, 0))
 
         if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
             self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics)
@@ -425,11 +425,12 @@ class HandState:
             for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):
                 for hook in effect.post_others_discarded_hooks:
                     hook(hand_card)
+                    hook(hand_card)
         self.cards_discarded_this_turn += 1
 
         # post discard stuff
         if RelicId.TOUGH_BANDAGES in self.relics:
-            self.player.block += 3
+            self.add_player_block(3)
 
         if RelicId.HOVERING_KITE in self.relics and self.cards_discarded_this_turn == 1:
             self.player.energy += 1
@@ -448,6 +449,11 @@ class HandState:
                                            min_hp_damage)
         else:
             self.total_random_damage_dealt += base_damage * hits
+
+    def add_player_block(self, amount: int):
+        self.player.block += amount
+        if amount > 0 and self.player.powers.get(PowerId.JUGGERNAUT, 0):
+            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1, vulnerable_modifier=1, is_attack=False)
 
     def kill_monsters(self):
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
