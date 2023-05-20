@@ -25,6 +25,7 @@ class HandStateInterface:
     draw_cards: Callable[[int], None]
     add_cards_to_hand: Callable[[Card, int], None]
     discard_card: Callable[[Card], None]
+    inflict_random_target_damage: Callable[[int, int, bool, float, bool, int], None]
 
 
 class CardEffectsInterface:

@@ -12,7 +12,6 @@ from enum import Enum
 # 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
-# 'tingsha'
 # and several others that aren't listed yet
 
 
@@ -116,6 +115,7 @@ class RelicId(Enum):
     THE_BOOT = 'the boot'
     THE_COURIER = 'the courier'                     # N/A
     THREAD_AND_NEEDLE = 'thread and needle'         # Covered by Plated Armor
+    TINGSHA = 'tingsha'
     TINY_CHEST = 'tiny chest'                       # N/A
     TINY_HOUSE = 'tiny house'                       # N/A
     TORII = 'torii'

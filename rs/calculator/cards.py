@@ -140,6 +140,7 @@ class CardId(Enum):
     SUCKER_PUNCH = 'sucker punch'
     SURVIVOR = 'survivor'
     SWIFT_STRIKE = 'swift strike'
+    SWORD_BOOMERANG = 'sword boomerang'
     TACTICIAN = 'tactician'
     TERROR = 'terror'
     TOOLS_OF_THE_TRADE = 'tools of the trade'
@@ -282,6 +283,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.RAMPAGE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.SWORD_BOOMERANG:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.METALLICIZE:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.RECKLESS_CHARGE:

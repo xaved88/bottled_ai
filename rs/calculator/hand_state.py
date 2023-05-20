@@ -18,7 +18,8 @@ class HandState:
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
                  monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
-                 cards_discarded_this_turn: int = 0, attacks_played_this_turn: int = 0):
+                 cards_discarded_this_turn: int = 0, attacks_played_this_turn: int = 0,
+                 total_random_damage_dealt: int = 0):
 
         self.player: Player = player
         self.hand: List[Card] = [] if hand is None else hand
@@ -30,6 +31,7 @@ class HandState:
         self.amount_to_discard: int = amount_to_discard
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
         self.attacks_played_this_turn: int = attacks_played_this_turn
+        self.total_random_damage_dealt: int = total_random_damage_dealt
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
 
@@ -431,6 +433,21 @@ class HandState:
 
         if RelicId.HOVERING_KITE in self.relics and self.cards_discarded_this_turn == 1:
             self.player.energy += 1
+
+        if RelicId.TINGSHA in self.relics:
+            self.inflict_random_target_damage(3, 1, vulnerable_modifier=1, is_attack=False)
+
+    def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True,
+                                     vulnerable_modifier: float = 1.5, is_attack: bool = True,
+                                     min_hp_damage: int = 1):
+        alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+        if alive_monsters == 1:
+            for monster in self.monsters:
+                if monster.current_hp > 0:
+                    monster.inflict_damage(self.player, base_damage, hits, blockable, vulnerable_modifier, is_attack,
+                                           min_hp_damage)
+        else:
+            self.total_random_damage_dealt += base_damage * hits
 
     def kill_monsters(self):
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.

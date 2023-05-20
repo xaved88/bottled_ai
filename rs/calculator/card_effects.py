@@ -189,6 +189,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.RAGE: 3 if not card.upgrade else 5})]
     if card.id == CardId.RAMPAGE:
         return [CardEffects(target=TargetType.MONSTER, damage=8, hits=1)]
+    if card.id == CardId.SWORD_BOOMERANG:
+        hook = sword_boomerang_post_hook if not card.upgrade else sword_boomerang_upgraded_post_hook
+        return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
     if card.id == CardId.METALLICIZE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.METALLICIZE: 3 if not card.upgrade else 4})]
     if card.id == CardId.RECKLESS_CHARGE:

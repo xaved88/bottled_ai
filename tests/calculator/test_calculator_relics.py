@@ -469,6 +469,37 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 5)
         self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
 
+    def test_tingsha_deals_damage_if_single_target(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.TINGSHA: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 3)
+
+    def test_tingsha_damage_blocked(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.TINGSHA: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        state.monsters[0].block = 5
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_tingsha_deals_multi_damage_if_single_target_and_multi_discard(self):
+        state = self.given_state(CardId.PREPARED, upgrade=1, relics={RelicId.TINGSHA: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_tingsha_deals_no_damage_if_nothing_to_discard(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.TINGSHA: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_tingsha_assume_no_damage_if_multiple_targets(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.TINGSHA: 1}, targets=2)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 0, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))
