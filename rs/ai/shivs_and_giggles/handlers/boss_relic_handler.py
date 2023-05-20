@@ -32,8 +32,9 @@ class BossRelicHandler(Handler):
             "empty cage",
             "sacred bark",
             "coffee dripper",
-            "runic dome",
-            "velvet choker",
+            # "pandora\u0027s box",
+            # "runic dome",
+            # "velvet choker",
         ]
         self.energy_relics = [
             "sozu",
