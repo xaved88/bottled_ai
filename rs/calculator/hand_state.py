@@ -399,6 +399,14 @@ class HandState:
                 self.draw_pile = self.discard_pile.copy()
                 self.discard_pile.clear()
 
+                if RelicId.THE_ABACUS in self.relics:
+                    self.add_player_block(6)
+                if RelicId.SUNDIAL in self.relics:
+                    self.relics[RelicId.SUNDIAL] += 1
+                    if self.relics[RelicId.SUNDIAL] >= 3:
+                        self.relics[RelicId.SUNDIAL] -= 3
+                        self.player.energy += 2
+
             # note: we're still allowing draws even if draw pile is empty because that's how a bunch of tests are set up
             # currently, and we're not complete functionality-wise for draws anyway
             if len(self.draw_pile) > 0:
@@ -424,7 +432,6 @@ class HandState:
         for hand_card in self.hand:
             for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):
                 for hook in effect.post_others_discarded_hooks:
-                    hook(hand_card)
                     hook(hand_card)
         self.cards_discarded_this_turn += 1
 

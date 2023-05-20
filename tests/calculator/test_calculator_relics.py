@@ -119,8 +119,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_relic_value(play, RelicId.ORNAMENTAL_FAN, 0)
 
     def test_orichalcum_gives_block_when_player_has_none(self):
-        state = self.given_state(CardId.STRIKE_R)
-        state.relics[RelicId.ORICHALCUM] = 1
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.ORICHALCUM: 1})
         play = self.when_playing_the_first_card(state)
         play.state.end_turn()
         self.see_player_has_block(play, 6)
@@ -137,7 +136,6 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1}, relics={RelicId.ODD_MUSHROOM: 1})
         state.monsters[0].damage = 10
         state.monsters[0].hits = 1
-        # state.relics[RelicId.ODD_MUSHROOM] = 1
         play = self.when_playing_the_first_card(state)
         play.state.end_turn()
         self.see_player_lost_hp(play, 12)
@@ -514,6 +512,33 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
         self.see_random_damage_dealt(play, 6)
+
+    def test_gain_block_from_abacus(self):
+        state = self.given_state(CardId.PREPARED, upgrade=1, relics={RelicId.THE_ABACUS: 1})
+        state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 6)
+
+    def test_do_not_gain_block_from_abacus_because_we_did_not_reset_draw_pile_yet(self):
+        state = self.given_state(CardId.FLASH_OF_STEEL, relics={RelicId.THE_ABACUS: 1})
+        state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 0)
+
+    def test_sundial_increments(self):
+        state = self.given_state(CardId.PREPARED, upgrade=1)
+        state.relics[RelicId.SUNDIAL] = 1
+        state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.SUNDIAL, 2)
+
+    def test_sundial_triggers(self):
+        state = self.given_state(CardId.PREPARED, upgrade=1)
+        state.relics[RelicId.SUNDIAL] = 2
+        state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, -2)
+        self.see_relic_value(play, RelicId.SUNDIAL, 0)
 
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):

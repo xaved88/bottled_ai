@@ -111,7 +111,8 @@ class RelicId(Enum):
     STONE_CALENDAR = 'stone calendar'
     STRAWBERRY = 'strawberry'                       # N/A
     STRIKE_DUMMY = 'strike dummy'
-    SUNDIAL = 'sundial'                             # N/A
+    SUNDIAL = 'sundial'
+    THE_ABACUS = 'the abacus'
     THE_BOOT = 'the boot'
     THE_COURIER = 'the courier'                     # N/A
     THREAD_AND_NEEDLE = 'thread and needle'         # Covered by Plated Armor

@@ -5,7 +5,6 @@ from rs.calculator.executor import get_best_battle_path
 from test_helpers.resources import load_resource_state
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import CardId, get_card
-from rs.calculator.powers import PowerId
 
 
 class CalculatorOtherTest(unittest.TestCase):
