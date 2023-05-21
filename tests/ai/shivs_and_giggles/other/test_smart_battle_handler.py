@@ -110,3 +110,6 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
 
     def test_playing_random_damage_is_desirable(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_play_random_damage_card.json', ['play 1'])
+
+    def test_playing_random_poison_is_desirable(self):
+        self.execute_handler_tests('/battles/smart_battle/smart_battle_play_bouncing_flask.json', ['play 1'])

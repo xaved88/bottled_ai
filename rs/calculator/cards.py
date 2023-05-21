@@ -34,6 +34,7 @@ class CardId(Enum):
     BLUDGEON = 'bludgeon'
     BLUR = 'blur'
     BODY_SLAM = 'body slam'
+    BOUNCING_FLASK = 'bouncing flask'
     BULLET_TIME = 'bullet time'
     BURN = 'burn'
     CALTROPS = 'caltrops'
@@ -475,6 +476,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.CATALYST:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL, exhausts=True)
+    if card_id == CardId.BOUNCING_FLASK:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.PHANTASMAL_KILLER:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)

@@ -19,7 +19,7 @@ class HandState:
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
                  monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
                  cards_discarded_this_turn: int = 0, attacks_played_this_turn: int = 0,
-                 total_random_damage_dealt: int = 0):
+                 total_random_damage_dealt: int = 0, total_random_poison_added: int = 0):
 
         self.player: Player = player
         self.hand: List[Card] = [] if hand is None else hand
@@ -32,6 +32,7 @@ class HandState:
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
         self.attacks_played_this_turn: int = attacks_played_this_turn
         self.total_random_damage_dealt: int = total_random_damage_dealt
+        self.total_random_poison_added: int = total_random_poison_added
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
 
@@ -456,6 +457,16 @@ class HandState:
                                            min_hp_damage)
         else:
             self.total_random_damage_dealt += base_damage * hits
+
+    def add_random_poison(self, poison_amount: int, hits: int):
+        alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+        if alive_monsters == 1:
+            for monster in self.monsters:
+                if monster.current_hp > 0:
+                    for i in range(hits):
+                        monster.add_powers({PowerId.POISON: poison_amount}, self.player.relics)
+        else:
+            self.total_random_poison_added += poison_amount * hits
 
     def add_player_block(self, amount: int):
         self.player.block += amount

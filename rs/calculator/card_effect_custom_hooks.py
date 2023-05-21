@@ -199,3 +199,15 @@ def sword_boomerang_upgraded_post_hook(state: HandStateInterface, effect: CardEf
 
 def __sword_boomerang_post_hook(state: HandStateInterface, hits: int):
     state.inflict_random_target_damage(3, hits, True, 1.5, True, 1)
+
+
+def bouncing_flask_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __bouncing_flask_post_hook(state, 3)
+
+
+def bouncing_flask_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __bouncing_flask_post_hook(state, 4)
+
+
+def __bouncing_flask_post_hook(state: HandStateInterface, hits: int):
+    state.add_random_poison(3, hits)
