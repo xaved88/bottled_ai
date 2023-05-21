@@ -58,14 +58,13 @@ class RelicId(Enum):
     HAND_DRILL = 'hand drill'
     HORN_CLEAT = 'horn cleat'                       # We get block from state
     HOVERING_KITE = 'hovering kite'
-    ICE_CREAM = 'ice cream'                         # We only look at current turn so far, so get this as bonus.
+    ICE_CREAM = 'ice cream'
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
     INK_BOTTLE = 'ink bottle'
     JUZU_BRACELET = 'juzu bracelet'                 # N/A
     KUNAI = 'kunai'
     LANTERN = 'lantern'                             # N/A
     LETTER_OPENER = 'letter opener'
-    LIZARD_TAIL = 'lizard tail'                     # N/A
     MANGO = 'mango'                                 # N/A
     MARK_OF_PAIN = 'mark of pain'                   # N/A
     MATRYOSHKA = 'matryoshka'                       # N/A
@@ -122,7 +121,6 @@ class RelicId(Enum):
     TORII = 'torii'
     TOUGH_BANDAGES = 'tough bandages'
     TOXIC_EGG = 'toxic egg'                         # N/A
-    TOY_ORNITHOPTER = 'toy ornithopter'             # N/A
     TUNGSTEN_ROD = 'tungsten rod'
     TURNIP = 'turnip'                               # N/A
     UNCEASING_TOP = 'unceasing top'

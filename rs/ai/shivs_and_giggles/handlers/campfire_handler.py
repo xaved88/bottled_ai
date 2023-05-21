@@ -9,6 +9,7 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 high_prio_upgrades = [
+    'Neutralize',
     'Accuracy',
 ]
 
