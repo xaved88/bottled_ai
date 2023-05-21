@@ -215,6 +215,10 @@ class HandState:
                     for target in targets:
                         target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics)
 
+            # add cards to hand
+            if effect.add_cards_to_hand:
+                self.add_cards_to_hand(effect.add_cards_to_hand[0], effect.add_cards_to_hand[1])
+
         if card.type == CardType.ATTACK:
             self.attacks_played_this_turn += 1
 

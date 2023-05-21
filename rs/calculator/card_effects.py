@@ -31,6 +31,7 @@ class CardEffects:
             post_self_discarded_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
+            add_cards_to_hand: [Card, int] = None
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -44,9 +45,11 @@ class CardEffects:
         self.post_hooks: List[CardEffectCustomHook] = [] if post_hooks is None else post_hooks
         self.post_others_discarded_hooks: List[
             CardEffectCustomHookWithCard] = [] if post_others_discarded_hooks is None else post_others_discarded_hooks
-        self.post_self_discarded_hooks: List[CardEffectCustomHook] = [] if post_self_discarded_hooks is None else post_self_discarded_hooks
+        self.post_self_discarded_hooks: List[
+            CardEffectCustomHook] = [] if post_self_discarded_hooks is None else post_self_discarded_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
+        self.add_cards_to_hand: [Card, int] = add_cards_to_hand
 
 
 def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_pile: List[Card],
@@ -248,13 +251,11 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.DIE_DIE_DIE:
         return [CardEffects(damage=13 if not card.upgrade else 17, hits=1, target=TargetType.ALL_MONSTERS)]
     if card.id == CardId.BLADE_DANCE:
-        return [CardEffects(target=TargetType.SELF,
-                            post_hooks=[blade_dance_post_hook] if not card.upgrade
-                            else [blade_dance_upgraded_post_hook])]
+        amount = 3 if not card.upgrade else 4
+        return [CardEffects(target=TargetType.SELF, add_cards_to_hand=(get_card(CardId.SHIV), amount))]
     if card.id == CardId.CLOAK_AND_DAGGER:
-        return [CardEffects(block=6, target=TargetType.SELF,
-                            post_hooks=[cloak_and_dagger_post_hook] if not card.upgrade
-                            else [cloak_and_dagger_upgraded_post_hook])]
+        amount = 1 if not card.upgrade else 2
+        return [CardEffects(block=6, target=TargetType.SELF, add_cards_to_hand=(get_card(CardId.SHIV), amount))]
     if card.id == CardId.LEG_SWEEP:
         weak_amount = 2 if not card.upgrade else 3
         block_amount = 11 if not card.upgrade else 14

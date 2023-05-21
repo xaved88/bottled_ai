@@ -88,23 +88,6 @@ def apotheosis_post_hook(state: HandStateInterface, effect: CardEffectsInterface
         state.draw_pile[i] = get_card(c.id, upgrade=c.upgrade + 1)
 
 
-def blade_dance_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    state.add_cards_to_hand(get_card(CardId.SHIV), 3)
-
-
-def blade_dance_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    state.add_cards_to_hand(get_card(CardId.SHIV), 4)
-
-
-def cloak_and_dagger_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    state.add_cards_to_hand(get_card(CardId.SHIV), 1)
-
-
-def cloak_and_dagger_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface,
-                                        target_index: int = -1):
-    state.add_cards_to_hand(get_card(CardId.SHIV), 2)
-
-
 def heel_hook_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.WEAKENED):
@@ -172,7 +155,8 @@ def bullet_time_post_hook(state: HandStateInterface, effect: CardEffectsInterfac
 
 
 def finisher_pre_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    effect.hits = state.attacks_played_this_turn
+    if target_index > -1:
+        effect.hits = state.attacks_played_this_turn
 
 
 def catalyst_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
