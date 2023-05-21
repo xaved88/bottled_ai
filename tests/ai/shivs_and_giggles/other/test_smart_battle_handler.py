@@ -96,6 +96,9 @@ class SmartBattleHandlerTestCase(SgTestHandlerFixture):
     def test_waiting_lagavulin_use_power(self):
         self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_with_powers_in_hand.json', ['play 4'])
 
+    def test_waiting_lagavulin_use_terror(self):
+        self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_with_terror_in_hand.json', ['play 3 0'])
+
     def test_waiting_lagavulin_no_powers(self):
         self.execute_handler_tests('/battles/smart_battle/waiting_lagavulin/smart_battle_waiting_lagavulin_turn_1_without_powers.json', ['play 3 0'])
 

@@ -14,7 +14,7 @@ class GCValues:
             battle_won: bool,
             incoming_damage: int,
             dead_monsters: int,
-            lowest_health_monster: int,
+            lagavulin_hp: int,
             total_monster_health: int,
             barricaded_block: int,
             draw_free_early: int,
@@ -37,7 +37,7 @@ class GCValues:
         self.battle_won: bool = battle_won
         self.incoming_damage: int = incoming_damage
         self.dead_monsters: int = dead_monsters
-        self.lowest_health_monster: int = lowest_health_monster
+        self.lagavulin_hp: int = lagavulin_hp
         self.total_monster_health: int = total_monster_health
         self.barricaded_block: int = barricaded_block
         self.draw_free_early: int = draw_free_early
@@ -67,12 +67,14 @@ class WaitingLagavulinSilentComparator(SbcComparator):
         battle_won = not [True for m in state.monsters if m.current_hp > 0]
         monsters_vulnerable_hp = [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3)
                                   for monster in state.monsters if monster.current_hp > 0]
+        lagavulin_hp = [monster.current_hp for monster in state.monsters if monster.current_hp > 0]
+
         return GCValues(
             battle_lost=state.player.current_hp <= 0,
             battle_won=battle_won,
             incoming_damage=original.player.current_hp - state.player.current_hp,
             dead_monsters=len([True for monster in state.monsters if monster.current_hp <= 0]),
-            lowest_health_monster=0 if battle_won else min(monsters_vulnerable_hp),
+            lagavulin_hp=0 if battle_won else min(lagavulin_hp),
             total_monster_health=0 if battle_won else sum(monsters_vulnerable_hp)-state.total_random_damage_dealt-state.total_random_poison_added,
             barricaded_block=sum([m.block for m in state.monsters if m.powers.get(PowerId.BARRICADE, 0) != 0]),
             draw_free_early=len([True for c in state.hand if c.id == CardId.DRAW_FREE_EARLY]),
@@ -135,8 +137,8 @@ class WaitingLagavulinSilentComparator(SbcComparator):
             return challenger.incoming_damage < best.incoming_damage
         if best.dead_monsters != challenger.dead_monsters:
             return challenger.dead_monsters > best.dead_monsters
-        if best.lowest_health_monster != challenger.lowest_health_monster:
-            return challenger.lowest_health_monster > best.lowest_health_monster
+        if best.lagavulin_hp != challenger.lagavulin_hp:
+            return challenger.lagavulin_hp > best.lagavulin_hp
         if best.player_powers_good != challenger.player_powers_good:
             return challenger.player_powers_good > best.player_powers_good
         if max(1, best.enemy_vulnerable) != max(1, challenger.enemy_vulnerable):
