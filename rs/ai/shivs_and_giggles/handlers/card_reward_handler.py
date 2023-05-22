@@ -60,12 +60,8 @@ class CardRewardHandler(Handler):
                     state.game_state()["room_phase"] == "COMBAT")
 
     def handle(self, state: GameState) -> List[str]:
-        choice_list = state.game_state()["choice_list"]
-
-        for idx, choice in enumerate(choice_list):
-            choice_list[idx] = choice.replace("+", "")
-
-        deck_card_list = state.get_deck_card_list()
+        choice_list = state.get_choice_list_upgrade_stripped_from_choice()
+        deck_card_list = state.get_deck_card_list_upgrade_stripped_from_name()
 
         # we have to copy this, otherwise it will modify the list until the bot is rerun
         desired_cards_working_copy = self.cards_desired_for_deck.copy()

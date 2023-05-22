@@ -45,6 +45,12 @@ class GameState:
     def get_choice_list(self):
         return self.game_state()["choice_list"]
 
+    def get_choice_list_upgrade_stripped_from_choice(self):
+        choice_list_modified = self.get_choice_list()
+        for idx, choice in enumerate(choice_list_modified):
+            choice_list_modified[idx] = choice.replace("+", "")
+        return choice_list_modified
+
     def get_relics(self):
         return self.game_state()["relics"]
 
@@ -112,6 +118,17 @@ class GameState:
         cards = {}
         for card in self.deck.cards:
             name = card.name.lower()
+            if name in cards:
+                cards[name] += 1
+            else:
+                cards[name] = 1
+        return cards
+
+    def get_deck_card_list_upgrade_stripped_from_name(self) -> dict[str, int]:
+        cards = {}
+        for card in self.deck.cards:
+            name = card.name.replace("+", "")
+            name = name.lower()
             if name in cards:
                 cards[name] += 1
             else:

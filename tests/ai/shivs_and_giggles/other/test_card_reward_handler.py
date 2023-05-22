@@ -8,6 +8,18 @@ class CardRewardHandlerTestCase(SgTestHandlerFixture):
     def test_take_card(self):
         self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_take.json', ['choose 2', 'wait 30'])
 
+    def test_skip_because_enough_in_deck(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_skip_because_amount.json', ['skip', 'proceed'])
+
+    def test_skip_because_enough_in_deck_and_some_in_deck_are_upgraded(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json', ['skip', 'proceed'])
+
+    def test_take_upgraded_card(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_take_upgraded.json', ['choose 2', 'wait 30'])
+
+    def test_skip_upgraded_card_because_enough_in_deck(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_skip_upgraded_card_because_amount.json', ['skip', 'proceed'])
+
     def test_snecko_skip(self):
         self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_snecko_eye_skip.json', ['skip', 'proceed'])
 
