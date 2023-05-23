@@ -95,13 +95,19 @@ class CardRewardHandler(Handler):
             exit_choice = "choose bowl"
         elif not state.has_command(Command.SKIP):  # Mainly (only?) relevant for the Colorless potion
             exit_choice = "choose 0"
-        elif state.game_state()["room_phase"] == "EVENT" or state.game_state()["room_phase"] == "COMBAT":
+        elif state.game_state()["room_phase"] == "COMBAT":  # E.g. potions
+            exit_choice = "skip"
+        elif state.game_state()["room_phase"] == "EVENT" and not state.floor() == '0' and not state.has_relic("Tiny House"):
             exit_choice = "skip"  # There isn't a `proceed` available after skipping Neow's card obtain for example.
 
         if exit_choice != "undecided":
             if presentation_mode:
                 return [p_delay, exit_choice, "wait 30"]
             return [exit_choice, "wait 30"]
+
+        # Very specific case for being with Neow and getting a Tiny House, which unfortunately requires different exiting.
+        if state.floor() == "0" and state.has_relic("Tiny House"):
+            return ["skip", "proceed"]
 
         if presentation_mode:
             return [p_delay, "skip", "proceed"]

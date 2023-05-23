@@ -37,3 +37,6 @@ class CardRewardHandlerTestCase(SgTestHandlerFixture):
 
     def test_forced_to_take_card_from_potion(self):
         self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_potion_cannot_skip.json', ['choose 0', 'wait 30'])
+
+    def test_escape_tiny_house_from_neow(self):
+        self.execute_handler_tests('/card_reward/shivs_and_giggles_card_reward_escape_tiny_house_from_neow.json', ['skip', 'proceed'])
