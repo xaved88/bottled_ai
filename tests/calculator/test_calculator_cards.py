@@ -1175,28 +1175,6 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.NOXIOUS_FUMES, 2)
 
-    def test_finisher_no_attacks(self):
-        state = self.given_state(CardId.FINISHER)
-        state.hand.append(get_card(CardId.DEFEND_R))
-        play = self.when_playing_the_first_card(state)
-        self.see_player_spent_energy(play, 1)
-        self.see_enemy_lost_hp(play, 0)
-
-    def test_finisher_one_attack(self):
-        state = self.given_state(CardId.FINISHER)
-        state.hand.append(get_card(CardId.STRIKE_R))
-        play = self.when_playing_the_whole_hand(state)
-        self.see_enemy_lost_hp(play, 12)
-        self.see_player_spent_energy(play, 2)
-
-    def test_finisher_two_attacks(self):
-        state = self.given_state(CardId.FINISHER)
-        state.hand.append(get_card(CardId.STRIKE_R))
-        state.hand.append(get_card(CardId.STRIKE_R))
-        play = self.when_playing_the_whole_hand(state)
-        self.see_enemy_lost_hp(play, 24)
-        self.see_player_spent_energy(play, 3)
-
     def test_endless_agony(self):
         state = self.given_state(CardId.ENDLESS_AGONY)
         play = self.when_playing_the_first_card(state)

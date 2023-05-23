@@ -154,11 +154,6 @@ def bullet_time_post_hook(state: HandStateInterface, effect: CardEffectsInterfac
             card.cost = 0
 
 
-def finisher_pre_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    if target_index > -1:
-        effect.hits = state.attacks_played_this_turn
-
-
 def catalyst_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.POISON):

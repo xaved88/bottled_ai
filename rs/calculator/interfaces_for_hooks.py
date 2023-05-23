@@ -20,7 +20,6 @@ class HandStateInterface:
     monsters: List[Monster]
     relics: Relics
     cards_discarded_this_turn: int
-    attacks_played_this_turn: int
     # functions
     draw_cards: Callable[[int], None]
     add_cards_to_hand: Callable[[Card, int], None]

@@ -18,7 +18,7 @@ class HandState:
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
                  monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
-                 cards_discarded_this_turn: int = 0, attacks_played_this_turn: int = 0,
+                 cards_discarded_this_turn: int = 0,
                  total_random_damage_dealt: int = 0, total_random_poison_added: int = 0):
 
         self.player: Player = player
@@ -30,7 +30,6 @@ class HandState:
         self.relics: Relics = {} if relics is None else relics
         self.amount_to_discard: int = amount_to_discard
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
-        self.attacks_played_this_turn: int = attacks_played_this_turn
         self.total_random_damage_dealt: int = total_random_damage_dealt
         self.total_random_poison_added: int = total_random_poison_added
         self.__is_first_play: bool = False  # transient and used only internally
@@ -218,9 +217,6 @@ class HandState:
             # add cards to hand
             if effect.add_cards_to_hand:
                 self.add_cards_to_hand(effect.add_cards_to_hand[0], effect.add_cards_to_hand[1])
-
-        if card.type == CardType.ATTACK:
-            self.attacks_played_this_turn += 1
 
         # post card play relic checks
         if RelicId.VELVET_CHOKER in self.relics:
