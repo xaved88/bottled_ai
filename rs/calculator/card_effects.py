@@ -227,6 +227,9 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.TRIP:
         return [CardEffects(target=TargetType.MONSTER if not card.upgrade else TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.VULNERABLE: 2})]
+    if card.id == CardId.BLIND:
+        return [CardEffects(target=TargetType.MONSTER if not card.upgrade else TargetType.ALL_MONSTERS,
+                            applies_powers={PowerId.WEAKENED: 2})]
     if card.id == CardId.APOTHEOSIS:
         return [CardEffects(target=TargetType.SELF, post_hooks=[apotheosis_post_hook])]
     if card.id == CardId.HAND_OF_GREED:
@@ -235,6 +238,15 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4)]
     if card.id == CardId.APPARITION:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE_PLAYER: 1})]
+    if card.id == CardId.DEEP_BREATH:
+        return [CardEffects(target=TargetType.SELF, draw=1 if not card.upgrade else 2, pre_hooks=[deep_breath_pre_hook])]
+    if card.id == CardId.ENLIGHTENMENT:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[enlightenment_post_hook])]
+    if card.id == CardId.IMPATIENCE:
+        hook = impatience_post_hook if not card.upgrade else impatience_upgraded_post_hook
+        return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
+    if card.id == CardId.MAYHEM:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MAYHEM: 1})]
 
     # silent cards
     if card.id == CardId.NEUTRALIZE:
@@ -392,6 +404,4 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.BOUNCING_FLASK:
         hook = bouncing_flask_post_hook if not card.upgrade else bouncing_flask_upgraded_post_hook
         return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
-    if card.id == CardId.BLIND:
-        return [CardEffects(target=TargetType.MONSTER if not card.upgrade else TargetType.ALL_MONSTERS, applies_powers={PowerId.WEAKENED: 2})]
     return [CardEffects()]

@@ -58,6 +58,7 @@ class CardId(Enum):
     DAZED = 'dazed'
     DEADLY_POISON = 'deadly poison'
     DECAY = 'decay'
+    DEEP_BREATH = 'deep breath'
     DEFEND_R = 'defend_r'
     DEFEND_G = 'defend_g'
     DEFLECT = 'deflect'
@@ -68,6 +69,7 @@ class CardId(Enum):
     DODGE_AND_ROLL = 'dodge and roll'
     DOUBT = 'doubt'
     ENDLESS_AGONY = 'endless agony'  # Note: the special bits of this card aren't relevant for our current calculator.
+    ENLIGHTENMENT = 'enlightenment'
     ENTRENCH = 'entrench'
     ENVENOM = 'envenom'
     ESCAPE_PLAN = 'escape plan'
@@ -91,6 +93,7 @@ class CardId(Enum):
     HEEL_HOOK = 'heel hook'
     HEMOKINESIS = 'hemokinesis'
     IMMOLATE = 'immolate'
+    IMPATIENCE = 'impatience'
     IMPERVIOUS = 'impervious'
     INFINITE_BLADES = 'infinite blades'
     INFLAME = 'inflame'
@@ -102,6 +105,7 @@ class CardId(Enum):
     LEG_SWEEP = 'leg sweep'
     LIMIT_BREAK = 'limit break'
     MASTER_OF_STRATEGY = 'master of strategy'
+    MAYHEM = 'mayhem'
     METALLICIZE = 'metallicize'
     MIND_BLAST = 'mind blast'
     NEUTRALIZE = 'neutralize'
@@ -310,6 +314,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.TRIP:
         return Card(card_id, upgrade, 0 if cost is None else cost, True if not upgrade else False, CardType.SKILL)
+    if card_id == CardId.BLIND:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True if not upgrade else False, CardType.SKILL)
     if card_id == CardId.APOTHEOSIS:
         base_cost = 2 if not upgrade else 1
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
@@ -320,6 +326,18 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.APPARITION:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL,
                     ethereal=True if not upgrade else False, exhausts=True)
+    if card_id == CardId.DEEP_BREATH:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.ENLIGHTENMENT:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.IMPATIENCE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.MAYHEM:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+
+
+
     if card_id == CardId.PAIN:
         return Card(card_id, 0, -1, False, CardType.CURSE)
     if card_id == CardId.REGRET:
@@ -482,5 +500,3 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.PHANTASMAL_KILLER:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)
-    if card_id == CardId.BLIND:
-        return Card(card_id, upgrade, 0 if cost is None else cost, True if not upgrade else False, CardType.SKILL)

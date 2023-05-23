@@ -51,7 +51,8 @@ class CardRewardHandler(Handler):
             'panacea': 3,
             'bandage up': 3,
             'dramatic entrance': 3,
-            'blind': 3,
+            'blind': 1,
+            'deep breath': 1,
         }
 
     def can_handle(self, state: GameState) -> bool:

@@ -190,3 +190,26 @@ def bouncing_flask_upgraded_post_hook(state: HandStateInterface, effect: CardEff
 
 def __bouncing_flask_post_hook(state: HandStateInterface, hits: int):
     state.add_random_poison(3, hits)
+
+
+def deep_breath_pre_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.draw_pile.extend(state.discard_pile)
+    state.discard_pile.clear()
+
+
+def enlightenment_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    for card in state.hand:
+        if card.cost >= 2:
+            card.cost = 1
+
+
+def impatience_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    attacks_in_hand = len([True for c in state.hand if c.type == CardType.ATTACK])
+    if attacks_in_hand == 0:
+        state.draw_cards(2)
+
+
+def impatience_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    attacks_in_hand = len([True for c in state.hand if c.type == CardType.ATTACK])
+    if attacks_in_hand == 0:
+        state.draw_cards(3)

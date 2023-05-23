@@ -39,6 +39,7 @@ class PowerId(Enum):
     INTANGIBLE_PLAYER = 'intangibleplayer'
     INTANGIBLE_ENEMY = 'intangible'
     JUGGERNAUT = 'juggernaut'
+    MAYHEM = 'mayhem'
     MALLEABLE = 'malleable'
     METALLICIZE = 'metallicize'
     MINION = 'minion'

@@ -1309,3 +1309,44 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.WEAKENED, 2, enemy_index=0)
         self.see_enemy_has_power(play, PowerId.WEAKENED, 2, enemy_index=1)
 
+    def test_deep_breath(self):
+        state = self.given_state(CardId.DEEP_BREATH)
+        for i in range(2):
+            state.discard_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_drew_cards(play, 1)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_enlightenment(self):
+        state = self.given_state(CardId.DASH)
+        state.hand.append(get_card(CardId.DASH))
+        state.hand.append(get_card(CardId.ENLIGHTENMENT))  # At the bottom to force this as first play
+        state.player.energy = 2
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 20)
+
+    def test_impatience_draws(self):
+        state = self.given_state(CardId.IMPATIENCE)
+        state.hand.append(get_card(CardId.DEFEND_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_drew_cards(play, 2)
+
+    def test_impatience_does_not_draw(self):
+        state = self.given_state(CardId.IMPATIENCE)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_drew_cards(play, 0)
+
+    def test_mayhem(self):
+        state = self.given_state(CardId.MAYHEM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.MAYHEM, 1)
+
+    def test_mayhem_upgraded(self):
+        state = self.given_state(CardId.MAYHEM, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.MAYHEM, 1)
