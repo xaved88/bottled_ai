@@ -392,4 +392,6 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.BOUNCING_FLASK:
         hook = bouncing_flask_post_hook if not card.upgrade else bouncing_flask_upgraded_post_hook
         return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
+    if card.id == CardId.BLIND:
+        return [CardEffects(target=TargetType.MONSTER if not card.upgrade else TargetType.ALL_MONSTERS, applies_powers={PowerId.WEAKENED: 2})]
     return [CardEffects()]

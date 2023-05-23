@@ -1295,3 +1295,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.POISON, 0)
         self.assertEqual(play.state.total_random_poison_added, 9)
 
+    def test_blind(self):
+        state = self.given_state(CardId.BLIND, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 0, enemy_index=1)
+
+    def test_blind_upgraded(self):
+        state = self.given_state(CardId.BLIND, upgrade=1, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2, enemy_index=1)
+
