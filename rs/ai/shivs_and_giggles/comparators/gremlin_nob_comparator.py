@@ -89,7 +89,7 @@ class GremlinNobSilentComparator(SbcComparator):
             player_powers_bad=get_power_count(state.player.powers, powers_we_dislike),
             bad_cards_exhausted=len([True for c in state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]),  # We mostly don't exhaust cards yet though.
             saved_for_later=len([True for c in state.discard_pile if c.ethereal and c.type != CardType.CURSE and c.type != CardType.STATUS]),
-            nob_adjusted_incoming_damage=original.player.current_hp - state.player.current_hp + (int(gremlin_nob_hp / 20) * anger_strength_up),
+            nob_adjusted_incoming_damage=original.player.current_hp - state.player.current_hp + (int(gremlin_nob_hp / 15) * anger_strength_up),
             awkward_shivs=len([True for c in state.hand if c.id == CardId.SHIV])+len([True for c in state.discard_pile if c.id == CardId.SHIV]),
         )
 
