@@ -736,3 +736,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_random_damage_dealt(play, 0)
+
+    def test_panache_decrements(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.player.powers[PowerId.PANACHE] = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_has_power(play, PowerId.PANACHE, 4)
+
+    def test_panache_triggers(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.player.powers[PowerId.PANACHE] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_has_power(play, PowerId.PANACHE, 5)

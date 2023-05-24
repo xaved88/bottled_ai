@@ -114,6 +114,7 @@ class CardId(Enum):
     OUTMANEUVER = 'outmaneuver'
     PAIN = 'pain'
     PANACEA = 'panacea'
+    PANACHE = 'panache'
     PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
     PHANTASMAL_KILLER = 'phantasmal killer'
@@ -335,6 +336,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.MAYHEM:
         base_cost = 2 if not upgrade else 1
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.PANACHE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.POWER)
 
 
 

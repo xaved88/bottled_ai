@@ -69,6 +69,7 @@ powers_we_like: List[PowerId] = [
     PowerId.MAYHEM,
     PowerId.METALLICIZE,
     PowerId.NOXIOUS_FUMES,
+    PowerId.PANACHE,
     PowerId.PHANTASMAL,
     PowerId.PLATED_ARMOR,
     PowerId.THORNS,

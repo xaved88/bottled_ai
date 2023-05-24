@@ -1350,3 +1350,9 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.MAYHEM, 1)
+
+    def test_panache(self):
+        state = self.given_state(CardId.PANACHE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_power(play, PowerId.PANACHE, 1)
