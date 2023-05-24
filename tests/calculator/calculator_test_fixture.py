@@ -13,9 +13,9 @@ class CalculatorTestFixture(unittest.TestCase):
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
                     relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0) -> HandState:
         return HandState(
-            player=Player(50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
+            player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
             hand=[get_card(card_id, None, upgrade)],
-            monsters=[Monster(100, 100, 0, {}) for i in range(targets)],
+            monsters=[Monster(False, 100, 100, 0, {}) for i in range(targets)],
             relics=relics,
             cards_discarded_this_turn=cards_discarded_this_turn,
             amount_to_discard=amount_to_discard,

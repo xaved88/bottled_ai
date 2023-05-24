@@ -68,6 +68,7 @@ def create_hand_state(game_state: GameState) -> HandState:
 
     # get player status
     player = Player(
+        is_player=True,
         current_hp=cs['player']['current_hp'],
         max_hp=cs['player']['max_hp'],
         powers=make_powers(cs['player']['powers']),
@@ -79,6 +80,7 @@ def create_hand_state(game_state: GameState) -> HandState:
     # get enemies
     monsters = [
         Monster(
+            is_player=False,
             current_hp=monster['current_hp'],
             max_hp=monster['max_hp'],
             block=monster['block'],

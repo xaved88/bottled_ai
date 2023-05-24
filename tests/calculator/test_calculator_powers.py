@@ -750,3 +750,28 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 10)
         self.see_player_has_power(play, PowerId.PANACHE, 5)
+
+    def test_sadistic_triggers(self):
+        state = self.given_state(CardId.BLIND, player_powers={PowerId.SADISTIC: 5})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
+        self.see_enemy_lost_hp(play, 5)
+
+    def test_sadistic_triggers_on_multi_hit(self):
+        state = self.given_state(CardId.BOUNCING_FLASK, player_powers={PowerId.SADISTIC: 5})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.POISON, 9)
+        self.see_enemy_lost_hp(play, 15)
+
+    def test_sadistic_envenom_interaction(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.SADISTIC: 5, PowerId.ENVENOM: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.POISON, 1)
+        self.see_enemy_lost_hp(play, 11)
+
+    def test_sadistic_should_not_damage_player(self):
+        state = self.given_state(CardId.DOUBT, player_powers={PowerId.SADISTIC: 5})
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_has_power(play, PowerId.WEAKENED, 1)
+        self.see_player_lost_hp(play, 0)

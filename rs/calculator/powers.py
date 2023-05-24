@@ -53,6 +53,7 @@ class PowerId(Enum):
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'
+    SADISTIC = 'sadistic'
     SHACKLED = 'shackled'               # Enemy regains strength at end of turn, not currently relevant
     SHARP_HIDE = 'sharp hide'
     SHIFTING = 'shifting'

@@ -9,9 +9,10 @@ InflictDamageSummary = (int)
 
 
 class Target:
-    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None):
+    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None,):
         if relics is None:
             relics = {}
+        self.is_player: bool = is_player
         self.current_hp: int = current_hp
         self.max_hp: int = max_hp
         self.block: int = block
@@ -59,7 +60,7 @@ class Target:
                     hit_damage -= self.block
                     self.block = 0
                     if source.relics.get(RelicId.HAND_DRILL):
-                        self.add_powers({PowerId.VULNERABLE: 2}, source.relics)
+                        self.add_powers({PowerId.VULNERABLE: 2}, source.relics, source.powers)
 
             if hit_damage > 0:
                 if self.relics.get(RelicId.TORII) and hit_damage < 6:
@@ -97,7 +98,7 @@ class Target:
                         self.powers[PowerId.MALLEABLE] += 1
                         trigger_malleable_block += 1
                     if is_attack and source.powers.get(PowerId.ENVENOM):
-                        self.add_powers({PowerId.POISON: 1}, source.relics)
+                        self.add_powers({PowerId.POISON: 1}, source.relics, source.powers)
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
                         self.current_hp = 0
@@ -134,11 +135,11 @@ class Target:
             self.hits = 0
             del self.powers[PowerId.SPLIT]
         if self.powers.get(PowerId.SHIFTING):
-            self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics)
+            self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics, source.powers)
         return (health_damage_dealt)
 
     # returns a list of powerIds that were applied and not blocked by artifacts
-    def add_powers(self, powers: Powers, relics: Relics) -> List[PowerId]:
+    def add_powers(self, powers: Powers, relics: Relics, source_powers: Powers) -> List[PowerId]:
         applied_powers = []
         for power in powers:
             if self.powers.get(PowerId.ARTIFACT) and \
@@ -155,14 +156,17 @@ class Target:
             else:
                 self.powers[power] = powers[power]
 
+            if source_powers and not self.is_player:
+                if source_powers.get(PowerId.SADISTIC):
+                    self.inflict_damage(self, source_powers.get(PowerId.SADISTIC), 1, vulnerable_modifier=1, is_attack=False)
+                    #  'Self' as source is technically incorrect here, but I don't want to pass even more things into this function and it shouldn't break anything.
+
             if relics:
-                if relics.get(RelicId.SNECKO_SKULL) and power == PowerId.POISON:
-                    self.powers[PowerId.POISON] += 1
                 if relics.get(RelicId.CHAMPION_BELT) and power == PowerId.VULNERABLE:
-                    if PowerId.WEAKENED in self.powers:
-                        self.powers[PowerId.WEAKENED] += 1
-                    else:
-                        self.powers[PowerId.WEAKENED] = 1
+                    self.add_powers({PowerId.WEAKENED: 1}, relics, source_powers)
+                if relics.get(RelicId.SNECKO_SKULL) and power == PowerId.POISON:
+                    # Adding this manually, so we don't get into an infinite loop
+                    self.powers[PowerId.POISON] += 1
 
         return applied_powers
 
@@ -181,8 +185,8 @@ class Target:
 
 class Player(Target):
 
-    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, energy: int, relics: Relics):
-        super().__init__(current_hp, max_hp, block, powers, relics)
+    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, energy: int, relics: Relics):
+        super().__init__(is_player, current_hp, max_hp, block, powers, relics)
         self.energy: int = energy
 
     def get_state_string(self) -> str:
@@ -191,8 +195,8 @@ class Player(Target):
 
 class Monster(Target):
 
-    def __init__(self, current_hp: int, max_hp: int, block: int, powers: Powers, damage: int = 0, hits: int = 0, is_gone: bool = False):
-        super().__init__(current_hp, max_hp, block, powers)
+    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, damage: int = 0, hits: int = 0, is_gone: bool = False):
+        super().__init__(is_player, current_hp, max_hp, block, powers)
         self.damage: int = damage
         self.hits: int = hits
         self.is_gone: bool = is_gone

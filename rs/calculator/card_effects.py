@@ -249,6 +249,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MAYHEM: 1})]
     if card.id == CardId.PANACHE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.PANACHE: 1})]
+    if card.id == CardId.SADISTIC_NATURE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.SADISTIC: 5 if not card.upgrade else 7})]
 
     # silent cards
     if card.id == CardId.NEUTRALIZE:

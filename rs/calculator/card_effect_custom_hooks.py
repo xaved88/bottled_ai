@@ -74,7 +74,7 @@ def spot_weakness_upgraded_post_hook(state: HandStateInterface, effect: CardEffe
 
 def __spot_weakness_post_hook(state: HandStateInterface, target_index: int, amount: int):
     if state.monsters[target_index].hits:
-        state.player.add_powers({PowerId.STRENGTH: amount}, state.player.relics)
+        state.player.add_powers({PowerId.STRENGTH: amount}, state.player.relics, state.player.powers)
 
 
 def reaper_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -158,14 +158,14 @@ def catalyst_post_hook(state: HandStateInterface, effect: CardEffectsInterface, 
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.POISON):
             base_poison = state.monsters[target_index].powers.get(PowerId.POISON)
-            state.monsters[target_index].add_powers({PowerId.POISON: base_poison}, state.player.relics)
+            state.monsters[target_index].add_powers({PowerId.POISON: base_poison}, state.player.relics, state.player.powers)
 
 
 def catalyst_upgraded_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.POISON):
             base_poison = state.monsters[target_index].powers.get(PowerId.POISON)
-            state.monsters[target_index].add_powers({PowerId.POISON: base_poison * 2}, state.player.relics)
+            state.monsters[target_index].add_powers({PowerId.POISON: base_poison * 2}, state.player.relics, state.player.powers)
 
 
 def sword_boomerang_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):

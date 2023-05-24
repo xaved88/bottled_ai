@@ -133,6 +133,7 @@ class CardId(Enum):
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'
     RIDDLE_WITH_HOLES = 'riddle with holes'
+    SADISTIC_NATURE = 'sadistic nature'
     SEEING_RED = 'seeing red'
     SHAME = 'shame'
     SHIV = 'shiv'
@@ -337,6 +338,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         base_cost = 2 if not upgrade else 1
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.PANACHE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.SADISTIC_NATURE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.POWER)
 
 

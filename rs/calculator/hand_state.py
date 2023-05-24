@@ -216,11 +216,11 @@ class HandState:
             # Apply any powers from the card
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
-                    self.player.add_powers(effect.applies_powers, self.player.relics)
+                    self.player.add_powers(effect.applies_powers, self.player.relics, self.player.powers)
                 else:
                     targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
                     for target in targets:
-                        target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics)
+                        target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics, self.player.powers)
 
             # add cards to hand
             if effect.add_cards_to_hand:
@@ -239,13 +239,13 @@ class HandState:
         if RelicId.SHURIKEN in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.SHURIKEN] += 1
             if self.relics[RelicId.SHURIKEN] >= 3:
-                self.player.add_powers({PowerId.STRENGTH: 1}, self.player.relics)
+                self.player.add_powers({PowerId.STRENGTH: 1}, self.player.relics, self.player.powers)
                 self.relics[RelicId.SHURIKEN] -= 3
 
         if RelicId.KUNAI in self.relics and card.type == CardType.ATTACK:
             self.relics[RelicId.KUNAI] += 1
             if self.relics[RelicId.KUNAI] >= 3:
-                self.player.add_powers({PowerId.DEXTERITY: 1}, self.player.relics)
+                self.player.add_powers({PowerId.DEXTERITY: 1}, self.player.relics, self.player.powers)
                 self.relics[RelicId.KUNAI] -= 3
 
         if RelicId.NUNCHAKU in self.relics and card.type == CardType.ATTACK:
@@ -301,7 +301,7 @@ class HandState:
         self.add_player_block(self.player.powers.get(PowerId.METALLICIZE, 0))
 
         if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
-            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics)
+            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics, self.player.powers)
 
         if self.player.powers.get(PowerId.CONSTRICTED, 0):
             self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
@@ -329,11 +329,11 @@ class HandState:
 
         doubt_count = len([1 for c in self.hand if c.id == CardId.DOUBT])
         if doubt_count:
-            self.player.add_powers({PowerId.WEAKENED: doubt_count}, self.player.relics)
+            self.player.add_powers({PowerId.WEAKENED: doubt_count}, self.player.relics, self.player.powers)
 
         shame_count = len([1 for c in self.hand if c.id == CardId.SHAME])
         if shame_count:
-            self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics)
+            self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics, self.player.powers)
 
         # poison
         for monster in self.monsters:
@@ -472,7 +472,7 @@ class HandState:
             for monster in self.monsters:
                 if monster.current_hp > 0:
                     for i in range(hits):
-                        monster.add_powers({PowerId.POISON: poison_amount}, self.player.relics)
+                        monster.add_powers({PowerId.POISON: poison_amount}, self.player.relics, self.player.powers)
         else:
             self.total_random_poison_added += poison_amount * hits
 

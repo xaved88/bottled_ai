@@ -1356,3 +1356,9 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_has_power(play, PowerId.PANACHE, 1)
+
+    def test_sadistic_nature(self):
+        state = self.given_state(CardId.SADISTIC_NATURE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_power(play, PowerId.SADISTIC, 5)
