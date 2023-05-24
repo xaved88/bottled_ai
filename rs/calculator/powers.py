@@ -47,7 +47,7 @@ class PowerId(Enum):
     NEXT_TURN_BLOCK = 'next turn block' # It affects a future turn though, so we mostly don't do anything with it.
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
-    PANACHE = 'panache wrong name to trigger missing enum'
+    PANACHE = 'panache'                 # We currently have damage provided by triggering the Panache power hardcoded to 10. It's the first power we've run into that has multiple values associated with it.
     PEN_NIB_POWER = 'pen nib'           # Covered by Pen Nib relic counting
     PHANTASMAL = 'phantasmal'
     POISON = 'poison'

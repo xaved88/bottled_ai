@@ -46,13 +46,14 @@ class CardRewardHandler(Handler):
             'corpse explosion': 3,
             'crippling cloud': 3,
             'apotheosis': 1,
-            # 'panache': 3,             # not implemented yet
-            # 'sadistic nature': 3,     # not implemented yet
+            'panache': 3,
+            'sadistic nature': 3,
             'panacea': 3,
             'bandage up': 3,
             'dramatic entrance': 3,
             'blind': 1,
             'deep breath': 1,
+            'enlightenment': 1,
         }
 
     def can_handle(self, state: GameState) -> bool:

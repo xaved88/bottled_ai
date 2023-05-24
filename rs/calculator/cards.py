@@ -114,7 +114,7 @@ class CardId(Enum):
     OUTMANEUVER = 'outmaneuver'
     PAIN = 'pain'
     PANACEA = 'panacea'
-    PANACHE = 'panache'
+    PANACHE = 'panache'  # We currently have damage provided by triggering the Panache power hardcoded to 10. It's the first power we've run into that has multiple values associated with it.
     PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
     PHANTASMAL_KILLER = 'phantasmal killer'

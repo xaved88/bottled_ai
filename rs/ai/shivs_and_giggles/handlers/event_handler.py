@@ -166,7 +166,7 @@ class EventHandler(Handler):
             return "choose 1"  # Heal, but also because I don't know if we handle selection here.
 
         if event_name == "Masked Bandits":
-            if hp_per >= 70:
+            if hp_per >= 60:
                 return "choose 1"  # Fuck 'em up!
             else:
                 return "choose 0"  # Give up all money and leave.
