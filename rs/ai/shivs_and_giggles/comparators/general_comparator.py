@@ -1,6 +1,7 @@
 from typing import List
 
-from rs.calculator.cards import CardId, CardType
+from rs.calculator.cards import CardType
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.battle_state import BattleState
 from rs.calculator.powers import PowerId, get_power_count

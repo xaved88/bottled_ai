@@ -1,4 +1,4 @@
-from rs.calculator.cards import CardId
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import RelicId
 from rs.machine.character import Character

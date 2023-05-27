@@ -1,5 +1,6 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
-from rs.calculator.cards import CardId, get_card
+from rs.calculator.cards import get_card
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.powers import PowerId
 
 

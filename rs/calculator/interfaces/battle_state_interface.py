@@ -1,17 +1,17 @@
 import abc
 from typing import List
 
-from rs.calculator.cards import Card
+from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.relics import Relics
 from rs.calculator.targets import Player, Monster
 
 
 class BattleStateInterface(metaclass=abc.ABCMeta):
     player: Player
-    hand: List[Card]
-    discard_pile: List[Card]
-    exhaust_pile: List[Card]
-    draw_pile: List[Card]
+    hand: List[CardInterface]
+    discard_pile: List[CardInterface]
+    exhaust_pile: List[CardInterface]
+    draw_pile: List[CardInterface]
     monsters: List[Monster]
     relics: Relics
     cards_discarded_this_turn: int
@@ -22,12 +22,12 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def add_cards_to_hand(self, card: Card, amount: int):
+    def add_cards_to_hand(self, card: CardInterface, amount: int):
         # must be implemented by children
         pass
 
     @abc.abstractmethod
-    def discard_card(self, card: Card):
+    def discard_card(self, card: CardInterface):
         # must be implemented by children
         pass
 

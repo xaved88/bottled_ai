@@ -1,4 +1,4 @@
-from rs.calculator.cards import CardId
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.comparator import SbcComparator
 from rs.calculator.battle_state import BattleState
 from rs.calculator.powers import PowerId

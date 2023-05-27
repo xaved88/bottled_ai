@@ -1,6 +1,7 @@
 import unittest
 
-from rs.calculator.cards import CardId, get_card
+from rs.calculator.cards import get_card
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
 from rs.calculator.play_path import PlayPath, get_paths
 from rs.calculator.powers import PowerId

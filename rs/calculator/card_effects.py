@@ -2,7 +2,7 @@ from enum import Enum
 from typing import List
 
 from rs.calculator.card_effect_custom_hooks import *
-from rs.calculator.cards import Card, CardId
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.powers import Powers, PowerId
 from rs.calculator.targets import Player
@@ -32,7 +32,7 @@ class CardEffects(CardEffectsInterface):
             post_self_discarded_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
-            add_cards_to_hand: [Card, int] = None
+            add_cards_to_hand: [CardInterface, int] = None
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -50,11 +50,11 @@ class CardEffects(CardEffectsInterface):
             CardEffectCustomHook] = [] if post_self_discarded_hooks is None else post_self_discarded_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
-        self.add_cards_to_hand: [Card, int] = add_cards_to_hand
+        self.add_cards_to_hand: [CardInterface, int] = add_cards_to_hand
 
 
-def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_pile: List[Card],
-                     hand: List[Card]) -> List[CardEffects]:
+def get_card_effects(card: CardInterface, player: Player, draw_pile: List[CardInterface],
+                     discard_pile: List[CardInterface], hand: List[CardInterface]) -> List[CardEffects]:
     if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G:
         return [CardEffects(damage=6 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER)]
     if card.id == CardId.DEFEND_R or card.id == CardId.DEFEND_G:

@@ -4,7 +4,8 @@ from rs.calculator.comparator import DefaultSbcComparator
 from rs.calculator.executor import get_best_battle_path
 from test_helpers.resources import load_resource_state
 from calculator.calculator_test_fixture import CalculatorTestFixture
-from rs.calculator.cards import CardId, get_card
+from rs.calculator.cards import get_card
+from rs.calculator.enums.card_id import CardId
 
 
 class CalculatorOtherTest(unittest.TestCase):

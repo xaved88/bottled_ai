@@ -2,9 +2,11 @@ import math
 from typing import List
 
 from rs.calculator.card_effects import get_card_effects, TargetType
-from rs.calculator.cards import Card, CardId, get_card
+from rs.calculator.cards import get_card
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
+from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Player, Monster
@@ -16,17 +18,17 @@ PLAY_DISCARD = -2
 
 class BattleState(BattleStateInterface):
 
-    def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
-                 exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
+    def __init__(self, player: Player, hand: List[CardInterface] = None, discard_pile: List[CardInterface] = None,
+                 exhaust_pile: List[CardInterface] = None, draw_pile: List[CardInterface] = None,
                  monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
                  cards_discarded_this_turn: int = 0,
                  total_random_damage_dealt: int = 0, total_random_poison_added: int = 0):
 
         self.player: Player = player
-        self.hand: List[Card] = [] if hand is None else hand
-        self.discard_pile: List[Card] = [] if discard_pile is None else discard_pile
-        self.exhaust_pile: List[Card] = [] if exhaust_pile is None else exhaust_pile
-        self.draw_pile: List[Card] = [] if draw_pile is None else draw_pile
+        self.hand: List[CardInterface] = [] if hand is None else hand
+        self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
+        self.exhaust_pile: List[CardInterface] = [] if exhaust_pile is None else exhaust_pile
+        self.draw_pile: List[CardInterface] = [] if draw_pile is None else draw_pile
         self.monsters: List[Monster] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
         self.amount_to_discard: int = amount_to_discard
@@ -282,7 +284,7 @@ class BattleState(BattleStateInterface):
 
         self.kill_monsters()
 
-    def transform_from_discard(self, card: Card, index: int):
+    def transform_from_discard(self, card: CardInterface, index: int):
         self.discard_card(card)
         self.amount_to_discard -= 1
         pass
@@ -422,7 +424,7 @@ class BattleState(BattleStateInterface):
             if len(self.draw_pile) > 0:
                 del self.draw_pile[0]
 
-    def add_cards_to_hand(self, card: Card, amount: int):
+    def add_cards_to_hand(self, card: CardInterface, amount: int):
         amount_that_fits = min(amount, 10 - len(self.hand))
         amount_that_does_not_fit = amount - amount_that_fits
 
@@ -431,7 +433,7 @@ class BattleState(BattleStateInterface):
         for i in range(amount_that_does_not_fit):
             self.discard_pile.append(card)
 
-    def discard_card(self, card: Card):
+    def discard_card(self, card: CardInterface):
         self.hand.remove(card)
         self.discard_pile.append(card)
         # self_discarded hook
@@ -507,7 +509,7 @@ class BattleState(BattleStateInterface):
                                                    is_attack=False)
 
 
-def is_card_playable(card: Card, player: Player, hand: List[Card], draw_pile_count: int) -> bool:
+def is_card_playable(card: CardInterface, player: Player, hand: List[CardInterface], draw_pile_count: int) -> bool:
     # unplayable cards like burn, wound, and reflex
     if card.cost == -1:
         return False
@@ -526,7 +528,7 @@ def is_card_playable(card: Card, player: Player, hand: List[Card], draw_pile_cou
     return True
 
 
-def can_card_target_monster(card: Card, monster: Monster) -> bool:
+def can_card_target_monster(card: CardInterface, monster: Monster) -> bool:
     if not card.needs_target:
         return False  # should never be reached, but still :shrug:
 

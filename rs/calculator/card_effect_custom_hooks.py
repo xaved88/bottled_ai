@@ -1,13 +1,15 @@
 from typing import Callable
 
-from rs.calculator.cards import get_card, CardId, Card
+from rs.calculator.cards import get_card
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
+from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.powers import PowerId
 from rs.game.card import CardType
 
 CardEffectCustomHook = Callable[[BattleStateInterface, CardEffectsInterface, int], None]
-CardEffectCustomHookWithCard = Callable[[Card], None]
+CardEffectCustomHookWithCard = Callable[[CardInterface], None]
 
 
 def dropkick_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -103,14 +105,15 @@ def storm_of_steel_post_hook(state: BattleStateInterface, effect: CardEffectsInt
     state.add_cards_to_hand(get_card(CardId.SHIV), amount)
 
 
-def storm_of_steel_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+def storm_of_steel_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                      target_index: int = -1):
     amount = len(state.hand)
     for _ in range(amount):
         state.discard_card(state.hand[0])
     state.add_cards_to_hand(get_card(CardId.SHIV, upgrade=1), amount)
 
 
-def eviscerate_post_others_discarded_hook(card: Card):
+def eviscerate_post_others_discarded_hook(card: CardInterface):
     card.cost = max(0, card.cost - 1)
 
 
@@ -125,7 +128,8 @@ def unload_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, 
             state.discard_card(state.hand[idx])
 
 
-def tactician_post_self_discarded_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+def tactician_post_self_discarded_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
     state.player.energy += 1
 
 
@@ -159,21 +163,24 @@ def catalyst_post_hook(state: BattleStateInterface, effect: CardEffectsInterface
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.POISON):
             base_poison = state.monsters[target_index].powers.get(PowerId.POISON)
-            state.monsters[target_index].add_powers({PowerId.POISON: base_poison}, state.player.relics, state.player.powers)
+            state.monsters[target_index].add_powers({PowerId.POISON: base_poison}, state.player.relics,
+                                                    state.player.powers)
 
 
 def catalyst_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     if target_index > -1:
         if state.monsters[target_index].powers.get(PowerId.POISON):
             base_poison = state.monsters[target_index].powers.get(PowerId.POISON)
-            state.monsters[target_index].add_powers({PowerId.POISON: base_poison * 2}, state.player.relics, state.player.powers)
+            state.monsters[target_index].add_powers({PowerId.POISON: base_poison * 2}, state.player.relics,
+                                                    state.player.powers)
 
 
 def sword_boomerang_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     __sword_boomerang_post_hook(state, 3)
 
 
-def sword_boomerang_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+def sword_boomerang_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
     __sword_boomerang_post_hook(state, 4)
 
 
@@ -185,7 +192,8 @@ def bouncing_flask_post_hook(state: BattleStateInterface, effect: CardEffectsInt
     __bouncing_flask_post_hook(state, 3)
 
 
-def bouncing_flask_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+def bouncing_flask_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                      target_index: int = -1):
     __bouncing_flask_post_hook(state, 4)
 
 

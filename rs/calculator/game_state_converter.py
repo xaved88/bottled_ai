@@ -1,7 +1,9 @@
 from typing import List
 
-from rs.calculator.cards import Card, CardId
+from rs.calculator.cards import Card
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
+from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.powers import PowerId, Powers
 from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Player, Monster
@@ -12,7 +14,7 @@ from rs.machine.state import GameState
 possible_card_ids = set(item.value for item in CardId)
 
 
-def make_card(card: GameCard) -> Card:
+def make_card(card: GameCard) -> CardInterface:
     card_id = card.id.lower()
     if card_id not in possible_card_ids:
         log_calculator_missing_card(card_id)
