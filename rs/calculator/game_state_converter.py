@@ -6,7 +6,8 @@ from rs.calculator.battle_state import BattleState
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.powers import PowerId, Powers
 from rs.calculator.relics import Relics, RelicId
-from rs.calculator.targets import Player, Monster
+from rs.calculator.player import Player
+from rs.calculator.monster import Monster
 from rs.game.card import CardType, Card as GameCard
 from rs.helper.logger import log_calculator_missing_relic, log_calculator_missing_power, log_calculator_missing_card
 from rs.machine.state import GameState

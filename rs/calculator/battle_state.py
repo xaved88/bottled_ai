@@ -7,9 +7,10 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
+from rs.calculator.interfaces.moster_interface import MonsterInterface
+from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
-from rs.calculator.targets import Player, Monster
 from rs.game.card import CardType
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
@@ -18,18 +19,18 @@ PLAY_DISCARD = -2
 
 class BattleState(BattleStateInterface):
 
-    def __init__(self, player: Player, hand: List[CardInterface] = None, discard_pile: List[CardInterface] = None,
-                 exhaust_pile: List[CardInterface] = None, draw_pile: List[CardInterface] = None,
-                 monsters: List[Monster] = None, relics: Relics = None, amount_to_discard: int = 0,
-                 cards_discarded_this_turn: int = 0,
-                 total_random_damage_dealt: int = 0, total_random_poison_added: int = 0):
+    def __init__(self, player: PlayerInterface, hand: List[CardInterface] = None,
+                 discard_pile: List[CardInterface] = None, exhaust_pile: List[CardInterface] = None,
+                 draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
+                 amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
+                 total_random_poison_added: int = 0):
 
-        self.player: Player = player
+        self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
         self.exhaust_pile: List[CardInterface] = [] if exhaust_pile is None else exhaust_pile
         self.draw_pile: List[CardInterface] = [] if draw_pile is None else draw_pile
-        self.monsters: List[Monster] = [] if monsters is None else monsters
+        self.monsters: List[MonsterInterface] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
         self.amount_to_discard: int = amount_to_discard
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
@@ -223,7 +224,8 @@ class BattleState(BattleStateInterface):
                 else:
                     targets = [self.monsters[target_index]] if effect.target == TargetType.MONSTER else self.monsters
                     for target in targets:
-                        target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics, self.player.powers)
+                        target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics,
+                                          self.player.powers)
 
             # add cards to hand
             if effect.add_cards_to_hand:
@@ -304,16 +306,19 @@ class BattleState(BattleStateInterface):
         self.add_player_block(self.player.powers.get(PowerId.METALLICIZE, 0))
 
         if self.player.powers.get(PowerId.WRAITH_FORM_POWER):
-            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)}, self.player.relics, self.player.powers)
+            self.player.add_powers({PowerId.DEXTERITY: -self.player.powers.get(PowerId.WRAITH_FORM_POWER)},
+                                   self.player.relics, self.player.powers)
 
         if self.player.powers.get(PowerId.CONSTRICTED, 0):
             self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
                                        vulnerable_modifier=1, is_attack=False)
 
         # curses and burns
-        regret_count = len([1 for c in self.hand if c.id == CardId.REGRET])  # might technically be off by 1 if there are #manyregrets
+        regret_count = len(
+            [1 for c in self.hand if c.id == CardId.REGRET])  # might technically be off by 1 if there are #manyregrets
         if regret_count:
-            self.player.inflict_damage(self.player, len(self.hand), regret_count, blockable=False, vulnerable_modifier=1,
+            self.player.inflict_damage(self.player, len(self.hand), regret_count, blockable=False,
+                                       vulnerable_modifier=1,
                                        is_attack=False)
 
         decay_count = len([1 for c in self.hand if c.id == CardId.DECAY])
@@ -482,7 +487,8 @@ class BattleState(BattleStateInterface):
     def add_player_block(self, amount: int):
         self.player.block += amount
         if amount > 0 and self.player.powers.get(PowerId.JUGGERNAUT, 0):
-            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1, vulnerable_modifier=1, is_attack=False)
+            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1, vulnerable_modifier=1,
+                                              is_attack=False)
 
     def kill_monsters(self):
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
@@ -505,11 +511,13 @@ class BattleState(BattleStateInterface):
                     corpse_explosion_hits = m.powers.get(PowerId.CORPSE_EXPLOSION_POWER)
                     for monster in self.monsters:
                         if monster.current_hp > 0:
-                            monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits, vulnerable_modifier=1,
+                            monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits,
+                                                   vulnerable_modifier=1,
                                                    is_attack=False)
 
 
-def is_card_playable(card: CardInterface, player: Player, hand: List[CardInterface], draw_pile_count: int) -> bool:
+def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],
+                     draw_pile_count: int) -> bool:
     # unplayable cards like burn, wound, and reflex
     if card.cost == -1:
         return False
@@ -528,7 +536,7 @@ def is_card_playable(card: CardInterface, player: Player, hand: List[CardInterfa
     return True
 
 
-def can_card_target_monster(card: CardInterface, monster: Monster) -> bool:
+def can_card_target_monster(card: CardInterface, monster: MonsterInterface) -> bool:
     if not card.needs_target:
         return False  # should never be reached, but still :shrug:
 

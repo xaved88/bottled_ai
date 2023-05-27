@@ -4,8 +4,8 @@ from typing import List
 from rs.calculator.card_effect_custom_hooks import *
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
+from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.powers import Powers, PowerId
-from rs.calculator.targets import Player
 
 
 class TargetType(Enum):
@@ -53,7 +53,7 @@ class CardEffects(CardEffectsInterface):
         self.add_cards_to_hand: [CardInterface, int] = add_cards_to_hand
 
 
-def get_card_effects(card: CardInterface, player: Player, draw_pile: List[CardInterface],
+def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: List[CardInterface],
                      discard_pile: List[CardInterface], hand: List[CardInterface]) -> List[CardEffects]:
     if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G:
         return [CardEffects(damage=6 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER)]

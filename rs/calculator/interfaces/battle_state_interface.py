@@ -2,17 +2,18 @@ import abc
 from typing import List
 
 from rs.calculator.interfaces.card_interface import CardInterface
+from rs.calculator.interfaces.moster_interface import MonsterInterface
+from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.relics import Relics
-from rs.calculator.targets import Player, Monster
 
 
 class BattleStateInterface(metaclass=abc.ABCMeta):
-    player: Player
+    player: PlayerInterface
     hand: List[CardInterface]
     discard_pile: List[CardInterface]
     exhaust_pile: List[CardInterface]
     draw_pile: List[CardInterface]
-    monsters: List[Monster]
+    monsters: List[MonsterInterface]
     relics: Relics
     cards_discarded_this_turn: int
 

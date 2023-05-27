@@ -6,7 +6,8 @@ from rs.calculator.battle_state import BattleState
 from rs.calculator.play_path import PlayPath, get_paths
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics
-from rs.calculator.targets import Player, Monster
+from rs.calculator.player import Player
+from rs.calculator.monster import Monster
 
 
 class CalculatorTestFixture(unittest.TestCase):

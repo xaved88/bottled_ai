@@ -1,15 +1,13 @@
 import math
 from typing import List
 
+from rs.calculator.interfaces.target_interface import InflictDamageSummary
 from rs.calculator.powers import PowerId, Powers, DEBUFFS, DEBUFFS_WHEN_NEGATIVE
 from rs.calculator.relics import Relics, RelicId
 
-# hp_damage_dealt
-InflictDamageSummary = (int)
-
 
 class Target:
-    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None,):
+    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None):
         if relics is None:
             relics = {}
         self.is_player: bool = is_player
@@ -158,7 +156,8 @@ class Target:
 
             if source_powers and not self.is_player:
                 if source_powers.get(PowerId.SADISTIC):
-                    self.inflict_damage(self, source_powers.get(PowerId.SADISTIC), 1, vulnerable_modifier=1, is_attack=False)
+                    self.inflict_damage(self, source_powers.get(PowerId.SADISTIC), 1, vulnerable_modifier=1,
+                                        is_attack=False)
                     #  'Self' as source is technically incorrect here, but I don't want to pass even more things into this function and it shouldn't break anything.
 
             if relics:
@@ -181,25 +180,3 @@ class Target:
         self.current_hp += amount
         if self.current_hp > self.max_hp:
             self.current_hp = self.max_hp
-
-
-class Player(Target):
-
-    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, energy: int, relics: Relics):
-        super().__init__(is_player, current_hp, max_hp, block, powers, relics)
-        self.energy: int = energy
-
-    def get_state_string(self) -> str:
-        return super().get_state_string() + str(self.energy) + ","
-
-
-class Monster(Target):
-
-    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, damage: int = 0, hits: int = 0, is_gone: bool = False):
-        super().__init__(is_player, current_hp, max_hp, block, powers)
-        self.damage: int = damage
-        self.hits: int = hits
-        self.is_gone: bool = is_gone
-
-    def get_state_string(self) -> str:
-        return super().get_state_string() + f"{self.damage},{self.hits},"
