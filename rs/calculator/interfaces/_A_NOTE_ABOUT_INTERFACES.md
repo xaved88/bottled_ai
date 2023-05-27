@@ -4,8 +4,8 @@ The interfaces package is meant to be entirely independent. It exits so that we 
 parts (such as cards affecting the game state effecting cards again). Python hates this circular dependency, but with
 using interfaces we can avoid it. What this means for you as a dev:
 
-- If you're doing something the interfaces package, it must only import from interfaces or enums - nothing else in the
-  calculator. If it does, you're doing it wrong and there's ways to refactor that.
+- If you're doing something in the interfaces package, it must only import from interfaces or enums - nothing else in
+  the calculator. If it does, you're doing it wrong and there's ways to refactor that.
 
 - If you are working outside the interfaces package and in the battle state or somewhere, USE INTERFACES instead of the
   concrete classes. Anything outside of interfaces (like cards, battle state, player, etc) - should only have usages in

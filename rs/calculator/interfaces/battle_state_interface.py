@@ -2,7 +2,7 @@ import abc
 from typing import List
 
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.moster_interface import MonsterInterface
+from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
 

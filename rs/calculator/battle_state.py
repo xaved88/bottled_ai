@@ -7,7 +7,7 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.moster_interface import MonsterInterface
+from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
