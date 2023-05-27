@@ -1,7 +1,7 @@
 import math
 from typing import List
 
-from rs.calculator.game_state_converter import create_hand_state
+from rs.calculator.game_state_converter import create_battle_state
 from rs.game.card import Card, CardType
 from rs.game.deck import Deck
 from rs.machine.command import Command
@@ -112,7 +112,7 @@ class BattleHandler(Handler):
 
     def handle(self, state: GameState) -> List[str]:
         # Temp hand state generation to see if there are any errors and make sure it works in general
-        create_hand_state(state)
+        create_battle_state(state)
 
         # Determine target (lowest effective hp)
         target_index = self.get_target(state.get_monsters())

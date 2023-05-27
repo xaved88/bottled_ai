@@ -1,7 +1,7 @@
 from typing import List
 
 from rs.calculator.cards import Card, CardId
-from rs.calculator.hand_state import HandState
+from rs.calculator.battle_state import BattleState
 from rs.calculator.powers import PowerId, Powers
 from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Player, Monster
@@ -53,7 +53,7 @@ def make_powers(powers: List[dict]) -> Powers:
     return {make_power_id(power['id'].lower()): (power['amount']) for power in powers}
 
 
-def create_hand_state(game_state: GameState) -> HandState:
+def create_battle_state(game_state: GameState) -> BattleState:
     # make sure it's in a usable battle state
     if not game_state.combat_state():
         return None
@@ -102,5 +102,5 @@ def create_hand_state(game_state: GameState) -> HandState:
     amount_to_discard = game_state.screen_state_max_cards()
     cards_discarded_this_turn = game_state.get_cards_discarded_this_turn()
 
-    return HandState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
-                     cards_discarded_this_turn)
+    return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
+                       cards_discarded_this_turn)

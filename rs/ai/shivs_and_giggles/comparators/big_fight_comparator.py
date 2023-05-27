@@ -2,7 +2,7 @@ from rs.ai.shivs_and_giggles.comparators.general_comparator import powers_we_lik
     powers_we_dislike
 from rs.calculator.cards import CardId, CardType
 from rs.calculator.comparator import SbcComparator
-from rs.calculator.hand_state import HandState
+from rs.calculator.battle_state import BattleState
 from rs.calculator.powers import PowerId, get_power_count
 from rs.calculator.relics import RelicId
 
@@ -63,7 +63,7 @@ class GCValues:
 
 class BigFightSilentComparator(SbcComparator):
 
-    def get_values(self, state: HandState, original: HandState) -> GCValues:
+    def get_values(self, state: BattleState, original: BattleState) -> GCValues:
         battle_won = not [True for m in state.monsters if m.current_hp > 0]
         monsters_vulnerable_hp = [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3)
                                   for monster in state.monsters if monster.current_hp > 0]
@@ -92,8 +92,8 @@ class BigFightSilentComparator(SbcComparator):
             enemy_artifacts=sum([m.powers.get(PowerId.ARTIFACT, 0) for m in state.monsters]),
         )
 
-    def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
-                            challenger_state: HandState, original: HandState) -> bool:
+    def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: BattleState,
+                            challenger_state: BattleState, original: BattleState) -> bool:
         if best_state.player.max_hp != challenger_state.player.max_hp:
             return challenger_state.player.max_hp > best_state.player.max_hp
         if best.incoming_damage != challenger.incoming_damage:
@@ -111,8 +111,8 @@ class BigFightSilentComparator(SbcComparator):
             return challenger.energy > best.energy
         return False
 
-    def does_challenger_defeat_the_best(self, best_state: HandState, challenger_state: HandState,
-                                        original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best_state: BattleState, challenger_state: BattleState,
+                                        original: BattleState) -> bool:
         best = self.get_values(best_state, original)
         challenger = self.get_values(challenger_state, original)
 

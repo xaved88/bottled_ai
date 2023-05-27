@@ -1,7 +1,7 @@
 import unittest
 
 from rs.calculator.cards import CardId, get_card
-from rs.calculator.hand_state import HandState
+from rs.calculator.battle_state import BattleState
 from rs.calculator.play_path import PlayPath, get_paths
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics
@@ -11,8 +11,8 @@ from rs.calculator.targets import Player, Monster
 class CalculatorTestFixture(unittest.TestCase):
 
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
-                    relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0) -> HandState:
-        return HandState(
+                    relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0) -> BattleState:
+        return BattleState(
             player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
             hand=[get_card(card_id, None, upgrade)],
             monsters=[Monster(False, 100, 100, 0, {}) for i in range(targets)],
@@ -21,7 +21,7 @@ class CalculatorTestFixture(unittest.TestCase):
             amount_to_discard=amount_to_discard,
         )
 
-    def when_playing_the_first_card(self, hand_state: HandState) -> PlayPath:
+    def when_playing_the_first_card(self, hand_state: BattleState) -> PlayPath:
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
         plays = list(paths.values())
@@ -30,7 +30,7 @@ class CalculatorTestFixture(unittest.TestCase):
         else:
             return plays[0]
 
-    def when_playing_the_whole_hand(self, hand_state: HandState) -> PlayPath:
+    def when_playing_the_whole_hand(self, hand_state: BattleState) -> PlayPath:
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
         return list(paths.values())[-1]

@@ -13,7 +13,7 @@ Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for disc
 PLAY_DISCARD = -2
 
 
-class HandState:
+class BattleState:
 
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,

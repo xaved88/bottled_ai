@@ -1,7 +1,7 @@
 import unittest
 
 from rs.calculator.executor import get_discard_commands
-from rs.calculator.hand_state import PLAY_DISCARD
+from rs.calculator.battle_state import PLAY_DISCARD
 
 
 class CalculatorExecutorTestCase(unittest.TestCase):

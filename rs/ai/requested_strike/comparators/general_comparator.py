@@ -1,6 +1,6 @@
 from rs.calculator.cards import CardId
 from rs.calculator.comparator import SbcComparator
-from rs.calculator.hand_state import HandState
+from rs.calculator.battle_state import BattleState
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import RelicId
 
@@ -41,7 +41,7 @@ class GCValues:
 
 class GeneralComparator(SbcComparator):
 
-    def get_values(self, state: HandState, original: HandState) -> GCValues:
+    def get_values(self, state: BattleState, original: BattleState) -> GCValues:
         battle_won = not [True for m in state.monsters if m.current_hp > 0]
         monsters_vulnerable_hp = [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3)
                                   for monster in state.monsters if monster.current_hp > 0]
@@ -62,8 +62,8 @@ class GeneralComparator(SbcComparator):
             enemy_weak=min(max([m.powers.get(PowerId.WEAKENED, 0) for m in state.monsters]), 4),
         )
 
-    def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: HandState,
-                            challenger_state: HandState, original: HandState) -> bool:
+    def optimize_battle_won(self, best: GCValues, challenger: GCValues, best_state: BattleState,
+                            challenger_state: BattleState, original: BattleState) -> bool:
         if best_state.player.max_hp != challenger_state.player.max_hp:
             return challenger_state.player.max_hp > best_state.player.max_hp
         if best.incoming_damage != challenger.incoming_damage:
@@ -78,8 +78,8 @@ class GeneralComparator(SbcComparator):
             return challenger.energy > best.energy
         return False
 
-    def does_challenger_defeat_the_best(self, best_state: HandState, challenger_state: HandState,
-                                        original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best_state: BattleState, challenger_state: BattleState,
+                                        original: BattleState) -> bool:
         """
         - split
         """

@@ -1,13 +1,13 @@
 from typing import List
 
-from rs.calculator.hand_state import HandState, Play
+from rs.calculator.battle_state import BattleState, Play
 from rs.calculator.helper import pickle_deepcopy
 
 
 class PlayPath:
-    def __init__(self, plays: List[Play], state: HandState):
+    def __init__(self, plays: List[Play], state: BattleState):
         self.plays: List[Play] = plays
-        self.state: HandState = state
+        self.state: BattleState = state
 
     def end_turn(self):
         self.state.end_turn()
@@ -24,7 +24,7 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
     else:
         plays = path.state.get_plays()
     for play in plays:
-        new_state: HandState = pickle_deepcopy(path.state)
+        new_state: BattleState = pickle_deepcopy(path.state)
         new_state.transform_from_play(play, is_first_play=not path.plays)
         new_plays: List[Play] = path.plays.copy()
         new_plays.append(play)
@@ -32,7 +32,7 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
         get_paths(new_path, paths)
 
 
-def get_paths_bfs(state: HandState, max_path_count: int):
+def get_paths_bfs(state: BattleState, max_path_count: int):
     explored_paths: dict[str, PlayPath] = {}
     unexplored_paths = [PlayPath([], pickle_deepcopy(state))]
 
@@ -56,7 +56,7 @@ def get_paths_bfs(state: HandState, max_path_count: int):
             plays = path.state.get_plays()
 
         for play in plays:
-            new_state: HandState = pickle_deepcopy(path.state)
+            new_state: BattleState = pickle_deepcopy(path.state)
             new_state.transform_from_play(play, is_first_play=not path.plays)
             new_plays: List[Play] = path.plays.copy()
             new_plays.append(play)

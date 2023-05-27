@@ -6,12 +6,12 @@ from rs.calculator.relics import Relics
 from rs.calculator.targets import Player, Monster
 
 """
-These classes only exists so that we can reference HandState and CardEffects elsewhere and avoid circular dependencies.
-It should be kept to have the same var members as HandState/CardEffects, and essentially function as an interface for it.
+These classes only exists so that we can reference BattleState and CardEffects elsewhere and avoid circular dependencies.
+It should be kept to have the same var members as BattleState/CardEffects, and essentially function as an interface for it.
 """
 
 
-class HandStateInterface:
+class BattleStateInterface:
     player: Player
     hand: List[Card]
     discard_pile: List[Card]

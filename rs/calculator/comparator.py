@@ -1,15 +1,15 @@
-from rs.calculator.hand_state import HandState
+from rs.calculator.battle_state import BattleState
 from rs.calculator.powers import PowerId
 
 
 class SbcComparator:  # Abstract class, just for signature for the kiddos.
-    def does_challenger_defeat_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best: BattleState, challenger: BattleState, original: BattleState) -> bool:
         return True
 
 
 class DefaultSbcComparator(SbcComparator):
 
-    def get_values(self, state: HandState, original: HandState) -> dict:
+    def get_values(self, state: BattleState, original: BattleState) -> dict:
         values = {}
         values['battle_lost'] = state.player.current_hp <= 0
         values['monsters_hp'] = [monster.current_hp for monster in state.monsters if monster.current_hp > 0]
@@ -21,7 +21,7 @@ class DefaultSbcComparator(SbcComparator):
         values['total_monster_health']: int = 0 if values['battle_won'] else sum(monsters_hp)
         return values
 
-    def does_challenger_defeat_the_best(self, best: HandState, challenger: HandState, original: HandState) -> bool:
+    def does_challenger_defeat_the_best(self, best: BattleState, challenger: BattleState, original: BattleState) -> bool:
         best_values = self.get_values(best, original)
         challenger_values = self.get_values(challenger, original)
         
