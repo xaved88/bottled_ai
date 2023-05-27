@@ -1,7 +1,8 @@
 from typing import Callable
 
 from rs.calculator.cards import get_card, CardId, Card
-from rs.calculator.interfaces_for_hooks import CardEffectsInterface, BattleStateInterface
+from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
+from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.powers import PowerId
 from rs.game.card import CardType
 

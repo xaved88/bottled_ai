@@ -3,6 +3,7 @@ from typing import List
 
 from rs.calculator.card_effect_custom_hooks import *
 from rs.calculator.cards import Card, CardId
+from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.powers import Powers, PowerId
 from rs.calculator.targets import Player
 
@@ -14,7 +15,7 @@ class TargetType(Enum):
     ALL_MONSTERS = 3
 
 
-class CardEffects:
+class CardEffects(CardEffectsInterface):
     def __init__(
             self,
             damage: int = 0,
@@ -239,7 +240,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.APPARITION:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE_PLAYER: 1})]
     if card.id == CardId.DEEP_BREATH:
-        return [CardEffects(target=TargetType.SELF, draw=1 if not card.upgrade else 2, pre_hooks=[deep_breath_pre_hook])]
+        return [
+            CardEffects(target=TargetType.SELF, draw=1 if not card.upgrade else 2, pre_hooks=[deep_breath_pre_hook])]
     if card.id == CardId.ENLIGHTENMENT:
         return [CardEffects(target=TargetType.SELF, post_hooks=[enlightenment_post_hook])]
     if card.id == CardId.IMPATIENCE:
@@ -344,7 +346,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.QUICK_SLASH:
         return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 12, hits=1, draw=1)]
     if card.id == CardId.CRIPPLING_CLOUD:
-        return [CardEffects(target=TargetType.ALL_MONSTERS, applies_powers={PowerId.POISON: 4 if not card.upgrade else 7, PowerId.WEAKENED: 2})]
+        return [CardEffects(target=TargetType.ALL_MONSTERS,
+                            applies_powers={PowerId.POISON: 4 if not card.upgrade else 7, PowerId.WEAKENED: 2})]
     if card.id == CardId.PANACEA:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1 if not card.upgrade else 2})]
     if card.id == CardId.MIND_BLAST:
@@ -358,21 +361,30 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
     if card.id == CardId.DEADLY_POISON:
         return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 5 if not card.upgrade else 7})]
     if card.id == CardId.TACTICIAN:
-        return [CardEffects(target=TargetType.NONE, post_self_discarded_hooks=[tactician_post_self_discarded_hook] if not card.upgrade else [tactician_upgraded_post_self_discarded_hook])]
+        return [CardEffects(target=TargetType.NONE,
+                            post_self_discarded_hooks=[tactician_post_self_discarded_hook] if not card.upgrade else [
+                                tactician_upgraded_post_self_discarded_hook])]
     if card.id == CardId.REFLEX:
-        return [CardEffects(target=TargetType.NONE, post_self_discarded_hooks=[reflex_post_self_discarded_hook] if not card.upgrade else [reflex_upgraded_post_self_discarded_hook])]
+        return [CardEffects(target=TargetType.NONE,
+                            post_self_discarded_hooks=[reflex_post_self_discarded_hook] if not card.upgrade else [
+                                reflex_upgraded_post_self_discarded_hook])]
     if card.id == CardId.CONCENTRATE:
         return [CardEffects(target=TargetType.SELF, energy_gain=2, amount_to_discard=3 if not card.upgrade else 2)]
     if card.id == CardId.FLECHETTES:
-        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=len([1 for c in hand if c.type == CardType.SKILL]))]
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6,
+                            hits=len([1 for c in hand if c.type == CardType.SKILL]))]
     if card.id == CardId.EXPERTISE:
-        return [CardEffects(target=TargetType.SELF, draw=6-len(hand)+1 if not card.upgrade else 7-len(hand)+1)]  # The +1 is for accounting for the EXPERTISE that doesn't disappear until after we've resolved the play.
+        return [CardEffects(target=TargetType.SELF, draw=6 - len(hand) + 1 if not card.upgrade else 7 - len(
+            hand) + 1)]  # The +1 is for accounting for the EXPERTISE that doesn't disappear until after we've resolved the play.
     if card.id == CardId.BANE:
-        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, pre_hooks=[bane_pre_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
+                            pre_hooks=[bane_pre_hook])]
     if card.id == CardId.BULLET_TIME:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1}, post_hooks=[bullet_time_post_hook])]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1},
+                            post_hooks=[bullet_time_post_hook])]
     if card.id == CardId.CHOKE:
-        return [CardEffects(target=TargetType.MONSTER, damage=12, hits=1, applies_powers={PowerId.CHOKED: 3 if not card.upgrade else 5})]
+        return [CardEffects(target=TargetType.MONSTER, damage=12, hits=1,
+                            applies_powers={PowerId.CHOKED: 3 if not card.upgrade else 5})]
     if card.id == CardId.FLYING_KNEE:
         return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 1})]
@@ -383,26 +395,33 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         amount = 4 if not card.upgrade else 6
         return [CardEffects(target=TargetType.SELF, block=amount, applies_powers={PowerId.NEXT_TURN_BLOCK: amount})]
     if card.id == CardId.OUTMANEUVER:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 2} if not card.upgrade else {PowerId.ENERGIZED: 3})]
+        return [CardEffects(target=TargetType.SELF,
+                            applies_powers={PowerId.ENERGIZED: 2} if not card.upgrade else {PowerId.ENERGIZED: 3})]
     if card.id == CardId.ENVENOM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENVENOM: 1})]
     if card.id == CardId.NOXIOUS_FUMES:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NOXIOUS_FUMES: 2 if not card.upgrade else 3})]
+        return [
+            CardEffects(target=TargetType.SELF, applies_powers={PowerId.NOXIOUS_FUMES: 2 if not card.upgrade else 3})]
     if card.id == CardId.ENDLESS_AGONY:
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
     if card.id == CardId.CORPSE_EXPLOSION:
-        return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 6 if not card.upgrade else 9, PowerId.CORPSE_EXPLOSION_POWER: 1})]
+        return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 6 if not card.upgrade else 9,
+                                                                       PowerId.CORPSE_EXPLOSION_POWER: 1})]
     if card.id == CardId.GRAND_FINALE:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=50 if not card.upgrade else 60, hits=1)]
     if card.id == CardId.WRAITH_FORM:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.INTANGIBLE_PLAYER: 2 if not card.upgrade else 3, PowerId.WRAITH_FORM_POWER: 1})]
+        return [CardEffects(target=TargetType.SELF,
+                            applies_powers={PowerId.INTANGIBLE_PLAYER: 2 if not card.upgrade else 3,
+                                            PowerId.WRAITH_FORM_POWER: 1})]
     if card.id == CardId.PIERCING_WAIL:
         return [CardEffects(target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.STRENGTH: -6 if not card.upgrade else -8})]
     if card.id == CardId.BLUR:
-        return [CardEffects(target=TargetType.SELF, block=5 if not card.upgrade else 8, applies_powers={PowerId.BLUR: 1})]
+        return [
+            CardEffects(target=TargetType.SELF, block=5 if not card.upgrade else 8, applies_powers={PowerId.BLUR: 1})]
     if card.id == CardId.CATALYST:
-        return [CardEffects(target=TargetType.MONSTER, post_hooks=[catalyst_post_hook] if not card.upgrade else [catalyst_upgraded_post_hook])]
+        return [CardEffects(target=TargetType.MONSTER,
+                            post_hooks=[catalyst_post_hook] if not card.upgrade else [catalyst_upgraded_post_hook])]
     if card.id == CardId.PHANTASMAL_KILLER:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.PHANTASMAL: 1})]
     if card.id == CardId.BOUNCING_FLASK:

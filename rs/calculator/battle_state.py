@@ -4,6 +4,7 @@ from typing import List
 from rs.calculator.card_effects import get_card_effects, TargetType
 from rs.calculator.cards import Card, CardId, get_card
 from rs.calculator.helper import pickle_deepcopy
+from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.powers import PowerId
 from rs.calculator.relics import Relics, RelicId
 from rs.calculator.targets import Player, Monster
@@ -13,7 +14,7 @@ Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for disc
 PLAY_DISCARD = -2
 
 
-class BattleState:
+class BattleState(BattleStateInterface):
 
     def __init__(self, player: Player, hand: List[Card] = None, discard_pile: List[Card] = None,
                  exhaust_pile: List[Card] = None, draw_pile: List[Card] = None,
