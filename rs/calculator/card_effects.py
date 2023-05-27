@@ -3,6 +3,7 @@ from typing import List
 
 from rs.calculator.card_effect_custom_hooks import *
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.interfaces.card_effect_hooks_interface import CardEffectCustomHook, CardEffectCustomHookWithCard
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.powers import Powers

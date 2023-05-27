@@ -216,7 +216,7 @@ class BattleState(BattleStateInterface):
         for effect in effects:
             # custom post hooks
             for hook in effect.post_hooks:
-                hook(self, effect, target_index)  # TODO - would be nice to find a way to resolve this circular dep
+                hook(self, effect, target_index)
 
             # Apply any powers from the card
             if effect.applies_powers:
