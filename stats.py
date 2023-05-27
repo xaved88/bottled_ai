@@ -1,6 +1,6 @@
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.powers import PowerId
-from rs.calculator.relics import RelicId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
 from rs.machine.character import Character
 
 characters_implemented = len(Character)

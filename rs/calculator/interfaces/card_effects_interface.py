@@ -1,4 +1,4 @@
-from rs.calculator.powers import Powers
+from rs.calculator.interfaces.powers import Powers
 
 
 class CardEffectsInterface:

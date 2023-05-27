@@ -1,5 +1,5 @@
 from rs.calculator.interfaces.moster_interface import MonsterInterface
-from rs.calculator.powers import Powers
+from rs.calculator.interfaces.powers import Powers
 from rs.calculator.targets import Target
 
 

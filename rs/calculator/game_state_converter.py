@@ -4,8 +4,10 @@ from rs.calculator.cards import Card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.powers import PowerId, Powers
-from rs.calculator.relics import Relics, RelicId
+from rs.calculator.interfaces.powers import Powers
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.interfaces.relics import Relics
+from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.player import Player
 from rs.calculator.monster import Monster
 from rs.game.card import CardType, Card as GameCard

@@ -1,6 +1,6 @@
 from rs.calculator.interfaces.player import PlayerInterface
-from rs.calculator.powers import Powers
-from rs.calculator.relics import Relics
+from rs.calculator.interfaces.powers import Powers
+from rs.calculator.interfaces.relics import Relics
 from rs.calculator.targets import Target
 
 

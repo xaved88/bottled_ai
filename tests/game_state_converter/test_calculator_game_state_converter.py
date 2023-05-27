@@ -1,8 +1,8 @@
 import unittest
 
 from rs.calculator.game_state_converter import create_battle_state
-from rs.calculator.powers import PowerId
-from rs.calculator.relics import RelicId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
 from test_helpers.resources import load_resource_state
 
 

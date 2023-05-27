@@ -5,7 +5,7 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.powers import PowerId
+from rs.calculator.enums.power_id import PowerId
 from rs.game.card import CardType
 
 CardEffectCustomHook = Callable[[BattleStateInterface, CardEffectsInterface, int], None]

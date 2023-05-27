@@ -9,8 +9,9 @@ from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.moster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
-from rs.calculator.powers import PowerId
-from rs.calculator.relics import Relics, RelicId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.interfaces.relics import Relics
+from rs.calculator.enums.relic_id import RelicId
 from rs.game.card import CardType
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)

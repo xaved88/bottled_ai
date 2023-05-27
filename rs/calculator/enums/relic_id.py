@@ -131,6 +131,3 @@ class RelicId(Enum):
     WHETSTONE = 'whetstone'                         # N/A
     WHITE_BEAST_STATUE = 'white beast statue'       # N/A
     WRIST_BLADE = 'wrist blade'
-
-
-Relics = dict[RelicId: int]

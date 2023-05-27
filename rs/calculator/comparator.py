@@ -1,5 +1,5 @@
 from rs.calculator.battle_state import BattleState
-from rs.calculator.powers import PowerId
+from rs.calculator.enums.power_id import PowerId
 
 
 class SbcComparator:  # Abstract class, just for signature for the kiddos.

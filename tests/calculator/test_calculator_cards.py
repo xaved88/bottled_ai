@@ -1,7 +1,7 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.powers import PowerId
+from rs.calculator.enums.power_id import PowerId
 
 
 class CalculatorCardsTest(CalculatorTestFixture):

@@ -2,8 +2,8 @@ from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.play_path import PlayPath
-from rs.calculator.powers import PowerId
-from rs.calculator.relics import RelicId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
 
 
 class CalculatorCardsTest(CalculatorTestFixture):

@@ -1,8 +1,9 @@
 import abc
 from typing import List
 
-from rs.calculator.powers import Powers, PowerId
-from rs.calculator.relics import Relics
+from rs.calculator.interfaces.powers import Powers
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.interfaces.relics import Relics
 
 # hp_damage_dealt
 InflictDamageSummary = int
