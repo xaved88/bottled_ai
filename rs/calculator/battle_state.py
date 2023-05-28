@@ -301,6 +301,9 @@ class BattleState(BattleStateInterface):
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
             self.add_player_block(6)
 
+        if RelicId.CLOAK_CLASP in self.relics:
+            self.add_player_block(len(self.hand))
+
         if RelicId.STONE_CALENDAR in self.relics and self.relics[RelicId.STONE_CALENDAR] == 7:
             for monster in self.monsters:
                 if monster.current_hp > 0:

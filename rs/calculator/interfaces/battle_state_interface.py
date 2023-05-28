@@ -42,3 +42,8 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     def add_random_poison(self, poison_amount: int, hits: int):
         # must be implemented by children
         pass
+
+    @abc.abstractmethod
+    def add_player_block(self, amount: int):
+        # must be implemented by children
+        pass

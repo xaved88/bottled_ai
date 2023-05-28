@@ -41,11 +41,14 @@ class RelicId(Enum):
     CERAMIC_FISH = 'ceramic fish'                   # N/A
     CHAMPION_BELT = 'champion belt'
     CIRCLET = 'circlet'                             # N/A
+    CLOAK_CLASP = 'cloak clasp'                     # N/A
     CLOCKWORK_SOUVENIR = 'clockwork souvenir'       # N/A
     COFFEE_DRIPPER = 'coffee dripper'               # N/A
     CULTIST_HEADPIECE = 'cultist headpiece'         # N/A
+    CRACKED_CORE = 'cracked core'                   # N/A
     CURSED_KEY = 'cursed key'                       # N/A
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
+    DATA_DISK = 'data disk'                         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
     EMPTY_CAGE = 'empty cage'                       # N/A
@@ -62,6 +65,7 @@ class RelicId(Enum):
     GREMLIN_VISAGE = 'gremlin visage'               # N/A
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
     HAND_DRILL = 'hand drill'
+    HOLY_WATER = 'holy water'                       # N/A
     HORN_CLEAT = 'horn cleat'                       # We get block from state
     HOVERING_KITE = 'hovering kite'
     ICE_CREAM = 'ice cream'
@@ -82,6 +86,7 @@ class RelicId(Enum):
     MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength
     NINJA_SCROLL = 'ninja scroll'                   # N/A
     NLOTHS_HUNGRY_FACE = 'n\u0027loth\u0027s hungry face' # N/A
+    NUCLEAR_BATTERY = 'nuclear battery'             # N/A
     NUNCHAKU = 'nunchaku'
     ODD_MUSHROOM = 'odd mushroom'
     ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity
@@ -101,11 +106,13 @@ class RelicId(Enum):
     POTION_BELT = 'potion belt'                     # N/A
     PRAYER_WHEEL = 'prayer wheel'                   # N/A
     PRESERVED_INSECT = 'preserved insect'           # N/A
+    PURE_WATER = 'pure water'                       # N/A
     QUESTION_CARD = 'question card'                 # N/A
     RED_MASK = 'red mask'                           # N/A
     REGAL_PILLOW = 'regal pillow'                   # N/A
     RING_OF_THE_SERPENT = 'ring of the serpent'     # N/A
     RING_OF_THE_SNAKE = 'ring of the snake'         # N/A
+    RUNIC_CAPACITOR = 'runic capacitor'             # N/A
     RUNIC_DOME = 'runic dome'                       # We see 0 incoming damage so we yolo attack
     RUNIC_PYRAMID = 'runic pyramid'                 # N/A
     SHOVEL = 'shovel'                               # N/A
@@ -120,6 +127,8 @@ class RelicId(Enum):
     STRAWBERRY = 'strawberry'                       # N/A
     STRIKE_DUMMY = 'strike dummy'
     SUNDIAL = 'sundial'
+    SYMBIOTIC_VIRUS = 'symbiotic virus'             # N/A
+    TEARDROP_LOCKET = 'teardrop locket'             # N/A
     THE_ABACUS = 'the abacus'
     THE_BOOT = 'the boot'
     THE_COURIER = 'the courier'                     # N/A

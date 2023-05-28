@@ -17,7 +17,7 @@ def dropkick_post_hook(state: BattleStateInterface, effect: CardEffectsInterface
 
 
 def entrench_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    state.player.block *= 2
+    state.add_player_block(state.player.block)
 
 
 def feed_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -236,12 +236,12 @@ def __rip_and_tear_post_hook(state: BattleStateInterface, damage: int):
 
 def stack_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     block = len(state.discard_pile)
-    state.player.block += block
+    state.add_player_block(block)
 
 
 def stack_upgraded_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     block = len(state.discard_pile) + 3
-    state.player.block += block
+    state.add_player_block(block)
 
 
 def mind_blast_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -260,7 +260,7 @@ def auto_shields_upgraded_post_hook(state: BattleStateInterface, effect: CardEff
 
 def __auto_shields_post_hook(state: BattleStateInterface, block: int):
     if state.player.block == 0:
-        state.player.block = block
+        state.add_player_block(block)
 
 
 def turbo_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
