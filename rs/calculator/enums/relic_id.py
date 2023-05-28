@@ -37,15 +37,20 @@ class RelicId(Enum):
     BUSTED_CROWN = 'busted crown'                   # N/A
     CALLING_BELL = 'calling bell'                   # N/A
     CAPTAINS_WHEEL = 'captain\u0027s wheel'         # We know current block
+    CAULDRON = 'cauldron'                           # N/A
     CERAMIC_FISH = 'ceramic fish'                   # N/A
     CHAMPION_BELT = 'champion belt'
+    CIRCLET = 'circlet'                             # N/A
+    CLOCKWORK_SOUVENIR = 'clockwork souvenir'       # N/A
     COFFEE_DRIPPER = 'coffee dripper'               # N/A
+    CULTIST_HEADPIECE = 'cultist headpiece'         # N/A
     CURSED_KEY = 'cursed key'                       # N/A
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
     EMPTY_CAGE = 'empty cage'                       # N/A
     ETERNAL_FEATHER = 'eternal feather'             # N/A
+    FACE_OF_CLERIC = 'face of cleric'               # N/A
     FOSSILIZED_HELIX = 'fossilized helix'
     FROZEN_EGG = 'frozen egg'                       # N/A
     FUSION_HAMMER = 'fusion hammer'                 # N/A
@@ -54,6 +59,7 @@ class RelicId(Enum):
     GIRYA = 'girya'                                 # Covered by Strength
     GOLDEN_IDOL = 'golden idol'                     # N/A
     GREMLIN_HORN = 'gremlin horn'
+    GREMLIN_VISAGE = 'gremlin visage'               # N/A
     HAPPY_FLOWER = 'happy flower'                   # We only look at current turn so far, so get this as bonus.
     HAND_DRILL = 'hand drill'
     HORN_CLEAT = 'horn cleat'                       # We get block from state
@@ -64,6 +70,7 @@ class RelicId(Enum):
     JUZU_BRACELET = 'juzu bracelet'                 # N/A
     KUNAI = 'kunai'
     LANTERN = 'lantern'                             # N/A
+    LEES_WAFFLE = 'lee\u0027s waffle'               # N/A
     LETTER_OPENER = 'letter opener'
     MANGO = 'mango'                                 # N/A
     MARK_OF_PAIN = 'mark of pain'                   # N/A
@@ -74,6 +81,7 @@ class RelicId(Enum):
     MOLTEN_EGG = 'molten egg'                       # N/A
     MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength
     NINJA_SCROLL = 'ninja scroll'                   # N/A
+    NLOTHS_HUNGRY_FACE = 'n\u0027loth\u0027s hungry face' # N/A
     NUNCHAKU = 'nunchaku'
     ODD_MUSHROOM = 'odd mushroom'
     ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity
@@ -81,6 +89,7 @@ class RelicId(Enum):
     OMAMORI = 'omamori'                             # N/A
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
+    ORREY = 'orrey'                                 # N/A
     PANDORAS_BOX = 'pandora\u0027s box'             # N/A
     PANTOGRAPH = 'pantograph'                       # N/A
     PAPER_KRANE = 'paper krane'
@@ -123,6 +132,7 @@ class RelicId(Enum):
     TOXIC_EGG = 'toxic egg'                         # N/A
     TUNGSTEN_ROD = 'tungsten rod'
     TURNIP = 'turnip'                               # N/A
+    TWISTED_FUNNEL = 'twisted funnel'               # N/A
     UNCEASING_TOP = 'unceasing top'
     VAJRA = 'vajra'                                 # Covered by Strength
     VELVET_CHOKER = 'velvet choker'

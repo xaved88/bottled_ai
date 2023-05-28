@@ -217,3 +217,16 @@ def impatience_upgraded_post_hook(state: BattleStateInterface, effect: CardEffec
     attacks_in_hand = len([True for c in state.hand if c.type == CardType.ATTACK])
     if attacks_in_hand == 0:
         state.draw_cards(3)
+
+
+def rip_and_tear_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __rip_and_tear_post_hook(state, 7)
+
+
+def rip_and_tear_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    __rip_and_tear_post_hook(state, 9)
+
+
+def __rip_and_tear_post_hook(state: BattleStateInterface, damage: int):
+    state.inflict_random_target_damage(damage, 2, True, 1.5, True, 1)

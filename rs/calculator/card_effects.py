@@ -57,9 +57,9 @@ class CardEffects(CardEffectsInterface):
 
 def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: List[CardInterface],
                      discard_pile: List[CardInterface], hand: List[CardInterface]) -> List[CardEffects]:
-    if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G:
+    if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G or card.id == CardId.STRIKE_B:
         return [CardEffects(damage=6 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER)]
-    if card.id == CardId.DEFEND_R or card.id == CardId.DEFEND_G:
+    if card.id == CardId.DEFEND_R or card.id == CardId.DEFEND_G or card.id == CardId.DEFEND_B:
         return [CardEffects(block=5 if not card.upgrade else 8, target=TargetType.SELF)]
     if card.id == CardId.BASH:
         return [CardEffects(damage=8 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
@@ -429,4 +429,24 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.BOUNCING_FLASK:
         hook = bouncing_flask_post_hook if not card.upgrade else bouncing_flask_upgraded_post_hook
         return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
+    if card.id == CardId.BEAM_CELL:
+        return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 4, hits=1, applies_powers={PowerId.VULNERABLE: 1 if not card.upgrade else 2})]
+    if card.id == CardId.LEAP:
+        return [CardEffects(target=TargetType.SELF, block=9 if not card.upgrade else 12)]
+    if card.id == CardId.CHARGE_BATTERY:
+        return [CardEffects(target=TargetType.SELF, block=7 if not card.upgrade else 10, applies_powers={PowerId.ENERGIZED: 1})]
+    if card.id == CardId.BUFFER:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BUFFER: 1 if not card.upgrade else 2})]
+    if card.id == CardId.SKIM:
+        return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 4)]
+    if card.id == CardId.RIP_AND_TEAR:
+        hook = rip_and_tear_post_hook if not card.upgrade else rip_and_tear_upgraded_post_hook
+        return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
+    if card.id == CardId.SWEEPING_BEAM:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=6 if not card.upgrade else 9, hits=1, draw=1)]
+    if card.id == CardId.CORE_SURGE:
+        return [CardEffects(target=TargetType.MONSTER, damage=11 if not card.upgrade else 15, hits=1),
+                CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1})]
+    if card.id == CardId.BOOT_SEQUENCE:
+        return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
     return [CardEffects()]

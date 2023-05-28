@@ -343,3 +343,28 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.PHANTASMAL_KILLER:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)
+
+    # defect
+    if card_id == CardId.STRIKE_B:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DEFEND_B:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.BEAM_CELL:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.LEAP:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.CHARGE_BATTERY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.BUFFER:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.SKIM:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.RIP_AND_TEAR:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.SWEEPING_BEAM:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.CORE_SURGE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.BOOT_SEQUENCE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+

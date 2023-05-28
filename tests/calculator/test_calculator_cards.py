@@ -1363,3 +1363,83 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_has_power(play, PowerId.SADISTIC, 5)
+
+    def test_strike_b(self):
+        state = self.given_state(CardId.STRIKE_B)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_spent_energy(play, 1)
+
+    def test_defend_B(self):
+        state = self.given_state(CardId.DEFEND_B)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 5)
+
+    def test_beam_cell(self):
+        state = self.given_state(CardId.BEAM_CELL)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1)
+        self.see_player_spent_energy(play, 0)
+
+    def test_leap(self):
+        state = self.given_state(CardId.LEAP)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 9)
+
+    def test_charge_battery(self):
+        state = self.given_state(CardId.CHARGE_BATTERY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 7)
+        self.see_player_has_power(play, PowerId.ENERGIZED, 1)
+
+    def test_buffer(self):
+        state = self.given_state(CardId.BUFFER)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.BUFFER, 1)
+
+    def test_skim(self):
+        state = self.given_state(CardId.SKIM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 3)
+
+    def test_rip_and_tear_single_target(self):
+        state = self.given_state(CardId.RIP_AND_TEAR)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 14)
+
+    def test_rip_and_tear_multi_target(self):
+        state = self.given_state(CardId.RIP_AND_TEAR, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_random_damage_dealt(play, 14)
+
+    def test_sweeping_beam(self):
+        state = self.given_state(CardId.SWEEPING_BEAM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 1)
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_core_surge(self):
+        state = self.given_state(CardId.CORE_SURGE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 11)
+        self.see_player_has_power(play, PowerId.ARTIFACT, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_boot_sequence(self):
+        state = self.given_state(CardId.BOOT_SEQUENCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_block(play, 10)
+        self.see_player_exhaust_count(play, 1)
