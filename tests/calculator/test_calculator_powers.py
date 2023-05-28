@@ -776,3 +776,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_has_power(play, PowerId.WEAKENED, 1)
         self.see_player_lost_hp(play, 0)
+
+    def test_heatsinks_does_not_trigger_itself(self):
+        state = self.given_state(CardId.HEATSINKS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.HEATSINK, 1)
+        self.see_player_drew_cards(play, 0)
+
+    def test_heatsinks(self):
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.HEATSINK: 2})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
+        self.see_player_drew_cards(play, 2)
+
+

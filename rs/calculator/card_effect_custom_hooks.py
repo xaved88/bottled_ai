@@ -1,3 +1,5 @@
+import math
+
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
@@ -230,3 +232,58 @@ def rip_and_tear_upgraded_post_hook(state: BattleStateInterface, effect: CardEff
 
 def __rip_and_tear_post_hook(state: BattleStateInterface, damage: int):
     state.inflict_random_target_damage(damage, 2, True, 1.5, True, 1)
+
+
+def stack_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    block = len(state.discard_pile)
+    state.player.block += block
+
+
+def stack_upgraded_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    block = len(state.discard_pile) + 3
+    state.player.block += block
+
+
+def mind_blast_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    effect.damage = len(state.draw_pile)
+    effect.hits = 1
+
+
+def auto_shields_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __auto_shields_post_hook(state, 11)
+
+
+def auto_shields_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    __auto_shields_post_hook(state, 15)
+
+
+def __auto_shields_post_hook(state: BattleStateInterface, block: int):
+    if state.player.block == 0:
+        state.player.block = block
+
+
+def turbo_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.discard_pile.append(get_card(CardId.VOID))
+
+
+def aggregate_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __aggregate_post_hook(state, 4)
+
+
+def aggregate_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    __aggregate_post_hook(state, 3)
+
+
+def __aggregate_post_hook(state: BattleStateInterface, divide_by_this: int):
+    energy_gain = math.floor(len(state.draw_pile) / divide_by_this)
+    state.player.energy += energy_gain
+
+
+def double_energy_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.energy *= 2
+
+
+def overclock_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.discard_pile.append(get_card(CardId.BURN))

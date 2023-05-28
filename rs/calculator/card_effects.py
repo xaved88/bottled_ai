@@ -353,7 +353,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.PANACEA:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1 if not card.upgrade else 2})]
     if card.id == CardId.MIND_BLAST:
-        return [CardEffects(damage=len(draw_pile), hits=1, target=TargetType.MONSTER)]
+        return [CardEffects(target=TargetType.MONSTER, pre_hooks=[mind_blast_pre_hook])]
     if card.id == CardId.GOOD_INSTINCTS:
         return [CardEffects(block=6 if not card.upgrade else 9, target=TargetType.SELF)]
     if card.id == CardId.ACROBATICS:
@@ -449,4 +449,25 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1})]
     if card.id == CardId.BOOT_SEQUENCE:
         return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
+    if card.id == CardId.STACK:
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[stack_pre_hook] if not card.upgrade else [stack_upgraded_pre_hook])]
+    if card.id == CardId.AUTO_SHIELDS:
+        hook = auto_shields_post_hook if not card.upgrade else auto_shields_upgraded_post_hook
+        return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
+    if card.id == CardId.STREAMLINE:
+        return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1)]
+    if card.id == CardId.TURBO:
+        return [CardEffects(target=TargetType.SELF, energy_gain=2 if not card.upgrade else 3, post_hooks=[turbo_post_hook])]
+    if card.id == CardId.AGGREGATE:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[aggregate_post_hook] if not card.upgrade else [aggregate_upgraded_post_hook])]
+    if card.id == CardId.DOUBLE_ENERGY:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[double_energy_post_hook])]
+    if card.id == CardId.HEATSINKS:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.HEATSINK: 1 if not card.upgrade else 2})]
+    if card.id == CardId.OVERCLOCK:
+        return [CardEffects(target=TargetType.SELF, draw=2 if not card.upgrade else 3, post_hooks=[overclock_post_hook])]
+    if card.id == CardId.SELF_REPAIR:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.REPAIR: 7 if not card.upgrade else 10})]
+    if card.id == CardId.MACHINE_LEARNING:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MACHINE_LEARNING: 1})]
     return [CardEffects()]

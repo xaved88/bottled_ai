@@ -200,6 +200,9 @@ class BattleState(BattleStateInterface):
                         monster.inflict_damage(self.player, 10, 1, vulnerable_modifier=1, is_attack=False)
                 self.player.powers[PowerId.PANACHE] = 5
 
+        if self.player.powers.get(PowerId.HEATSINK) and card.type == CardType.POWER:
+            self.draw_cards(self.player.powers.get(PowerId.HEATSINK))
+
         # post card play MONSTER power checks
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP) is not None:
