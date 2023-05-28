@@ -1,14 +1,13 @@
 from typing import List
 
 from config import presentation_mode, p_delay_s
-from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 
-class ChestHandler(Handler):
+class CommonChestHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \

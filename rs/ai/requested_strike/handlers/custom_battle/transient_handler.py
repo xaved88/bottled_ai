@@ -1,8 +1,8 @@
-from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
+from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
 from rs.machine.state import GameState
 
 
-class TransientHandler(BattleHandler):
+class TransientHandler(LegacyBattleHandler):
 
     def __init__(self):
         super().__init__()

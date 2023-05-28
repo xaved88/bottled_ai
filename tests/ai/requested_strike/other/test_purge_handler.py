@@ -1,9 +1,9 @@
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.purge_handler import PurgeHandler
+from rs.common.handlers.common_purge_handler import CommonPurgeHandler
 
 
 class TestPurgeHandler(RsTestHandlerFixture):
-    handler = PurgeHandler
+    handler = CommonPurgeHandler
 
     def test_regular_purge(self):
         self.execute_handler_tests('/other/purge_regular.json', ['choose 5', 'wait 30'])

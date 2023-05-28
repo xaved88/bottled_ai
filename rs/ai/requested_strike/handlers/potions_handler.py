@@ -5,7 +5,6 @@ from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
-# see also combat_reward_handler.py for discarding potions
 dont_play_potions = [
     'FairyInABottle',
     'SmokeBomb',

@@ -7,7 +7,7 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 # We don't cover choice 2, which is an option constructed out of a buff AND a debuff. 3 is always relic swap.
-desired_choices = [
+default_desired_choices = [
     'obtain a random common relic',
     'upgrade a card',
     'obtain 100 gold',
@@ -23,7 +23,10 @@ desired_choices = [
 ]
 
 
-class NeowHandler(Handler):
+class CommonNeowHandler(Handler):
+
+    def __init__(self, desired_choices: List[str] = None):
+        self.desired_choices: List[str] = default_desired_choices if desired_choices is None else desired_choices
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.EVENT.value \
@@ -38,7 +41,7 @@ class NeowHandler(Handler):
 
         choice_list = state.get_choice_list()
 
-        for choice in desired_choices:
+        for choice in self.desired_choices:
             if choice in choice_list:
                 if presentation_mode:
                     return [p_delay, "choose " + choice, "wait 30"]

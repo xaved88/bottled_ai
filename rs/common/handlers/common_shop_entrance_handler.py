@@ -6,7 +6,7 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 
-class ShopEntranceHandler(Handler):
+class CommonShopEntranceHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \

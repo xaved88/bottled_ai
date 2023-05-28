@@ -1,9 +1,9 @@
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.discard_handler import DiscardHandler
+from rs.common.handlers.common_discard_handler import CommonDiscardHandler
 
 
 class TestEventHandler(RsTestHandlerFixture):
-    handler = DiscardHandler
+    handler = CommonDiscardHandler
 
     def test_handle_discard_with_relic(self):
         self.execute_handler_tests('/other/discard_relic.json', ['choose strike'])

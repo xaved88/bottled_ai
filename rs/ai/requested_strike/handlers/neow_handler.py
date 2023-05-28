@@ -1,45 +1,20 @@
-from typing import List
-
-from config import presentation_mode, p_delay, p_delay_s
-from rs.game.screen_type import ScreenType
-from rs.machine.command import Command
-from rs.machine.handlers.handler import Handler
-from rs.machine.state import GameState
-
-# We don't cover choice 2, which is an option constructed out of a buff AND a debuff. 3 is always relic swap.
-desired_choices = [
-    'upgrade a card',
-    'obtain a random common relic',
-    'obtain 100 gold',
-    'choose a card to obtain',
-    'obtain 3 random potions',
-    'choose a colorless card to obtain',
-    'max hp +8',
-    'obtain a random rare card',
-    'enemies in your next three combats have 1 hp',
-    'remove a card from your deck',
-    'transform a card',
-    'lose your starting relic obtain a random boss relic',
-]
+from rs.common.handlers.common_neow_handler import CommonNeowHandler
 
 
-class NeowHandler(Handler):
+class NeowHandler(CommonNeowHandler):
 
-    def can_handle(self, state: GameState) -> bool:
-        return state.screen_type() == ScreenType.EVENT.value \
-               and state.has_command(Command.CHOOSE) \
-               and state.game_state()['screen_state']['event_id'] == "Neow Event"
-
-    def handle(self, state: GameState) -> List[str]:
-        if "leave" in state.get_choice_list():
-            if presentation_mode:
-                return [p_delay_s, "choose 0"]
-            return ["choose 0"]
-
-        choice_list = state.get_choice_list()
-
-        for choice in desired_choices:
-            if choice in choice_list:
-                if presentation_mode:
-                    return [p_delay, "choose " + choice, "wait 30"]
-                return ["choose " + choice, "wait 30"]
+    def __init__(self):
+        super().__init__(desired_choices=[
+            'upgrade a card',
+            'obtain a random common relic',
+            'obtain 100 gold',
+            'choose a card to obtain',
+            'obtain 3 random potions',
+            'choose a colorless card to obtain',
+            'max hp +8',
+            'obtain a random rare card',
+            'enemies in your next three combats have 1 hp',
+            'remove a card from your deck',
+            'transform a card',
+            'lose your starting relic obtain a random boss relic',
+        ])

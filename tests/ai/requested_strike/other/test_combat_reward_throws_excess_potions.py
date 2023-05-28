@@ -1,9 +1,9 @@
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.combat_reward_handler import CombatRewardHandler
+from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
 
 
 class CombatRewardHandlerTestCase(RsTestHandlerFixture):
-    handler = CombatRewardHandler
+    handler = CommonCombatRewardHandler
 
     def test_discards_potions_when_full(self):
-        self.execute_handler_tests('/combat_reward/combat_reward_full_potions.json', ['potion discard 0'])
+        self.execute_handler_tests('/combat_reward/combat_reward_full_potions.json', ['wait 30', 'potion discard 1'])

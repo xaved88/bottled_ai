@@ -39,7 +39,7 @@ class GCValues:
         self.enemy_weak: int = enemy_weak
 
 
-class GeneralComparator(SbcComparator):
+class CommonGeneralComparator(SbcComparator):
 
     def get_values(self, state: BattleState, original: BattleState) -> GCValues:
         battle_won = not [True for m in state.monsters if m.current_hp > 0]

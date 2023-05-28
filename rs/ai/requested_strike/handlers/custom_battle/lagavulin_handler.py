@@ -1,10 +1,10 @@
 from typing import List
 
-from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
+from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
 from rs.machine.state import GameState, get_stacks_of_power
 
 
-class LagavulinHandler(BattleHandler):
+class LagavulinHandler(LegacyBattleHandler):
 
     def __init__(self):
         self.aggro_prefs = [

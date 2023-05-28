@@ -9,10 +9,7 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState, get_stacks_of_power
 
 
-# https://alexdriedger.github.io/SlayTheSpireModding/docs/id-cards
-
-
-class BattleHandler(Handler):
+class LegacyBattleHandler(Handler):
 
     def __init__(self):
         self.always: List[str] = [

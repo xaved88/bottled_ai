@@ -1,9 +1,9 @@
 from ai.shivs_and_giggles.sg_test_handler_fixture import SgTestHandlerFixture
-from rs.ai.shivs_and_giggles.handlers.campfire_handler import CampfireHandler
+from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 
 
 class CampfireHandlerTestCase(SgTestHandlerFixture):
-    handler = CampfireHandler
+    handler = CommonCampfireHandler
 
     def test_rest(self):
         self.execute_handler_tests('/campfire/campfire_rest.json', ['choose rest'])

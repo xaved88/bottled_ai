@@ -1,9 +1,9 @@
-from rs.ai.requested_strike.handlers.chest_handler import ChestHandler
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
+from rs.common.handlers.common_chest_handler import CommonChestHandler
 
 
 class ChestHandlerTestCase(RsTestHandlerFixture):
-    handler = ChestHandler
+    handler = CommonChestHandler
 
     def test_normal_chest_open(self):
         self.execute_handler_tests('/other/chest_medium_reward.json', ['choose 0', 'wait 30'])

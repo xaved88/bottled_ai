@@ -60,7 +60,7 @@ class GCValues:
 
 # Differences to normal comparator:
 # Do not cause damage, instead play powers and debuffs.
-# See smart_battle_handler.py for the special criteria to get here.
+# See battle_handler.py for the special criteria to get here.
 
 
 class WaitingLagavulinSilentComparator(SbcComparator):

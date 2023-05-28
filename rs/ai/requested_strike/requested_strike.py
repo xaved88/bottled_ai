@@ -1,28 +1,29 @@
 from typing import List
 
-from rs.ai.requested_strike.handlers.chest_handler import ChestHandler
-from rs.ai.requested_strike.handlers.astrolabe_handler import AstrolabeHandler
-from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
+from rs.ai.requested_strike.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK
+from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
 from rs.ai.requested_strike.handlers.boss_relic_handler import BossRelicHandler
-from rs.ai.requested_strike.handlers.campfire_handler import CampfireHandler
-from rs.ai.requested_strike.handlers.card_reward_handler import CardRewardHandler
-from rs.ai.requested_strike.handlers.combat_reward_handler import CombatRewardHandler
 from rs.ai.requested_strike.handlers.custom_battle.gremlin_nob_handler import GremlinNobHandler
 from rs.ai.requested_strike.handlers.custom_battle.lagavulin_handler import LagavulinHandler
 from rs.ai.requested_strike.handlers.custom_battle.sentries_handler import SentriesHandler
 from rs.ai.requested_strike.handlers.custom_battle.transient_handler import TransientHandler
-from rs.ai.requested_strike.handlers.discard_handler import DiscardHandler
 from rs.ai.requested_strike.handlers.event_handler import EventHandler
 from rs.ai.requested_strike.handlers.neow_handler import NeowHandler
 from rs.ai.requested_strike.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, \
     PotionsEliteHandler
-from rs.ai.requested_strike.handlers.purge_handler import PurgeHandler
-from rs.ai.requested_strike.handlers.shop_entrance_handler import ShopEntranceHandler
 from rs.ai.requested_strike.handlers.shop_purchase_handler import ShopPurchaseHandler
-from rs.ai.requested_strike.handlers.smart_battle_handler import SmartBattleHandler
-from rs.ai.requested_strike.handlers.smart_path_handler import SmartPathHandler
-from rs.ai.requested_strike.handlers.transform_handler import TransformHandler
 from rs.ai.requested_strike.handlers.upgrade_handler import UpgradeHandler
+from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
+from rs.common.handlers.common_battle_handler import CommonBattleHandler
+from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
+from rs.common.handlers.common_card_reward_handler import CommonCardRewardHandler
+from rs.common.handlers.common_chest_handler import CommonChestHandler
+from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
+from rs.common.handlers.common_discard_handler import CommonDiscardHandler
+from rs.common.handlers.common_map_handler import CommonMapHandler
+from rs.common.handlers.common_purge_handler import CommonPurgeHandler
+from rs.common.handlers.common_shop_entrance_handler import CommonShopEntranceHandler
+from rs.common.handlers.common_transform_handler import CommonTransformHandler
 from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
 from rs.machine.handlers.handler import Handler
@@ -43,27 +44,25 @@ requested_strike_custom_battle_handlers: List[Handler] = [
 REQUESTED_STRIKE: AiStrategy = AiStrategy(
     character=Character.IRONCLAD,
     handlers=requested_strike_custom_battle_handlers + [
-        # Some edge cases
-        AstrolabeHandler(),
-
-        # Temp for testing
-        SmartBattleHandler(),
+        CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
+        CommonBattleHandler(),
 
         # General Stuff
         BossRelicHandler(),
-        BattleHandler(),
+        # LegacyBattleHandler - needed only because this was before comparators were finish, we can refactor out
+        LegacyBattleHandler(),
         UpgradeHandler(),
-        TransformHandler(),
-        PurgeHandler(),
-        CombatRewardHandler(),
-        CardRewardHandler(),
+        CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
+        CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
+        CommonCombatRewardHandler(),
+        CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK),
         NeowHandler(),
         EventHandler(),
-        ChestHandler(),
-        SmartPathHandler(),
-        CampfireHandler(),
-        ShopEntranceHandler(),
+        CommonChestHandler(),
+        CommonMapHandler(),
+        CommonCampfireHandler(),
+        CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
-        DiscardHandler(),
+        CommonDiscardHandler(),
     ]
 )

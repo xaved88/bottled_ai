@@ -1,13 +1,13 @@
 import unittest
 
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
+from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
 
 
 class BattleHandlerTestCase(RsTestHandlerFixture):
-    handler = BattleHandler
+    handler = LegacyBattleHandler
 
-    ai_handlers = [BattleHandler()]
+    ai_handlers = [LegacyBattleHandler()]
     def test_plays_bash(self):
         self.execute_handler_tests('battles/general/battle_should_play_bash.json', ['play 2 0'])
 

@@ -2,25 +2,21 @@ from typing import List
 
 from config import presentation_mode, p_delay
 from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import standard_cards_to_purge
-from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
-high_prio_upgrades = [
-    'Neutralize',
-    'Accuracy',
-]
 
+class CommonCampfireHandler(Handler):
 
-class CampfireHandler(Handler):
+    def __init__(self, high_priority_upgrades: List[str] = None):
+        self.high_priority_upgrades: List[str] = [] if high_priority_upgrades is None else high_priority_upgrades
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) and state.screen_type() == ScreenType.REST.value
 
     def handle(self, state: GameState) -> List[str]:
-
         can_rest = 'rest' in state.get_choice_list()
         can_toke = 'toke' in state.get_choice_list()
         can_lift = 'lift' in state.get_choice_list()
@@ -31,7 +27,7 @@ class CampfireHandler(Handler):
         pantograph_will_cover_it = state.has_relic("Pantograph") \
                                    and (state.floor() == 15 or state.floor() == 32) \
                                    and state.get_player_health_percentage() >= 0.4
-        important_upgrade_available = state.deck.contains_cards(high_prio_upgrades) and can_smith
+        important_upgrade_available = state.deck.contains_cards(self.high_priority_upgrades) and can_smith
 
         choice = "0"
 

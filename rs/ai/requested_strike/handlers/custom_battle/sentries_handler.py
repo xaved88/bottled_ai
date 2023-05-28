@@ -1,11 +1,11 @@
 from typing import List
 
-from rs.ai.requested_strike.handlers.battle_handler import BattleHandler
+from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
 from rs.game.card import CardType
 from rs.machine.state import GameState
 
 
-class SentriesHandler(BattleHandler):
+class SentriesHandler(LegacyBattleHandler):
 
     def __init__(self):
         super().__init__()

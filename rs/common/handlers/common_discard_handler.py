@@ -1,6 +1,6 @@
 from typing import List
 
-from config import presentation_mode, p_delay, p_delay_s
+from config import presentation_mode, p_delay
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -34,7 +34,7 @@ cards_to_discard = [
 ]
 
 
-class DiscardHandler(Handler):
+class CommonDiscardHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.HAND_SELECT.value \

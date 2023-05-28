@@ -1,66 +1,45 @@
 from typing import List
 
-from config import presentation_mode, p_delay, p_delay_s
-from rs.machine.command import Command
-from rs.machine.handlers.handler import Handler
+from rs.common.handlers.common_upgrade_handler import CommonUpgradeHandler
 from rs.machine.state import GameState
 
 
-class UpgradeHandler(Handler):
+class UpgradeHandler(CommonUpgradeHandler):
 
     def __init__(self):
-        self.upgrade_priorities: List[str] = [
+        super().__init__(priorities=[
             'neutralize',
             'accuracy',
             'footwork',
             'adrenaline',
-            'tools of the trade',   # removed if we have snecko eye
+            'tools of the trade',  # removed if we have snecko eye
             'blade dance',
             'prepared',
-            'terror',               # removed if we have snecko eye
+            'terror',  # removed if we have snecko eye
             'cloak and dagger',
             'storm of steel',
             'die die die',
             'eviscerate',
             'leg sweep',
             'master of strategy',
-            'flash of steel',       # removed if we have snecko eye
-            'finesse',              # removed if we have snecko eye
+            'flash of steel',  # removed if we have snecko eye
+            'finesse',  # removed if we have snecko eye
             'sneaky strike',
             'dagger spray',
             'sucker punch',
             'dash',
-            'escape plan',          # removed if we have snecko eye
+            'escape plan',  # removed if we have snecko eye
             'caltrops',
             'survivor',
             'backstab',
             'infinite blades',
             'after image',
-        ]
+        ]),
 
-    def can_handle(self, state: GameState) -> bool:
-        return state.has_command(Command.CHOOSE) \
-               and state.game_state()["screen_type"] == "GRID" \
-               and state.game_state()["screen_state"]["for_upgrade"]
-
-    def handle(self, state: GameState) -> List[str]:
-        choice_list = state.game_state()["choice_list"]
-
-        # we have to copy this, otherwise it will modify the list until the bot is rerun
-        upgrade_priorities_working_copy = self.upgrade_priorities.copy()
-
+    def transform_priorities_based_on_game_state(self, priorities: List[str], state: GameState):
         if state.has_relic("Snecko Eye"):
-            upgrade_priorities_working_copy.remove('tools of the trade')
-            upgrade_priorities_working_copy.remove('terror')
-            upgrade_priorities_working_copy.remove('escape plan')
-            upgrade_priorities_working_copy.remove('flash of steel')
-            upgrade_priorities_working_copy.remove('finesse')
-
-        for priority in upgrade_priorities_working_copy:
-            if priority in choice_list:
-                if presentation_mode:
-                    return [p_delay, "choose " + priority, p_delay_s]
-                return ["choose " + priority]
-        if presentation_mode:
-            return [p_delay, "choose " + choice_list[0], p_delay_s]
-        return ["choose " + choice_list[0]]
+            priorities.remove('tools of the trade')
+            priorities.remove('terror')
+            priorities.remove('escape plan')
+            priorities.remove('flash of steel')
+            priorities.remove('finesse')

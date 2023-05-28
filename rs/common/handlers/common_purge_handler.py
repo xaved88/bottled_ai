@@ -7,14 +7,10 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 
-class PurgeHandler(Handler):
+class CommonPurgeHandler(Handler):
 
-    def __init__(self):
-        self.preferences: List[str] = [
-            'defend',
-            'strike',
-            'strike+',
-        ]
+    def __init__(self, preferences: List[str]):
+        self.preferences: List[str] = preferences
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \

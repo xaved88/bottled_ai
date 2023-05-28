@@ -1,9 +1,9 @@
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.astrolabe_handler import AstrolabeHandler
+from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
 
 
 class TestAstrolabeHandler(RsTestHandlerFixture):
-    handler = AstrolabeHandler
+    handler = CommonAstrolabeHandler
 
     def test_picks_three(self):
         self.execute_handler_tests('relics/boss_reward_astrolabe.json',

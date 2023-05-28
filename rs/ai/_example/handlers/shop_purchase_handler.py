@@ -6,13 +6,14 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 standard_cards_to_purge: list[str] = [
-        'Strike',
-        'Defend',
-        'Strike+',
-        'Defend+',
-    ]
+    'Strike',
+    'Defend',
+    'Strike+',
+    'Defend+',
+]
 
 
+# TODO -> find a nice way to configure this and extract it to commons
 class ShopPurchaseHandler(Handler):
 
     def __init__(self):

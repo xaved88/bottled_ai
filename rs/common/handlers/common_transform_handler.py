@@ -5,15 +5,10 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 
 
-class TransformHandler(Handler):
+class CommonTransformHandler(Handler):
 
-    def __init__(self):
-        self.preferences: List[str] = [
-            'defend',
-            'strike',
-            'defend+',
-            'strike+',
-        ]
+    def __init__(self, preferences: List[str]):
+        self.preferences: List[str] = preferences
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \
@@ -28,4 +23,3 @@ class TransformHandler(Handler):
                 choice = choices.index(pref)
                 break
         return ["wait 30", "choose " + str(choice), "wait 30", "proceed", "wait 30"]
-
