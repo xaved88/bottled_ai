@@ -794,7 +794,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state = self.given_state(CardId.ELECTRODYNAMICS, orb_slots=3, targets=2)
         play = self.when_playing_the_first_card(state)
         play.end_turn()
-        self.see_player_has_power(play, PowerId.ELECTRODYNAMICS, 1)
+        self.see_player_has_power(play, PowerId.ELECTRO, 1)
         self.see_enemy_lost_hp(play, 6, enemy_index=0)
         self.see_enemy_lost_hp(play, 6, enemy_index=1)
 
@@ -802,6 +802,6 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state = self.given_state(CardId.ELECTRODYNAMICS, orb_slots=2, orbs=[(OrbId.LIGHTNING, 1)], targets=2)
         play = self.when_playing_the_first_card(state)
         play.end_turn()
-        self.see_player_has_power(play, PowerId.ELECTRODYNAMICS, 1)
+        self.see_player_has_power(play, PowerId.ELECTRO, 1)
         self.see_enemy_lost_hp(play, 14, enemy_index=0)
         self.see_enemy_lost_hp(play, 14, enemy_index=1)

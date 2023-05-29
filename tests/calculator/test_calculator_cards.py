@@ -1543,7 +1543,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_spent_energy(play, 2)
-        self.see_player_has_power(play, PowerId.ELECTRODYNAMICS, 1)
+        self.see_player_has_power(play, PowerId.ELECTRO, 1)
         self.see_orb_count(play, 2)
         self.see_orb_type_count(play, 2, OrbId.LIGHTNING)
 
@@ -1552,7 +1552,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_spent_energy(play, 2)
-        self.see_player_has_power(play, PowerId.ELECTRODYNAMICS, 1)
+        self.see_player_has_power(play, PowerId.ELECTRO, 1)
         self.see_orb_count(play, 3)
         self.see_orb_type_count(play, 3, OrbId.LIGHTNING)
 
