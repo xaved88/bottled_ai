@@ -160,6 +160,11 @@ class BattleState(BattleStateInterface):
                 frail_mod = 0.75 if self.player.powers.get(PowerId.FRAIL, 0) else 1
                 self.add_player_block(math.floor(block * frail_mod))
 
+            # orbs
+            if effect.channel_orbs:
+                for orb in effect.channel_orbs:
+                    self.channel_orb(orb)
+
             # energy gain
             self.player.energy += effect.energy_gain
 

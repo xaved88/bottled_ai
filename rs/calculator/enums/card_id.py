@@ -181,3 +181,4 @@ class CardId(Enum):
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
     WRAITH_FORM = 'wraith form v2'  # Weird id alert!
+    ZAP = 'zap'

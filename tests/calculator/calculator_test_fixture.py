@@ -105,3 +105,10 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def see_hand_card_cost(self, play: PlayPath, cost: int, index: int = 0):
         self.assertEqual(cost, play.state.hand[index].cost)
+
+    def see_orb_count(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, len(play.state.orbs))
+
+    def see_orb_type_count(self, play: PlayPath, amount: int, orb_id: OrbId):
+        orbs = [o for (o, a) in play.state.orbs if o == orb_id]
+        self.assertEqual(amount, len(orbs))

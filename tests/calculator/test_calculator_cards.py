@@ -1,6 +1,7 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
 
 
@@ -1536,3 +1537,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.MACHINE_LEARNING, 1)
+
+    def test_zap(self):
+        state = self.given_state(CardId.ZAP, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.LIGHTNING)
+
+    def test_upgraded_zap(self):
+        state = self.given_state(CardId.ZAP, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.LIGHTNING)

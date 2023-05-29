@@ -388,4 +388,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.MACHINE_LEARNING:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
-
+    if card_id == CardId.ZAP:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)

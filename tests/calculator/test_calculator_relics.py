@@ -6,7 +6,7 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 
 
-class CalculatorCardsTest(CalculatorTestFixture):
+class CalculatorRelicsTest(CalculatorTestFixture):
 
     def test_strike_dummy(self):
         state = self.given_state(CardId.STRIKE_R)

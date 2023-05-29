@@ -5,7 +5,7 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 
 
-class CalculatorCardsTest(CalculatorTestFixture):
+class CalculatorPowersTest(CalculatorTestFixture):
 
     def test_correct_statuses_lose_stacks_after_turn_end(self):
         pass
