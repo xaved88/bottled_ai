@@ -20,6 +20,7 @@ DEBUFFS: List[PowerId] = [
 DEBUFFS_WHEN_NEGATIVE: List[PowerId] = [
     PowerId.STRENGTH,
     PowerId.DEXTERITY,
+    PowerId.FOCUS,
 ]
 
 

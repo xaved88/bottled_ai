@@ -30,6 +30,7 @@ class PowerId(Enum):
     ENTANGLED = 'entangled'
     ENVENOM = 'envenom'
     FADING = 'fading'                   # N/A
+    FOCUS = 'focus'
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'
     FRAIL = 'frail'

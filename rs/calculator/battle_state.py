@@ -536,22 +536,25 @@ class BattleState(BattleStateInterface):
                                                    is_attack=False)
 
     def trigger_orbs_end_of_turn(self):
+        focus = self.player.powers.get(PowerId.FOCUS, 0)
         for index, (orb, amount) in enumerate(self.orbs):
             if orb == OrbId.LIGHTNING:
-                self.inflict_random_target_damage(base_damage=3, hits=1, vulnerable_modifier=1, is_attack=False)
+                self.inflict_random_target_damage(base_damage=3 + focus, hits=1, vulnerable_modifier=1, is_attack=False)
             elif orb == OrbId.FROST:
-                self.add_player_block(2)
+                self.add_player_block(2 + focus)
             elif orb == OrbId.DARK:
-                self.orbs[index] = (OrbId.DARK, amount + 6)
+                self.orbs[index] = (OrbId.DARK, amount + 6 + focus)
 
     def evoke_orbs(self, amount: int = 1, times: int = 1):
+        focus = self.player.powers.get(PowerId.FOCUS, 0)
         for i in range(amount):
             (orb, amount) = self.orbs.pop(0)
             for j in range(times):
                 if orb == OrbId.LIGHTNING:
-                    self.inflict_random_target_damage(base_damage=8, hits=1, vulnerable_modifier=1, is_attack=False)
+                    self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
+                                                      is_attack=False)
                 elif orb == OrbId.FROST:
-                    self.add_player_block(5)
+                    self.add_player_block(5 + focus)
                 elif orb == OrbId.DARK:
                     target = find_lowest_hp_monster(self.monsters)
                     target.inflict_damage(source=self.player, base_damage=amount, hits=1, vulnerable_modifier=1,
@@ -560,7 +563,8 @@ class BattleState(BattleStateInterface):
                     self.player.energy += 2
 
     def channel_orb(self, orb_id: OrbId):
-        amount = 1 if orb_id is not OrbId.DARK else 6
+        focus = self.player.powers.get(PowerId.FOCUS, 0)
+        amount = 1 if orb_id is not OrbId.DARK else 6 + focus
         self.orbs.append((orb_id, amount))
 
         # Todo -> this order will break Darkness+ because the passive triggers after channel, before evoke...

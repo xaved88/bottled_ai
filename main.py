@@ -1,7 +1,7 @@
 import time
 import traceback
 
-from rs.ai.shivs_and_giggles.shivs_and_giggles import SHIVS_AND_GIGGLES
+from rs.ai.unnamed_defect_build.example import UNNAMED_DEFECT_STRATEGY
 from rs.helper.seed import make_random_seed
 from rs.api.client import Client
 from rs.machine.game import Game
@@ -13,7 +13,7 @@ run_seeds = [
    # '10HTDAVER34YR',
 ]
 run_amount = 1
-strategy = SHIVS_AND_GIGGLES
+strategy = UNNAMED_DEFECT_STRATEGY
 
 if __name__ == "__main__":
     init_log()
