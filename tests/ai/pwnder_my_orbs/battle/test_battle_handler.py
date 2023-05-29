@@ -1,10 +1,10 @@
 import unittest
 
-from ai.unnamed_defect.ud_test_handler_fixture import UdTestHandlerFixture
+from ai.pwnder_my_orbs.pmo_test_handler_fixture import PmoTestHandlerFixture
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 
 
-class BattleHandlerTestCase(UdTestHandlerFixture):
+class BattleHandlerTestCase(PmoTestHandlerFixture):
     handler = CommonBattleHandler
 
     def test_plays_dualcast(self):

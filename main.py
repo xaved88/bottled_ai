@@ -1,7 +1,7 @@
 import time
 import traceback
 
-from rs.ai.unnamed_defect_build.example import UNNAMED_DEFECT_STRATEGY
+from rs.ai.pwnder_my_orbs.pwnder_my_orbs import PWNDER_MY_ORBS
 from rs.helper.seed import make_random_seed
 from rs.api.client import Client
 from rs.machine.game import Game
@@ -13,7 +13,7 @@ run_seeds = [
     'J9RPEAY7HD8P',
 ]
 run_amount = 1
-strategy = UNNAMED_DEFECT_STRATEGY
+strategy = PWNDER_MY_ORBS
 
 if __name__ == "__main__":
     init_log()
