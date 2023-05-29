@@ -1,13 +1,14 @@
 import math
-from typing import List
+from typing import List, Tuple
 
 from rs.calculator.card_effects import get_card_effects, TargetType
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.monster_interface import MonsterInterface
+from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
@@ -24,8 +25,7 @@ class BattleState(BattleStateInterface):
                  discard_pile: List[CardInterface] = None, exhaust_pile: List[CardInterface] = None,
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
-                 total_random_poison_added: int = 0):
-
+                 total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -39,6 +39,8 @@ class BattleState(BattleStateInterface):
         self.total_random_poison_added: int = total_random_poison_added
         self.__is_first_play: bool = False  # transient and used only internally
         self.__starting_energy: int = 0  # transient and used only internally
+        self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
+        self.orb_slots: int = orb_slots
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -297,9 +299,10 @@ class BattleState(BattleStateInterface):
 
     def end_turn(self):
 
-        # relics and powers
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
             self.add_player_block(6)
+
+        self.trigger_orbs_end_of_turn()
 
         if RelicId.CLOAK_CLASP in self.relics:
             self.add_player_block(len(self.hand))
@@ -398,6 +401,16 @@ class BattleState(BattleStateInterface):
         state_string += "r"
         for relic in self.relics.keys():
             state_string += f"{relic.value}.{self.relics[relic]},"
+
+        # orbs
+        if self.orb_slots:
+            state_string += "o"
+            for (orb, amount) in self.orbs:
+                state_string += orb.name[0]
+                if orb.name[0] == "D":
+                    state_string += str(amount)
+                state_string += str(self.orb_slots)
+
         return state_string
 
     def draw_cards(self, amount: int):
@@ -521,6 +534,38 @@ class BattleState(BattleStateInterface):
                             monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits,
                                                    vulnerable_modifier=1,
                                                    is_attack=False)
+
+    def trigger_orbs_end_of_turn(self):
+        for index, (orb, amount) in enumerate(self.orbs):
+            if orb == OrbId.LIGHTNING:
+                self.inflict_random_target_damage(base_damage=3, hits=1, vulnerable_modifier=1, is_attack=False)
+            elif orb == OrbId.FROST:
+                self.add_player_block(2)
+            elif orb == OrbId.DARK:
+                self.orbs[index] = (OrbId.DARK, amount + 6)
+
+    def evoke_orbs(self, amount: int = 1, times: int = 1):
+        for i in range(amount):
+            (orb, amount) = self.orbs.pop(0)
+            for j in range(times):
+                if orb == OrbId.LIGHTNING:
+                    self.inflict_random_target_damage(base_damage=8, hits=1, vulnerable_modifier=1, is_attack=False)
+                elif orb == OrbId.FROST:
+                    self.add_player_block(5)
+                elif orb == OrbId.DARK:
+                    target = find_lowest_hp_monster(self.monsters)
+                    target.inflict_damage(source=self.player, base_damage=amount, hits=1, vulnerable_modifier=1,
+                                          is_attack=False)
+                elif orb == OrbId.PLASMA:
+                    self.player.energy += 2
+
+    def channel_orb(self, orb_id: OrbId):
+        amount = 1 if orb_id is not OrbId.DARK else 6
+        self.orbs.append((orb_id, amount))
+
+        # Todo -> this order will break Darkness+ because the passive triggers after channel, before evoke...
+        while len(self.orbs) > self.orb_slots:
+            self.evoke_orbs()
 
 
 def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],

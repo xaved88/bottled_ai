@@ -8,7 +8,7 @@ from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 
 
-class CalculatorOtherTest(unittest.TestCase):
+class CalculatorOtherTest(CalculatorTestFixture):
 
     def test_minions_die_when_leader_dies(self):
         state = load_resource_state("battles/smart_battle/smart_battle_minions.json")
@@ -16,9 +16,6 @@ class CalculatorOtherTest(unittest.TestCase):
         for monster in path.state.monsters:
             self.assertEqual(0, monster.current_hp)
         self.assertEqual(1, len(path.plays))
-
-
-class CalculatorOtherCardsTest(CalculatorTestFixture):
 
     def test_draw_uncapped_by_hand_amount(self):
         state = self.given_state(CardId.BATTLE_TRANCE)

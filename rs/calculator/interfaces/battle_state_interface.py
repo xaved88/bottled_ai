@@ -1,6 +1,7 @@
 import abc
-from typing import List
+from typing import List, Tuple
 
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
@@ -16,6 +17,8 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     monsters: List[MonsterInterface]
     relics: Relics
     cards_discarded_this_turn: int
+    orbs: List[Tuple[OrbId, int]]
+    orb_slots: int
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):
@@ -45,5 +48,15 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def add_player_block(self, amount: int):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def evoke_orbs(self, amount: int = 1, times: int = 1):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def channel_orb(self, orb_id: OrbId):
         # must be implemented by children
         pass

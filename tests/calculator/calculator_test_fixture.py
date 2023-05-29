@@ -1,8 +1,10 @@
 import unittest
+from typing import List, Tuple
 
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.play_path import PlayPath, get_paths
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
@@ -13,7 +15,8 @@ from rs.calculator.monster import Monster
 class CalculatorTestFixture(unittest.TestCase):
 
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
-                    relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0) -> BattleState:
+                    relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0,
+                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0) -> BattleState:
         return BattleState(
             player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
             hand=[get_card(card_id, None, upgrade)],
@@ -21,6 +24,8 @@ class CalculatorTestFixture(unittest.TestCase):
             relics=relics,
             cards_discarded_this_turn=cards_discarded_this_turn,
             amount_to_discard=amount_to_discard,
+            orbs=orbs,
+            orb_slots=orb_slots,
         )
 
     def when_playing_the_first_card(self, hand_state: BattleState) -> PlayPath:

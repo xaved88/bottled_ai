@@ -3,6 +3,7 @@ from typing import List
 
 from rs.game.deck import Deck
 from rs.machine.command import Command
+from rs.machine.orb import Orb
 
 
 class GameState:
@@ -146,6 +147,18 @@ class GameState:
 
     def get_player_block(self) -> int:
         return self.get_player_combat()['block']
+
+    def get_player_orbs(self) -> list[(Orb, int)]:
+        orbs = self.get_player_combat()['orbs']
+        if not orbs:
+            return []
+        return [(Orb(o['id']), o['passive_amount']) for o in orbs if 'id' in o]
+
+    def get_player_orb_slots(self) -> int:
+        orbs = self.get_player_combat()['orbs']
+        if not orbs:
+            return 0
+        return len(orbs)
 
 
 def get_stacks_of_power(powers: List[dict], power_id: str):

@@ -17,8 +17,9 @@ class TargetInterface(metaclass=abc.ABCMeta):
     powers: Powers
     relics: Relics
 
-    def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool, vulnerable_modifier: float,
-                       is_attack: bool, min_hp_damage: int) -> InflictDamageSummary:
+    def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool = True,
+                       vulnerable_modifier: float = 1.5, is_attack: bool = True,
+                       min_hp_damage: int = 1) -> InflictDamageSummary:
         # must be implemented by children
         pass
 

@@ -1,15 +1,15 @@
 import math
 from typing import List
 
-from rs.calculator.interfaces.target_interface import InflictDamageSummary
-from rs.calculator.powers import DEBUFFS, DEBUFFS_WHEN_NEGATIVE
-from rs.calculator.interfaces.powers import Powers
 from rs.calculator.enums.power_id import PowerId
-from rs.calculator.interfaces.relics import Relics
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.powers import Powers
+from rs.calculator.interfaces.relics import Relics
+from rs.calculator.interfaces.target_interface import InflictDamageSummary, TargetInterface
+from rs.calculator.powers import DEBUFFS, DEBUFFS_WHEN_NEGATIVE
 
 
-class Target:
+class Target(TargetInterface):
     def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None):
         if relics is None:
             relics = {}

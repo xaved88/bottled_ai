@@ -4,5 +4,5 @@ from enum import Enum
 class Character(Enum):
     IRONCLAD = "Ironclad"
     SILENT = "Silent"
-    # DEFECT = "Defect"
+    DEFECT = "Defect"
     # WATCHER = "Watcher"
