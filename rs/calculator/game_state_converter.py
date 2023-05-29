@@ -3,6 +3,7 @@ from typing import List
 from rs.calculator.cards import Card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.powers import Powers
 from rs.calculator.enums.power_id import PowerId
@@ -108,7 +109,7 @@ def create_battle_state(game_state: GameState) -> BattleState:
     cards_discarded_this_turn = game_state.get_cards_discarded_this_turn()
 
     # get orbs
-    orbs = game_state.get_player_orbs()
+    orbs = [(OrbId(o.value), a) for o, a in game_state.get_player_orbs()]
     orb_slots = game_state.get_player_orb_slots()
 
     return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
