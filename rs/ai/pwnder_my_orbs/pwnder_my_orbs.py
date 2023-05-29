@@ -1,4 +1,5 @@
 from rs.ai.pwnder_my_orbs.config import CARD_REMOVAL_PRIORITY_LIST
+from rs.ai.pwnder_my_orbs.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.pwnder_my_orbs.handlers.event_handler import EventHandler
 from rs.ai.pwnder_my_orbs.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.pwnder_my_orbs.handlers.upgrade_handler import UpgradeHandler
@@ -29,7 +30,7 @@ PWNDER_MY_ORBS: AiStrategy = AiStrategy(
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonCombatRewardHandler(),
-        CommonCardRewardTakeFirstCardHandler(),
+        CardRewardHandler(),
         CommonNeowHandler(),
         EventHandler(),
         CommonChestHandler(),
