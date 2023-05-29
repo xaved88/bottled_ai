@@ -479,6 +479,12 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.REPAIR: 7 if not card.upgrade else 10})]
     if card.id == CardId.MACHINE_LEARNING:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MACHINE_LEARNING: 1})]
+    if card.id == CardId.ELECTRODYNAMICS:
+        orbs = [OrbId.LIGHTNING, OrbId.LIGHTNING]
+        if card.upgrade:
+            orbs.append(OrbId.LIGHTNING)
+        # we add the power by pre-hook because it's being applied before orbs are channeled...
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[electrodynamics_pre_hook], channel_orbs=orbs)]
     if card.id == CardId.ZAP:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
     if card.id == CardId.DUALCAST:

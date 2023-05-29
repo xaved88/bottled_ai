@@ -26,6 +26,7 @@ class PowerId(Enum):
     DOUBLE_DAMAGE = 'double damage'
     DRAW_CARD = 'draw card'     # It affects a future turn though, so we mostly don't do anything with it.
     DRAW_REDUCTION = 'draw reduction'   # It affects a future turn though, so we mostly don't do anything with it.
+    ELECTRODYNAMICS = 'electrodynamics'
     ENERGIZED = 'energized'           # It affects a future turn though, so we mostly don't do anything with it.
     ENTANGLED = 'entangled'
     ENVENOM = 'envenom'

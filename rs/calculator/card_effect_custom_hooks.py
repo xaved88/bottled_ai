@@ -289,5 +289,9 @@ def overclock_post_hook(state: BattleStateInterface, effect: CardEffectsInterfac
     state.discard_pile.append(get_card(CardId.BURN))
 
 
+def electrodynamics_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.add_powers({PowerId.ELECTRODYNAMICS: 1}, state.player.relics, state.player.powers)
+
+
 def dualcast_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.evoke_orbs(1, 2)

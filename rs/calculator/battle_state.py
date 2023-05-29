@@ -544,7 +544,12 @@ class BattleState(BattleStateInterface):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         for index, (orb, amount) in enumerate(self.orbs):
             if orb == OrbId.LIGHTNING:
-                self.inflict_random_target_damage(base_damage=3 + focus, hits=1, vulnerable_modifier=1, is_attack=False)
+                if self.player.powers.get(PowerId.ELECTRODYNAMICS):
+                    for m in self.monsters:
+                        m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False)
+                else:
+                    self.inflict_random_target_damage(base_damage=3 + focus, hits=1, vulnerable_modifier=1,
+                                                      is_attack=False)
             elif orb == OrbId.FROST:
                 self.add_player_block(2 + focus)
             elif orb == OrbId.DARK:
@@ -558,7 +563,11 @@ class BattleState(BattleStateInterface):
             (orb, amount) = self.orbs.pop(0)
             for j in range(times):
                 if orb == OrbId.LIGHTNING:
-                    self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
+                    if self.player.powers.get(PowerId.ELECTRODYNAMICS):
+                        for m in self.monsters:
+                            m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False)
+                    else:
+                        self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
                                                       is_attack=False)
                 elif orb == OrbId.FROST:
                     self.add_player_block(5 + focus)
