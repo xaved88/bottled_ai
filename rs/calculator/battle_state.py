@@ -1,7 +1,8 @@
 import math
 from typing import List, Tuple
 
-from rs.calculator.card_effects import get_card_effects, TargetType
+from rs.calculator.card_effects import get_card_effects
+from rs.calculator.interfaces.card_effects_interface import TargetType
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
@@ -139,11 +140,12 @@ class BattleState(BattleStateInterface):
                 else:
                     damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
                     if effect.target == TargetType.MONSTER:
-                        (hp_damage) = self.monsters[target_index].inflict_damage(source=self.player, base_damage=damage,
-                                                                                 hits=effect.hits,
-                                                                                 blockable=effect.blockable,
-                                                                                 vulnerable_modifier=monster_vulnerable_modifier,
-                                                                                 min_hp_damage=player_min_attack_hp_damage)
+                        (hp_damage) = self.monsters[target_index].inflict_damage(
+                            source=self.player, base_damage=damage,
+                            hits=effect.hits,
+                            blockable=effect.blockable,
+                            vulnerable_modifier=monster_vulnerable_modifier,
+                            min_hp_damage=player_min_attack_hp_damage)
                         effect.hp_damage = hp_damage
 
                     elif effect.target == TargetType.ALL_MONSTERS:
@@ -544,7 +546,7 @@ class BattleState(BattleStateInterface):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         for index, (orb, amount) in enumerate(self.orbs):
             if orb == OrbId.LIGHTNING:
-                if self.player.powers.get(PowerId.ELECTRODYNAMICS):
+                if self.player.powers.get(PowerId.ELECTRO):
                     for m in self.monsters:
                         m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False)
                 else:
@@ -563,12 +565,12 @@ class BattleState(BattleStateInterface):
             (orb, amount) = self.orbs.pop(0)
             for j in range(times):
                 if orb == OrbId.LIGHTNING:
-                    if self.player.powers.get(PowerId.ELECTRODYNAMICS):
+                    if self.player.powers.get(PowerId.ELECTRO):
                         for m in self.monsters:
                             m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False)
                     else:
                         self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
-                                                      is_attack=False)
+                                                          is_attack=False)
                 elif orb == OrbId.FROST:
                     self.add_player_block(5 + focus)
                 elif orb == OrbId.DARK:
