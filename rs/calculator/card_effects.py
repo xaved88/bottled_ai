@@ -483,4 +483,18 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
     if card.id == CardId.DUALCAST:
         return [CardEffects(target=TargetType.SELF, post_hooks=[dualcast_post_hook])]
+    if card.id == CardId.BALL_LIGHTNING:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
+                            channel_orbs=[OrbId.LIGHTNING])]
+    if card.id == CardId.COOLHEADED:
+        return [CardEffects(draw=1 if not card.upgrade else 2, target=TargetType.SELF, channel_orbs=[OrbId.FROST])]
+    if card.id == CardId.COLD_SNAP:
+        return [CardEffects(target=TargetType.MONSTER, damage=6 if not card.upgrade else 9, hits=1,
+                            channel_orbs=[OrbId.FROST])]
+    if card.id == CardId.DOOM_AND_GLOOM:
+        return [CardEffects(damage=10 if not card.upgrade else 14, hits=1, target=TargetType.ALL_MONSTERS,
+                            channel_orbs=[OrbId.DARK])]
+    if card.id == CardId.GLACIER:
+        return [CardEffects(block=7 if not card.upgrade else 10, target=TargetType.SELF,
+                            channel_orbs=[OrbId.FROST, OrbId.FROST])]
     return [CardEffects()]

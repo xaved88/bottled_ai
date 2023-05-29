@@ -1565,3 +1565,85 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_orb_count(play, 0)
         self.see_enemy_lost_hp(play, 0)
+
+    def test_ball_lightning(self):
+        state = self.given_state(CardId.BALL_LIGHTNING, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.LIGHTNING)
+        self.see_enemy_lost_hp(play, 7)
+
+    def test_ball_lightning_upgraded(self):
+        state = self.given_state(CardId.BALL_LIGHTNING, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.LIGHTNING)
+        self.see_enemy_lost_hp(play, 10)
+
+    def test_coolheaded(self):
+        state = self.given_state(CardId.COOLHEADED, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.FROST)
+        self.see_player_drew_cards(play, 1)
+
+    def test_coolheaded_upgraded(self):
+        state = self.given_state(CardId.COOLHEADED, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.FROST)
+        self.see_player_drew_cards(play, 2)
+
+    def test_cold_snap(self):
+        state = self.given_state(CardId.COLD_SNAP, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.FROST)
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_cold_snap_upgraded(self):
+        state = self.given_state(CardId.COLD_SNAP, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.FROST)
+        self.see_enemy_lost_hp(play, 9)
+
+    def test_doom_and_gloom(self):
+        state = self.given_state(CardId.DOOM_AND_GLOOM, orb_slots=3, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.DARK)
+        self.see_enemy_lost_hp(play, 10, enemy_index=0)
+        self.see_enemy_lost_hp(play, 10, enemy_index=1)
+
+    def test_doom_and_gloom_upgraded(self):
+        state = self.given_state(CardId.DOOM_AND_GLOOM, upgrade=1, orb_slots=3, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.DARK)
+        self.see_enemy_lost_hp(play, 14, enemy_index=0)
+        self.see_enemy_lost_hp(play, 14, enemy_index=1)
+
+    def test_glacier(self):
+        state = self.given_state(CardId.GLACIER, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_count(play, 2)
+        self.see_orb_type_count(play, 2, OrbId.FROST)
+        self.see_player_has_block(play, 7)
+
+    def test_glacier_upgraded(self):
+        state = self.given_state(CardId.GLACIER, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_count(play, 2)
+        self.see_orb_type_count(play, 2, OrbId.FROST)
+        self.see_player_has_block(play, 10)
