@@ -4,11 +4,11 @@ from typing import List
 from rs.calculator.card_effect_custom_hooks import *
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.card_effect_hooks_interface import CardEffectCustomHook, CardEffectCustomHookWithCard
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.powers import Powers
-from rs.calculator.enums.power_id import PowerId
 
 
 class TargetType(Enum):
@@ -481,4 +481,6 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MACHINE_LEARNING: 1})]
     if card.id == CardId.ZAP:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
+    if card.id == CardId.DUALCAST:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[dualcast_post_hook])]
     return [CardEffects()]

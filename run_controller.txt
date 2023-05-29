@@ -1,4 +1,4 @@
-[x] - abort
+[] - abort
 [] - pause
 
 Instructions:

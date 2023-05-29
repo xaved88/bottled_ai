@@ -553,6 +553,8 @@ class BattleState(BattleStateInterface):
     def evoke_orbs(self, amount: int = 1, times: int = 1):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         for i in range(amount):
+            if len(self.orbs) == 0:
+                break
             (orb, amount) = self.orbs.pop(0)
             for j in range(times):
                 if orb == OrbId.LIGHTNING:

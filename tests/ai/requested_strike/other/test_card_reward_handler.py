@@ -1,5 +1,5 @@
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.common.handlers.common_card_reward_handler import CommonCardRewardHandler
+from rs.common.handlers.card_reward.common_card_reward_handler import CommonCardRewardHandler
 
 
 class CardRewardHandlerTestCase(RsTestHandlerFixture):

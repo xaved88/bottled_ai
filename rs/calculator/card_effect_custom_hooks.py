@@ -226,7 +226,7 @@ def rip_and_tear_post_hook(state: BattleStateInterface, effect: CardEffectsInter
 
 
 def rip_and_tear_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
-                                       target_index: int = -1):
+                                    target_index: int = -1):
     __rip_and_tear_post_hook(state, 9)
 
 
@@ -254,7 +254,7 @@ def auto_shields_post_hook(state: BattleStateInterface, effect: CardEffectsInter
 
 
 def auto_shields_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
-                                       target_index: int = -1):
+                                    target_index: int = -1):
     __auto_shields_post_hook(state, 15)
 
 
@@ -272,7 +272,7 @@ def aggregate_post_hook(state: BattleStateInterface, effect: CardEffectsInterfac
 
 
 def aggregate_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
-                                       target_index: int = -1):
+                                 target_index: int = -1):
     __aggregate_post_hook(state, 3)
 
 
@@ -287,3 +287,7 @@ def double_energy_post_hook(state: BattleStateInterface, effect: CardEffectsInte
 
 def overclock_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.discard_pile.append(get_card(CardId.BURN))
+
+
+def dualcast_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.evoke_orbs(1, 2)

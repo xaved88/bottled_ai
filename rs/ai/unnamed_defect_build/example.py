@@ -1,12 +1,13 @@
-from rs.ai.unnamed_defect_build.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK
+from rs.ai.unnamed_defect_build.config import CARD_REMOVAL_PRIORITY_LIST
 from rs.ai.unnamed_defect_build.handlers.event_handler import EventHandler
 from rs.ai.unnamed_defect_build.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.unnamed_defect_build.handlers.upgrade_handler import UpgradeHandler
+from rs.common.handlers.card_reward.common_card_reward_take_first_card_handler import \
+    CommonCardRewardTakeFirstCardHandler
 from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.common.handlers.common_boss_relic_handler import CommonBossRelicHandler
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
-from rs.common.handlers.common_card_reward_handler import CommonCardRewardHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
 from rs.common.handlers.common_discard_handler import CommonDiscardHandler
@@ -28,7 +29,7 @@ UNNAMED_DEFECT_STRATEGY: AiStrategy = AiStrategy(
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonCombatRewardHandler(),
-        CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK),
+        CommonCardRewardTakeFirstCardHandler(),
         CommonNeowHandler(),
         EventHandler(),
         CommonChestHandler(),

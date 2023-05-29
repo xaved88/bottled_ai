@@ -1551,3 +1551,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 0)
         self.see_orb_count(play, 1)
         self.see_orb_type_count(play, 1, OrbId.LIGHTNING)
+
+    def test_dualcast(self):
+        state = self.given_state(CardId.DUALCAST, orbs=[(OrbId.LIGHTNING, 1)], orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 0)
+        self.see_enemy_lost_hp(play, 16)
+
+    def test_dualcast_with_no_orbs(self):
+        state = self.given_state(CardId.DUALCAST, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 0)
+        self.see_enemy_lost_hp(play, 0)

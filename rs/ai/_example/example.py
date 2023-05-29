@@ -6,7 +6,7 @@ from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.common.handlers.common_boss_relic_handler import CommonBossRelicHandler
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
-from rs.common.handlers.common_card_reward_handler import CommonCardRewardHandler
+from rs.common.handlers.card_reward.common_card_reward_handler import CommonCardRewardHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
 from rs.common.handlers.common_discard_handler import CommonDiscardHandler
