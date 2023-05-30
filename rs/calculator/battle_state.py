@@ -587,7 +587,8 @@ class BattleState(BattleStateInterface):
     def channel_orb(self, orb_id: OrbId):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         amount = 1 if orb_id is not OrbId.DARK else 6 + focus
-        self.orbs.append((orb_id, amount))
+        if self.orb_slots > 0:
+            self.orbs.append((orb_id, amount))
 
         # Todo -> this order will break Darkness+ because the passive triggers after channel, before evoke...
         while len(self.orbs) > self.orb_slots:

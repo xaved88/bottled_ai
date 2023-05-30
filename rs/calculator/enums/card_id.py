@@ -59,6 +59,7 @@ class CardId(Enum):
     COOLHEADED = 'coolheaded'
     COLD_SNAP = 'cold snap'
     CONCENTRATE = 'concentrate'
+    CONSUME = 'consume'
     CORE_SURGE = 'core surge'
     CORPSE_EXPLOSION = 'corpse explosion'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!

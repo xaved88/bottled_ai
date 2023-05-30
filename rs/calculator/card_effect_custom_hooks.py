@@ -300,10 +300,19 @@ def dualcast_post_hook(state: BattleStateInterface, effect: CardEffectsInterface
 
 def capacitor_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.orb_slots += 2
+    state.orb_slots = min(state.orb_slots, 10)
 
 
 def capacitor_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.orb_slots += 3
+    state.orb_slots = min(state.orb_slots, 10)
+
+
+def consume_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    amount_of_orbs = len(state.orbs)
+    state.orb_slots -= 1
+    if amount_of_orbs > state.orb_slots:
+        state.orbs.pop()
 
 
 def chill_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -314,3 +323,16 @@ def chill_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, t
 def barrage_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     effect.hits = len(state.orbs)
 
+
+def fission_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    amount = len(state.orbs)
+    state.orbs.clear()
+    state.player.energy += amount
+    state.draw_cards(amount)
+
+
+def fission_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    amount = len(state.orbs)
+    state.evoke_orbs(amount, 1)
+    state.player.energy += amount
+    state.draw_cards(amount)

@@ -1697,6 +1697,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_orb_slots_count(play, 6)
 
+    def test_cannot_have_more_than_10_orb_slots(self):
+        state = self.given_state(CardId.CAPACITOR, orb_slots=9)
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_slots_count(play, 10)
+
+    def test_consume(self):
+        state = self.given_state(CardId.CONSUME, orbs=[(OrbId.FROST, 1)], orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_slots_count(play, 2)
+        self.see_orb_count(play, 1)
+
+    def test_consume_removes_last_orb(self):
+        state = self.given_state(CardId.CONSUME, orbs=[(OrbId.LIGHTNING, 1), (OrbId.FROST, 1), (OrbId.DARK, 1)], orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_slots_count(play, 2)
+        self.see_orb_count(play, 2)
+        self.assertEqual(OrbId.LIGHTNING, play.state.orbs[0][0])
+        self.assertEqual(OrbId.FROST, play.state.orbs[1][0])
+
     def test_chill_single_target(self):
         state = self.given_state(CardId.CHILL, orb_slots=3)
         play = self.when_playing_the_first_card(state)

@@ -503,6 +503,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.GLACIER:
         return [CardEffects(block=7 if not card.upgrade else 10, target=TargetType.SELF,
                             channel_orbs=[OrbId.FROST, OrbId.FROST])]
+    if card.id == CardId.CONSUME:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 2 if not card.upgrade else 3}, post_hooks=[consume_post_hook])]
     if card.id == CardId.CHILL:
         return [CardEffects(target=TargetType.SELF, post_hooks=[chill_post_hook])]
     if card.id == CardId.BARRAGE:
