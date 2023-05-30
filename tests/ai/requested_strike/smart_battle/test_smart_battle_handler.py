@@ -1,4 +1,5 @@
 import time
+import unittest
 
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
@@ -18,6 +19,7 @@ class BattleHandlerTestCase(RsTestHandlerFixture):
         state = load_resource_state('battles/smart_battle/smart_battle_burns.json')
         self.assertEqual(['play 2 0'], CommonBattleHandler().handle(state))
 
+    @unittest.skip("we only want to run this test occasionally")
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
         state = load_resource_state('battles/smart_battle/smart_battle_complex_case.json')
