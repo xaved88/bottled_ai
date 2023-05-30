@@ -98,6 +98,7 @@ class CardId(Enum):
     FIEND_FIRE = 'fiend fire'
     FINESSE = 'finesse'
     FINISHER = 'finisher'  # Note: with current bot setup we can't easily remember how many attacks we've played this turn since we recalculate all paths after each card play, so this card is mostly useless as is.
+    FISSION = 'fission'
     FLAME_BARRIER = 'flame barrier'
     FLASH_OF_STEEL = 'flash of steel'
     FLECHETTES = 'flechettes'

@@ -1793,3 +1793,19 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 26, enemy_index=0)
         self.see_enemy_lost_hp(play, 26, enemy_index=1)
         self.see_player_has_power(play, PowerId.FOCUS, -3)
+
+    def test_fission(self):
+        state = self.given_state(CardId.FISSION, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)], orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, -3)
+        self.see_player_drew_cards(play, 3)
+        self.see_player_has_block(play, 0)
+        self.see_orb_count(play, 0)
+
+    def test_fission_upgraded(self):
+        state = self.given_state(CardId.FISSION, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)], orb_slots=3, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, -3)
+        self.see_player_drew_cards(play, 3)
+        self.see_player_has_block(play, 15)
+        self.see_orb_count(play, 0)

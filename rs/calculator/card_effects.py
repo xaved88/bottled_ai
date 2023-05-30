@@ -485,6 +485,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 4 if not card.upgrade else 5, PowerId.BIAS: 1})]
     if card.id == CardId.CAPACITOR:
         return [CardEffects(target=TargetType.SELF, post_hooks=[capacitor_post_hook] if not card.upgrade else [capacitor_upgraded_post_hook])]
+    if card.id == CardId.FISSION:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[fission_post_hook] if not card.upgrade else [fission_upgraded_post_hook])]
     if card.id == CardId.ZAP:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
     if card.id == CardId.DUALCAST:

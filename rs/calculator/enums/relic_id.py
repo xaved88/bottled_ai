@@ -52,7 +52,7 @@ class RelicId(Enum):
     DREAM_CATCHER = 'dream catcher'                 # N/A
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
     EMPTY_CAGE = 'empty cage'                       # N/A
-    EMOTION_CHIP = 'emotion chip'                   # N/A
+    EMOTION_CHIP = 'emotion chip'                   # N/A unless we choose to care about it in a comparator
     ETERNAL_FEATHER = 'eternal feather'             # N/A
     FACE_OF_CLERIC = 'face of cleric'               # N/A
     FOSSILIZED_HELIX = 'fossilized helix'
