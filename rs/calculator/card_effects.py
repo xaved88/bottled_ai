@@ -515,6 +515,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 2 if not card.upgrade else 3}, post_hooks=[consume_post_hook])]
     if card.id == CardId.CHILL:
         return [CardEffects(target=TargetType.SELF, post_hooks=[chill_post_hook])]
+    if card.id == CardId.RECURSION:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[recursion_post_hook])]
     if card.id == CardId.BARRAGE:
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=0, pre_hooks=[barrage_pre_hook])]
     if card.id == CardId.METEOR_STRIKE:
@@ -527,6 +529,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.HYPERBEAM:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=26 if not card.upgrade else 34, hits=1),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -3})]
+    if card.id == CardId.SUNDER:
+        return [CardEffects(target=TargetType.MONSTER, damage=24 if not card.upgrade else 32, hits=1, post_hooks=[sunder_post_hook])]
+    if card.id == CardId.MELTER:
+        return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 14, hits=1, pre_hooks=[melter_pre_hook])]
     if card.id == CardId.REBOOT:
         return [CardEffects(target=TargetType.SELF, post_hooks=[reboot_post_hook] if not card.upgrade else [reboot_upgraded_post_hook])]
     return [CardEffects()]

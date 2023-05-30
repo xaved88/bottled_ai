@@ -809,14 +809,12 @@ class CalculatorPowersTest(CalculatorTestFixture):
     def test_storm(self):
         state = self.given_state(CardId.INFLAME, orb_slots=3, player_powers={PowerId.STORM: 1})
         play = self.when_playing_the_first_card(state)
-        play.end_turn()
         self.see_player_has_power(play, PowerId.STORM, 1)
         self.see_orb_count(play, 1)
 
     def test_storm_multiple(self):
         state = self.given_state(CardId.INFLAME, orb_slots=3, player_powers={PowerId.STORM: 2})
         play = self.when_playing_the_first_card(state)
-        play.end_turn()
         self.see_player_has_power(play, PowerId.STORM, 2)
         self.see_orb_count(play, 2)
 

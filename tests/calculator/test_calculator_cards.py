@@ -1848,3 +1848,30 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.LOOP, 2)
+
+    def test_sunder_no_kill(self):
+        state = self.given_state(CardId.SUNDER)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_enemy_lost_hp(play, 24)
+
+    def test_sunder_yes_kill(self):
+        state = self.given_state(CardId.SUNDER)
+        state.monsters[0].current_hp = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_hp_is(play, 0)
+
+    def test_recursion(self):
+        state = self.given_state(CardId.RECURSION, orb_slots=3, orbs=[(OrbId.LIGHTNING, 1), (OrbId.FROST, 1)])
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.assertListEqual([(OrbId.FROST, 1), (OrbId.LIGHTNING, 1)], play.state.orbs)
+        self.see_enemy_lost_hp(play, 8)
+
+    def test_melter(self):
+        state = self.given_state(CardId.MELTER)
+        state.monsters[0].block = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 10)

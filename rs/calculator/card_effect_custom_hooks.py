@@ -355,3 +355,18 @@ def __reboot_post_hook(state: BattleStateInterface, amount_to_draw: int):
     state.discard_pile.extend(state.draw_pile)
     state.draw_pile.clear()
     state.draw_cards(amount_to_draw)
+
+
+def sunder_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    if state.monsters[target_index].current_hp <= 0:
+        state.player.energy += 3
+
+
+def recursion_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    orb = state.orbs[0][0]
+    state.evoke_orbs(1, 1)
+    state.channel_orb(orb)
+
+
+def melter_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.monsters[target_index].block = 0
