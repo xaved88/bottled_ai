@@ -569,8 +569,10 @@ class BattleState(BattleStateInterface):
         for i in range(amount):
             if len(self.orbs) == 0:
                 break
-            (orb, amount) = self.orbs.pop(0)
+            (orb, orb_value) = self.orbs.pop(0)
             for j in range(times):
+                if not [True for m in self.monsters if m.current_hp > 0]:
+                    break
                 if orb == OrbId.LIGHTNING:
                     if self.player.powers.get(PowerId.ELECTRO):
                         for m in self.monsters:
@@ -582,7 +584,7 @@ class BattleState(BattleStateInterface):
                     self.add_player_block(5 + focus)
                 elif orb == OrbId.DARK:
                     target = find_lowest_hp_monster(self.monsters)
-                    target.inflict_damage(source=self.player, base_damage=amount, hits=1, vulnerable_modifier=1,
+                    target.inflict_damage(source=self.player, base_damage=orb_value, hits=1, vulnerable_modifier=1,
                                           is_attack=False)
                 elif orb == OrbId.PLASMA:
                     self.player.energy += 2

@@ -1,0 +1,1203 @@
+{
+  "available_commands": [
+    "play",
+    "end",
+    "potion",
+    "key",
+    "click",
+    "wait",
+    "state"
+  ],
+  "ready_for_command": true,
+  "in_game": true,
+  "game_state": {
+    "screen_type": "NONE",
+    "screen_state": {},
+    "seed": 2365882032717228407,
+    "combat_state": {
+      "draw_pile": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend",
+          "id": "Defend_B",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "1ea825f8-5303-4cb0-b661-ed630b937abf",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Zap",
+          "id": "Zap",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "0a3c5c90-a547-4258-94d6-03162a10bf27",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        }
+      ],
+      "discard_pile": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend+",
+          "id": "Defend_B",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "95c622d5-fffd-4cf3-99f3-8d743fcecae9",
+          "upgrades": 1,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend",
+          "id": "Defend_B",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "8c918ea1-00df-4f98-a01e-d9a411c1b472",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 2,
+          "name": "Doom and Gloom",
+          "id": "Doom and Gloom",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "9c890c45-40c1-440f-ba20-e63f11534f3f",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Charge Battery",
+          "id": "Conserve Battery",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "08ce20df-aa75-4ad9-9286-bea927d60657",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend",
+          "id": "Defend_B",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "24e14a90-12f1-4c76-bc66-0c85def794b4",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        }
+      ],
+      "exhaust_pile": [
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Fission",
+          "id": "Fission",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "2f23ab22-cf84-42b6-8a7a-31a438337650",
+          "upgrades": 0,
+          "rarity": "RARE",
+          "has_target": false
+        }
+      ],
+      "cards_discarded_this_turn": 0,
+      "times_damaged": 9,
+      "monsters": [
+        {
+          "is_gone": true,
+          "move_hits": 2,
+          "move_base_damage": 5,
+          "last_move_id": 1,
+          "half_dead": false,
+          "move_adjusted_damage": 5,
+          "max_hp": 30,
+          "intent": "ATTACK",
+          "second_last_move_id": 1,
+          "move_id": 1,
+          "name": "Pointy",
+          "current_hp": 0,
+          "block": 0,
+          "id": "BanditChild",
+          "powers": []
+        },
+        {
+          "is_gone": true,
+          "move_hits": 1,
+          "move_base_damage": 10,
+          "last_move_id": 1,
+          "half_dead": false,
+          "move_adjusted_damage": 10,
+          "max_hp": 36,
+          "intent": "ATTACK_DEBUFF",
+          "second_last_move_id": 3,
+          "move_id": 3,
+          "name": "Romeo",
+          "current_hp": 0,
+          "block": 0,
+          "id": "BanditLeader",
+          "powers": []
+        },
+        {
+          "is_gone": false,
+          "move_hits": 1,
+          "move_base_damage": 18,
+          "last_move_id": 3,
+          "half_dead": false,
+          "move_adjusted_damage": 18,
+          "max_hp": 41,
+          "intent": "ATTACK",
+          "second_last_move_id": 1,
+          "move_id": 1,
+          "name": "Bear",
+          "current_hp": 7,
+          "block": 0,
+          "id": "BanditBear",
+          "powers": []
+        }
+      ],
+      "turn": 9,
+      "limbo": [],
+      "hand": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Dualcast",
+          "id": "Dualcast",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "8f422c9b-d395-4ec0-b953-dbd01a1cc572",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        }
+      ],
+      "player": {
+        "orbs": [
+          {
+            "passive_amount": 7,
+            "name": "Dark",
+            "id": "Dark",
+            "evoke_amount": 13
+          },
+          {
+            "passive_amount": 0,
+            "name": "Orb Slot",
+            "evoke_amount": 0
+          },
+          {
+            "passive_amount": 0,
+            "name": "Orb Slot",
+            "evoke_amount": 0
+          }
+        ],
+        "current_hp": 6,
+        "block": 0,
+        "max_hp": 69,
+        "powers": [
+          {
+            "amount": 1,
+            "name": "Focus",
+            "id": "Focus"
+          },
+          {
+            "amount": -2,
+            "name": "Dexterity",
+            "id": "Dexterity"
+          }
+        ],
+        "energy": 4
+      }
+    },
+    "deck": [
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Strike+",
+        "id": "Strike_B",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "a397adce-61b6-4018-94b5-55da4c05a6bb",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend+",
+        "id": "Defend_B",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "95c622d5-fffd-4cf3-99f3-8d743fcecae9",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend",
+        "id": "Defend_B",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "1ea825f8-5303-4cb0-b661-ed630b937abf",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend",
+        "id": "Defend_B",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "24e14a90-12f1-4c76-bc66-0c85def794b4",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Defend",
+        "id": "Defend_B",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "8c918ea1-00df-4f98-a01e-d9a411c1b472",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Zap",
+        "id": "Zap",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "0a3c5c90-a547-4258-94d6-03162a10bf27",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Dualcast",
+        "id": "Dualcast",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "8f422c9b-d395-4ec0-b953-dbd01a1cc572",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Compile Driver",
+        "id": "Compile Driver",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "9ea06683-3f00-4d6d-b899-dc22ceecd30d",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Streamline",
+        "id": "Streamline",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "44c5e206-2123-44ea-91cb-b2926867fb42",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Skim+",
+        "id": "Skim",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "ea871724-0c90-4de9-a2e2-b5adce6a45f2",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Charge Battery",
+        "id": "Conserve Battery",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "08ce20df-aa75-4ad9-9286-bea927d60657",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Doom and Gloom",
+        "id": "Doom and Gloom",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "9c890c45-40c1-440f-ba20-e63f11534f3f",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Fission",
+        "id": "Fission",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "2f23ab22-cf84-42b6-8a7a-31a438337650",
+        "upgrades": 0,
+        "rarity": "RARE",
+        "has_target": false
+      }
+    ],
+    "relics": [
+      {
+        "name": "Cracked Core",
+        "id": "Cracked Core",
+        "counter": -1
+      },
+      {
+        "name": "Golden Idol",
+        "id": "Golden Idol",
+        "counter": -1
+      },
+      {
+        "name": "Data Disk",
+        "id": "DataDisk",
+        "counter": -1
+      },
+      {
+        "name": "War Paint",
+        "id": "War Paint",
+        "counter": -1
+      },
+      {
+        "name": "Lizard Tail",
+        "id": "Lizard Tail",
+        "counter": -2
+      },
+      {
+        "name": "Ectoplasm",
+        "id": "Ectoplasm",
+        "counter": -1
+      }
+    ],
+    "max_hp": 69,
+    "act_boss": "Champ",
+    "gold": 165,
+    "action_phase": "WAITING_ON_USER",
+    "act": 2,
+    "screen_name": "NONE",
+    "room_phase": "COMBAT",
+    "is_screen_up": false,
+    "potions": [
+      {
+        "requires_target": false,
+        "can_use": true,
+        "can_discard": true,
+        "name": "Regen Potion",
+        "id": "Regen Potion"
+      },
+      {
+        "requires_target": false,
+        "can_use": true,
+        "can_discard": true,
+        "name": "Entropic Brew",
+        "id": "EntropicBrew"
+      },
+      {
+        "requires_target": false,
+        "can_use": true,
+        "can_discard": true,
+        "name": "Skill Potion",
+        "id": "SkillPotion"
+      }
+    ],
+    "current_hp": 6,
+    "floor": 21,
+    "ascension_level": 0,
+    "class": "DEFECT",
+    "map": [
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "x": 1,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 1
+          }
+        ],
+        "x": 2,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "x": 3,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "x": 4,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "x": 0,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "x": 2,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "x": 3,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "x": 4,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 3
+          }
+        ],
+        "x": 1,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "x": 2,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "x": 4,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "x": 0,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "x": 1,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "x": 2,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "x": 4,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "x": 1,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "x": 3,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "x": 4,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 1,
+            "y": 6
+          }
+        ],
+        "x": 0,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 6
+          }
+        ],
+        "x": 1,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "x": 2,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "x": 4,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 1,
+            "y": 7
+          }
+        ],
+        "x": 1,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 2,
+            "y": 7
+          },
+          {
+            "x": 3,
+            "y": 7
+          }
+        ],
+        "x": 2,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 3,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "x": 3,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "x": 5,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 8
+          }
+        ],
+        "x": 1,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 8
+          }
+        ],
+        "x": 2,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 3,
+            "y": 8
+          }
+        ],
+        "x": 3,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 3,
+            "y": 8
+          },
+          {
+            "x": 4,
+            "y": 8
+          }
+        ],
+        "x": 4,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 2,
+            "y": 9
+          }
+        ],
+        "x": 2,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 2,
+            "y": 9
+          },
+          {
+            "x": 3,
+            "y": 9
+          },
+          {
+            "x": 4,
+            "y": 9
+          }
+        ],
+        "x": 3,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 5,
+            "y": 9
+          }
+        ],
+        "x": 4,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 10
+          },
+          {
+            "x": 3,
+            "y": 10
+          }
+        ],
+        "x": 2,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 10
+          }
+        ],
+        "x": 3,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 10
+          }
+        ],
+        "x": 4,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 5,
+            "y": 10
+          }
+        ],
+        "x": 5,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 11
+          },
+          {
+            "x": 2,
+            "y": 11
+          }
+        ],
+        "x": 1,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 3,
+            "y": 11
+          },
+          {
+            "x": 4,
+            "y": 11
+          }
+        ],
+        "x": 3,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 11
+          },
+          {
+            "x": 5,
+            "y": 11
+          }
+        ],
+        "x": 5,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 1,
+            "y": 12
+          }
+        ],
+        "x": 1,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 2,
+            "y": 12
+          }
+        ],
+        "x": 2,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 12
+          }
+        ],
+        "x": 3,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 12
+          },
+          {
+            "x": 5,
+            "y": 12
+          }
+        ],
+        "x": 4,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 5,
+            "y": 12
+          }
+        ],
+        "x": 5,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 13
+          }
+        ],
+        "x": 1,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 13
+          }
+        ],
+        "x": 2,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 13
+          }
+        ],
+        "x": 3,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 4,
+            "y": 13
+          }
+        ],
+        "x": 5,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 14
+          },
+          {
+            "x": 2,
+            "y": 14
+          }
+        ],
+        "x": 2,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 14
+          },
+          {
+            "x": 4,
+            "y": 14
+          }
+        ],
+        "x": 4,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 1,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 2,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 3,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 4,
+        "y": 14,
+        "parents": []
+      }
+    ],
+    "room_type": "EventRoom"
+  }
+}

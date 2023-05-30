@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from rs.calculator.interfaces.target_interface import TargetInterface
 
@@ -9,8 +9,8 @@ class MonsterInterface(TargetInterface):
     is_gone: bool
 
 
-def find_lowest_hp_monster(monsters: List[MonsterInterface]) -> MonsterInterface:
-    lowest: MonsterInterface = None
+def find_lowest_hp_monster(monsters: List[MonsterInterface]) -> Optional[MonsterInterface]:
+    lowest: Optional[MonsterInterface] = None
     for monster in monsters:
         if monster.is_gone or monster.current_hp <= 0:
             continue
