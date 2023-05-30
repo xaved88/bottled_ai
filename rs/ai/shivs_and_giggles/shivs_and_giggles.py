@@ -1,7 +1,6 @@
 from typing import List
 
 from rs.ai.shivs_and_giggles.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES
-from rs.ai.shivs_and_giggles.handlers.battle_handler import BattleHandler
 from rs.ai.shivs_and_giggles.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.shivs_and_giggles.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.shivs_and_giggles.handlers.combat_reward_handler import CombatRewardHandler
@@ -11,6 +10,7 @@ from rs.ai.shivs_and_giggles.handlers.potions_handler import PotionsBossHandler,
 from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.shivs_and_giggles.handlers.upgrade_handler import UpgradeHandler
 from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
+from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_discard_handler import CommonDiscardHandler
@@ -37,7 +37,7 @@ SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
 
         # Battle Handler
-        BattleHandler(),
+        CommonBattleHandler(),
 
         # General Stuff
         BossRelicHandler(),

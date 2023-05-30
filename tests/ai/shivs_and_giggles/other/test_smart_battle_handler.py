@@ -1,9 +1,9 @@
 from ai.shivs_and_giggles.sg_test_handler_fixture import SgTestHandlerFixture
-from rs.ai.shivs_and_giggles.handlers.battle_handler import BattleHandler
+from rs.common.handlers.common_battle_handler import CommonBattleHandler
 
 
 class SmartBattleHandlerTestCase(SgTestHandlerFixture):
-    handler = BattleHandler
+    handler = CommonBattleHandler
 
     def test_discard_works_correctly(self):
         self.execute_handler_tests('/battles/smart_battle/smart_battle_discard.json',
