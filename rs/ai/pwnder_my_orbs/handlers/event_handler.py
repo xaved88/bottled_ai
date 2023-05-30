@@ -32,7 +32,7 @@ class EventHandler(Handler):
         # ACT 1
 
         if event_name == "Big Fish":
-            return "choose 2"  # Get relic and curse
+            return "choose 1"  # Get max hp
 
         if event_name == "The Cleric":
             if hp_per <= 65 and 'heal' in state.get_choice_list():
