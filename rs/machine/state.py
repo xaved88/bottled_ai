@@ -152,7 +152,7 @@ class GameState:
         orbs = self.get_player_combat()['orbs']
         if not orbs:
             return []
-        return [(Orb(o['id']), o['passive_amount']) for o in orbs if 'id' in o]
+        return [(Orb(o['id']), o['passive_amount']) for o in orbs if 'id' in o and o['id'] in Orb.__members__.keys()]
 
     def get_player_orb_slots(self) -> int:
         orbs = self.get_player_combat()['orbs']

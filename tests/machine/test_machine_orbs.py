@@ -24,4 +24,9 @@ class MachineOrbsTest(unittest.TestCase):
         self.assertEqual(Orb.LIGHTNING, orbId)
         self.assertEqual(3, amount)
 
+    def test_get_orbs_state_contains_specifically_empty_orbs(self):
+        state = load_resource_state("battles/with_orbs/defect_very_without_orbs.json")
+        orbs = state.get_player_orbs()
+        self.assertEqual(0, len(orbs))
+
     # TODO -> still need to add coverage for the other types. Specifically plasma, when we see it.
