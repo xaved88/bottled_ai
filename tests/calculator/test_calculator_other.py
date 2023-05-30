@@ -1,18 +1,16 @@
-import unittest
-
-from rs.calculator.comparator import DefaultSbcComparator
-from rs.calculator.executor import get_best_battle_path
-from test_helpers.resources import load_resource_state
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.executor import get_best_battle_path
+from rs.common.comparators.common_general_comparator import CommonGeneralComparator
+from test_helpers.resources import load_resource_state
 
 
 class CalculatorOtherTest(CalculatorTestFixture):
 
     def test_minions_die_when_leader_dies(self):
         state = load_resource_state("battles/smart_battle/smart_battle_minions.json")
-        path = get_best_battle_path(state, DefaultSbcComparator(), 100)
+        path = get_best_battle_path(state, CommonGeneralComparator(), 100)
         for monster in path.state.monsters:
             self.assertEqual(0, monster.current_hp)
         self.assertEqual(1, len(path.plays))

@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.calculator.comparator import SbcComparator
+from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.executor import get_best_battle_action
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from rs.machine.command import Command
@@ -16,7 +16,7 @@ class CommonBattleHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
 
-    def select_comparator(self, state: GameState) -> SbcComparator:
+    def select_comparator(self, state: GameState) -> ComparatorInterface:
         # can be overridden by children for extra logic.
         return CommonGeneralComparator()
 

@@ -1,7 +1,7 @@
 from typing import Callable, List
 
 from rs.calculator.battle_state import BattleState
-from rs.calculator.comparator import SbcComparator
+from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.enums.power_id import PowerId
 from rs.common.comparators.core.assessment import ComparatorAssessmentConfig
 from rs.common.comparators.core.comparisons import *
@@ -81,7 +81,7 @@ powers_we_dislike: List[PowerId] = [
 ]
 
 
-class CommonGeneralComparator(SbcComparator):
+class CommonGeneralComparator(ComparatorInterface):
 
     def __init__(self, comparisons: List[Comparison] = None, assessment_config: ComparatorAssessmentConfig = None):
         self.comparisons: List[Comparison] = default_comparisons if comparisons is None else comparisons

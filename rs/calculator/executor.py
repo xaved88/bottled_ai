@@ -1,13 +1,13 @@
 from typing import List
 
-from rs.calculator.comparator import SbcComparator
+from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.battle_state import PLAY_DISCARD, Play
 from rs.calculator.play_path import PlayPath, get_paths_bfs
 from rs.machine.state import GameState
 
 
-def get_best_battle_path(game_state: GameState, comparator: SbcComparator, max_path_count) -> PlayPath:
+def get_best_battle_path(game_state: GameState, comparator: ComparatorInterface, max_path_count) -> PlayPath:
     original_state = create_battle_state(game_state)
     paths = get_paths_bfs(original_state, max_path_count)
     best_path = None
@@ -22,7 +22,7 @@ def get_best_battle_path(game_state: GameState, comparator: SbcComparator, max_p
     return best_path
 
 
-def get_best_battle_action(game_state: GameState, comparator: SbcComparator, max_path_count: int = 11_000) -> List[str]:
+def get_best_battle_action(game_state: GameState, comparator: ComparatorInterface, max_path_count: int = 11_000) -> List[str]:
     path = get_best_battle_path(game_state, comparator, max_path_count)
 
     if path.plays:

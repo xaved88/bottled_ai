@@ -3,7 +3,7 @@ from rs.ai.shivs_and_giggles.comparators.general_comparator import GeneralSilent
 from rs.ai.shivs_and_giggles.comparators.gremlin_nob_comparator import GremlinNobSilentComparator
 from rs.ai.shivs_and_giggles.comparators.three_sentry_comparator import ThreeSentriesSilentComparator
 from rs.ai.shivs_and_giggles.comparators.waiting_lagavulin_comparator import WaitingLagavulinSilentComparator
-from rs.calculator.comparator import SbcComparator
+from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.game.card import CardType
 from rs.machine.state import GameState
@@ -11,7 +11,7 @@ from rs.machine.state import GameState
 
 class BattleHandler(CommonBattleHandler):
 
-    def select_comparator(self, state: GameState) -> SbcComparator:
+    def select_comparator(self, state: GameState) -> ComparatorInterface:
         big_fight = state.floor() == 33 or state.floor() == 50
 
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
