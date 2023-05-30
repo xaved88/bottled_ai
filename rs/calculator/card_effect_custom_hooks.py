@@ -2,6 +2,7 @@ import math
 
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
@@ -295,3 +296,21 @@ def electrodynamics_pre_hook(state: BattleStateInterface, effect: CardEffectsInt
 
 def dualcast_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.evoke_orbs(1, 2)
+
+
+def capacitor_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.orb_slots += 2
+
+
+def capacitor_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.orb_slots += 3
+
+
+def chill_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    for i in range(len(state.monsters)):
+        state.channel_orb(OrbId.FROST)
+
+
+def barrage_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    effect.hits = len(state.orbs)
+

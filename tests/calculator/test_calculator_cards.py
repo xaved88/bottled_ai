@@ -1665,3 +1665,58 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_orb_count(play, 2)
         self.see_orb_type_count(play, 2, OrbId.FROST)
         self.see_player_has_block(play, 10)
+
+    def test_defragment(self):
+        state = self.given_state(CardId.DEFRAGMENT)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FOCUS, 1)
+
+    def test_defragment_upgraded(self):
+        state = self.given_state(CardId.DEFRAGMENT, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FOCUS, 2)
+
+    def test_biased_cognition(self):
+        state = self.given_state(CardId.BIASED_COGNITION)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FOCUS, 4)
+        self.see_player_has_power(play, PowerId.BIAS, 1)
+
+    def test_capacitor(self):
+        state = self.given_state(CardId.CAPACITOR, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_slots_count(play, 5)
+
+    def test_capacitor_upgraded(self):
+        state = self.given_state(CardId.CAPACITOR, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_slots_count(play, 6)
+
+    def test_chill_single_target(self):
+        state = self.given_state(CardId.CHILL, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_orb_count(play, 1)
+
+    def test_chill_multi_target(self):
+        state = self.given_state(CardId.CHILL, orb_slots=3, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_orb_count(play, 2)
+
+    def test_barrage(self):
+        state = self.given_state(CardId.BARRAGE, orbs=[(OrbId.FROST, 1)], orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 4)
+
+    def test_barrage_multiple_orbs(self):
+        state = self.given_state(CardId.BARRAGE, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)], orb_slots=3, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 18)

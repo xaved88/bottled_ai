@@ -485,6 +485,12 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
             orbs.append(OrbId.LIGHTNING)
         # we add the power by pre-hook because it's being applied before orbs are channeled...
         return [CardEffects(target=TargetType.SELF, pre_hooks=[electrodynamics_pre_hook], channel_orbs=orbs)]
+    if card.id == CardId.DEFRAGMENT:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 1 if not card.upgrade else 2})]
+    if card.id == CardId.BIASED_COGNITION:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 4 if not card.upgrade else 5, PowerId.BIAS: 1})]
+    if card.id == CardId.CAPACITOR:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[capacitor_post_hook] if not card.upgrade else [capacitor_upgraded_post_hook])]
     if card.id == CardId.ZAP:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
     if card.id == CardId.DUALCAST:
@@ -503,4 +509,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.GLACIER:
         return [CardEffects(block=7 if not card.upgrade else 10, target=TargetType.SELF,
                             channel_orbs=[OrbId.FROST, OrbId.FROST])]
+    if card.id == CardId.CHILL:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[chill_post_hook])]
+    if card.id == CardId.BARRAGE:
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=0, pre_hooks=[barrage_pre_hook])]
     return [CardEffects()]

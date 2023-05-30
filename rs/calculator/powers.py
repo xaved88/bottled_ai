@@ -4,6 +4,7 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.powers import Powers
 
 DEBUFFS: List[PowerId] = [
+    PowerId.BIAS,
     PowerId.CHOKED,
     PowerId.CONFUSED,
     PowerId.CONSTRICTED,

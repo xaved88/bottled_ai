@@ -15,6 +15,7 @@ class PowerId(Enum):
     AFTER_IMAGE = 'after image'
     ARTIFACT = 'artifact'
     BARRICADE = 'barricade'
+    BIAS = 'bias'
     BLUR = 'blur'
     BUFFER = 'buffer'
     CHOKED = 'choked'

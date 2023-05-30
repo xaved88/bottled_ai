@@ -112,3 +112,6 @@ class CalculatorTestFixture(unittest.TestCase):
     def see_orb_type_count(self, play: PlayPath, amount: int, orb_id: OrbId):
         orbs = [o for (o, a) in play.state.orbs if o == orb_id]
         self.assertEqual(amount, len(orbs))
+
+    def see_orb_slots_count(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, play.state.orb_slots)
