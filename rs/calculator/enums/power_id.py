@@ -42,6 +42,7 @@ class PowerId(Enum):
     INTANGIBLE_PLAYER = 'intangibleplayer'
     INTANGIBLE_ENEMY = 'intangible'
     JUGGERNAUT = 'juggernaut'
+    LOCK_ON = 'lock-on'
     LOOP = 'loop'
     MACHINE_LEARNING = 'machine learning'
     MALLEABLE = 'malleable'

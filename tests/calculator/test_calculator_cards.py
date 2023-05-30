@@ -1875,3 +1875,43 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 10)
+
+    def test_bullseye(self):
+        state = self.given_state(CardId.BULLSEYE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_enemy_has_power(play, PowerId.LOCK_ON, 2)
+
+    def test_bullseye_upgraded(self):
+        state = self.given_state(CardId.BULLSEYE, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 11)
+        self.see_enemy_has_power(play, PowerId.LOCK_ON, 3)
+
+    def test_calculated_gamble(self):
+        state = self.given_state(CardId.CALCULATED_GAMBLE)
+        for i in range(5):
+            state.hand.append(get_card(CardId.WOUND))
+        for i in range(6):
+            state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_hand_count(play, 5)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_player_discard_pile_count(play, 5)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_calculated_gamble_upgraded(self):
+        state = self.given_state(CardId.CALCULATED_GAMBLE, upgrade=1)
+        for i in range(5):
+            state.hand.append(get_card(CardId.WOUND))
+        for i in range(6):
+            state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_hand_count(play, 5)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_player_discard_pile_count(play, 6)
+        self.see_player_exhaust_count(play, 0)

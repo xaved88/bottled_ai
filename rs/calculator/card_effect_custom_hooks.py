@@ -183,7 +183,7 @@ def sword_boomerang_upgraded_post_hook(state: BattleStateInterface, effect: Card
 
 
 def __sword_boomerang_post_hook(state: BattleStateInterface, hits: int):
-    state.inflict_random_target_damage(3, hits, True, 1.5, True, 1)
+    state.inflict_random_target_damage(3, hits)
 
 
 def bouncing_flask_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -232,7 +232,7 @@ def rip_and_tear_upgraded_post_hook(state: BattleStateInterface, effect: CardEff
 
 
 def __rip_and_tear_post_hook(state: BattleStateInterface, damage: int):
-    state.inflict_random_target_damage(damage, 2, True, 1.5, True, 1)
+    state.inflict_random_target_damage(damage, 2)
 
 
 def stack_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -370,3 +370,10 @@ def recursion_post_hook(state: BattleStateInterface, effect: CardEffectsInterfac
 
 def melter_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.monsters[target_index].block = 0
+
+
+def calculated_gamble_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    amount = len(state.hand)
+    for _ in range(amount):
+        state.discard_card(state.hand[0])
+    state.draw_cards(amount)

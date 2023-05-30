@@ -498,13 +498,13 @@ class BattleState(BattleStateInterface):
 
     def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True,
                                      vulnerable_modifier: float = 1.5, is_attack: bool = True,
-                                     min_hp_damage: int = 1):
+                                     min_hp_damage: int = 1, is_orbs: bool = False):
         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
         if alive_monsters == 1:
             for monster in self.monsters:
                 if monster.current_hp > 0:
                     monster.inflict_damage(self.player, base_damage, hits, blockable, vulnerable_modifier, is_attack,
-                                           min_hp_damage)
+                                           min_hp_damage, is_orbs)
         else:
             self.total_random_damage_dealt += base_damage * hits
 
@@ -555,10 +555,10 @@ class BattleState(BattleStateInterface):
             if orb == OrbId.LIGHTNING:
                 if self.player.powers.get(PowerId.ELECTRO):
                     for m in self.monsters:
-                        m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False)
+                        m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False, is_orbs=True)
                 else:
                     self.inflict_random_target_damage(base_damage=3 + focus, hits=1, vulnerable_modifier=1,
-                                                      is_attack=False)
+                                                      is_attack=False, is_orbs=True)
             elif orb == OrbId.FROST:
                 self.add_player_block(2 + focus)
             elif orb == OrbId.DARK:
@@ -576,16 +576,16 @@ class BattleState(BattleStateInterface):
                 if orb == OrbId.LIGHTNING:
                     if self.player.powers.get(PowerId.ELECTRO):
                         for m in self.monsters:
-                            m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False)
+                            m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False, is_orbs=True)
                     else:
                         self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
-                                                          is_attack=False)
+                                                          is_attack=False, is_orbs=True)
                 elif orb == OrbId.FROST:
                     self.add_player_block(5 + focus)
                 elif orb == OrbId.DARK:
                     target = find_lowest_hp_monster(self.monsters)
                     target.inflict_damage(source=self.player, base_damage=orb_value, hits=1, vulnerable_modifier=1,
-                                          is_attack=False)
+                                          is_attack=False, is_orbs=True)
                 elif orb == OrbId.PLASMA:
                     self.player.energy += 2
 

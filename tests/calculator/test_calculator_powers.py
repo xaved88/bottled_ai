@@ -818,3 +818,18 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_has_power(play, PowerId.STORM, 2)
         self.see_orb_count(play, 2)
 
+    def test_lock_on_applies_on_passive(self):
+        state = self.given_state(CardId.WOUND, orb_slots=3, orbs=[(OrbId.LIGHTNING, 1)])
+        state.monsters[0].powers[PowerId.LOCK_ON] = 2
+        play = self.when_playing_the_first_card(state)
+        state.end_turn()
+        self.see_orb_count(play, 1)
+        self.see_enemy_lost_hp(play, 4)
+
+    def test_lock_on_applies_on_evoke(self):
+        state = self.given_state(CardId.ZAP, orb_slots=1, orbs=[(OrbId.DARK, 6)])
+        state.monsters[0].powers[PowerId.LOCK_ON] = 2
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_count(play, 1)
+        self.see_enemy_lost_hp(play, 9)
+

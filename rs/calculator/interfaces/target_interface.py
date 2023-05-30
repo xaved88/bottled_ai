@@ -19,7 +19,7 @@ class TargetInterface(metaclass=abc.ABCMeta):
 
     def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool = True,
                        vulnerable_modifier: float = 1.5, is_attack: bool = True,
-                       min_hp_damage: int = 1) -> InflictDamageSummary:
+                       min_hp_damage: int = 1, is_orbs: bool = False) -> InflictDamageSummary:
         # must be implemented by children
         pass
 

@@ -11,6 +11,7 @@ DEBUFFS: List[PowerId] = [
     PowerId.DRAW_REDUCTION,
     PowerId.ENTANGLED,
     PowerId.FRAIL,
+    PowerId.LOCK_ON,
     PowerId.NO_DRAW,
     PowerId.POISON,
     PowerId.VULNERABLE,

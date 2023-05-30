@@ -535,4 +535,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 14, hits=1, pre_hooks=[melter_pre_hook])]
     if card.id == CardId.REBOOT:
         return [CardEffects(target=TargetType.SELF, post_hooks=[reboot_post_hook] if not card.upgrade else [reboot_upgraded_post_hook])]
+    if card.id == CardId.BULLSEYE:
+        return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1, applies_powers={PowerId.LOCK_ON: 2 if not card.upgrade else 3})]
+    if card.id == CardId.CALCULATED_GAMBLE:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[calculated_gamble_post_hook])]
     return [CardEffects()]

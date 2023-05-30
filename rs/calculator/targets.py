@@ -22,10 +22,12 @@ class Target(TargetInterface):
 
     def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool = True,
                        vulnerable_modifier: float = 1.5,
-                       is_attack: bool = True, min_hp_damage: int = 1) -> InflictDamageSummary:
+                       is_attack: bool = True, min_hp_damage: int = 1, is_orbs: bool = False) -> InflictDamageSummary:
         damage = base_damage
         if self.powers.get(PowerId.VULNERABLE):
             damage = math.floor(damage * vulnerable_modifier)
+        if is_orbs and self.powers.get(PowerId.LOCK_ON):
+            damage = math.floor(damage * 1.5)
 
         health_damage_dealt = 0
         trigger_malleable_block = 0
