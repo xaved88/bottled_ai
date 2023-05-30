@@ -212,6 +212,10 @@ class BattleState(BattleStateInterface):
         if self.player.powers.get(PowerId.HEATSINK) and card.type == CardType.POWER:
             self.draw_cards(self.player.powers.get(PowerId.HEATSINK))
 
+        if self.player.powers.get(PowerId.STORM) and card.type == CardType.POWER:
+            for i in range(self.player.powers.get(PowerId.STORM)):
+                self.channel_orb(OrbId.LIGHTNING)
+
         # post card play MONSTER power checks
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP) is not None:

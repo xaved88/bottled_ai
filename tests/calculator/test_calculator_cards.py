@@ -1720,3 +1720,55 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 18)
+
+    def test_storm(self):
+        state = self.given_state(CardId.STORM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.STORM, 1)
+
+    def test_meteor_strike(self):
+        state = self.given_state(CardId.METEOR_STRIKE, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 5)
+        self.see_enemy_lost_hp(play, 24)
+        self.see_orb_count(play, 3)
+
+    def test_rainbow(self):
+        state = self.given_state(CardId.RAINBOW, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.assertListEqual([(OrbId.LIGHTNING, 1), (OrbId.FROST, 1), (OrbId.DARK, 6)], play.state.orbs)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_rainbow_upgraded(self):
+        state = self.given_state(CardId.RAINBOW, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.assertListEqual([(OrbId.LIGHTNING, 1), (OrbId.FROST, 1), (OrbId.DARK, 6)], play.state.orbs)
+        self.see_player_exhaust_count(play, 0)
+
+    def test_reprogram(self):
+        state = self.given_state(CardId.REPROGRAM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FOCUS, -1)
+        self.see_player_has_power(play, PowerId.STRENGTH, 1)
+        self.see_player_has_power(play, PowerId.DEXTERITY, 1)
+
+    def test_reprogram_upgraded_with_artifact(self):
+        state = self.given_state(CardId.REPROGRAM, upgrade=1, player_powers={PowerId.ARTIFACT: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FOCUS, 0)
+        self.see_player_has_power(play, PowerId.ARTIFACT, 0)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
+        self.see_player_has_power(play, PowerId.DEXTERITY, 2)
+
+    def test_hyperbeam(self):
+        state = self.given_state(CardId.HYPERBEAM, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 26, enemy_index=0)
+        self.see_enemy_lost_hp(play, 26, enemy_index=1)
+        self.see_player_has_power(play, PowerId.FOCUS, -3)

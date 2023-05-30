@@ -471,6 +471,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.REPAIR: 7 if not card.upgrade else 10})]
     if card.id == CardId.MACHINE_LEARNING:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MACHINE_LEARNING: 1})]
+    if card.id == CardId.STORM:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STORM: 1})]
     if card.id == CardId.ELECTRODYNAMICS:
         orbs = [OrbId.LIGHTNING, OrbId.LIGHTNING]
         if card.upgrade:
@@ -505,4 +507,14 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, post_hooks=[chill_post_hook])]
     if card.id == CardId.BARRAGE:
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=0, pre_hooks=[barrage_pre_hook])]
+    if card.id == CardId.METEOR_STRIKE:
+        return [CardEffects(target=TargetType.MONSTER, damage=24 if not card.upgrade else 30, hits=1, channel_orbs=[OrbId.PLASMA, OrbId.PLASMA, OrbId.PLASMA])]
+    if card.id == CardId.RAINBOW:
+        return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING, OrbId.FROST, OrbId.DARK])]
+    if card.id == CardId.REPROGRAM:
+        amount = 1 if not card.upgrade else 2
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -amount, PowerId.STRENGTH: amount, PowerId.DEXTERITY: amount})]
+    if card.id == CardId.HYPERBEAM:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=26 if not card.upgrade else 34, hits=1),
+                CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -3})]
     return [CardEffects()]
