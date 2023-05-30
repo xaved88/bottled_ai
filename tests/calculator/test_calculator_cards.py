@@ -1809,3 +1809,42 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_drew_cards(play, 3)
         self.see_player_has_block(play, 15)
         self.see_orb_count(play, 0)
+
+    def test_creative_ai(self):
+        state = self.given_state(CardId.CREATIVE_AI)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_has_power(play, PowerId.CREATIVE_AI, 1)
+
+    def test_fusion(self):
+        state = self.given_state(CardId.FUSION, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.PLASMA)
+
+    def test_reboot(self):
+        state = self.given_state(CardId.REBOOT)
+        state.hand.append(get_card(CardId.WOUND))
+        for i in range(5):
+            state.draw_pile.append(get_card(CardId.WOUND))
+        for i in range(4):
+            state.discard_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_hand_count(play, 4)
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_draw_pile_count(play, 6)
+
+    def test_loop(self):
+        state = self.given_state(CardId.LOOP)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.LOOP, 1)
+
+    def test_loop_upgraded(self):
+        state = self.given_state(CardId.LOOP, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.LOOP, 2)

@@ -22,6 +22,7 @@ class PowerId(Enum):
     CONFUSED = 'confusion'              # Bot takes the new costs into account
     CONSTRICTED = 'constricted'
     CORPSE_EXPLOSION_POWER = 'corpse explosion'
+    CREATIVE_AI = 'creative ai'
     CURL_UP = 'curl up'
     DEXTERITY = 'dexterity'
     DOUBLE_DAMAGE = 'double damage'
@@ -41,6 +42,7 @@ class PowerId(Enum):
     INTANGIBLE_PLAYER = 'intangibleplayer'
     INTANGIBLE_ENEMY = 'intangible'
     JUGGERNAUT = 'juggernaut'
+    LOOP = 'loop'
     MACHINE_LEARNING = 'machine learning'
     MALLEABLE = 'malleable'
     MAYHEM = 'mayhem'

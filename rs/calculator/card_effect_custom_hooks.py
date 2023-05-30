@@ -336,3 +336,22 @@ def fission_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsI
     state.evoke_orbs(amount, 1)
     state.player.energy += amount
     state.draw_cards(amount)
+
+
+def reboot_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __reboot_post_hook(state, 4)
+
+
+def reboot_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                 target_index: int = -1):
+    __reboot_post_hook(state, 6)
+
+
+def __reboot_post_hook(state: BattleStateInterface, amount_to_draw: int):
+    # Shuffling into the opposite pile as what the card says to use existing functionality around reshuffling the draw pile
+    amount = len(state.hand)
+    for _ in range(amount):
+        state.discard_card(state.hand[0])
+    state.discard_pile.extend(state.draw_pile)
+    state.draw_pile.clear()
+    state.draw_cards(amount_to_draw)

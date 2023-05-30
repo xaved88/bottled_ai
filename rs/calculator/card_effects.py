@@ -473,6 +473,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MACHINE_LEARNING: 1})]
     if card.id == CardId.STORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STORM: 1})]
+    if card.id == CardId.LOOP:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.LOOP: 1 if not card.upgrade else 2})]
     if card.id == CardId.ELECTRODYNAMICS:
         orbs = [OrbId.LIGHTNING, OrbId.LIGHTNING]
         if card.upgrade:
@@ -483,12 +485,16 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 1 if not card.upgrade else 2})]
     if card.id == CardId.BIASED_COGNITION:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 4 if not card.upgrade else 5, PowerId.BIAS: 1})]
+    if card.id == CardId.CREATIVE_AI:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.CREATIVE_AI: 1})]
     if card.id == CardId.CAPACITOR:
         return [CardEffects(target=TargetType.SELF, post_hooks=[capacitor_post_hook] if not card.upgrade else [capacitor_upgraded_post_hook])]
     if card.id == CardId.FISSION:
         return [CardEffects(target=TargetType.SELF, post_hooks=[fission_post_hook] if not card.upgrade else [fission_upgraded_post_hook])]
     if card.id == CardId.ZAP:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
+    if card.id == CardId.FUSION:
+        return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.PLASMA])]
     if card.id == CardId.DUALCAST:
         return [CardEffects(target=TargetType.SELF, post_hooks=[dualcast_post_hook])]
     if card.id == CardId.BALL_LIGHTNING:
@@ -521,4 +527,6 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.HYPERBEAM:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=26 if not card.upgrade else 34, hits=1),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -3})]
+    if card.id == CardId.REBOOT:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[reboot_post_hook] if not card.upgrade else [reboot_upgraded_post_hook])]
     return [CardEffects()]

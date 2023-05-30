@@ -542,6 +542,17 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, -2)
         self.see_relic_value(play, RelicId.SUNDIAL, 0)
 
+    def test_reboot_increments_sundial(self):
+        state = self.given_state(CardId.REBOOT)
+        state.hand.append(get_card(CardId.WOUND))
+        state.relics[RelicId.SUNDIAL] = 1
+        for i in range(6):
+            state.draw_pile.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_hand_count(play, 4)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_relic_value(play, RelicId.SUNDIAL, 2)
+
     def test_cloak_clasp(self):
         state = self.given_state(CardId.BLUDGEON, relics={RelicId.CLOAK_CLASP: 1})
         for i in range(4):
