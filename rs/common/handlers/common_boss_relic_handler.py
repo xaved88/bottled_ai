@@ -39,6 +39,7 @@ class CommonBossRelicHandler(Handler):
         "mark of pain",
         "busted crown",
         "coffee dripper",
+        "nuclear battery",
     ]
 
     def __init__(self, preferred_relic_list: List[str] = None):
