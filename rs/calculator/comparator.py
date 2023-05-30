@@ -7,6 +7,7 @@ class SbcComparator:  # Abstract class, just for signature for the kiddos.
         return True
 
 
+#todo -> clean this up and move it / remove it, probably can use the common or something.
 class DefaultSbcComparator(SbcComparator):
 
     def get_values(self, state: BattleState, original: BattleState) -> dict:

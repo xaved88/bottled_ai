@@ -27,6 +27,9 @@ def most_optimal_winning_battle(best: CA, challenger: CA) -> Optional[bool]:
     if best.nunchaku_counter() != challenger.nunchaku_counter():
         return challenger.nunchaku_counter() > best.nunchaku_counter()
 
+    if best.ink_bottle_counter() != challenger.ink_bottle_counter():
+        return challenger.ink_bottle_counter() > best.ink_bottle_counter()
+
     if best.energy() != challenger.energy():
         return challenger.energy() > best.energy()
     return False
@@ -71,9 +74,25 @@ def lowest_health_monster(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.lowest_health_monster() < best.lowest_health_monster()
 
 
+# mainly only useful for lagavulin or intentional waiting
+def highest_health_monster(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.lowest_true_health_monster() == challenger.lowest_true_health_monster() \
+        else challenger.lowest_true_health_monster() > best.lowest_true_health_monster()
+
+
+def lowest_health_edge_monster(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.lowest_health_edge_monster() == challenger.lowest_health_edge_monster() \
+        else challenger.lowest_health_edge_monster() < best.lowest_health_edge_monster()
+
+
 def lowest_total_monster_health(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.total_monster_health() == challenger.total_monster_health() \
         else challenger.total_monster_health() < best.total_monster_health()
+
+
+def lowest_barricaded_block(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.barricaded_block() == challenger.barricaded_block() \
+        else challenger.barricaded_block() < best.barricaded_block()
 
 
 def most_draw_pay_early(best: CA, challenger: CA) -> Optional[bool]:
@@ -85,5 +104,51 @@ def most_draw_pay(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.draw_pay() == challenger.draw_pay() else challenger.draw_pay() > best.draw_pay()
 
 
+def most_good_player_powers(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.player_powers_good() == challenger.player_powers_good() \
+        else challenger.player_powers_good() > best.player_powers_good()
+
+
+def most_less_good_player_powers(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.player_powers_less_good() == challenger.player_powers_less_good() \
+        else challenger.player_powers_less_good() > best.player_powers_less_good()
+
+
+def least_bad_player_powers(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.player_powers_bad() == challenger.player_powers_bad() \
+        else challenger.player_powers_bad() < best.player_powers_bad()
+
+
+def most_bad_cards_exhausted(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.bad_cards_exhausted() == challenger.bad_cards_exhausted() \
+        else challenger.bad_cards_exhausted() > best.bad_cards_exhausted()
+
+
 def most_energy(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.energy() == challenger.energy() else challenger.energy() > best.energy()
+
+
+def least_incoming_damage(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.incoming_damage() == challenger.incoming_damage() \
+        else challenger.incoming_damage() < best.incoming_damage()
+
+
+def most_ethereal_cards_saved_for_later(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.saved_for_later() == challenger.saved_for_later() \
+        else challenger.saved_for_later() > best.saved_for_later()
+
+
+def least_awkward_shivs(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.awkward_shivs() == challenger.awkward_shivs() \
+        else challenger.awkward_shivs() < best.awkward_shivs()
+
+
+def least_enemy_artifacts(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.enemy_artifacts() == challenger.enemy_artifacts() \
+        else challenger.enemy_artifacts() < best.enemy_artifacts()
+
+
+def least_nob_adjusted_scaling_damage(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.nob_adjusted_scaling_damage() == challenger.nob_adjusted_scaling_damage() \
+        else challenger.nob_adjusted_scaling_damage() < best.nob_adjusted_scaling_damage()
+
