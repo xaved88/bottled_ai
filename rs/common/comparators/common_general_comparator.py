@@ -1,6 +1,6 @@
-from rs.calculator.enums.card_id import CardId
-from rs.calculator.comparator import SbcComparator
 from rs.calculator.battle_state import BattleState
+from rs.calculator.comparator import SbcComparator
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 
