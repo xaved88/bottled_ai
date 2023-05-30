@@ -313,6 +313,9 @@ class BattleState(BattleStateInterface):
         if RelicId.ORICHALCUM in self.relics and self.player.block == 0:
             self.add_player_block(6)
 
+        if RelicId.FROZEN_CORE in self.relics and len(self.orbs) < self.orb_slots:
+            self.channel_orb(OrbId.FROST)
+
         self.trigger_orbs_end_of_turn()
 
         if RelicId.CLOAK_CLASP in self.relics:

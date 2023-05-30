@@ -1,6 +1,7 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.play_path import PlayPath
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
@@ -549,6 +550,20 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         state.end_turn()
         self.see_player_has_block(play, 5)
+
+    def test_frozen_core(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=2, orbs=[(OrbId.LIGHTNING, 1)])
+        play = self.when_playing_the_first_card(state)
+        state.end_turn()
+        self.see_orb_count(play, 2)
+        self.assertEqual(OrbId.FROST, play.state.orbs[1][0])
+
+    def test_frozen_core_not_enough_slots(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=1, orbs=[(OrbId.LIGHTNING, 1)])
+        play = self.when_playing_the_first_card(state)
+        state.end_turn()
+        self.see_orb_count(play, 1)
+        self.assertEqual(OrbId.LIGHTNING, play.state.orbs[0][0])
 
     # HELPER METHODS
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):

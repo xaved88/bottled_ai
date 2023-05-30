@@ -52,14 +52,17 @@ class RelicId(Enum):
     DREAM_CATCHER = 'dream catcher'                 # N/A
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
     EMPTY_CAGE = 'empty cage'                       # N/A
+    EMOTION_CHIP = 'emotion chip'                   # N/A
     ETERNAL_FEATHER = 'eternal feather'             # N/A
     FACE_OF_CLERIC = 'face of cleric'               # N/A
     FOSSILIZED_HELIX = 'fossilized helix'
+    FROZEN_CORE = 'frozen core'
     FROZEN_EGG = 'frozen egg'                       # N/A
     FUSION_HAMMER = 'fusion hammer'                 # N/A
     GAMBLING_CHIP = 'gambling chip'                 # Handled outside of calculator by a Discard Handler
     GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
+    GOLD_PLATED_CABLES = 'gold-plated cables'       # N/A
     GOLDEN_IDOL = 'golden idol'                     # N/A
     GREMLIN_HORN = 'gremlin horn'
     GREMLIN_VISAGE = 'gremlin visage'               # N/A
@@ -71,6 +74,7 @@ class RelicId(Enum):
     ICE_CREAM = 'ice cream'
     INCENSE_BURNER = 'incense burner'               # We know about Intangible
     INK_BOTTLE = 'ink bottle'
+    INSERTER = 'inserter'                           # N/A (triggers at start of turn)
     JUZU_BRACELET = 'juzu bracelet'                 # N/A
     KUNAI = 'kunai'
     LANTERN = 'lantern'                             # N/A
