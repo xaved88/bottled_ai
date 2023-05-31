@@ -1,11 +1,11 @@
 from rs.ai.pwnder_my_orbs.config import CARD_REMOVAL_PRIORITY_LIST
+from rs.ai.pwnder_my_orbs.handlers.battle_handler import BattleHandler
 from rs.ai.pwnder_my_orbs.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.pwnder_my_orbs.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.pwnder_my_orbs.handlers.event_handler import EventHandler
 from rs.ai.pwnder_my_orbs.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.pwnder_my_orbs.handlers.upgrade_handler import UpgradeHandler
 from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
-from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
@@ -22,7 +22,7 @@ PWNDER_MY_ORBS: AiStrategy = AiStrategy(
     character=Character.DEFECT,
     handlers=[
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
-        CommonBattleHandler(),
+        BattleHandler(),
         BossRelicHandler(),
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
