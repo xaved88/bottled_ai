@@ -344,7 +344,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.CALCULATED_GAMBLE:
-        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True if not upgrade else False)
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL,
+                    exhausts=True if not upgrade else False)
 
     # defect
     if card_id == CardId.STRIKE_B:
@@ -426,7 +427,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.CHILL:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.RAINBOW:
-        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True if not upgrade else False)
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL,
+                    exhausts=True if not upgrade else False)
     if card_id == CardId.REPROGRAM:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.RECURSION:
@@ -453,3 +455,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.COMPILE_DRIVER:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.COMPILE_DRIVER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.ECHO_FORM:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER,
+                    ethereal=True if not upgrade else False)

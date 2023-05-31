@@ -90,6 +90,7 @@ class CardId(Enum):
     DOUBLE_ENERGY = 'double energy'
     DOUBT = 'doubt'
     DUALCAST = 'dualcast'
+    ECHO_FORM = 'echo form'
     ELECTRODYNAMICS = 'electrodynamics'
     ENDLESS_AGONY = 'endless agony'  # Note: the special bits of this card aren't relevant for our current calculator.
     ENLIGHTENMENT = 'enlightenment'

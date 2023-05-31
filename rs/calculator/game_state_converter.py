@@ -56,7 +56,14 @@ def make_power_id(power_id: str) -> PowerId:
 
 
 def make_powers(powers: List[dict]) -> Powers:
-    return {make_power_id(power['id'].lower()): (power['amount']) for power in powers}
+    out = {make_power_id(power['id'].lower()): (power['amount']) for power in powers}
+
+    # custom counters
+    echo_form_charge = [p['misc'] for p in powers if p['id'].lower() == "echo form" and 'misc' in p and p['misc'] > 0]
+    if len(echo_form_charge):
+        out[PowerId.INTERNAL_ECHO_FORM_READY] = echo_form_charge[0]
+
+    return out
 
 
 def create_battle_state(game_state: GameState) -> BattleState:

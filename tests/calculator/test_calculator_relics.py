@@ -576,6 +576,3 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_orb_count(play, 1)
         self.assertEqual(OrbId.LIGHTNING, play.state.orbs[0][0])
 
-    # HELPER METHODS
-    def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
-        self.assertEqual(value, play.state.relics.get(relic_id))

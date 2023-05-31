@@ -41,6 +41,7 @@ class GeneralComparator(CommonGeneralComparator):
 
     def __init__(self, comparisons: List[Comparison] = None):
         powers_we_love = [
+            PowerId.ECHO_FORM,
             PowerId.ELECTRO,
         ]
         config = ComparatorAssessmentConfig(powers_we_like, powers_we_like_less, powers_we_dislike, powers_we_love)

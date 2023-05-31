@@ -46,14 +46,7 @@ class BattleState(BattleStateInterface):
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
 
-        # Prep time warp
-        time_warp_full = False
-        for idx, monster in enumerate(self.monsters):
-            if monster.powers.get(PowerId.TIME_WARP, 0) >= 12:
-                time_warp_full = True
-
-        # Turn over conditions
-        if self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 or time_warp_full or self.player.current_hp <= 0:
+        if self.is_turn_forced_to_be_over():
             return plays
 
         for card_idx, card in enumerate(self.hand):
@@ -84,6 +77,17 @@ class BattleState(BattleStateInterface):
 
         # play the card
         self.player.energy -= card.cost
+        self.resolve_card_play(card, target_index)
+        if self.player.powers.get(PowerId.INTERNAL_ECHO_FORM_READY):
+            if self.is_turn_forced_to_be_over():
+                return
+            if target_index > -1 and self.monsters[target_index].is_gone:
+                return
+            # todo -> battle is over
+            self.player.powers[PowerId.INTERNAL_ECHO_FORM_READY] -= 1
+            self.resolve_card_play(card, target_index)
+
+    def resolve_card_play(self, card: CardInterface, target_index: int):
         effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
 
         # pain
@@ -555,7 +559,8 @@ class BattleState(BattleStateInterface):
             if orb == OrbId.LIGHTNING:
                 if self.player.powers.get(PowerId.ELECTRO):
                     for m in self.monsters:
-                        m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False, is_orbs=True)
+                        m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False,
+                                         is_orbs=True)
                 else:
                     self.inflict_random_target_damage(base_damage=3 + focus, hits=1, vulnerable_modifier=1,
                                                       is_attack=False, is_orbs=True)
@@ -576,7 +581,8 @@ class BattleState(BattleStateInterface):
                 if orb == OrbId.LIGHTNING:
                     if self.player.powers.get(PowerId.ELECTRO):
                         for m in self.monsters:
-                            m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False, is_orbs=True)
+                            m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False,
+                                             is_orbs=True)
                     else:
                         self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
                                                           is_attack=False, is_orbs=True)
@@ -598,6 +604,17 @@ class BattleState(BattleStateInterface):
         # Todo -> this order will break Darkness+ because the passive triggers after channel, before evoke...
         while len(self.orbs) > self.orb_slots:
             self.evoke_orbs()
+
+    def is_turn_forced_to_be_over(self) -> bool:
+        if len([True for m in self.monsters if m.current_hp > 0]) == 0:
+            return True  # all monsters are dead
+
+        # Prep time warp
+        time_warp_full = False
+        for idx, monster in enumerate(self.monsters):
+            if monster.powers.get(PowerId.TIME_WARP, 0) >= 12:
+                time_warp_full = True
+        return self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 or time_warp_full or self.player.current_hp <= 0
 
 
 def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],

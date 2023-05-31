@@ -531,7 +531,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state = self.given_state(CardId.NEUTRALIZE)
         state.monsters[0].powers[PowerId.SHIFTING] = 1
         state.monsters[0].powers[PowerId.STRENGTH] = -3
-        state.monsters[0].damage = 20   # Strength-unadjusted damage
+        state.monsters[0].damage = 20  # Strength-unadjusted damage
         state.monsters[0].hits = 1
         play = self.when_playing_the_first_card(state)
         play.end_turn()
@@ -686,7 +686,9 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_enemy_hp_is(play, 0, enemy_index=0)
-        self.see_enemy_lost_hp(play, state.monsters[0].max_hp * state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER], enemy_index=1)
+        self.see_enemy_lost_hp(play,
+                               state.monsters[0].max_hp * state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER],
+                               enemy_index=1)
 
     def test_wraith_form_power_decreases_dexterity_on_turn_end(self):
         state = self.given_state(CardId.WOUND, player_powers={PowerId.WRAITH_FORM_POWER: 1})
@@ -833,3 +835,77 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_orb_count(play, 1)
         self.see_enemy_lost_hp(play, 9)
 
+    def test_echo_form_duplicates_card_play_when_ready(self):
+        state = self.given_state(CardId.ZAP, orb_slots=3,
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_count(play, 2)
+
+    def test_echo_form_is_blocked_by_time_warp(self):
+        state = self.given_state(CardId.ZAP, orb_slots=3,
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
+        state.monsters[0].powers[PowerId.TIME_WARP] = 11
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_count(play, 1)
+        self.see_enemy_has_power(play, PowerId.TIME_WARP, 12)
+
+    def test_echo_form_is_blocked_by_choker(self):
+        state = self.given_state(CardId.ZAP, orb_slots=3, relics={RelicId.VELVET_CHOKER: 5},
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
+        state.monsters[0].powers[PowerId.TIME_WARP] = 11
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_count(play, 1)
+
+    def test_echo_form_duplication_applies_to_counters(self):
+        relics = {RelicId.INK_BOTTLE: 0, RelicId.PEN_NIB: 0, RelicId.LETTER_OPENER: 0}
+        state = self.given_state(CardId.ZAP, orb_slots=3, relics=relics,
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_count(play, 2)
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.PEN_NIB, 0)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 2)
+        self.see_relic_value(play, RelicId.LETTER_OPENER, 2)
+
+    def test_echo_form_duplication_does_not_double_dip_on_vigor(self):
+        state = self.given_state(CardId.STRIKE_R, orb_slots=3,
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1,
+                                                PowerId.VIGOR: 8})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6 + 8 + 6)
+        self.see_player_does_not_have_power(play, PowerId.VIGOR)
+
+    def test_echo_form_duplication_stops_when_enemy_is_dead(self):
+        state = self.given_state(CardId.STRIKE_R, orb_slots=3, relics={RelicId.INK_BOTTLE: 0},
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
+        state.monsters[0].current_hp = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 1)
+        self.see_player_has_power(play, PowerId.INTERNAL_ECHO_FORM_READY, 1)
+
+    def test_echo_form_duplication_stops_when_battle_is_over(self):
+        state = self.given_state(CardId.SWEEPING_BEAM, orb_slots=3, relics={RelicId.INK_BOTTLE: 0}, targets=2,
+                                 player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
+        state.monsters[0].current_hp = 1
+        state.monsters[1].current_hp = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 1)
+        self.see_player_has_power(play, PowerId.INTERNAL_ECHO_FORM_READY, 1)
+
+    def test_echo_form_multiple_stacks_with_multiple_cards(self):
+        state = self.given_state(CardId.ZAP, orb_slots=5,
+                                 player_powers={PowerId.ECHO_FORM: 2, PowerId.INTERNAL_ECHO_FORM_READY: 2})
+        state.hand.append(get_card(CardId.ZAP))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_orb_count(play, 4)
+        self.see_player_spent_energy(play, 2)
+
+    def test_echo_form_multiple_stacks_with_single_card(self):
+        state = self.given_state(CardId.ZAP, orb_slots=5,
+                                 player_powers={PowerId.ECHO_FORM: 2, PowerId.INTERNAL_ECHO_FORM_READY: 2})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_orb_count(play, 2)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.INTERNAL_ECHO_FORM_READY, 1)

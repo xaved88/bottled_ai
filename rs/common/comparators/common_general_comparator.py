@@ -75,7 +75,8 @@ def move_in_comparison_list(comparisons: List[Comparison], comparison_to_move: C
 
 powers_we_like_less: List[PowerId] = [
     PowerId.DEXTERITY,
-    PowerId.STRENGTH
+    PowerId.STRENGTH,
+    PowerId.ENERGIZED,
 ]
 
 powers_we_dislike: List[PowerId] = [

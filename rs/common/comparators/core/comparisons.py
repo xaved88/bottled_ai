@@ -110,8 +110,8 @@ def most_good_player_powers(best: CA, challenger: CA) -> Optional[bool]:
 
 
 def most_great_player_powers(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.player_powers_good() == challenger.player_powers_good() \
-        else challenger.player_powers_good() > best.player_powers_good()
+    return None if best.player_powers_great() == challenger.player_powers_great() \
+        else challenger.player_powers_great() > best.player_powers_great()
 
 
 def most_less_good_player_powers(best: CA, challenger: CA) -> Optional[bool]:

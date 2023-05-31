@@ -5,6 +5,7 @@ from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.play_path import PlayPath, get_paths
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
@@ -115,3 +116,6 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def see_orb_slots_count(self, play: PlayPath, amount: int):
         self.assertEqual(amount, play.state.orb_slots)
+
+    def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
+        self.assertEqual(value, play.state.relics.get(relic_id))
