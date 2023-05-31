@@ -22,7 +22,7 @@ class BattleHandler(Handler):
         return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
 
     def select_comparator(self, state: GameState) -> ComparatorInterface:
-        big_fight = state.floor() == 33 or state.floor() == 50
+        big_fight = state.floor() == 16 or state.floor() == 33 or state.floor() == 50
 
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
 

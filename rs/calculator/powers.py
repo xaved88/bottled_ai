@@ -16,7 +16,7 @@ DEBUFFS: List[PowerId] = [
     PowerId.POISON,
     PowerId.VULNERABLE,
     PowerId.WEAKENED,
-    PowerId.WRAITH_FORM_POWER
+    PowerId.WRAITH_FORM_POWER,
 ]
 
 DEBUFFS_WHEN_NEGATIVE: List[PowerId] = [

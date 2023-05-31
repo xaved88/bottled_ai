@@ -31,7 +31,7 @@ class PowerId(Enum):
     DRAW_REDUCTION = 'draw reduction'  # It affects a future turn though, so we mostly don't do anything with it.
     ECHO_FORM = 'echo form'
     ELECTRO = 'electro'
-    ENERGIZED = 'energized'  # It affects a future turn though, so we mostly don't do anything with it.
+    ENERGIZED = 'energizedblue'  # It affects a future turn though, so we mostly don't do anything with it.
     ENTANGLED = 'entangled'
     ENVENOM = 'envenom'
     FADING = 'fading'  # N/A
@@ -45,7 +45,7 @@ class PowerId(Enum):
     INTANGIBLE_ENEMY = 'intangible'
     INTERNAL_ECHO_FORM_READY = 'echo form ready'  # internal use only, for marking whether echo form can be used
     JUGGERNAUT = 'juggernaut'
-    LOCK_ON = 'lock-on'
+    LOCK_ON = 'lockon'
     LOOP = 'loop'
     MACHINE_LEARNING = 'machine learning'
     MALLEABLE = 'malleable'

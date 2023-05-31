@@ -1,8 +1,12 @@
+from typing import List
+
 from rs.ai.pwnder_my_orbs.config import CARD_REMOVAL_PRIORITY_LIST
 from rs.ai.pwnder_my_orbs.handlers.battle_handler import BattleHandler
 from rs.ai.pwnder_my_orbs.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.pwnder_my_orbs.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.pwnder_my_orbs.handlers.event_handler import EventHandler
+from rs.ai.pwnder_my_orbs.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, \
+    PotionsEliteHandler
 from rs.ai.pwnder_my_orbs.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.pwnder_my_orbs.handlers.upgrade_handler import UpgradeHandler
 from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
@@ -17,10 +21,17 @@ from rs.common.handlers.common_shop_entrance_handler import CommonShopEntranceHa
 from rs.common.handlers.common_transform_handler import CommonTransformHandler
 from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
+from rs.machine.handlers.handler import Handler
+
+orb_pondering_battle_potion_handlers: List[Handler] = [
+    PotionsBossHandler(),
+    PotionsEventFightHandler(),
+    PotionsEliteHandler(),
+]
 
 PWNDER_MY_ORBS: AiStrategy = AiStrategy(
     character=Character.DEFECT,
-    handlers=[
+    handlers=orb_pondering_battle_potion_handlers + [
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
         BattleHandler(),
         BossRelicHandler(),

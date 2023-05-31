@@ -83,6 +83,7 @@ powers_we_dislike: List[PowerId] = [
     PowerId.FRAIL,
     PowerId.VULNERABLE,
     PowerId.WEAKENED,
+    PowerId.BIAS,
 ]
 
 

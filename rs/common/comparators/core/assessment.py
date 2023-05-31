@@ -65,6 +65,11 @@ class ComparatorAssessment:
         0 if self.battle_won() else sum(self.monsters_vulnerable_hp()) -
                                     self.state.total_random_damage_dealt - self.state.total_random_poison_added)
 
+    def total_monster_health_percent(self) -> float:
+        return self.__get_value('total_monster_health_percent', lambda: 0 if self.battle_won()
+        else float(sum([m.current_hp for m in self.state.monsters])) / float(
+            sum([m.max_hp for m in self.state.monsters])))
+
     def draw_free_early(self) -> int:
         return self.__get_value('dfe', lambda: len([True for c in self.state.hand if c.id == CardId.DRAW_FREE_EARLY]))
 
@@ -158,3 +163,6 @@ class ComparatorAssessment:
 
     def channeled_orb_count(self) -> int:
         return self.__get_value('orb_count', lambda: len(self.state.orbs))
+
+    def player_bias(self) -> int:
+        return self.__get_value('player_bias', lambda: self.state.player.powers.get(PowerId.BIAS, 0))
