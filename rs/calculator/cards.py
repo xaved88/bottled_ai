@@ -451,3 +451,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.BULLSEYE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.COMPILE_DRIVER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)

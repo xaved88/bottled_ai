@@ -1710,7 +1710,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_orb_count(play, 1)
 
     def test_consume_removes_last_orb(self):
-        state = self.given_state(CardId.CONSUME, orbs=[(OrbId.LIGHTNING, 1), (OrbId.FROST, 1), (OrbId.DARK, 1)], orb_slots=3)
+        state = self.given_state(CardId.CONSUME, orbs=[(OrbId.LIGHTNING, 1), (OrbId.FROST, 1), (OrbId.DARK, 1)],
+                                 orb_slots=3)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
         self.see_orb_slots_count(play, 2)
@@ -1737,7 +1738,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 4)
 
     def test_barrage_multiple_orbs(self):
-        state = self.given_state(CardId.BARRAGE, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)], orb_slots=3, upgrade=1)
+        state = self.given_state(CardId.BARRAGE, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)],
+                                 orb_slots=3, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 18)
@@ -1795,7 +1797,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_power(play, PowerId.FOCUS, -3)
 
     def test_fission(self):
-        state = self.given_state(CardId.FISSION, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)], orb_slots=3)
+        state = self.given_state(CardId.FISSION, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)],
+                                 orb_slots=3)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, -3)
         self.see_player_drew_cards(play, 3)
@@ -1803,7 +1806,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_orb_count(play, 0)
 
     def test_fission_upgraded(self):
-        state = self.given_state(CardId.FISSION, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)], orb_slots=3, upgrade=1)
+        state = self.given_state(CardId.FISSION, orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.FROST, 1)],
+                                 orb_slots=3, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, -3)
         self.see_player_drew_cards(play, 3)
@@ -1915,3 +1919,33 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_draw_pile_count(play, 1)
         self.see_player_discard_pile_count(play, 6)
         self.see_player_exhaust_count(play, 0)
+
+    def test_compile_driver_four_unique_orbs(self):
+        state = self.given_state(CardId.COMPILE_DRIVER, orb_slots=3,
+                                 orbs=[(OrbId.LIGHTNING, 1), (OrbId.FROST, 1), (OrbId.DARK, 1), (OrbId.PLASMA, 1)])
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 4)
+        self.see_enemy_lost_hp(play, 7)
+
+    def test_compile_driver_with_similar_orbs(self):
+        state = self.given_state(CardId.COMPILE_DRIVER, orb_slots=3,
+                                 orbs=[(OrbId.FROST, 1), (OrbId.FROST, 1), (OrbId.DARK, 1), (OrbId.DARK, 1)])
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 2)
+        self.see_enemy_lost_hp(play, 7)
+
+    def test_compile_driver_with_no_orbs(self):
+        state = self.given_state(CardId.COMPILE_DRIVER)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 0)
+        self.see_enemy_lost_hp(play, 7)
+
+    def test_compile_driver_upgraded(self):
+        state = self.given_state(CardId.COMPILE_DRIVER, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 0)
+        self.see_enemy_lost_hp(play, 10)

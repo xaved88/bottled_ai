@@ -60,6 +60,7 @@ class CardId(Enum):
     CLUMSY = 'clumsy'
     COOLHEADED = 'coolheaded'
     COLD_SNAP = 'cold snap'
+    COMPILE_DRIVER = 'compile driver'
     CONCENTRATE = 'concentrate'
     CONSUME = 'consume'
     CORE_SURGE = 'core surge'

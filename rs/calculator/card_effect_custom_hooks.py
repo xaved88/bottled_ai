@@ -343,7 +343,7 @@ def reboot_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, 
 
 
 def reboot_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
-                                 target_index: int = -1):
+                              target_index: int = -1):
     __reboot_post_hook(state, 6)
 
 
@@ -376,4 +376,12 @@ def calculated_gamble_post_hook(state: BattleStateInterface, effect: CardEffects
     amount = len(state.hand)
     for _ in range(amount):
         state.discard_card(state.hand[0])
+    state.draw_cards(amount)
+
+
+def compile_driver_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    unique_orbs = set()
+    for (orb_id, v) in state.orbs:
+        unique_orbs.add(orb_id)
+    amount = len(unique_orbs)
     state.draw_cards(amount)

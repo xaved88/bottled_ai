@@ -484,13 +484,16 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.DEFRAGMENT:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 1 if not card.upgrade else 2})]
     if card.id == CardId.BIASED_COGNITION:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 4 if not card.upgrade else 5, PowerId.BIAS: 1})]
+        return [CardEffects(target=TargetType.SELF,
+                            applies_powers={PowerId.FOCUS: 4 if not card.upgrade else 5, PowerId.BIAS: 1})]
     if card.id == CardId.CREATIVE_AI:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.CREATIVE_AI: 1})]
     if card.id == CardId.CAPACITOR:
-        return [CardEffects(target=TargetType.SELF, post_hooks=[capacitor_post_hook] if not card.upgrade else [capacitor_upgraded_post_hook])]
+        return [CardEffects(target=TargetType.SELF,
+                            post_hooks=[capacitor_post_hook] if not card.upgrade else [capacitor_upgraded_post_hook])]
     if card.id == CardId.FISSION:
-        return [CardEffects(target=TargetType.SELF, post_hooks=[fission_post_hook] if not card.upgrade else [fission_upgraded_post_hook])]
+        return [CardEffects(target=TargetType.SELF,
+                            post_hooks=[fission_post_hook] if not card.upgrade else [fission_upgraded_post_hook])]
     if card.id == CardId.ZAP:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING])]
     if card.id == CardId.FUSION:
@@ -512,31 +515,42 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(block=7 if not card.upgrade else 10, target=TargetType.SELF,
                             channel_orbs=[OrbId.FROST, OrbId.FROST])]
     if card.id == CardId.CONSUME:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 2 if not card.upgrade else 3}, post_hooks=[consume_post_hook])]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: 2 if not card.upgrade else 3},
+                            post_hooks=[consume_post_hook])]
     if card.id == CardId.CHILL:
         return [CardEffects(target=TargetType.SELF, post_hooks=[chill_post_hook])]
     if card.id == CardId.RECURSION:
         return [CardEffects(target=TargetType.SELF, post_hooks=[recursion_post_hook])]
     if card.id == CardId.BARRAGE:
-        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=0, pre_hooks=[barrage_pre_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=0,
+                            pre_hooks=[barrage_pre_hook])]
     if card.id == CardId.METEOR_STRIKE:
-        return [CardEffects(target=TargetType.MONSTER, damage=24 if not card.upgrade else 30, hits=1, channel_orbs=[OrbId.PLASMA, OrbId.PLASMA, OrbId.PLASMA])]
+        return [CardEffects(target=TargetType.MONSTER, damage=24 if not card.upgrade else 30, hits=1,
+                            channel_orbs=[OrbId.PLASMA, OrbId.PLASMA, OrbId.PLASMA])]
     if card.id == CardId.RAINBOW:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING, OrbId.FROST, OrbId.DARK])]
     if card.id == CardId.REPROGRAM:
         amount = 1 if not card.upgrade else 2
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -amount, PowerId.STRENGTH: amount, PowerId.DEXTERITY: amount})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -amount, PowerId.STRENGTH: amount,
+                                                                    PowerId.DEXTERITY: amount})]
     if card.id == CardId.HYPERBEAM:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=26 if not card.upgrade else 34, hits=1),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.FOCUS: -3})]
     if card.id == CardId.SUNDER:
-        return [CardEffects(target=TargetType.MONSTER, damage=24 if not card.upgrade else 32, hits=1, post_hooks=[sunder_post_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=24 if not card.upgrade else 32, hits=1,
+                            post_hooks=[sunder_post_hook])]
     if card.id == CardId.MELTER:
-        return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 14, hits=1, pre_hooks=[melter_pre_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 14, hits=1,
+                            pre_hooks=[melter_pre_hook])]
     if card.id == CardId.REBOOT:
-        return [CardEffects(target=TargetType.SELF, post_hooks=[reboot_post_hook] if not card.upgrade else [reboot_upgraded_post_hook])]
+        return [CardEffects(target=TargetType.SELF,
+                            post_hooks=[reboot_post_hook] if not card.upgrade else [reboot_upgraded_post_hook])]
     if card.id == CardId.BULLSEYE:
-        return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1, applies_powers={PowerId.LOCK_ON: 2 if not card.upgrade else 3})]
+        return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1,
+                            applies_powers={PowerId.LOCK_ON: 2 if not card.upgrade else 3})]
     if card.id == CardId.CALCULATED_GAMBLE:
         return [CardEffects(target=TargetType.SELF, post_hooks=[calculated_gamble_post_hook])]
+    if card.id == CardId.COMPILE_DRIVER:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
+                            post_hooks=[compile_driver_post_hook])]
     return [CardEffects()]
