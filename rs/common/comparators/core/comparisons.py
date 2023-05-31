@@ -109,6 +109,11 @@ def most_good_player_powers(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.player_powers_good() > best.player_powers_good()
 
 
+def most_great_player_powers(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.player_powers_good() == challenger.player_powers_good() \
+        else challenger.player_powers_good() > best.player_powers_good()
+
+
 def most_less_good_player_powers(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.player_powers_less_good() == challenger.player_powers_less_good() \
         else challenger.player_powers_less_good() > best.player_powers_less_good()
@@ -152,3 +157,12 @@ def least_nob_adjusted_scaling_damage(best: CA, challenger: CA) -> Optional[bool
     return None if best.nob_adjusted_scaling_damage() == challenger.nob_adjusted_scaling_damage() \
         else challenger.nob_adjusted_scaling_damage() < best.nob_adjusted_scaling_damage()
 
+
+def most_orb_slots(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.orb_slot_count() == challenger.orb_slot_count() \
+        else challenger.orb_slot_count() > best.orb_slot_count()
+
+
+def most_channeled_orbs(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.channeled_orb_count() == challenger.channeled_orb_count() \
+        else challenger.channeled_orb_count() > best.channeled_orb_count()

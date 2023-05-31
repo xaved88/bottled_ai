@@ -31,6 +31,7 @@ priorities = [
         ('streamline', 1),
         # ('ftl', 1),
         ('sweeping beam', 1),
+        ('bullseye', 1),
         ('compile driver', 2),
     ], 5),
     # frost orbs

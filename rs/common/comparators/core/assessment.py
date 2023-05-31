@@ -12,7 +12,8 @@ T = TypeVar('T')
 
 class ComparatorAssessmentConfig:
     def __init__(self, powers_we_like: List[PowerId], powers_we_like_less: List[PowerId],
-                 powers_we_dislike: List[PowerId]):
+                 powers_we_dislike: List[PowerId], powers_we_love: List[PowerId] = None):
+        self.powers_we_love: List[PowerId] = [] if powers_we_love is None else powers_we_love
         self.powers_we_like: List[PowerId] = powers_we_like
         self.powers_we_like_less: List[PowerId] = powers_we_like_less
         self.powers_we_dislike: List[PowerId] = powers_we_dislike
@@ -104,6 +105,10 @@ class ComparatorAssessment:
     def ink_bottle_counter(self) -> int:
         return self.__get_value('ink_bottle_counter', lambda: self.state.player.relics.get(RelicId.INK_BOTTLE, -1))
 
+    def player_powers_great(self) -> int:
+        return self.__get_value('player_powers_great',
+                                lambda: get_power_count(self.state.player.powers, self.config.powers_we_love))
+
     def player_powers_good(self) -> int:
         return self.__get_value('player_powers_good',
                                 lambda: get_power_count(self.state.player.powers, self.config.powers_we_like))
@@ -146,4 +151,10 @@ class ComparatorAssessment:
                                  m.powers.get(PowerId.ANGER_NOB, 0)])  # Probably going too high!!
         gremlin_nob_hp = sum([m.current_hp for m in self.state.monsters if m.powers.get(PowerId.ANGER_NOB, 0)])
         return self.original.player.current_hp - self.state.player.current_hp + (
-                    int(gremlin_nob_hp / 15) * anger_strength_up)
+                int(gremlin_nob_hp / 15) * anger_strength_up)
+
+    def orb_slot_count(self) -> int:
+        return self.__get_value('orb_slots', lambda: self.state.orb_slots)
+
+    def channeled_orb_count(self) -> int:
+        return self.__get_value('orb_count', lambda: len(self.state.orbs))
