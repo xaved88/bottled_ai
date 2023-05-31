@@ -23,6 +23,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'charge battery',
             'hologram',
             'dualcast',
+            'bullseye',
             'core surge',
             'skim',
             'streamline',

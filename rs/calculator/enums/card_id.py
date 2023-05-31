@@ -43,7 +43,7 @@ class CardId(Enum):
     BOUNCING_FLASK = 'bouncing flask'
     BUFFER = 'buffer'
     BULLET_TIME = 'bullet time'
-    BULLSEYE = 'bullseye'
+    BULLSEYE = 'lockon'
     BURN = 'burn'
     CALCULATED_GAMBLE = 'calculated gamble'
     CALTROPS = 'caltrops'
