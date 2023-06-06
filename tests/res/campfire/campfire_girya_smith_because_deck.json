@@ -29,11 +29,11 @@
     "seed": 3954278398241337568,
     "deck": [
         {
-        "exhausts": false,
-        "cost": 1,
-        "name": "Accuracy",
-        "id": "Accuracy",
-        "type": "POWER",
+        "exhausts": true,
+        "cost": 2,
+        "name": "Apotheosis",
+        "id": "Apotheosis",
+        "type": "SKILL",
         "ethereal": false,
         "uuid": "a0925693-9274-4404-b8a4-d84c493dc006",
         "upgrades": 0,

@@ -1,8 +1,8 @@
-from ai.shivs_and_giggles.sg_test_handler_fixture import SgTestHandlerFixture
+from common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 
 
-class CampfireHandlerTestCase(SgTestHandlerFixture):
+class CampfireHandlerTestCase(CoTestHandlerFixture):
     handler = CommonCampfireHandler
 
     def test_rest(self):

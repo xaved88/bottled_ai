@@ -6,6 +6,7 @@ CARD_REMOVAL_PRIORITY_LIST = [
 ]
 
 HIGH_PRIORITY_UPGRADES = [
+    'Apotheosis',
     'Neutralize',
     'Accuracy',
 ]
