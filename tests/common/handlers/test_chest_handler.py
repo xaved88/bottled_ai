@@ -1,8 +1,8 @@
-from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
+from common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 
 
-class ChestHandlerTestCase(RsTestHandlerFixture):
+class ChestHandlerTestCase(CoTestHandlerFixture):
     handler = CommonChestHandler
 
     def test_normal_chest_open(self):

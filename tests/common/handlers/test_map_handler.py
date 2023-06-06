@@ -1,8 +1,8 @@
-from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
+from common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_map_handler import CommonMapHandler
 
 
-class MapHandlerTestCase(RsTestHandlerFixture):
+class MapHandlerTestCase(CoTestHandlerFixture):
     handler = CommonMapHandler
 
     def test_no_errors_on_basic(self):
