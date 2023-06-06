@@ -15,6 +15,7 @@ default_preferences = [
     "cursed key",
     "fusion hammer",
     "snecko eye",
+    "mark of pain",
     "busted crown",
     "coffee dripper",
     "slaver\u0027s collar",
