@@ -42,6 +42,21 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 10)
 
+    def test_paper_phrog_causes_more_damage_even_when_it_was_done_via_random_targeting(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, relics={RelicId.PAPER_PHROG: 1})
+        state.monsters[0].powers[PowerId.VULNERABLE] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 15)
+        self.see_random_damage_dealt(play, 0)
+
+    def test_paper_phrog_no_extra_damage_from_tingsha(self):
+        state = self.given_state(CardId.SURVIVOR, relics={RelicId.PAPER_PHROG: 1, RelicId.TINGSHA: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        state.monsters[0].powers[PowerId.VULNERABLE] = 1
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_random_damage_dealt(play, 0)
+
     def test_paper_krane(self):
         state = self.given_state(CardId.NEUTRALIZE)
         state.relics[RelicId.PAPER_KRANE] = 1

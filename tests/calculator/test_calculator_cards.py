@@ -1259,6 +1259,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 12)
         self.see_random_damage_dealt(play, 0)
 
+    def test_sword_boomerang_works_with_vulnerable(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG)
+        state.monsters[0].powers[PowerId.VULNERABLE] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_random_damage_dealt(play, 0)
+
     def test_sword_boomerang_see_random_damage_with_multiple_targets(self):
         state = self.given_state(CardId.SWORD_BOOMERANG, targets=2)
         play = self.when_playing_the_first_card(state)

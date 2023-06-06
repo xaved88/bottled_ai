@@ -498,12 +498,17 @@ class BattleState(BattleStateInterface):
             self.player.energy += 1
 
         if RelicId.TINGSHA in self.relics:
-            self.inflict_random_target_damage(3, 1, vulnerable_modifier=1, is_attack=False)
+            self.inflict_random_target_damage(3, 1, affected_by_vulnerable=False, is_attack=False)
 
     def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True,
-                                     vulnerable_modifier: float = 1.5, is_attack: bool = True,
+                                     affected_by_vulnerable: bool = True, is_attack: bool = True,
                                      min_hp_damage: int = 1, is_orbs: bool = False):
         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+
+        vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
+        if not affected_by_vulnerable:
+            vulnerable_modifier = 1
+
         if alive_monsters == 1:
             for monster in self.monsters:
                 if monster.current_hp > 0:
@@ -525,7 +530,7 @@ class BattleState(BattleStateInterface):
     def add_player_block(self, amount: int):
         self.player.block += amount
         if amount > 0 and self.player.powers.get(PowerId.JUGGERNAUT, 0):
-            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1, vulnerable_modifier=1,
+            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1, affected_by_vulnerable=False,
                                               is_attack=False)
 
     def kill_monsters(self):
@@ -562,7 +567,7 @@ class BattleState(BattleStateInterface):
                         m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False,
                                          is_orbs=True)
                 else:
-                    self.inflict_random_target_damage(base_damage=3 + focus, hits=1, vulnerable_modifier=1,
+                    self.inflict_random_target_damage(base_damage=3 + focus, hits=1, affected_by_vulnerable=False,
                                                       is_attack=False, is_orbs=True)
             elif orb == OrbId.FROST:
                 self.add_player_block(2 + focus)
@@ -584,7 +589,7 @@ class BattleState(BattleStateInterface):
                             m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False,
                                              is_orbs=True)
                     else:
-                        self.inflict_random_target_damage(base_damage=8 + focus, hits=1, vulnerable_modifier=1,
+                        self.inflict_random_target_damage(base_damage=8 + focus, hits=1, affected_by_vulnerable=False,
                                                           is_attack=False, is_orbs=True)
                 elif orb == OrbId.FROST:
                     self.add_player_block(5 + focus)

@@ -36,7 +36,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True, vulnerable_modifier: float = 1.5,
+    def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True, affected_by_vulnerable: bool = True,
                                      is_attack: bool = True, min_hp_damage: int = 1, is_orbs: bool = False):
         # must be implemented by children
         pass
