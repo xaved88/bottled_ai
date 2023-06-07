@@ -1,7 +1,7 @@
 import unittest
 
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.custom_battle.gremlin_nob_handler import GremlinNobHandler
+from rs.ai.requested_strike.handlers.custom_legacy_battle.gremlin_nob_handler import GremlinNobHandler
 
 
 class GremlinNobHandlerTestCase(RsTestHandlerFixture):

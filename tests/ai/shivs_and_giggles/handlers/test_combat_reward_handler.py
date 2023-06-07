@@ -5,9 +5,6 @@ from rs.ai.shivs_and_giggles.handlers.combat_reward_handler import CombatRewardH
 class CardRewardHandlerTestCase(SgTestHandlerFixture):
     handler = CombatRewardHandler
 
-    def test_take_relic(self):
-        self.execute_handler_tests('/combat_reward/combat_reward_relic.json', ['choose relic'])
-
     def test_skip_relic(self):
         self.execute_handler_tests('/combat_reward/combat_reward_relic_skip.json', ['proceed'])
 

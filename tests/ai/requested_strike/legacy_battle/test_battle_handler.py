@@ -1,7 +1,7 @@
 import unittest
 
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
+from rs.ai.requested_strike.handlers.legacy_battle_handler import LegacyBattleHandler
 
 
 class BattleHandlerTestCase(RsTestHandlerFixture):

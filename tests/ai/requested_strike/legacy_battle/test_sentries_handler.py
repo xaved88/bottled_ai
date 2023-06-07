@@ -1,7 +1,7 @@
 import unittest
 
 from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.custom_battle.sentries_handler import SentriesHandler
+from rs.ai.requested_strike.handlers.custom_legacy_battle.sentries_handler import SentriesHandler
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 
 

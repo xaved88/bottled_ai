@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.ai.requested_strike.handlers.battle_handler import LegacyBattleHandler
+from rs.ai.requested_strike.handlers.legacy_battle_handler import LegacyBattleHandler
 from rs.game.card import CardType
 from rs.machine.state import GameState
 
