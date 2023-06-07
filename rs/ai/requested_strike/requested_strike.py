@@ -1,12 +1,7 @@
 from typing import List
 
 from rs.ai.requested_strike.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK
-from rs.ai.requested_strike.handlers.legacy_battle_handler import LegacyBattleHandler
 from rs.ai.requested_strike.handlers.boss_relic_handler import BossRelicHandler
-from rs.ai.requested_strike.handlers.custom_legacy_battle.gremlin_nob_handler import GremlinNobHandler
-from rs.ai.requested_strike.handlers.custom_legacy_battle.lagavulin_handler import LagavulinHandler
-from rs.ai.requested_strike.handlers.custom_legacy_battle.sentries_handler import SentriesHandler
-from rs.ai.requested_strike.handlers.custom_legacy_battle.transient_handler import TransientHandler
 from rs.ai.requested_strike.handlers.event_handler import EventHandler
 from rs.ai.requested_strike.handlers.neow_handler import NeowHandler
 from rs.ai.requested_strike.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, \
@@ -33,12 +28,6 @@ requested_strike_custom_battle_handlers: List[Handler] = [
     PotionsBossHandler(),
     PotionsEventFightHandler(),
     PotionsEliteHandler(),
-
-    # Enemies After
-    GremlinNobHandler(),
-    LagavulinHandler(),
-    SentriesHandler(),
-    TransientHandler(),
 ]
 
 REQUESTED_STRIKE: AiStrategy = AiStrategy(
@@ -49,8 +38,6 @@ REQUESTED_STRIKE: AiStrategy = AiStrategy(
 
         # General Stuff
         BossRelicHandler(),
-        # LegacyBattleHandler - needed only because this was before comparators were finish, we can refactor out
-        LegacyBattleHandler(),
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),

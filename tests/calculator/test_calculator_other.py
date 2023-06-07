@@ -9,7 +9,7 @@ from test_helpers.resources import load_resource_state
 class CalculatorOtherTest(CalculatorTestFixture):
 
     def test_minions_die_when_leader_dies(self):
-        state = load_resource_state("battles/smart_battle/smart_battle_minions.json")
+        state = load_resource_state("battles/general/minions.json")
         path = get_best_battle_path(state, CommonGeneralComparator(), 100)
         for monster in path.state.monsters:
             self.assertEqual(0, monster.current_hp)
