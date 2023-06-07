@@ -8,7 +8,6 @@ from enum import Enum
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
 # 'meat on the bone'
-# 'mercury hourglass'
 # 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
@@ -86,6 +85,7 @@ class RelicId(Enum):
     MAW_BANK = 'maw bank'                           # N/A
     MEAL_TICKET = 'meal ticket'                     # N/A
     MEMBERSHIP_CARD = 'membership card'             # N/A
+    MERCURY_HOURGLASS = 'mercury hourglass'         # We only look at current turn so far, so get this as bonus.
     MOLTEN_EGG = 'molten egg'                       # N/A
     MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength
     NINJA_SCROLL = 'ninja scroll'                   # N/A

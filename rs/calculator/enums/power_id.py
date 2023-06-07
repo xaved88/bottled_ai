@@ -17,6 +17,7 @@ class PowerId(Enum):
     ARTIFACT = 'artifact'
     BARRICADE = 'barricade'
     BIAS = 'bias'
+    BERSERK = 'berserk'
     BLUR = 'blur'
     BUFFER = 'buffer'
     CHOKED = 'choked'
@@ -25,6 +26,7 @@ class PowerId(Enum):
     CORPSE_EXPLOSION_POWER = 'corpse explosion'
     CREATIVE_AI = 'creative ai'
     CURL_UP = 'curl up'
+    DEMON_FORM = 'demon form'
     DEXTERITY = 'dexterity'
     DOUBLE_DAMAGE = 'double damage'
     DRAW_CARD = 'draw card'  # It affects a future turn though, so we mostly don't do anything with it.
@@ -34,10 +36,12 @@ class PowerId(Enum):
     ENERGIZED = 'energizedblue'  # It affects a future turn though, so we mostly don't do anything with it.
     ENTANGLED = 'entangled'
     ENVENOM = 'envenom'
+    EVOLVE = 'evolve'
     FADING = 'fading'  # N/A
-    FOCUS = 'focus'
+    FIRE_BREATHING = 'fire breathing'
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'
+    FOCUS = 'focus'
     FRAIL = 'frail'
     HEATSINK = 'heatsink'
     INFINITE_BLADES = 'infinite blades'

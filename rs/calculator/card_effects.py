@@ -115,6 +115,14 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                 CardEffects(damage=2, hits=1, blockable=False, target=TargetType.SELF)]
     if card.id == CardId.INFLAME:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 3})]
+    if card.id == CardId.FIRE_BREATHING:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FIRE_BREATHING: 6 if not card.upgrade else 10})]
+    if card.id == CardId.EVOLVE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.EVOLVE: 1 if not card.upgrade else 2})]
+    if card.id == CardId.DEMON_FORM:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEMON_FORM: 2 if not card.upgrade else 3})]
+    if card.id == CardId.BERSERK:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.VULNERABLE: 2 if not card.upgrade else 1, PowerId.BERSERK: 1})]
     if card.id == CardId.INTIMIDATE:
         return [CardEffects(target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.WEAKENED: 1 if not card.upgrade else 2})]

@@ -909,3 +909,4 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_orb_count(play, 2)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.INTERNAL_ECHO_FORM_READY, 1)
+

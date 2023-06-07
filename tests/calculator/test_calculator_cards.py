@@ -1956,3 +1956,29 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_drew_cards(play, 0)
         self.see_enemy_lost_hp(play, 10)
+
+    def test_fire_breathing(self):
+        state = self.given_state(CardId.FIRE_BREATHING)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FIRE_BREATHING, 6)
+
+    def test_evolve(self):
+        state = self.given_state(CardId.EVOLVE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.EVOLVE, 1)
+
+    def test_demon_form(self):
+        state = self.given_state(CardId.DEMON_FORM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_has_power(play, PowerId.DEMON_FORM, 2)
+
+    def test_berserk(self):
+        state = self.given_state(CardId.BERSERK)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_power(play, PowerId.VULNERABLE, 2)
+        self.see_player_has_power(play, PowerId.BERSERK, 1)
+

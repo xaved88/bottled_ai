@@ -73,6 +73,14 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.INFLAME:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.FIRE_BREATHING:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.EVOLVE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.BERSERK:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.DEMON_FORM:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.INTIMIDATE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.PUMMEL:
