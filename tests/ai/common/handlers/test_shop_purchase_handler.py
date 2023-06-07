@@ -1,8 +1,8 @@
-from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
-from rs.ai.requested_strike.handlers.shop_purchase_handler import ShopPurchaseHandler
+from ai.common.co_test_handler_fixture import CoTestHandlerFixture
+from rs.ai._example.handlers.shop_purchase_handler import ShopPurchaseHandler
 
 
-class ShopPurchaseHandlerTestCase(RsTestHandlerFixture):
+class ShopPurchaseHandlerTestCase(CoTestHandlerFixture):
     handler = ShopPurchaseHandler
 
     def test_buy_perfected_strike(self):

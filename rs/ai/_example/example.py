@@ -1,4 +1,5 @@
-from rs.ai._example.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK, HIGH_PRIORITY_UPGRADES
+from rs.ai._example.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK, HIGH_PRIORITY_UPGRADES, \
+    DESIRED_CARDS_FROM_POTIONS
 from rs.ai._example.handlers.event_handler import EventHandler
 from rs.ai._example.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai._example.handlers.upgrade_handler import UpgradeHandler
@@ -28,7 +29,7 @@ EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonCombatRewardHandler(),
-        CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK),
+        CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK, DESIRED_CARDS_FROM_POTIONS),
         CommonNeowHandler(),
         EventHandler(),
         CommonChestHandler(),

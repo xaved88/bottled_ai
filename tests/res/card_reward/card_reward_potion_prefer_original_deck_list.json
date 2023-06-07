@@ -12,9 +12,9 @@
   "in_game": true,
   "game_state": {
     "choice_list": [
-      "dash",
-      "sneaky strike",
-      "poisoned stab"
+      "twin strike",
+      "demon form",
+      "strike"
     ],
     "screen_type": "CARD_REWARD",
     "screen_state": {
@@ -22,40 +22,40 @@
         {
           "exhausts": false,
           "is_playable": true,
-          "cost": 2,
-          "name": "Dash",
-          "id": "Dash",
-          "type": "ATTACK",
+          "cost": 1,
+          "name": "Accuracy",
+          "id": "Accuracy",
+          "type": "POWER",
           "ethereal": false,
-          "uuid": "9a43dd3a-210c-4a2d-b6cb-cdd0ee1e14ad",
+          "uuid": "c208a253-d09d-4b8d-a771-8c3d8650dbe8",
           "upgrades": 0,
           "rarity": "UNCOMMON",
-          "has_target": true
+          "has_target": false
         },
         {
-          "exhausts": false,
+          "exhausts": true,
           "is_playable": true,
           "cost": 2,
-          "name": "Sneaky Strike",
-          "id": "Underhanded Strike",
-          "type": "ATTACK",
+          "name": "Apotheosis",
+          "id": "Apotheosis",
+          "type": "SKILL",
           "ethereal": false,
-          "uuid": "9942c650-81bc-4c55-ae17-703c00b58f41",
+          "uuid": "c208a253-d09d-4b8d-a771-8c3d8650dbe8",
           "upgrades": 0,
-          "rarity": "COMMON",
-          "has_target": true
+          "rarity": "RARE",
+          "has_target": false
         },
         {
           "exhausts": false,
           "is_playable": true,
           "cost": 1,
-          "name": "Poisoned Stab",
-          "id": "Poisoned Stab",
+          "name": "Strike",
+          "id": "Strike_R",
           "type": "ATTACK",
           "ethereal": false,
           "uuid": "c208a253-d09d-4b8d-a771-8c3d8650dbe8",
           "upgrades": 0,
-          "rarity": "COMMON",
+          "rarity": "BASIC",
           "has_target": true
         }
       ],

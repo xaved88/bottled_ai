@@ -1,8 +1,8 @@
-from ai.requested_strike.rs_test_handler_fixture import RsTestHandlerFixture
+from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_discard_handler import CommonDiscardHandler
 
 
-class TestEventHandler(RsTestHandlerFixture):
+class TestDiscardHandler(CoTestHandlerFixture):
     handler = CommonDiscardHandler
 
     def test_handle_discard_with_relic(self):

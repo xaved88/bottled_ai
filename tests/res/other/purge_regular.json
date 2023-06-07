@@ -11,14 +11,14 @@
   "in_game": true,
   "game_state": {
     "choice_list": [
-      "strike",
-      "strike",
-      "strike",
-      "strike",
-      "strike",
       "defend",
       "defend",
       "defend",
+      "strike",
+      "strike",
+      "strike",
+      "strike",
+      "strike",
       "defend",
       "bash"
     ],

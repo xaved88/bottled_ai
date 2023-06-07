@@ -36,6 +36,7 @@ class ShopPurchaseHandler(Handler):
         ]
 
         self.cards_to_buy = [
+            "Perfected Strike",
             "Accuracy",
             "Blade Dance",
         ]

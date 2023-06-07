@@ -13,4 +13,4 @@ class CommonShopEntranceHandler(Handler):
                and state.screen_type() == ScreenType.SHOP_ROOM.value
 
     def handle(self, state: GameState) -> List[str]:
-        return ["choose 0", "wait 30"]
+        return ["choose shop", "wait 30"]

@@ -1,6 +1,4 @@
-from ai.shivs_and_giggles.sg_test_handler_fixture import SgTestHandlerFixture
-from common.co_test_handler_fixture import CoTestHandlerFixture
-from rs.ai.shivs_and_giggles.handlers.combat_reward_handler import CombatRewardHandler
+from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
 
 

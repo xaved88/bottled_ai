@@ -2,6 +2,7 @@
   "available_commands": [
     "choose",
     "potion",
+    "proceed",
     "key",
     "click",
     "wait",
@@ -11,163 +12,11 @@
   "in_game": true,
   "game_state": {
     "choice_list": [
-      "strike",
-      "defend",
-      "defend",
-      "bash+",
-      "strike",
-      "strike",
-      "strike",
-      "strike",
-      "battle trance+",
-      "offering"
+      "shop"
     ],
-    "screen_type": "GRID",
-    "screen_state": {
-      "cards": [
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_R",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "89e77900-439f-4ad0-99a1-7511c3da0a55",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_R",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "a1dee956-5b23-47b7-8d63-8c195e01d5f2",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_R",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "7025b1f9-7471-41ec-aeed-4ae16ad7ef3d",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_R",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "3a5b2b4b-416a-4750-9159-dae9a1633d21",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_R",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "a777f121-011a-416d-9836-699f52617362",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_R",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "961a5dae-6722-4f2e-9110-9a7a6a9c5ca6",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_R",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "fbc6fe8f-b0f3-4253-a96a-e35f12b35f8b",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
-        {
-          "exhausts": false,
-          "cost": 2,
-          "name": "Bash+",
-          "id": "Bash",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "9101ea90-bd59-4391-a157-5b668e66fd40",
-          "upgrades": 1,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "cost": 0,
-          "name": "Battle Trance+",
-          "id": "Battle Trance",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "a8cfb16b-2ea7-4c93-964a-69bc0460fd9e",
-          "upgrades": 1,
-          "rarity": "UNCOMMON",
-          "has_target": false
-        },
-        {
-          "exhausts": true,
-          "cost": 0,
-          "name": "Offering",
-          "id": "Offering",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "a853c8b6-bea1-4e93-86c2-7ae828beec29",
-          "upgrades": 0,
-          "rarity": "RARE",
-          "has_target": false
-        }
-      ],
-      "selected_cards": [
-        {
-          "exhausts": false,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_R",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "961a5dae-6722-4f2e-9110-9a7a6a9c5ca6",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        }
-      ],
-      "for_transform": false,
-      "confirm_up": false,
-      "any_number": false,
-      "for_upgrade": false,
-      "num_cards": 2,
-      "for_purge": true
-    },
-    "seed": 6874855300287929117,
+    "screen_type": "SHOP_ROOM",
+    "screen_state": {},
+    "seed": 3529198064264428737,
     "deck": [
       {
         "exhausts": false,
@@ -176,7 +25,7 @@
         "id": "Strike_R",
         "type": "ATTACK",
         "ethereal": false,
-        "uuid": "89e77900-439f-4ad0-99a1-7511c3da0a55",
+        "uuid": "3e1ea997-178d-4c96-b179-f4b4d7d27e71",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": true
@@ -188,7 +37,7 @@
         "id": "Strike_R",
         "type": "ATTACK",
         "ethereal": false,
-        "uuid": "a1dee956-5b23-47b7-8d63-8c195e01d5f2",
+        "uuid": "8b87c910-decb-40d0-86ae-f8464f9f64f5",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": true
@@ -200,7 +49,7 @@
         "id": "Strike_R",
         "type": "ATTACK",
         "ethereal": false,
-        "uuid": "7025b1f9-7471-41ec-aeed-4ae16ad7ef3d",
+        "uuid": "26da1831-0d6b-4adc-8654-fb07d43f20e4",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": true
@@ -212,7 +61,7 @@
         "id": "Strike_R",
         "type": "ATTACK",
         "ethereal": false,
-        "uuid": "3a5b2b4b-416a-4750-9159-dae9a1633d21",
+        "uuid": "d5c997bf-cfda-4ff2-ad55-b47c4e0f8235",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": true
@@ -224,7 +73,7 @@
         "id": "Strike_R",
         "type": "ATTACK",
         "ethereal": false,
-        "uuid": "a777f121-011a-416d-9836-699f52617362",
+        "uuid": "5d8edd4a-c9bd-4bc5-a579-7c78dad6820c",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": true
@@ -236,7 +85,7 @@
         "id": "Defend_R",
         "type": "SKILL",
         "ethereal": false,
-        "uuid": "961a5dae-6722-4f2e-9110-9a7a6a9c5ca6",
+        "uuid": "7213d895-0176-4004-9591-56e4b98d92d1",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": false
@@ -248,7 +97,19 @@
         "id": "Defend_R",
         "type": "SKILL",
         "ethereal": false,
-        "uuid": "fbc6fe8f-b0f3-4253-a96a-e35f12b35f8b",
+        "uuid": "060b5558-6aad-444d-8b97-b6e9c1dc7f7b",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Defend",
+        "id": "Defend_R",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "9af5af04-e320-4197-b630-247597899c02",
         "upgrades": 0,
         "rarity": "BASIC",
         "has_target": false
@@ -256,37 +117,37 @@
       {
         "exhausts": false,
         "cost": 2,
-        "name": "Bash+",
+        "name": "Bash",
         "id": "Bash",
         "type": "ATTACK",
         "ethereal": false,
-        "uuid": "9101ea90-bd59-4391-a157-5b668e66fd40",
-        "upgrades": 1,
+        "uuid": "8ea4359a-ca2d-4e16-8883-f6740aa745f4",
+        "upgrades": 0,
         "rarity": "BASIC",
         "has_target": true
       },
       {
-        "exhausts": false,
-        "cost": 0,
-        "name": "Battle Trance+",
-        "id": "Battle Trance",
+        "exhausts": true,
+        "cost": 2,
+        "name": "Shockwave",
+        "id": "Shockwave",
         "type": "SKILL",
         "ethereal": false,
-        "uuid": "a8cfb16b-2ea7-4c93-964a-69bc0460fd9e",
-        "upgrades": 1,
+        "uuid": "d3023e7f-bde3-4b12-8b3d-a91e8b18fa7d",
+        "upgrades": 0,
         "rarity": "UNCOMMON",
         "has_target": false
       },
       {
         "exhausts": true,
-        "cost": 0,
-        "name": "Offering",
-        "id": "Offering",
+        "cost": 2,
+        "name": "Shockwave",
+        "id": "Shockwave",
         "type": "SKILL",
         "ethereal": false,
-        "uuid": "a853c8b6-bea1-4e93-86c2-7ae828beec29",
+        "uuid": "91b5893b-55df-4a78-a0e1-1ba6fe8f11fb",
         "upgrades": 0,
-        "rarity": "RARE",
+        "rarity": "UNCOMMON",
         "has_target": false
       }
     ],
@@ -297,69 +158,49 @@
         "counter": -1
       },
       {
-        "name": "Neow\u0027s Lament",
-        "id": "NeowsBlessing",
-        "counter": -2
-      },
-      {
-        "name": "Art of War",
-        "id": "Art of War",
+        "name": "White Beast Statue",
+        "id": "White Beast Statue",
         "counter": -1
       },
       {
-        "name": "Pen Nib",
-        "id": "Pen Nib",
-        "counter": 3
-      },
-      {
-        "name": "Anchor",
-        "id": "Anchor",
-        "counter": -1
-      },
-      {
-        "name": "Horn Cleat",
-        "id": "HornCleat",
-        "counter": -1
-      },
-      {
-        "name": "Empty Cage",
-        "id": "Empty Cage",
+        "name": "Torii",
+        "id": "Torii",
         "counter": -1
       }
     ],
     "max_hp": 80,
     "act_boss": "Hexaghost",
-    "gold": 348,
+    "gold": 197,
     "action_phase": "WAITING_ON_USER",
     "act": 1,
-    "screen_name": "GRID",
-    "room_phase": "INCOMPLETE",
-    "is_screen_up": true,
+    "screen_name": "NONE",
+    "room_phase": "COMPLETE",
+    "is_screen_up": false,
     "potions": [
       {
         "requires_target": false,
         "can_use": false,
         "can_discard": true,
-        "name": "Fairy in a Bottle",
-        "id": "FairyPotion"
+        "name": "Liquid Bronze",
+        "id": "LiquidBronze"
+      },
+      {
+        "requires_target": true,
+        "can_use": false,
+        "can_discard": true,
+        "name": "Fear Potion",
+        "id": "FearPotion"
       },
       {
         "requires_target": false,
         "can_use": false,
-        "can_discard": false,
-        "name": "Potion Slot",
-        "id": "Potion Slot"
-      },
-      {
-        "requires_target": false,
-        "can_use": false,
-        "can_discard": false,
-        "name": "Potion Slot",
-        "id": "Potion Slot"
+        "can_discard": true,
+        "name": "Cultist Potion",
+        "id": "CultistPotion"
       }
     ],
-    "current_hp": 26,
-    "floor": 17,
+    "current_hp": 69,
+    "floor": 10,
     "ascension_level": 0,
     "class": "IRONCLAD",
     "map": [
@@ -367,7 +208,23 @@
         "symbol": "M",
         "children": [
           {
-            "x": 2,
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "x": 1,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
             "y": 1
           }
         ],
@@ -379,11 +236,11 @@
         "symbol": "M",
         "children": [
           {
-            "x": 4,
+            "x": 5,
             "y": 1
           }
         ],
-        "x": 5,
+        "x": 4,
         "y": 0,
         "parents": []
       },
@@ -395,7 +252,7 @@
             "y": 1
           }
         ],
-        "x": 6,
+        "x": 5,
         "y": 0,
         "parents": []
       },
@@ -403,146 +260,150 @@
         "symbol": "M",
         "children": [
           {
-            "x": 3,
+            "x": 1,
             "y": 2
           }
         ],
-        "x": 2,
+        "x": 0,
         "y": 1,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 4,
-            "y": 2
-          },
-          {
-            "x": 5,
-            "y": 2
-          }
-        ],
-        "x": 4,
-        "y": 1,
-        "parents": []
-      },
-      {
-        "symbol": "?",
-        "children": [
-          {
-            "x": 5,
-            "y": 2
-          },
-          {
-            "x": 6,
-            "y": 2
-          }
-        ],
-        "x": 6,
-        "y": 1,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 3,
-            "y": 3
-          },
-          {
-            "x": 4,
-            "y": 3
-          }
-        ],
-        "x": 3,
-        "y": 2,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 5,
-            "y": 3
-          }
-        ],
-        "x": 4,
-        "y": 2,
-        "parents": []
-      },
-      {
-        "symbol": "?",
-        "children": [
-          {
-            "x": 5,
-            "y": 3
-          },
-          {
-            "x": 6,
-            "y": 3
-          }
-        ],
-        "x": 5,
-        "y": 2,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 6,
-            "y": 3
-          }
-        ],
-        "x": 6,
-        "y": 2,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 2,
-            "y": 4
-          }
-        ],
-        "x": 3,
-        "y": 3,
-        "parents": []
-      },
-      {
-        "symbol": "?",
-        "children": [
-          {
-            "x": 3,
-            "y": 4
-          }
-        ],
-        "x": 4,
-        "y": 3,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 4,
-            "y": 4
-          },
-          {
-            "x": 6,
-            "y": 4
-          }
-        ],
-        "x": 5,
-        "y": 3,
         "parents": []
       },
       {
         "symbol": "$",
         "children": [
           {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "x": 1,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "x": 3,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "x": 5,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "x": 6,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "x": 1,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "x": 2,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 3
+          }
+        ],
+        "x": 5,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "x": 0,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "x": 1,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "x": 4,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
             "x": 6,
             "y": 4
           }
@@ -552,10 +413,26 @@
         "parents": []
       },
       {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "x": 1,
+        "y": 4,
+        "parents": []
+      },
+      {
         "symbol": "?",
         "children": [
           {
-            "x": 3,
+            "x": 2,
             "y": 5
           }
         ],
@@ -571,31 +448,15 @@
             "y": 5
           }
         ],
-        "x": 3,
+        "x": 5,
         "y": 4,
         "parents": []
       },
       {
-        "symbol": "$",
-        "children": [
-          {
-            "x": 4,
-            "y": 5
-          }
-        ],
-        "x": 4,
-        "y": 4,
-        "parents": []
-      },
-      {
-        "symbol": "?",
+        "symbol": "M",
         "children": [
           {
             "x": 5,
-            "y": 5
-          },
-          {
-            "x": 6,
             "y": 5
           }
         ],
@@ -604,14 +465,34 @@
         "parents": []
       },
       {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "x": 1,
+        "y": 5,
+        "parents": []
+      },
+      {
         "symbol": "E",
         "children": [
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
           {
             "x": 3,
             "y": 6
           }
         ],
-        "x": 3,
+        "x": 2,
         "y": 5,
         "parents": []
       },
@@ -619,11 +500,7 @@
         "symbol": "R",
         "children": [
           {
-            "x": 3,
-            "y": 6
-          },
-          {
-            "x": 4,
+            "x": 5,
             "y": 6
           }
         ],
@@ -635,7 +512,7 @@
         "symbol": "R",
         "children": [
           {
-            "x": 4,
+            "x": 5,
             "y": 6
           }
         ],
@@ -644,15 +521,27 @@
         "parents": []
       },
       {
-        "symbol": "E",
+        "symbol": "?",
         "children": [
           {
-            "x": 5,
-            "y": 6
+            "x": 0,
+            "y": 7
           }
         ],
-        "x": 6,
-        "y": 5,
+        "x": 0,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 0,
+            "y": 7
+          }
+        ],
+        "x": 1,
+        "y": 6,
         "parents": []
       },
       {
@@ -661,9 +550,17 @@
           {
             "x": 2,
             "y": 7
-          },
+          }
+        ],
+        "x": 2,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
           {
-            "x": 3,
+            "x": 4,
             "y": 7
           }
         ],
@@ -672,22 +569,14 @@
         "parents": []
       },
       {
-        "symbol": "E",
+        "symbol": "?",
         "children": [
+          {
+            "x": 4,
+            "y": 7
+          },
           {
             "x": 5,
-            "y": 7
-          }
-        ],
-        "x": 4,
-        "y": 6,
-        "parents": []
-      },
-      {
-        "symbol": "R",
-        "children": [
-          {
-            "x": 6,
             "y": 7
           }
         ],
@@ -696,7 +585,23 @@
         "parents": []
       },
       {
-        "symbol": "R",
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 8
+          },
+          {
+            "x": 1,
+            "y": 8
+          }
+        ],
+        "x": 0,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "M",
         "children": [
           {
             "x": 1,
@@ -708,26 +613,26 @@
         "parents": []
       },
       {
-        "symbol": "M",
+        "symbol": "E",
         "children": [
           {
-            "x": 2,
+            "x": 3,
+            "y": 8
+          },
+          {
+            "x": 4,
             "y": 8
           }
         ],
-        "x": 3,
+        "x": 4,
         "y": 7,
         "parents": []
       },
       {
-        "symbol": "R",
+        "symbol": "M",
         "children": [
           {
             "x": 4,
-            "y": 8
-          },
-          {
-            "x": 6,
             "y": 8
           }
         ],
@@ -736,22 +641,22 @@
         "parents": []
       },
       {
-        "symbol": "M",
+        "symbol": "T",
         "children": [
           {
-            "x": 6,
-            "y": 8
+            "x": 0,
+            "y": 9
           }
         ],
-        "x": 6,
-        "y": 7,
+        "x": 0,
+        "y": 8,
         "parents": []
       },
       {
         "symbol": "T",
         "children": [
           {
-            "x": 2,
+            "x": 1,
             "y": 9
           }
         ],
@@ -763,124 +668,28 @@
         "symbol": "T",
         "children": [
           {
-            "x": 2,
-            "y": 9
-          }
-        ],
-        "x": 2,
-        "y": 8,
-        "parents": []
-      },
-      {
-        "symbol": "T",
-        "children": [
-          {
-            "x": 5,
-            "y": 9
-          }
-        ],
-        "x": 4,
-        "y": 8,
-        "parents": []
-      },
-      {
-        "symbol": "T",
-        "children": [
-          {
-            "x": 5,
-            "y": 9
-          },
-          {
-            "x": 6,
-            "y": 9
-          }
-        ],
-        "x": 6,
-        "y": 8,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
             "x": 3,
-            "y": 10
-          }
-        ],
-        "x": 2,
-        "y": 9,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 4,
-            "y": 10
-          },
-          {
-            "x": 6,
-            "y": 10
-          }
-        ],
-        "x": 5,
-        "y": 9,
-        "parents": []
-      },
-      {
-        "symbol": "E",
-        "children": [
-          {
-            "x": 6,
-            "y": 10
-          }
-        ],
-        "x": 6,
-        "y": 9,
-        "parents": []
-      },
-      {
-        "symbol": "M",
-        "children": [
-          {
-            "x": 2,
-            "y": 11
-          },
-          {
-            "x": 3,
-            "y": 11
+            "y": 9
           }
         ],
         "x": 3,
-        "y": 10,
+        "y": 8,
         "parents": []
       },
       {
-        "symbol": "M",
+        "symbol": "T",
         "children": [
           {
             "x": 4,
-            "y": 11
+            "y": 9
+          },
+          {
+            "x": 5,
+            "y": 9
           }
         ],
         "x": 4,
-        "y": 10,
-        "parents": []
-      },
-      {
-        "symbol": "?",
-        "children": [
-          {
-            "x": 5,
-            "y": 11
-          },
-          {
-            "x": 6,
-            "y": 11
-          }
-        ],
-        "x": 6,
-        "y": 10,
+        "y": 8,
         "parents": []
       },
       {
@@ -888,23 +697,23 @@
         "children": [
           {
             "x": 1,
-            "y": 12
+            "y": 10
           }
         ],
-        "x": 2,
-        "y": 11,
+        "x": 0,
+        "y": 9,
         "parents": []
       },
       {
-        "symbol": "R",
+        "symbol": "$",
         "children": [
           {
-            "x": 4,
-            "y": 12
+            "x": 1,
+            "y": 10
           }
         ],
-        "x": 3,
-        "y": 11,
+        "x": 1,
+        "y": 9,
         "parents": []
       },
       {
@@ -912,10 +721,118 @@
         "children": [
           {
             "x": 4,
-            "y": 12
+            "y": 10
+          }
+        ],
+        "x": 3,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 10
           }
         ],
         "x": 4,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 5,
+            "y": 10
+          }
+        ],
+        "x": 5,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 11
+          },
+          {
+            "x": 1,
+            "y": 11
+          }
+        ],
+        "x": 1,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 11
+          }
+        ],
+        "x": 4,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 5,
+            "y": 11
+          },
+          {
+            "x": 6,
+            "y": 11
+          }
+        ],
+        "x": 5,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 12
+          }
+        ],
+        "x": 0,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 0,
+            "y": 12
+          },
+          {
+            "x": 1,
+            "y": 12
+          }
+        ],
+        "x": 1,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 12
+          }
+        ],
+        "x": 3,
         "y": 11,
         "parents": []
       },
@@ -932,7 +849,7 @@
         "parents": []
       },
       {
-        "symbol": "$",
+        "symbol": "?",
         "children": [
           {
             "x": 6,
@@ -944,7 +861,19 @@
         "parents": []
       },
       {
-        "symbol": "M",
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 13
+          }
+        ],
+        "x": 0,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "R",
         "children": [
           {
             "x": 0,
@@ -956,7 +885,19 @@
         "parents": []
       },
       {
-        "symbol": "?",
+        "symbol": "E",
+        "children": [
+          {
+            "x": 4,
+            "y": 13
+          }
+        ],
+        "x": 3,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
         "children": [
           {
             "x": 5,
@@ -968,14 +909,10 @@
         "parents": []
       },
       {
-        "symbol": "?",
+        "symbol": "R",
         "children": [
           {
             "x": 5,
-            "y": 13
-          },
-          {
-            "x": 6,
             "y": 13
           }
         ],
@@ -984,8 +921,12 @@
         "parents": []
       },
       {
-        "symbol": "M",
+        "symbol": "?",
         "children": [
+          {
+            "x": 0,
+            "y": 14
+          },
           {
             "x": 1,
             "y": 14
@@ -999,11 +940,23 @@
         "symbol": "M",
         "children": [
           {
-            "x": 4,
+            "x": 5,
+            "y": 14
+          }
+        ],
+        "x": 4,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 5,
             "y": 14
           },
           {
-            "x": 5,
+            "x": 6,
             "y": 14
           }
         ],
@@ -1012,15 +965,15 @@
         "parents": []
       },
       {
-        "symbol": "?",
+        "symbol": "R",
         "children": [
           {
-            "x": 5,
-            "y": 14
+            "x": 3,
+            "y": 16
           }
         ],
-        "x": 6,
-        "y": 13,
+        "x": 0,
+        "y": 14,
         "parents": []
       },
       {
@@ -1043,7 +996,7 @@
             "y": 16
           }
         ],
-        "x": 4,
+        "x": 5,
         "y": 14,
         "parents": []
       },
@@ -1055,11 +1008,11 @@
             "y": 16
           }
         ],
-        "x": 5,
+        "x": 6,
         "y": 14,
         "parents": []
       }
     ],
-    "room_type": "TreasureRoomBoss"
+    "room_type": "ShopRoom"
   }
 }

@@ -1,4 +1,4 @@
-from common.co_test_handler_fixture import CoTestHandlerFixture
+from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_map_handler import CommonMapHandler
 
 

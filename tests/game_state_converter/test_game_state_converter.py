@@ -21,21 +21,21 @@ class GameStateConverterTest(unittest.TestCase):
         self.assertEqual(False, counter)
 
     def test_get_choice_list(self):
-        state = load_resource_state("card_reward/shivs_and_giggles_card_reward_skip_upgraded_card_because_amount.json")
+        state = load_resource_state("card_reward/card_reward_skip_upgraded_card_because_amount.json")
         choices = state.get_choice_list()
-        self.assertEqual(['pommel strike', 'heel hook', 'escape plan+'], choices)
+        self.assertEqual(['pommel strike', 'heel hook', 'twin strike+'], choices)
 
     def test_get_choice_list_upgrade_stripped_from_choice(self):
-        state = load_resource_state("card_reward/shivs_and_giggles_card_reward_skip_upgraded_card_because_amount.json")
+        state = load_resource_state("card_reward/card_reward_skip_upgraded_card_because_amount.json")
         choices = state.get_choice_list_upgrade_stripped_from_choice()
-        self.assertEqual(['pommel strike', 'heel hook', 'escape plan'], choices)
+        self.assertEqual(['pommel strike', 'heel hook', 'twin strike'], choices)
 
     def test_get_deck_card_list(self):
-        state = load_resource_state("card_reward/shivs_and_giggles_card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
+        state = load_resource_state("card_reward/card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
         deck_list = state.get_deck_card_list()
-        self.assertEqual({'bash+': 1, 'defend': 4, 'escape plan': 1, 'escape plan+': 1, 'strike': 3}, deck_list)
+        self.assertEqual({'bash+': 1, 'defend': 4, 'strike': 3, 'twin strike': 1, 'twin strike+': 1}, deck_list)
 
     def test_get_deck_card_list_upgrade_stripped_from_name(self):
-        state = load_resource_state("card_reward/shivs_and_giggles_card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
+        state = load_resource_state("card_reward/card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
         deck_list = state.get_deck_card_list_upgrade_stripped_from_name()
-        self.assertEqual({'bash': 1, 'defend': 4, 'escape plan': 2, 'strike': 3}, deck_list)
+        self.assertEqual({'bash': 1, 'defend': 4, 'strike': 3, 'twin strike': 2}, deck_list)
