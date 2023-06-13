@@ -566,4 +566,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.GO_FOR_THE_EYES:
         hook = go_for_the_eyes_post_hook if not card.upgrade else go_for_the_eyes_upgraded_post_hook
         return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 4, hits=1, post_hooks=[hook])]
+    if card.id == CardId.AMPLIFY:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.AMPLIFY: 1 if not card.upgrade else 2})]
+    if card.id == CardId.BURST:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BURST: 1 if not card.upgrade else 2})]
+    if card.id == CardId.DOUBLE_TAP:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DOUBLE_TAP: 1 if not card.upgrade else 2})]
+
     return [CardEffects()]

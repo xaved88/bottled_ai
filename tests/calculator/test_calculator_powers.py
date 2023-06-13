@@ -852,7 +852,6 @@ class CalculatorPowersTest(CalculatorTestFixture):
     def test_echo_form_is_blocked_by_choker(self):
         state = self.given_state(CardId.ZAP, orb_slots=3, relics={RelicId.VELVET_CHOKER: 5},
                                  player_powers={PowerId.ECHO_FORM: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1})
-        state.monsters[0].powers[PowerId.TIME_WARP] = 11
         play = self.when_playing_the_first_card(state)
         self.see_orb_count(play, 1)
 
@@ -910,3 +909,73 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.INTERNAL_ECHO_FORM_READY, 1)
 
+    def test_amplify_doubles_powers(self):
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.AMPLIFY: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 4)
+
+    def test_amplify_doubles_powers_multiple_times(self):
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.AMPLIFY: 2})
+        state.hand.append(get_card(CardId.INFLAME))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 8)
+
+    def test_amplify_stops_when_empty(self):
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.AMPLIFY: 1})
+        state.hand.append(get_card(CardId.INFLAME))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 6)
+
+    def test_amplify_only_doubles_powers(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.AMPLIFY: 2})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 5)
+
+    def test_burst_doubles_skills(self):
+        state = self.given_state(CardId.DEADLY_POISON, player_powers={PowerId.BURST: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.POISON, 10)
+
+    def test_burst_only_doubles_skills(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.BURST: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+
+    def test_burst_duplication_stops_when_enemy_is_dead_but_still_reduces_counter(self):
+        state = self.given_state(CardId.BLIND, orb_slots=3, relics={RelicId.INK_BOTTLE: 0},
+                                 player_powers={PowerId.BURST: 1, PowerId.SADISTIC: 1})
+        state.monsters[0].current_hp = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 1)
+        self.see_player_has_power(play, PowerId.BURST, 0)
+
+    def test_double_tap_doubles_attacks(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.DOUBLE_TAP: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+
+    def test_double_tap_only_doubles_attacks(self):
+        state = self.given_state(CardId.DEADLY_POISON, player_powers={PowerId.DOUBLE_TAP: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.POISON, 5)
+
+    def test_double_tap_duplication_stops_when_enemy_is_dead_but_still_reduces_counter(self):
+        state = self.given_state(CardId.STRIKE_R, orb_slots=3, relics={RelicId.INK_BOTTLE: 0},
+                                 player_powers={PowerId.DOUBLE_TAP: 1})
+        state.monsters[0].current_hp = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 1)
+        self.see_player_has_power(play, PowerId.DOUBLE_TAP, 0)
+
+    def test_duplication_potion_power_doubles_things(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.DUPLICATION_POTION_POWER: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+
+    def test_doubling_effects_interacting_with_each_other(self):
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.AMPLIFY: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1}, relics={RelicId.INK_BOTTLE: 0})
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 3)
+        self.see_player_has_power(play, PowerId.STRENGTH, 6)

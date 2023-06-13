@@ -78,14 +78,32 @@ class BattleState(BattleStateInterface):
         # play the card
         self.player.energy -= card.cost
         self.resolve_card_play(card, target_index)
+
+        # repeats
         if self.player.powers.get(PowerId.INTERNAL_ECHO_FORM_READY):
-            if self.is_turn_forced_to_be_over():
-                return
-            if target_index > -1 and self.monsters[target_index].is_gone:
-                return
-            # todo -> battle is over
-            self.player.powers[PowerId.INTERNAL_ECHO_FORM_READY] -= 1
-            self.resolve_card_play(card, target_index)
+            self.repeat_card(card, target_index, PowerId.INTERNAL_ECHO_FORM_READY, power_lost_if_incomplete=False)
+        if self.player.powers.get(PowerId.DUPLICATION_POTION_POWER):
+            self.repeat_card(card, target_index, PowerId.DUPLICATION_POTION_POWER, power_lost_if_incomplete=False)
+        if self.player.powers.get(PowerId.AMPLIFY) and card.type == CardType.POWER:
+            self.repeat_card(card, target_index, PowerId.AMPLIFY)
+        if self.player.powers.get(PowerId.BURST) and card.type == CardType.SKILL:
+            self.repeat_card(card, target_index, PowerId.BURST)
+        if self.player.powers.get(PowerId.DOUBLE_TAP) and card.type == CardType.ATTACK:
+            self.repeat_card(card, target_index, PowerId.DOUBLE_TAP)
+
+    def repeat_card(self, card: CardInterface, target_index: int, repeating_power, power_lost_if_incomplete: bool = True):
+        if power_lost_if_incomplete:
+            self.player.powers[repeating_power] -= 1
+
+        if self.is_turn_forced_to_be_over():
+            return
+        if target_index > -1 and self.monsters[target_index].is_gone:
+            return
+        # todo -> battle is over
+        self.resolve_card_play(card, target_index)
+
+        if not power_lost_if_incomplete:
+            self.player.powers[repeating_power] -= 1
 
     def resolve_card_play(self, card: CardInterface, target_index: int):
         effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
@@ -446,7 +464,7 @@ class BattleState(BattleStateInterface):
 
         # can't draw more than 10 cards, will discard the played card tho
         amount = min(amount, 11 - len(self.hand))
-        self.hand += [get_card(card_type) for i in range(amount)]
+        self.hand += [get_card(card_type) for _ in range(amount)]
 
         # mainly just making some numbers work here, not looking into the piles yet for real
         for i in range(amount):

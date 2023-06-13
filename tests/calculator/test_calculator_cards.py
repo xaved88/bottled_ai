@@ -2006,3 +2006,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 0)
         self.see_enemy_lost_hp(play, 3)
         self.see_enemy_does_not_have_power(play, PowerId.WEAKENED)
+
+    def test_amplify(self):
+        state = self.given_state(CardId.AMPLIFY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.AMPLIFY, 1)
+
+    def test_amplify_upgraded(self):
+        state = self.given_state(CardId.AMPLIFY, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.AMPLIFY, 2)
+
+    def test_burst(self):
+        state = self.given_state(CardId.BURST)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.BURST, 1)
+
+    def test_double_tap(self):
+        state = self.given_state(CardId.DOUBLE_TAP)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.DOUBLE_TAP, 1)

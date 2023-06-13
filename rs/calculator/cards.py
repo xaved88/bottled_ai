@@ -133,6 +133,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.WILD_STRIKE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DOUBLE_TAP:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.BATTLE_TRANCE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.RAGE:
@@ -354,6 +356,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.CALCULATED_GAMBLE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL,
                     exhausts=True if not upgrade else False)
+    if card_id == CardId.BURST:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
 
     # defect
     if card_id == CardId.STRIKE_B:
@@ -470,3 +474,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
                     ethereal=True if not upgrade else False)
     if card_id == CardId.GO_FOR_THE_EYES:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.AMPLIFY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)

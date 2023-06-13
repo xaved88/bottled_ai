@@ -10,6 +10,7 @@ from enum import Enum
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
+    AMPLIFY = 'amplify'
     ANGER_NOB = 'anger'  # Non-standard naming to distinguish it from Angry
     ANGRY = 'angry'
     ACCURACY = 'accuracy'
@@ -20,6 +21,7 @@ class PowerId(Enum):
     BERSERK = 'berserk'
     BLUR = 'blur'
     BUFFER = 'buffer'
+    BURST = 'burst'
     CHOKED = 'choked'
     CONFUSED = 'confusion'  # Bot takes the new costs into account
     CONSTRICTED = 'constricted'
@@ -29,8 +31,10 @@ class PowerId(Enum):
     DEMON_FORM = 'demon form'
     DEXTERITY = 'dexterity'
     DOUBLE_DAMAGE = 'double damage'
+    DOUBLE_TAP = 'double tap'
     DRAW_CARD = 'draw card'  # It affects a future turn though, so we mostly don't do anything with it.
     DRAW_REDUCTION = 'draw reduction'  # It affects a future turn though, so we mostly don't do anything with it.
+    DUPLICATION_POTION_POWER = 'duplicationpower'
     ECHO_FORM = 'echo form'
     ELECTRO = 'electro'
     ENERGIZED = 'energizedblue'  # It affects a future turn though, so we mostly don't do anything with it.
