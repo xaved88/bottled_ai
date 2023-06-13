@@ -1982,3 +1982,27 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_power(play, PowerId.VULNERABLE, 2)
         self.see_player_has_power(play, PowerId.BERSERK, 1)
 
+    def test_go_for_the_eyes(self):
+        state = self.given_state(CardId.GO_FOR_THE_EYES)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+
+    def test_go_for_the_eyes_upgraded(self):
+        state = self.given_state(CardId.GO_FOR_THE_EYES, upgrade=1)
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 4)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
+
+    def test_go_for_the_eyes_does_not_trigger(self):
+        state = self.given_state(CardId.GO_FOR_THE_EYES)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 3)
+        self.see_enemy_does_not_have_power(play, PowerId.WEAKENED)

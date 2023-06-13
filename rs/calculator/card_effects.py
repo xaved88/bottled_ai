@@ -563,4 +563,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             post_hooks=[compile_driver_post_hook])]
     if card.id == CardId.ECHO_FORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ECHO_FORM: 1})]
+    if card.id == CardId.GO_FOR_THE_EYES:
+        hook = go_for_the_eyes_post_hook if not card.upgrade else go_for_the_eyes_upgraded_post_hook
+        return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 4, hits=1, post_hooks=[hook])]
     return [CardEffects()]

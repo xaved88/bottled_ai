@@ -117,6 +117,7 @@ class CardId(Enum):
     FUSION = 'fusion'
     GHOSTLY_ARMOR = 'ghostly armor'
     GLACIER = 'glacier'
+    GO_FOR_THE_EYES = 'go for the eyes'
     GOOD_INSTINCTS = 'good instincts'
     GRAND_FINALE = 'grand finale'
     HAND_OF_GREED = 'handofgreed'  # Weird id alert!

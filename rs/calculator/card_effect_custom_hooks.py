@@ -385,3 +385,17 @@ def compile_driver_post_hook(state: BattleStateInterface, effect: CardEffectsInt
         unique_orbs.add(orb_id)
     amount = len(unique_orbs)
     state.draw_cards(amount)
+
+
+def go_for_the_eyes_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __go_for_the_eyes_post_hook(state, target_index, 1)
+
+
+def go_for_the_eyes_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    __go_for_the_eyes_post_hook(state, target_index, 2)
+
+
+def __go_for_the_eyes_post_hook(state: BattleStateInterface, target_index: int, weak_counts: int):
+    if state.monsters[target_index].hits:
+        state.monsters[target_index].add_powers({PowerId.WEAKENED: weak_counts}, state.player.relics, state.player.powers)

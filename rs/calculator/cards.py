@@ -468,3 +468,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.ECHO_FORM:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER,
                     ethereal=True if not upgrade else False)
+    if card_id == CardId.GO_FOR_THE_EYES:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
