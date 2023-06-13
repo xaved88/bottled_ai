@@ -247,9 +247,11 @@ class BattleState(BattleStateInterface):
                                                   vulnerable_modifier=1, is_attack=False)
             if monster.powers.get(PowerId.ANGER_NOB):
                 if card.type == CardType.SKILL:
-                    if not monster.powers.get(PowerId.STRENGTH):
-                        monster.powers[PowerId.STRENGTH] = 0
-                    self.monsters[idx].powers[PowerId.STRENGTH] += monster.powers.get(PowerId.ANGER_NOB)
+                    self.monsters[idx].add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.ANGER_NOB)}, self.player.relics, self.player.powers)
+
+            if monster.powers.get(PowerId.CURIOSITY):
+                if card.type == CardType.POWER:
+                    self.monsters[idx].add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics, self.player.powers)
 
         for effect in effects:
             # custom post hooks
@@ -389,12 +391,16 @@ class BattleState(BattleStateInterface):
         if shame_count:
             self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics, self.player.powers)
 
-        # poison
+        # enemy end of turn powers
         for monster in self.monsters:
             poison = monster.powers.get(PowerId.POISON, 0)
             if poison > 0:
                 monster.powers[PowerId.POISON] -= 1
                 monster.inflict_damage(monster, poison, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
+            if monster.powers.get(PowerId.EXPLOSIVE):
+                monster.powers[PowerId.EXPLOSIVE] -= 1
+                if monster.powers[PowerId.EXPLOSIVE] < 1:
+                    self.player.inflict_damage(monster, 30, 1, vulnerable_modifier=1, is_attack=False)
 
         # get rid of ethereal cards
         for c in self.hand:

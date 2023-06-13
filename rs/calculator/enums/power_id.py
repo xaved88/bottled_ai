@@ -2,7 +2,6 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED but probably should be
-# 'duplicationpower'
 # 'explosive'
 # there are many others that aren't listed
 
@@ -27,6 +26,7 @@ class PowerId(Enum):
     CONSTRICTED = 'constricted'
     CORPSE_EXPLOSION_POWER = 'corpse explosion'
     CREATIVE_AI = 'creative ai'
+    CURIOSITY = 'curiosity'
     CURL_UP = 'curl up'
     DEMON_FORM = 'demon form'
     DEXTERITY = 'dexterity'
@@ -41,6 +41,7 @@ class PowerId(Enum):
     ENTANGLED = 'entangled'
     ENVENOM = 'envenom'
     EVOLVE = 'evolve'
+    EXPLOSIVE = 'explosive'
     FADING = 'fading'  # N/A
     FIRE_BREATHING = 'fire breathing'
     FLAME_BARRIER = 'flame barrier'

@@ -367,8 +367,8 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state.monsters[1].damage = 5
         state.monsters[1].hits = 1
         play = self.when_playing_the_first_card(state)
-        play.end_turn()
-        self.see_player_lost_hp(play, 7)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, 2, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, 0, enemy_index=1)
 
     def test_flight_reduces_damage(self):
         state = self.given_state(CardId.TWIN_STRIKE)
@@ -979,3 +979,51 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_relic_value(play, RelicId.INK_BOTTLE, 3)
         self.see_player_has_power(play, PowerId.STRENGTH, 6)
+
+    def test_curiosity_raises_strength_from_power(self):
+        state = self.given_state(CardId.CAPACITOR)
+        state.monsters[0].powers[PowerId.CURIOSITY] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.CURIOSITY, 1)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, 1)
+
+    def test_curiosity_does_not_trigger_with_non_power(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.monsters[0].powers[PowerId.CURIOSITY] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.CURIOSITY, 1)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, 0)
+
+    def test_only_the_monster_with_curiosity_gets_strength_up(self):
+        state = self.given_state(CardId.ECHO_FORM, targets=2)
+        state.monsters[0].powers[PowerId.CURIOSITY] = 3
+        state.monsters[0].damage = 5
+        state.monsters[0].hits = 1
+        state.monsters[1].damage = 5
+        state.monsters[1].hits = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, 3, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.STRENGTH, 0, enemy_index=1)
+
+    def test_explosive_increments(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.EXPLOSIVE] = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_has_power(play, PowerId.EXPLOSIVE, 2)
+
+    def test_explosive_increments_only_on_enemy_that_has_it(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2)
+        state.monsters[0].powers[PowerId.EXPLOSIVE] = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_has_power(play, PowerId.EXPLOSIVE, 2, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.EXPLOSIVE, 0, enemy_index=1)
+
+    def test_explosive_triggers(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.EXPLOSIVE] = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 30)
+        self.see_enemy_has_power(play, PowerId.EXPLOSIVE, 0)
