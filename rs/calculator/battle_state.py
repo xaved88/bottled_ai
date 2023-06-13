@@ -239,19 +239,21 @@ class BattleState(BattleStateInterface):
                 self.channel_orb(OrbId.LIGHTNING)
 
         # post card play MONSTER power checks
-        for idx, monster in enumerate(self.monsters):
+        for monster in self.monsters:
             if monster.powers.get(PowerId.TIME_WARP) is not None:
-                self.monsters[idx].powers[PowerId.TIME_WARP] += 1
+                monster.add_powers({PowerId.TIME_WARP: 1}, self.player.relics, self.player.powers)
             if monster.powers.get(PowerId.CHOKED):
-                self.monsters[idx].inflict_damage(self.player, monster.powers.get(PowerId.CHOKED), 1,
-                                                  vulnerable_modifier=1, is_attack=False)
+                monster.inflict_damage(self.player, monster.powers.get(PowerId.CHOKED), 1, vulnerable_modifier=1, is_attack=False)
             if monster.powers.get(PowerId.ANGER_NOB):
                 if card.type == CardType.SKILL:
-                    self.monsters[idx].add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.ANGER_NOB)}, self.player.relics, self.player.powers)
-
+                    monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.ANGER_NOB)}, self.player.relics, self.player.powers)
             if monster.powers.get(PowerId.CURIOSITY):
                 if card.type == CardType.POWER:
-                    self.monsters[idx].add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics, self.player.powers)
+                    monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics, self.player.powers)
+            if monster.powers.get(PowerId.HEX):
+                if card.type != CardType.ATTACK:
+                    for i in range(monster.powers.get(PowerId.HEX)):
+                        self.draw_pile.append(get_card(CardId.DAZED))
 
         for effect in effects:
             # custom post hooks
@@ -361,6 +363,10 @@ class BattleState(BattleStateInterface):
             self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
                                        vulnerable_modifier=1, is_attack=False)
 
+        if self.player.powers.get(PowerId.REGENERATION_PLAYER, 0) and self.player.current_hp > 0:
+            self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0))
+            self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
+
         # curses and burns
         regret_count = len(
             [1 for c in self.hand if c.id == CardId.REGRET])  # might technically be off by 1 if there are #manyregrets
@@ -391,21 +397,23 @@ class BattleState(BattleStateInterface):
         if shame_count:
             self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics, self.player.powers)
 
-        # enemy end of turn powers
+        # get rid of ethereal cards
+        for c in self.hand:
+            if c.ethereal:
+                self.exhaust_pile.append(c)
+
+        # this is getting into the enemy's turn now
+        # enemy powers
         for monster in self.monsters:
             poison = monster.powers.get(PowerId.POISON, 0)
             if poison > 0:
                 monster.powers[PowerId.POISON] -= 1
                 monster.inflict_damage(monster, poison, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
-            if monster.powers.get(PowerId.EXPLOSIVE):
-                monster.powers[PowerId.EXPLOSIVE] -= 1
-                if monster.powers[PowerId.EXPLOSIVE] < 1:
-                    self.player.inflict_damage(monster, 30, 1, vulnerable_modifier=1, is_attack=False)
+            if monster.powers.get(PowerId.REGENERATE_ENEMY) and monster.current_hp > 0:
+                monster.heal(monster.powers.get(PowerId.REGENERATE_ENEMY))
 
-        # get rid of ethereal cards
-        for c in self.hand:
-            if c.ethereal:
-                self.exhaust_pile.append(c)
+        # last check in case there were some more monsters that should die
+        self.kill_monsters()
 
         # apply enemy damage
         player_vulnerable_mod = 1.5 if not self.relics.get(RelicId.ODD_MUSHROOM) else 1.25
@@ -417,8 +425,10 @@ class BattleState(BattleStateInterface):
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
-        # last check in case there were some more monsters that should die
-        self.kill_monsters()
+            if monster.powers.get(PowerId.EXPLOSIVE):
+                monster.powers[PowerId.EXPLOSIVE] -= 1
+                if monster.powers[PowerId.EXPLOSIVE] < 1:
+                    self.player.inflict_damage(monster, 30, 1, vulnerable_modifier=1, is_attack=False)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()

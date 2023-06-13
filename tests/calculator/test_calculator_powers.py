@@ -1027,3 +1027,41 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_lost_hp(play, 30)
         self.see_enemy_has_power(play, PowerId.EXPLOSIVE, 0)
+
+    def test_hex(self):
+        state = self.given_state(CardId.DEFEND_G)
+        state.hand.append(get_card(CardId.DEFEND_G))
+        state.monsters[0].powers[PowerId.HEX] = 1
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_draw_pile_count(play, 2)
+
+    def test_regenerate_enemy_heals(self):
+        state = self.given_state(CardId.DEFEND_G)
+        state.monsters[0].powers[PowerId.REGENERATE_ENEMY] = 1
+        state.monsters[0].current_hp = 99
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 0)
+
+    def test_regenerate_enemy_does_not_revive_enemy(self):
+        state = self.given_state(CardId.DEFEND_G)
+        state.monsters[0].powers[PowerId.REGENERATE_ENEMY] = 1
+        state.monsters[0].current_hp = 0
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 100)
+
+    def test_regeneration_player_heals_and_increments(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.REGENERATION_PLAYER: 4})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, -4)
+        self.see_player_has_power(play, PowerId.REGENERATION_PLAYER, 3)
+
+    def test_regeneration_player_does_not_revive_player(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.REGENERATION_PLAYER: 4})
+        state.player.current_hp = 1
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 50)

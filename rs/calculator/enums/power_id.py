@@ -49,6 +49,7 @@ class PowerId(Enum):
     FOCUS = 'focus'
     FRAIL = 'frail'
     HEATSINK = 'heatsink'
+    HEX = 'hex'
     INFINITE_BLADES = 'infinite blades'
     INTANGIBLE_PLAYER = 'intangibleplayer'
     INTANGIBLE_ENEMY = 'intangible'
@@ -71,6 +72,8 @@ class PowerId(Enum):
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'
     RAGE = 'rage'
+    REGENERATE_ENEMY = 'regenerate'
+    REGENERATION_PLAYER = 'regeneration'
     REPAIR = 'repair'
     SADISTIC = 'sadistic'
     SHACKLED = 'shackled'  # Enemy regains strength at end of turn, not currently relevant

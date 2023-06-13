@@ -130,10 +130,11 @@ class ComparatorAssessment:
         return self.__get_value('bad_cards_exhausted', lambda: len(
             [True for c in self.state.exhaust_pile if c.type == CardType.CURSE or c.type == CardType.STATUS]))
 
-    def saved_for_later(self) -> int:
-        return self.__get_value('saved_for_later', lambda: len([True for c in self.state.discard_pile if c.ethereal
-                                                                and c.type != CardType.CURSE
-                                                                and c.type != CardType.STATUS]))
+    def ethereal_saved_for_later(self) -> int:
+        return self.__get_value('ethereal_saved_for_later',
+                                lambda: len([True for c in self.state.discard_pile if c.ethereal
+                                             and c.type != CardType.CURSE
+                                             and c.type != CardType.STATUS]))
 
     def awkward_shivs(self) -> int:
         return self.__get_value('awkward_shivs',

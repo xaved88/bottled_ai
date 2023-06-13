@@ -139,8 +139,8 @@ def least_incoming_damage(best: CA, challenger: CA) -> Optional[bool]:
 
 
 def most_ethereal_cards_saved_for_later(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.saved_for_later() == challenger.saved_for_later() \
-        else challenger.saved_for_later() > best.saved_for_later()
+    return None if best.ethereal_saved_for_later() == challenger.ethereal_saved_for_later() \
+        else challenger.ethereal_saved_for_later() > best.ethereal_saved_for_later()
 
 
 def least_awkward_shivs(best: CA, challenger: CA) -> Optional[bool]:

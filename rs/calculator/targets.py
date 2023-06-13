@@ -102,6 +102,7 @@ class Target(TargetInterface):
                         trigger_malleable_block += 1
                     if is_attack and source.powers.get(PowerId.ENVENOM):
                         self.add_powers({PowerId.POISON: 1}, source.relics, source.powers)
+
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
                         self.current_hp = 0
