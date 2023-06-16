@@ -134,3 +134,18 @@ class CalculatorOrbsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_orb_count(play, 0)
+
+    def test_channeling_random_orb(self):
+        state = self.given_state(CardId.WOUND, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        play.state.channel_orb(OrbId.INTERNAL_RANDOM_ORB)
+
+        orb_id, amount = play.state.orbs[0]
+        self.assertEqual(OrbId.INTERNAL_RANDOM_ORB, orb_id)
+
+    def test_random_orb_evocation(self):
+        state = self.given_state(CardId.WOUND, orbs=[(OrbId.INTERNAL_RANDOM_ORB, 1)], orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        play.state.evoke_orbs()
+        self.see_enemy_lost_hp(play, 0)
+        self.see_orb_count(play, 0)

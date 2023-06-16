@@ -2030,3 +2030,97 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.DOUBLE_TAP, 1)
+
+    def test_chaos(self):
+        state = self.given_state(CardId.CHAOS, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.INTERNAL_RANDOM_ORB)
+
+    def test_chaos_upgraded(self):
+        state = self.given_state(CardId.CHAOS, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 2)
+        self.see_orb_type_count(play, 2, OrbId.INTERNAL_RANDOM_ORB)
+
+    def test_darkness(self):
+        state = self.given_state(CardId.DARKNESS, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_orb_type_count(play, 1, OrbId.DARK)
+
+    def test_darkness_upgraded(self):
+        state = self.given_state(CardId.DARKNESS, upgrade=1, orb_slots=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+
+        orb_id, amount = play.state.orbs[0]
+        self.assertEqual(OrbId.DARK, orb_id)
+        self.assertEqual(12, amount)
+
+    def test_darkness_upgraded_triggering_evoke(self):
+        state = self.given_state(CardId.DARKNESS, upgrade=1, orb_slots=1, orbs=[(OrbId.DARK, 6)])
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_orb_count(play, 1)
+        self.see_enemy_lost_hp(play, 12)
+
+        orb_id, amount = play.state.orbs[0]
+        self.assertEqual(OrbId.DARK, orb_id)
+        self.assertEqual(12, amount)
+
+    def test_hello_world(self):
+        state = self.given_state(CardId.HELLO_WORLD)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.HELLO, 1)
+
+    def test_magnetism(self):
+        state = self.given_state(CardId.MAGNETISM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.MAGNETISM, 1)
+
+    def test_all_for_one(self):
+        state = self.given_state(CardId.ALL_FOR_ONE)
+        state.discard_pile.append(get_card(CardId.STRIKE_R))
+        state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        state.discard_pile.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_hand_count(play, 1)
+        self.see_hand_card_is(play, CardId.NEUTRALIZE, 0)
+        self.see_player_discard_pile_count(play, 3)
+
+    def test_all_for_one_limited_by_hand_size(self):
+        state = self.given_state(CardId.ALL_FOR_ONE)
+        for i in range(8):
+            state.hand.append(get_card(CardId.WOUND))
+        state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        for j in range(5):
+            state.discard_pile.append(get_card(CardId.WOUND))
+        state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_hand_count(play, 10)
+        self.see_player_discard_pile_count(play, 6)
+        self.see_hand_card_is(play, CardId.NEUTRALIZE, 8)
+        self.see_hand_card_is(play, CardId.NEUTRALIZE, 9)
+
+    def test_all_for_one_pulls_from_end_of_discard_list(self):
+        state = self.given_state(CardId.ALL_FOR_ONE)
+        for _ in range(15):
+            state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        state.discard_pile.append(get_card(CardId.ANGER))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_hand_card_is(play, CardId.ANGER, 0)
+
+

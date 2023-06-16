@@ -57,7 +57,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def channel_orb(self, orb_id: OrbId):
+    def channel_orb(self, orb_id: OrbId, triggered_by_darkness_upgraded: bool = False):
         # must be implemented by children
         pass
 

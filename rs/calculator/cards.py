@@ -401,6 +401,11 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.SELF_REPAIR:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.HELLO_WORLD:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.MAGNETISM:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.MACHINE_LEARNING:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.ELECTRODYNAMICS:
@@ -431,6 +436,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.COLD_SNAP:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.DOOM_AND_GLOOM:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.ALL_FOR_ONE:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.GLACIER:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
@@ -475,4 +482,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.GO_FOR_THE_EYES:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.AMPLIFY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.CHAOS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.DARKNESS:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)

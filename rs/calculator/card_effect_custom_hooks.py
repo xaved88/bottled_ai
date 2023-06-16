@@ -399,3 +399,35 @@ def go_for_the_eyes_upgraded_post_hook(state: BattleStateInterface, effect: Card
 def __go_for_the_eyes_post_hook(state: BattleStateInterface, target_index: int, weak_counts: int):
     if state.monsters[target_index].hits:
         state.monsters[target_index].add_powers({PowerId.WEAKENED: weak_counts}, state.player.relics, state.player.powers)
+
+
+def darkness_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.channel_orb(OrbId.DARK)
+
+
+def darkness_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.channel_orb(OrbId.DARK, triggered_by_darkness_upgraded=True)
+
+
+def all_for_one_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    hand_space = 10 - len(state.hand) + 1   # +1 because we didn't dispose of All For One yet
+    discard_length = len(state.discard_pile)
+    discard_index = 0
+
+    discard_pile_working_copy = state.discard_pile.copy()
+    discard_pile_working_copy.reverse()
+
+    for _ in range(discard_length):
+        if hand_space < 1:
+            break
+        card = discard_pile_working_copy[discard_index]
+        if card.cost == 0:
+            del discard_pile_working_copy[discard_index]
+            state.hand.append(get_card(card.id))
+            hand_space -= 1
+        else:
+            discard_index += 1
+
+    discard_pile_working_copy.reverse()
+    state.discard_pile = discard_pile_working_copy.copy()
+

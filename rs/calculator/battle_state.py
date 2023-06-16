@@ -633,14 +633,20 @@ class BattleState(BattleStateInterface):
                                           is_attack=False, is_orbs=True)
                 elif orb == OrbId.PLASMA:
                     self.player.energy += 2
+                elif orb == OrbId.INTERNAL_RANDOM_ORB:
+                    pass
 
-    def channel_orb(self, orb_id: OrbId):
+    def channel_orb(self, orb_id: OrbId, triggered_by_darkness_upgraded: bool = False):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         amount = 1 if orb_id is not OrbId.DARK else 6 + focus
         if self.orb_slots > 0:
             self.orbs.append((orb_id, amount))
 
-        # Todo -> this order will break Darkness+ because the passive triggers after channel, before evoke...
+        if triggered_by_darkness_upgraded:
+            for index, (orb, current_amount) in enumerate(self.orbs):
+                if orb == OrbId.DARK:
+                    self.orbs[index] = (OrbId.DARK, current_amount + 6 + focus)
+
         while len(self.orbs) > self.orb_slots:
             self.evoke_orbs()
 
