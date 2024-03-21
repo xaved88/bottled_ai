@@ -401,6 +401,7 @@ class BattleState(BattleStateInterface):
         for c in self.hand:
             if c.ethereal:
                 self.exhaust_pile.append(c)
+                del self.hand[self.hand.index(c)]
 
         # this is getting into the enemy's turn now
         # enemy powers
