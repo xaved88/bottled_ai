@@ -167,3 +167,9 @@ class ComparatorAssessment:
 
     def player_bias(self) -> int:
         return self.__get_value('player_bias', lambda: self.state.player.powers.get(PowerId.BIAS, 0))
+
+    def repair_count(self) -> int:
+        missing_hp = self.state.player.max_hp - self.state.player.current_hp
+        if missing_hp >= 1:
+            return self.__get_value('repair_count', lambda: self.state.player.powers.get(PowerId.REPAIR, 0))
+        return 0

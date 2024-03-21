@@ -166,3 +166,12 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_playing_random_poison_is_desirable(self):
         self.execute_handler_tests('/battles/general/play_bouncing_flask.json', ['play 1'])
+
+    def test_play_self_repair_when_going_to_win_and_damaged(self):
+        self.execute_handler_tests('/battles/general/winning_play_self_repair.json', ['play 2'])
+
+    def test_do_not_play_self_repair_when_more_important_things_happening(self):
+        self.execute_handler_tests('/battles/general/self_repair_in_hand.json', ['play 4 0'])
+
+    def test_do_not_play_self_repair_when_full(self):
+        self.execute_handler_tests('/battles/general/winning_do_not_play_self_repair.json', ['play 5 0'])

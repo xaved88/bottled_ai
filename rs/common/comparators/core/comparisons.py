@@ -21,6 +21,9 @@ def most_optimal_winning_battle(best: CA, challenger: CA) -> Optional[bool]:
     if best.incoming_damage() != challenger.incoming_damage():
         return challenger.incoming_damage() < best.incoming_damage()
 
+    if best.repair_count() != challenger.repair_count():
+        return challenger.repair_count() > best.repair_count()
+
     if best.pen_nib_counter() != challenger.pen_nib_counter():
         return challenger.pen_nib_counter() > best.pen_nib_counter()
 
