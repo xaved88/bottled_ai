@@ -104,6 +104,7 @@ class CardId(Enum):
     ENLIGHTENMENT = 'enlightenment'
     ENTRENCH = 'entrench'
     ENVENOM = 'envenom'
+    EQUILIBRIUM = 'equilibrium'
     ESCAPE_PLAN = 'escape plan'
     EVISCERATE = 'eviscerate'
     EVOLVE = 'evolve'

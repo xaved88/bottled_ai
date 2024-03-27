@@ -2,7 +2,7 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED but probably should be
-# 'explosive'
+#
 # there are many others that aren't listed
 
 
@@ -77,6 +77,7 @@ class PowerId(Enum):
     REGENERATE_ENEMY = 'regenerate'
     REGENERATION_PLAYER = 'regeneration'
     REPAIR = 'repair'
+    RETAIN_ALL = 'retain'
     SADISTIC = 'sadistic'
     SHACKLED = 'shackled'  # Enemy regains strength at end of turn, not currently relevant
     SHARP_HIDE = 'sharp hide'

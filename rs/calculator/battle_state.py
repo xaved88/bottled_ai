@@ -398,12 +398,29 @@ class BattleState(BattleStateInterface):
             self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics, self.player.powers)
 
         # get rid of cards
+        cards_to_maybe_retain: list[CardInterface] = []
+        auto_play_end_turn_cards: list[CardId] =\
+            [
+                CardId.REGRET,
+                CardId.DECAY,
+                CardId.BURN,
+                CardId.DOUBT,
+                CardId.SHAME,
+             ]
+
         for c in self.hand:
             if c.ethereal:
                 self.exhaust_pile.append(c)
-            else:
+            elif c.id in auto_play_end_turn_cards:
                 self.discard_pile.append(c)
+            else:
+                cards_to_maybe_retain.append(c)
         self.hand.clear()
+
+        if self.player.powers.get(PowerId.RETAIN_ALL):
+            self.hand = cards_to_maybe_retain.copy()
+        else:
+            self.discard_pile.extend(cards_to_maybe_retain)
 
         # this is getting into the enemy's turn now
         # enemy powers
