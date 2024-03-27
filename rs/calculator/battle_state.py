@@ -397,11 +397,13 @@ class BattleState(BattleStateInterface):
         if shame_count:
             self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics, self.player.powers)
 
-        # get rid of ethereal cards
+        # get rid of cards
         for c in self.hand:
             if c.ethereal:
                 self.exhaust_pile.append(c)
-                del self.hand[self.hand.index(c)]
+            else:
+                self.discard_pile.append(c)
+        self.hand.clear()
 
         # this is getting into the enemy's turn now
         # enemy powers

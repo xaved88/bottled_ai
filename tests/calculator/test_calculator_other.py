@@ -62,10 +62,12 @@ class CalculatorOtherTest(CalculatorTestFixture):
 
     def test_ethereal_cards_exhaust_on_turn_end(self):
         state = self.given_state(CardId.ASCENDERS_BANE)
+        state.hand.append(get_card(CardId.ASCENDERS_BANE))
         state.hand.append(get_card(CardId.STRIKE_R))
         play = self.when_playing_the_whole_hand(state)
         play.end_turn()
-        self.see_player_exhaust_count(play, 1)
+        self.see_player_exhaust_count(play, 2)
+        self.see_player_discard_pile_count(play, 1)
         self.see_player_hand_count(play, 0)
 
     def test_ethereal_cards_exhaust_after_curses_applied(self):
@@ -74,3 +76,12 @@ class CalculatorOtherTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         play.end_turn()
         self.see_player_lost_hp(play, 2)
+
+    def test_hand_goes_to_discard_when_turn_ended(self):
+        state = self.given_state(CardId.WOUND)
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 3)
