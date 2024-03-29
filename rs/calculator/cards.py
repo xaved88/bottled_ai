@@ -5,7 +5,7 @@ from rs.game.card import CardType
 
 class Card(CardInterface):
     def __init__(self, card_id: CardId, upgrade: int, cost: int, needs_target: bool, card_type: CardType,
-                 ethereal: bool = False, exhausts: bool = False):
+                 ethereal: bool = False, exhausts: bool = False, retains: bool = False):
         self.id: CardId = card_id
         self.upgrade: int = upgrade
         self.cost: int = cost  # energy cost. Maybe -1 for no cost and not playable statuses?
@@ -13,6 +13,7 @@ class Card(CardInterface):
         self.ethereal: bool = ethereal
         self.exhausts: bool = exhausts
         self.type: CardType = card_type
+        self.retains: bool = retains
 
     def get_state_string(self) -> str:
         return f"{self.id.value}+{self.upgrade}+{self.cost},"
@@ -474,8 +475,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.COMPILE_DRIVER:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
-    if card_id == CardId.COMPILE_DRIVER:
-        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.ECHO_FORM:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER,
                     ethereal=True if not upgrade else False)
@@ -489,3 +488,9 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.EQUILIBRIUM:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+
+    # watcher
+    if card_id == CardId.FLYING_SLEEVES:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, retains=True)
+    if card_id == CardId.ESTABLISHMENT:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)

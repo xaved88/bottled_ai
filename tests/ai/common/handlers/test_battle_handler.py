@@ -174,4 +174,10 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/self_repair_in_hand.json', ['play 4 0'])
 
     def test_do_not_play_self_repair_when_full(self):
-        self.execute_handler_tests('/battles/general/winning_do_not_play_self_repair.json', ['play 5 0'])
+        self.execute_handler_tests('/battles/general/winning_do_not_play_self_repair.json', ['play 5 0'])    def test_retaining_enmasse_is_desirable(self):
+
+    def test_retaining_enmasse_is_desirable(self):
+        self.execute_handler_tests('/battles/general/play_equilibrium.json', ['play 3'])
+
+    def test_retaining_individual_card_is_desirable(self):
+        self.execute_handler_tests('/battles/general/save_flying_sleeves.json', ['play 3'])

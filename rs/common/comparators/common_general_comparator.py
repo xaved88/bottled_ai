@@ -32,6 +32,7 @@ default_comparisons = [
     most_bad_cards_exhausted,
     least_incoming_damage,
     most_ethereal_cards_saved_for_later,
+    most_retained_cards,
     most_energy,
 ]
 
@@ -44,6 +45,7 @@ powers_we_like: List[PowerId] = [
     PowerId.DEMON_FORM,
     PowerId.ELECTRO,
     PowerId.ENVENOM,
+    PowerId.ESTABLISHMENT,
     PowerId.EVOLVE,
     PowerId.FIRE_BREATHING,
     PowerId.FOCUS,

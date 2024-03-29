@@ -173,3 +173,7 @@ class ComparatorAssessment:
         if missing_hp >= 1:
             return self.__get_value('repair_count', lambda: self.state.player.powers.get(PowerId.REPAIR, 0))
         return 0
+
+    def retained_cards(self) -> int:
+        return self.__get_value('retained_cards',
+                                lambda: len([True for c in self.state.hand if c.retains]))

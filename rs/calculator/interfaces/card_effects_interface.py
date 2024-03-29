@@ -35,3 +35,4 @@ class CardEffectsInterface:
     amount_to_discard: int
     add_cards_to_hand: [CardInterface, int]
     channel_orbs: List[OrbId]
+    retains: bool

@@ -41,6 +41,7 @@ class PowerId(Enum):
     ENTANGLED = 'entangled'
     ENVENOM = 'envenom'
     EVOLVE = 'evolve'
+    ESTABLISHMENT = 'establishment'
     EXPLOSIVE = 'explosive'
     FADING = 'fading'  # N/A
     FIRE_BREATHING = 'fire breathing'

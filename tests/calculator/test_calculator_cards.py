@@ -2130,5 +2130,29 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 13)
         self.see_player_has_power(play, PowerId.RETAIN_ALL, 1)
 
+    def test_flying_sleeves(self):
+        state = self.given_state(CardId.FLYING_SLEEVES)
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
 
+    def test_flying_sleeves_retains(self):
+        state = self.given_state(CardId.FLYING_SLEEVES)
+        state.player.energy = 0
+        play = self.when_playing_the_whole_hand(state)
+        self.assertEqual(True, play.state.hand[0].retains)
+
+    def test_flying_sleeves_stays_in_hand(self):
+        state = self.given_state(CardId.FLYING_SLEEVES)
+        state.player.energy = 0
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_hand_count(play, 1)
+
+    def test_establishment(self):
+        state = self.given_state(CardId.ESTABLISHMENT)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.ESTABLISHMENT, 1)
 

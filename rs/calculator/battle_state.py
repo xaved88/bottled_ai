@@ -408,7 +408,15 @@ class BattleState(BattleStateInterface):
                 CardId.SHAME,
              ]
 
+        # 'Retains' should be a property of a card imo. And I've added it as such.
+        # But we populate card properties based on import. And 'retain' isn't in the API.
+        # And so I'm having trouble persisting 'retains' in all places we'd need it.
+        # So I ALSO added it as an effect. Will clean this up after consulting with Logan.
+        # Maybe should hack it into the import area instead.
         for c in self.hand:
+            for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
+                if effect.retains:
+                    c.retains = True
             if c.ethereal:
                 self.exhaust_pile.append(c)
             elif c.id in auto_play_end_turn_cards:
@@ -418,9 +426,14 @@ class BattleState(BattleStateInterface):
         self.hand.clear()
 
         if self.player.powers.get(PowerId.RETAIN_ALL):
-            self.hand = cards_to_maybe_retain.copy()
-        else:
-            self.discard_pile.extend(cards_to_maybe_retain)
+            for c in cards_to_maybe_retain:
+                c.retains = True
+
+        for c in cards_to_maybe_retain:
+            if c.retains:
+                self.hand.append(c)
+            else:
+                self.discard_pile.append(c)
 
         # this is getting into the enemy's turn now
         # enemy powers

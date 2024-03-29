@@ -29,6 +29,7 @@ class CardEffects(CardEffectsInterface):
             amount_to_discard: int = 0,
             add_cards_to_hand: [CardInterface, int] = None,
             channel_orbs: List[OrbId] = None,
+            retains: bool = False
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -48,6 +49,7 @@ class CardEffects(CardEffectsInterface):
         self.amount_to_discard: int = amount_to_discard
         self.add_cards_to_hand: [CardInterface, int] = add_cards_to_hand
         self.channel_orbs: List[OrbId] = [] if channel_orbs is None else channel_orbs
+        self.retains: bool = retains
 
 
 def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: List[CardInterface],
@@ -588,4 +590,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.EQUILIBRIUM:
         return [CardEffects(target=TargetType.SELF, block=13 if not card.upgrade else 16,
                             applies_powers={PowerId.RETAIN_ALL: 1})]
+    if card.id == CardId.FLYING_SLEEVES:
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=2, retains=True)]
+    if card.id == CardId.ESTABLISHMENT:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ESTABLISHMENT: 1})]
     return [CardEffects()]

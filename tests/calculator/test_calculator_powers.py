@@ -1093,3 +1093,13 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 0)
         self.see_player_discard_pile_count(play, 1)
 
+    def test_retain_all_does_not_duplicate_retained_cards(self):
+        state = self.given_state(CardId.FLYING_SLEEVES, player_powers={PowerId.RETAIN_ALL: 1})
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+

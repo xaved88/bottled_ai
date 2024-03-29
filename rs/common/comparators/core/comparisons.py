@@ -169,3 +169,8 @@ def most_orb_slots(best: CA, challenger: CA) -> Optional[bool]:
 def most_channeled_orbs(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.channeled_orb_count() == challenger.channeled_orb_count() \
         else challenger.channeled_orb_count() > best.channeled_orb_count()
+
+
+def most_retained_cards(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.retained_cards() == challenger.retained_cards() \
+        else challenger.retained_cards() > best.retained_cards()
