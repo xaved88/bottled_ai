@@ -55,7 +55,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/play_slimed.json', ['play 1'])
 
     def test_do_not_discard_bad_ethereal_cards(self):
-        self.execute_handler_tests('/battles/general/hold_on_to_bad_ethereals.json', ['choose 2', 'confirm', 'wait 30'])
+        self.execute_handler_tests('/battles/general/discard_hold_on_to_bad_ethereals.json', ['choose 2', 'confirm', 'wait 30'])
 
     def test_save_unnecessary_apparition_for_later(self):
         self.execute_handler_tests('/battles/general/save_unnecessary_apparition_for_later.json',
@@ -168,13 +168,13 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/play_bouncing_flask.json', ['play 1'])
 
     def test_play_self_repair_when_going_to_win_and_damaged(self):
-        self.execute_handler_tests('/battles/general/winning_play_self_repair.json', ['play 2'])
+        self.execute_handler_tests('/battles/powers/winning_play_self_repair.json', ['play 2'])
 
     def test_do_not_play_self_repair_when_more_important_things_happening(self):
-        self.execute_handler_tests('/battles/general/self_repair_in_hand.json', ['play 4 0'])
+        self.execute_handler_tests('/battles/powers/self_repair_in_hand.json', ['play 4 0'])
 
     def test_do_not_play_self_repair_when_full(self):
-        self.execute_handler_tests('/battles/general/winning_do_not_play_self_repair.json', ['play 5 0'])    def test_retaining_enmasse_is_desirable(self):
+        self.execute_handler_tests('/battles/powers/winning_do_not_play_self_repair.json', ['play 5 0'])
 
     def test_retaining_enmasse_is_desirable(self):
         self.execute_handler_tests('/battles/general/play_equilibrium.json', ['play 3'])
