@@ -31,6 +31,7 @@ class CardEffectsInterface:
     post_hooks: List['CardEffectCustomHook']
     post_others_discarded_hooks: List['CardEffectCustomHookWithCard']
     post_self_discarded_hooks: List['CardEffectCustomHook']
+    end_turn_hooks: List['CardEffectCustomHook']
     heal: int
     amount_to_discard: int
     add_cards_to_hand: [CardInterface, int]

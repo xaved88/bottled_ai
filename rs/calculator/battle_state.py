@@ -91,7 +91,8 @@ class BattleState(BattleStateInterface):
         if self.player.powers.get(PowerId.DOUBLE_TAP) and card.type == CardType.ATTACK:
             self.repeat_card(card, target_index, PowerId.DOUBLE_TAP)
 
-    def repeat_card(self, card: CardInterface, target_index: int, repeating_power, power_lost_if_incomplete: bool = True):
+    def repeat_card(self, card: CardInterface, target_index: int, repeating_power,
+                    power_lost_if_incomplete: bool = True):
         if power_lost_if_incomplete:
             self.player.powers[repeating_power] -= 1
 
@@ -201,7 +202,7 @@ class BattleState(BattleStateInterface):
                 self.amount_to_discard += effect.amount_to_discard
 
         # dispose of cards being played
-        if card in self.hand:  # because some cards like fiend fire, will destroy themselves before they can follow this route
+        if card in self.hand:  # b/c some cards like fiend fire, will destroy themselves before they follow this route
             idx = self.hand.index(card)
             if card.exhausts:
                 self.exhaust_pile.append(card)
@@ -243,13 +244,16 @@ class BattleState(BattleStateInterface):
             if monster.powers.get(PowerId.TIME_WARP) is not None:
                 monster.add_powers({PowerId.TIME_WARP: 1}, self.player.relics, self.player.powers)
             if monster.powers.get(PowerId.CHOKED):
-                monster.inflict_damage(self.player, monster.powers.get(PowerId.CHOKED), 1, vulnerable_modifier=1, is_attack=False)
+                monster.inflict_damage(self.player, monster.powers.get(PowerId.CHOKED), 1, vulnerable_modifier=1,
+                                       is_attack=False)
             if monster.powers.get(PowerId.ANGER_NOB):
                 if card.type == CardType.SKILL:
-                    monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.ANGER_NOB)}, self.player.relics, self.player.powers)
+                    monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.ANGER_NOB)}, self.player.relics,
+                                       self.player.powers)
             if monster.powers.get(PowerId.CURIOSITY):
                 if card.type == CardType.POWER:
-                    monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics, self.player.powers)
+                    monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics,
+                                       self.player.powers)
             if monster.powers.get(PowerId.HEX):
                 if card.type != CardType.ATTACK:
                     for i in range(monster.powers.get(PowerId.HEX)):
@@ -367,60 +371,32 @@ class BattleState(BattleStateInterface):
             self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0))
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 
-        # curses and burns
-        regret_count = len(
-            [1 for c in self.hand if c.id == CardId.REGRET])  # might technically be off by 1 if there are #manyregrets
-        if regret_count:
-            self.player.inflict_damage(self.player, len(self.hand), regret_count, blockable=False,
-                                       vulnerable_modifier=1,
-                                       is_attack=False)
-
-        decay_count = len([1 for c in self.hand if c.id == CardId.DECAY])
-        if decay_count:
-            self.player.inflict_damage(self.player, 2, decay_count, vulnerable_modifier=1,
-                                       is_attack=False)
-
-        burn_count = len([1 for c in self.hand if c.id == CardId.BURN and c.upgrade == 0])
-        if burn_count:
-            self.player.inflict_damage(self.player, 2, burn_count, vulnerable_modifier=1,
-                                       is_attack=False)
-        burn_upgraded_count = len([1 for c in self.hand if c.id == CardId.BURN and c.upgrade == 1])
-        if burn_upgraded_count:
-            self.player.inflict_damage(self.player, 4, burn_upgraded_count, vulnerable_modifier=1,
-                                       is_attack=False)
-
-        doubt_count = len([1 for c in self.hand if c.id == CardId.DOUBT])
-        if doubt_count:
-            self.player.add_powers({PowerId.WEAKENED: doubt_count}, self.player.relics, self.player.powers)
-
-        shame_count = len([1 for c in self.hand if c.id == CardId.SHAME])
-        if shame_count:
-            self.player.add_powers({PowerId.FRAIL: shame_count}, self.player.relics, self.player.powers)
+        # hooks for cards that are auto-played end of turn, e.g. burns and some curses
+        for card in self.hand:
+            for effect in get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand):
+                for hook in effect.end_turn_hooks:
+                    hook(self, effect, None)
+                    card.autoplay = True
 
         # get rid of cards
         cards_to_maybe_retain: list[CardInterface] = []
-        auto_play_end_turn_cards: list[CardId] =\
-            [
-                CardId.REGRET,
-                CardId.DECAY,
-                CardId.BURN,
-                CardId.DOUBT,
-                CardId.SHAME,
-             ]
 
         # 'Retains' should be a property of a card imo. And I've added it as such.
         # But we populate card properties based on import. And 'retain' isn't in the API.
         # And so I'm having trouble persisting 'retains' in all places we'd need it.
         # So I ALSO added it as an effect. Will clean this up after consulting with Logan.
         # Maybe should hack it into the import area instead.
+        # Kind of a similar issue with the 'autoplay' cards but practically doesn't matter since we don't have
+        # decision-making around them.
         for c in self.hand:
             for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
                 if effect.retains:
                     c.retains = True
             if c.ethereal:
                 self.exhaust_pile.append(c)
-            elif c.id in auto_play_end_turn_cards:
+            elif c.autoplay:
                 self.discard_pile.append(c)
+
             else:
                 cards_to_maybe_retain.append(c)
         self.hand.clear()
@@ -549,7 +525,7 @@ class BattleState(BattleStateInterface):
         # self_discarded hook
         for effect in get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand):
             for hook in effect.post_self_discarded_hooks:
-                hook(self, effect)
+                hook(self, effect, None)
         # others_discarded hook
         for hand_card in self.hand:
             for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):
@@ -597,8 +573,9 @@ class BattleState(BattleStateInterface):
     def add_player_block(self, amount: int):
         self.player.block += amount
         if amount > 0 and self.player.powers.get(PowerId.JUGGERNAUT, 0):
-            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1, affected_by_vulnerable=False,
-                                              is_attack=False)
+            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1,
+                                              affected_by_vulnerable=False, is_attack=False)
+
 
     def kill_monsters(self):
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.

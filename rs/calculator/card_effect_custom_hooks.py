@@ -431,3 +431,27 @@ def all_for_one_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
     discard_pile_working_copy.reverse()
     state.discard_pile = discard_pile_working_copy.copy()
 
+
+def decay_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.inflict_damage(state.player, 2, 1, vulnerable_modifier=1, is_attack=False)
+
+
+def doubt_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.add_powers({PowerId.WEAKENED: 1}, state.player.relics, state.player.powers)
+
+
+def shame_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.add_powers({PowerId.FRAIL: 1}, state.player.relics, state.player.powers)
+
+
+def burn_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.inflict_damage(state.player, 2, 1, vulnerable_modifier=1, is_attack=False)
+
+
+def burn_upgraded_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.inflict_damage(state.player, 4, 1, vulnerable_modifier=1, is_attack=False)
+
+
+def regret_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.inflict_damage(state.player, len(state.hand), 1, vulnerable_modifier=1, is_attack=False)
+    # this will probably be off by 1 if there are 2 regrets since ingame they'd be handled one by one

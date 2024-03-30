@@ -609,6 +609,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_lost_hp(play, 2)
 
+    def test_multiple_decay(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.DECAY))
+        state.hand.append(get_card(CardId.DECAY))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 4)
+
     def test_decay_blockable(self):
         state = self.given_state(CardId.DECAY)
         state.hand.append(get_card(CardId.DEFEND_G))

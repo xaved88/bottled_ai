@@ -25,6 +25,7 @@ class CardEffects(CardEffectsInterface):
             post_hooks: List[CardEffectCustomHook] = None,
             post_others_discarded_hooks: List[CardEffectCustomHookWithCard] = None,
             post_self_discarded_hooks: List[CardEffectCustomHook] = None,
+            end_turn_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
             add_cards_to_hand: [CardInterface, int] = None,
@@ -45,6 +46,8 @@ class CardEffects(CardEffectsInterface):
             CardEffectCustomHookWithCard] = [] if post_others_discarded_hooks is None else post_others_discarded_hooks
         self.post_self_discarded_hooks: List[
             CardEffectCustomHook] = [] if post_self_discarded_hooks is None else post_self_discarded_hooks
+        self.end_turn_hooks: List[
+            CardEffectCustomHook] = [] if end_turn_hooks is None else end_turn_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
         self.add_cards_to_hand: [CardInterface, int] = add_cards_to_hand
@@ -152,17 +155,18 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=21 if not card.upgrade else 28, hits=1,
                             post_hooks=[immolate_post_hook])]
     if card.id == CardId.BURN:
-        return [CardEffects(target=TargetType.NONE)]
+        hook = burn_end_turn_hook if not card.upgrade else burn_upgraded_end_turn_hook
+        return [CardEffects(target=TargetType.NONE, end_turn_hooks=[hook])]
     if card.id == CardId.SLIMED:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.DECAY:
-        return [CardEffects(target=TargetType.NONE)]
+        return [CardEffects(target=TargetType.NONE, end_turn_hooks=[decay_end_turn_hook])]
     if card.id == CardId.REGRET:
-        return [CardEffects(target=TargetType.NONE)]
+        return [CardEffects(target=TargetType.NONE, end_turn_hooks=[regret_end_turn_hook])]
     if card.id == CardId.SHAME:
-        return [CardEffects(target=TargetType.NONE)]
+        return [CardEffects(target=TargetType.NONE, end_turn_hooks=[shame_end_turn_hook])]
     if card.id == CardId.DOUBT:
-        return [CardEffects(target=TargetType.NONE)]
+        return [CardEffects(target=TargetType.NONE, end_turn_hooks=[doubt_end_turn_hook])]
     if card.id == CardId.CURSE_OF_THE_BELL:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.PARASITE:
