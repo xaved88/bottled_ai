@@ -2172,3 +2172,71 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.ESTABLISHMENT, 1)
 
+    def test_strike_p(self):
+        state = self.given_state(CardId.STRIKE_P)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_spent_energy(play, 1)
+
+    def test_strike_p_upgraded(self):
+        state = self.given_state(CardId.STRIKE_P, 1)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_spent_energy(play, 1)
+
+    def test_defend_p(self):
+        state = self.given_state(CardId.DEFEND_P)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 5)
+
+    def test_defend_p_upgraded(self):
+        state = self.given_state(CardId.DEFEND_P, 1)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 8)
+
+    def test_bowling_bash_single(self):
+        state = self.given_state(CardId.BOWLING_BASH, targets=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_spent_energy(play, 1)
+
+    def test_bowling_bash_poly(self):
+        state = self.given_state(CardId.BOWLING_BASH, targets=3)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 21, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_player_spent_energy(play, 1)
+
+    def test_consecrate(self):
+        state = self.given_state(CardId.CONSECRATE, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 5, enemy_index=0)
+        self.see_enemy_lost_hp(play, 5, enemy_index=1)
+        self.see_player_spent_energy(play, 0)
+
+    def test_conclude(self):
+        state = self.given_state(CardId.CONCLUDE, targets=2)
+        state.hand.append(get_card(CardId.REGRET))
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12, enemy_index=0)
+        self.see_enemy_lost_hp(play, 12, enemy_index=1)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_lost_hp(play, 1)
+
+    def test_ragnarok(self):
+        state = self.given_state(CardId.RAGNAROK, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_random_damage_dealt(play, 25)
+
+    def test_ragnarok_upgraded(self):
+        state = self.given_state(CardId.RAGNAROK, upgrade=1, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_random_damage_dealt(play, 36)

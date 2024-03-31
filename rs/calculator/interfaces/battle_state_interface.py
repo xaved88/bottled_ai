@@ -65,3 +65,8 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     def repeat_card(self, card: CardInterface, target_index: int, repeating_power, power_lost_if_incomplete: bool = True):
         # must be implemented by children
         pass
+
+    @abc.abstractmethod
+    def end_turn(self):
+        # must be implemented by children
+        pass

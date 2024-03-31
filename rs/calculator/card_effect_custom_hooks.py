@@ -247,7 +247,6 @@ def stack_upgraded_pre_hook(state: BattleStateInterface, effect: CardEffectsInte
 
 def mind_blast_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     effect.damage = len(state.draw_pile)
-    effect.hits = 1
 
 
 def auto_shields_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -455,3 +454,24 @@ def burn_upgraded_end_turn_hook(state: BattleStateInterface, effect: CardEffects
 def regret_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
     state.player.inflict_damage(state.player, len(state.hand), 1, vulnerable_modifier=1, is_attack=False)
     # this will probably be off by 1 if there are 2 regrets since ingame they'd be handled one by one
+
+
+def bowling_bash_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    effect.hits = len(state.monsters)
+
+
+def conclude_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.end_turn()
+
+
+def ragnarok_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __ragnarok_post_hook(state, 5)
+
+
+def ragnarok_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    __ragnarok_post_hook(state, 6)
+
+
+def __ragnarok_post_hook(state: BattleStateInterface, damage_and_hits: int):
+    state.inflict_random_target_damage(damage_and_hits, damage_and_hits)

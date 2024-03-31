@@ -57,9 +57,11 @@ class CardEffects(CardEffectsInterface):
 
 def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: List[CardInterface],
                      discard_pile: List[CardInterface], hand: List[CardInterface]) -> List[CardEffectsInterface]:
-    if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G or card.id == CardId.STRIKE_B:
+    if card.id == CardId.STRIKE_R or card.id == CardId.STRIKE_G \
+            or card.id == CardId.STRIKE_B or card.id == CardId.STRIKE_P:
         return [CardEffects(damage=6 if not card.upgrade else 9, hits=1, target=TargetType.MONSTER)]
-    if card.id == CardId.DEFEND_R or card.id == CardId.DEFEND_G or card.id == CardId.DEFEND_B:
+    if card.id == CardId.DEFEND_R or card.id == CardId.DEFEND_G \
+            or card.id == CardId.DEFEND_B or card.id == CardId.DEFEND_P:
         return [CardEffects(block=5 if not card.upgrade else 8, target=TargetType.SELF)]
     if card.id == CardId.BASH:
         return [CardEffects(damage=8 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
@@ -362,7 +364,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.PANACEA:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1 if not card.upgrade else 2})]
     if card.id == CardId.MIND_BLAST:
-        return [CardEffects(target=TargetType.MONSTER, pre_hooks=[mind_blast_pre_hook])]
+        return [CardEffects(target=TargetType.MONSTER, hits=1, pre_hooks=[mind_blast_pre_hook])]
     if card.id == CardId.GOOD_INSTINCTS:
         return [CardEffects(block=6 if not card.upgrade else 9, target=TargetType.SELF)]
     if card.id == CardId.ACROBATICS:
@@ -598,4 +600,15 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=2, retains=True)]
     if card.id == CardId.ESTABLISHMENT:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ESTABLISHMENT: 1})]
+    if card.id == CardId.BOWLING_BASH:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10,
+                            pre_hooks=[bowling_bash_pre_hook])]
+    if card.id == CardId.CONSECRATE:
+        return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.ALL_MONSTERS)]
+    if card.id == CardId.CONCLUDE:
+        return [CardEffects(damage=12 if not card.upgrade else 16, hits=1, target=TargetType.ALL_MONSTERS,
+                post_hooks=[conclude_post_hook])]
+    if card.id == CardId.RAGNAROK:
+        hook = ragnarok_post_hook if not card.upgrade else ragnarok_upgraded_post_hook
+        return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
     return [CardEffects()]

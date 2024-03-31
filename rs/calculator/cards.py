@@ -28,6 +28,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.DEFEND_G:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.STRIKE_P:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DEFEND_P:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.BASH:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.ANGER:
@@ -494,3 +498,11 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, retains=True)
     if card_id == CardId.ESTABLISHMENT:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.BOWLING_BASH:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.CONSECRATE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.CONCLUDE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.RAGNAROK:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.ATTACK)
