@@ -647,6 +647,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_has_power(play, PowerId.WEAKENED, 1)
 
+    def test_doubt_more(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.DOUBT))
+        state.hand.append(get_card(CardId.DOUBT))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_has_power(play, PowerId.WEAKENED, 2)
+
     def test_shame(self):
         state = self.given_state(CardId.STRIKE_R)
         state.hand.append(get_card(CardId.SHAME))

@@ -13,7 +13,6 @@ class CardInterface(metaclass=abc.ABCMeta):
     exhausts: bool
     type: CardType
     retains: bool
-    autoplay: bool
 
     @abc.abstractmethod
     def get_state_string(self) -> str:

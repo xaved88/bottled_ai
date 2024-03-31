@@ -1084,7 +1084,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 2)
         self.see_player_discard_pile_count(play, 0)
 
-    def test_retain_all_does_not_retain_autoplay_end_of_turn_cards(self):
+    def test_retain_all_does_not_retain_auto_played_end_of_turn_cards(self):
         state = self.given_state(CardId.REGRET, player_powers={PowerId.RETAIN_ALL: 1})
         play = self.when_playing_the_whole_hand(state)
         play.end_turn()

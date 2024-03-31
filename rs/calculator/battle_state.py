@@ -264,7 +264,7 @@ class BattleState(BattleStateInterface):
             for hook in effect.post_hooks:
                 hook(self, effect, target_index)
 
-            # Apply any powers from the card
+            # apply any powers from the card
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
                     self.player.add_powers(effect.applies_powers, self.player.relics, self.player.powers)
@@ -371,45 +371,35 @@ class BattleState(BattleStateInterface):
             self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0))
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 
-        # hooks for cards that are auto-played end of turn, e.g. burns and some curses
-        for card in self.hand:
-            for effect in get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand):
-                for hook in effect.end_turn_hooks:
-                    hook(self, effect, None)
-                    card.autoplay = True
-
-        # get rid of cards
-        cards_to_maybe_retain: list[CardInterface] = []
-
-        # 'Retains' should be a property of a card imo. And I've added it as such.
-        # But we populate card properties based on import. And 'retain' isn't in the API.
-        # And so I'm having trouble persisting 'retains' in all places we'd need it.
-        # So I ALSO added it as an effect. Will clean this up after consulting with Logan.
-        # Maybe should hack it into the import area instead.
-        # Kind of a similar issue with the 'autoplay' cards but practically doesn't matter since we don't have
-        # decision-making around them.
-        for c in self.hand:
-            for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
-                if effect.retains:
-                    c.retains = True
-            if c.ethereal:
-                self.exhaust_pile.append(c)
-            elif c.autoplay:
-                self.discard_pile.append(c)
-
-            else:
-                cards_to_maybe_retain.append(c)
-        self.hand.clear()
-
-        if self.player.powers.get(PowerId.RETAIN_ALL):
-            for c in cards_to_maybe_retain:
+        if self.player.powers.get(PowerId.RETAIN_ALL, 0):
+            for c in self.hand:
                 c.retains = True
 
-        for c in cards_to_maybe_retain:
-            if c.retains:
-                self.hand.append(c)
+        # deal with the remaining cards in hand
+        card_was_auto_played: list[CardInterface] = []
+        cards_to_retain: list[CardInterface] = []
+
+        for c in self.hand:
+            for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
+                # for various curses and burns
+                for hook in effect.end_turn_hooks:
+                    hook(self, effect, None)
+                    card_was_auto_played.append(c)
+                # I'm struggling to persist 'retain' as a card property, so temporarily added it as an effect too.
+                if effect.retains:
+                    c.retains = True
+
+            # dispose of cards
+            if c.ethereal:
+                self.exhaust_pile.append(c)
+            elif c in card_was_auto_played:
+                self.discard_pile.append(c)
+            elif c.retains:
+                cards_to_retain.append(c)
             else:
                 self.discard_pile.append(c)
+
+        self.hand = cards_to_retain.copy()
 
         # this is getting into the enemy's turn now
         # enemy powers
