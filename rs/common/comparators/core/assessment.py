@@ -175,4 +175,4 @@ class ComparatorAssessment:
         return 0
 
     def retained_cards(self) -> int:
-        return self.__get_value('retained_cards', lambda: self.state.get_amount_of_retained_cards())
+        return self.__get_value('retained_cards', lambda: len(self.state.hand))
