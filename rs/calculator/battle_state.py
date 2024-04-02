@@ -371,30 +371,27 @@ class BattleState(BattleStateInterface):
             self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0))
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 
-        if self.player.powers.get(PowerId.RETAIN_ALL, 0):
-            for c in self.hand:
-                c.retains = True
-
         # deal with the remaining cards in hand
-        card_was_auto_played: list[CardInterface] = []
         cards_to_retain: list[CardInterface] = []
 
         for c in self.hand:
+            card_was_auto_played: list[CardInterface] = []
+            card_might_retain: list[CardInterface] = []
+
             for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
                 # for various curses and burns
                 for hook in effect.end_turn_hooks:
                     hook(self, effect, None)
                     card_was_auto_played.append(c)
-                # I'm struggling to persist 'retain' as a card property, so temporarily added it as an effect too.
-                if effect.retains:
-                    c.retains = True
+                if effect.retains or self.player.powers.get(PowerId.RETAIN_ALL, 0):
+                    card_might_retain.append(c)
 
             # dispose of cards
             if c.ethereal:
                 self.exhaust_pile.append(c)
             elif c in card_was_auto_played:
                 self.discard_pile.append(c)
-            elif c.retains:
+            elif c in card_might_retain:
                 cards_to_retain.append(c)
             else:
                 self.discard_pile.append(c)
@@ -660,6 +657,26 @@ class BattleState(BattleStateInterface):
             if monster.powers.get(PowerId.TIME_WARP, 0) >= 12:
                 time_warp_full = True
         return self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 or time_warp_full or self.player.current_hp <= 0
+
+    def get_amount_of_retained_cards(self) -> int:
+        cards_to_retain: list[CardInterface] = []
+
+        for c in self.hand:
+            card_was_auto_played: list[CardInterface] = []
+            card_might_retain: list[CardInterface] = []
+
+            for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
+                # for various curses and burns
+                for hook in effect.end_turn_hooks:
+                    hook(self, effect, None)
+                    card_was_auto_played.append(c)
+                if effect.retains or self.player.powers.get(PowerId.RETAIN_ALL, 0):
+                    card_might_retain.append(c)
+
+            if not c.ethereal and c not in card_was_auto_played and c in card_might_retain:
+                cards_to_retain.append(c)
+
+        return len(cards_to_retain)
 
 
 def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],

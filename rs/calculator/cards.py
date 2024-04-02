@@ -13,7 +13,6 @@ class Card(CardInterface):
         self.ethereal: bool = ethereal
         self.exhausts: bool = exhausts
         self.type: CardType = card_type
-        self.retains: bool = retains
 
     def get_state_string(self) -> str:
         return f"{self.id.value}+{self.upgrade}+{self.cost},"
@@ -495,7 +494,7 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
 
     # watcher
     if card_id == CardId.FLYING_SLEEVES:
-        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, retains=True)
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.ESTABLISHMENT:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.BOWLING_BASH:

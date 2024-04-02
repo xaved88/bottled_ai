@@ -12,7 +12,6 @@ class CardInterface(metaclass=abc.ABCMeta):
     ethereal: bool
     exhausts: bool
     type: CardType
-    retains: bool
 
     @abc.abstractmethod
     def get_state_string(self) -> str:
