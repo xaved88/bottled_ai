@@ -2235,3 +2235,29 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
         self.see_random_damage_dealt(play, 36)
+
+    def test_insight(self):
+        state = self.given_state(CardId.INSIGHT)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_drew_cards(play, 2)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_protect(self):
+        state = self.given_state(CardId.PROTECT)
+        state.hand.append(get_card(CardId.PROTECT))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 12)
+        play.end_turn()
+        self.see_player_hand_count(play, 1)
+        self.assertEqual(CardId.PROTECT, play.state.hand[0].id)
+
+    def test_smite(self):
+        state = self.given_state(CardId.SMITE)
+        state.hand.append(get_card(CardId.SMITE))
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        play.end_turn()
+        self.see_player_hand_count(play, 1)

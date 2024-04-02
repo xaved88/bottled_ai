@@ -611,4 +611,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.RAGNAROK:
         hook = ragnarok_post_hook if not card.upgrade else ragnarok_upgraded_post_hook
         return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
+    if card.id == CardId.INSIGHT:
+        return [CardEffects(draw=2 if not card.upgrade else 3, retains=True)]
+    if card.id == CardId.PROTECT:
+        return [CardEffects(block=12 if not card.upgrade else 16, target=TargetType.SELF, retains=True)]
+    if card.id == CardId.SMITE:
+        return [CardEffects(damage=12 if not card.upgrade else 16, hits=1, target=TargetType.MONSTER, retains=True)]
     return [CardEffects()]

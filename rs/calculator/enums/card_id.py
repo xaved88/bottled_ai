@@ -146,6 +146,7 @@ class CardId(Enum):
     INFINITE_BLADES = 'infinite blades'
     INFLAME = 'inflame'
     INJURY = 'injury'
+    INSIGHT = 'insight'
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
     JAX = 'j.a.x.'
@@ -179,6 +180,7 @@ class CardId(Enum):
     POWER_THROUGH = 'power through'
     PREDATOR = 'predator'
     PREPARED = 'prepared'
+    PROTECT = 'protect'
     PUMMEL = 'pummel'
     QUICK_SLASH = 'quick slash'
     RAGE = 'rage'
@@ -204,6 +206,7 @@ class CardId(Enum):
     SKIM = 'skim'
     SLICE = 'slice'
     SLIMED = 'slimed'
+    SMITE = 'smite'
     SNEAKY_STRIKE = 'underhanded strike'  # Weird id alert!
     SPOT_WEAKNESS = 'spot weakness'
     STACK = 'stack'
