@@ -9,9 +9,10 @@ class CardInterface(metaclass=abc.ABCMeta):
     upgrade: int
     cost: int  # energy cost. Maybe -1 for no cost and not playable statuses?
     needs_target: bool
+    type: CardType
     ethereal: bool
     exhausts: bool
-    type: CardType
+    uuid: str
 
     @abc.abstractmethod
     def get_state_string(self) -> str:

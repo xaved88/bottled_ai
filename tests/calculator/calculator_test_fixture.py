@@ -11,7 +11,7 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.player import Player
 from rs.calculator.monster import Monster
-from rs.machine.custom_state import CustomState
+from rs.machine.custom_state import set_new_game_state
 
 
 class CalculatorTestFixture(unittest.TestCase):
@@ -19,7 +19,7 @@ class CalculatorTestFixture(unittest.TestCase):
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
                     relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0,
                     orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0) -> BattleState:
-        CustomState.set_new_game_state(None)
+        set_new_game_state()
         return BattleState(
             player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
             hand=[get_card(card_id, None, upgrade)],

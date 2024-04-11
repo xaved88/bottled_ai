@@ -3,6 +3,7 @@ import unittest
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
+from rs.machine.custom_state import CustomState
 from test_helpers.resources import load_resource_state
 
 
@@ -57,3 +58,9 @@ class GameStateConverterTest(unittest.TestCase):
         self.assertIsNotNone(battle_state)
         self.assertIn(PowerId.INTERNAL_ECHO_FORM_READY, battle_state.player.powers)
         self.assertEqual(battle_state.player.powers[PowerId.INTERNAL_ECHO_FORM_READY], 2)
+
+    def test_custom_state_is_empty(self):
+        state = load_resource_state("battles/general/battle_state_pen_nib.json")
+        battle_state = create_battle_state(state)
+        self.assertIsNotNone(battle_state)
+        self.assertEqual(True, "default" not in CustomState.extra_ritual_dagger_damage_by_card)

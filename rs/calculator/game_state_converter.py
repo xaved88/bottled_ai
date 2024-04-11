@@ -32,6 +32,7 @@ def make_card(card: GameCard) -> CardInterface:
         card_type=card.type,
         ethereal=card.ethereal,
         exhausts=card.exhausts,
+        uuid=card.uuid,
     )
 
 

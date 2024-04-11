@@ -5,7 +5,7 @@ from rs.game.card import CardType
 
 class Card(CardInterface):
     def __init__(self, card_id: CardId, upgrade: int, cost: int, needs_target: bool, card_type: CardType,
-                 ethereal: bool = False, exhausts: bool = False, retains: bool = False):
+                 ethereal: bool = False, exhausts: bool = False, uuid: str = "default"):
         self.id: CardId = card_id
         self.upgrade: int = upgrade
         self.cost: int = cost  # energy cost. Maybe -1 for no cost and not playable statuses?
@@ -13,6 +13,7 @@ class Card(CardInterface):
         self.ethereal: bool = ethereal
         self.exhausts: bool = exhausts
         self.type: CardType = card_type
+        self.uuid: str = uuid
 
     def get_state_string(self) -> str:
         return f"{self.id.value}+{self.upgrade}+{self.cost},"

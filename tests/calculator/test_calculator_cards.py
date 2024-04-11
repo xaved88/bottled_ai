@@ -2344,7 +2344,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_ritual_dagger_deals_more_damage_when_powered_up(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
-        CustomState.extra_ritual_dagger_damage = 3
+        CustomState.extra_ritual_dagger_damage_by_card.update({"default": 3})
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_player_spent_energy(play, 1)
@@ -2357,17 +2357,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(3, CustomState.extra_ritual_dagger_damage)
+        self.assertEqual(3, CustomState.extra_ritual_dagger_damage_by_card["default"])
 
     def test_ritual_dagger_can_power_up_upgraded(self):
         state = self.given_state(CardId.RITUAL_DAGGER, upgrade=1)
-        CustomState.extra_ritual_dagger_damage = 3
+        CustomState.extra_ritual_dagger_damage_by_card.update({"default": 3})
         state.monsters[0].current_hp = 5
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(8, CustomState.extra_ritual_dagger_damage)
+        self.assertEqual(8, CustomState.extra_ritual_dagger_damage_by_card["default"])
 
     def test_ritual_dagger_no_power_up_on_minion(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
@@ -2377,4 +2377,4 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(0, CustomState.extra_ritual_dagger_damage)
+        self.assertEqual(0, CustomState.extra_ritual_dagger_damage_by_card["default"])
