@@ -2378,3 +2378,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
         self.assertEqual(0, CustomState.extra_ritual_dagger_damage_by_card["default"])
+
+    def test_ritual_dagger_extra_damage_applies_per_uuid(self):
+        state = self.given_state(CardId.RITUAL_DAGGER)
+        state.hand[0].uuid = "different_uuid"
+        state.monsters[0].current_hp = 15
+        CustomState.extra_ritual_dagger_damage_by_card.update({"default": 69})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.assertEqual(69, CustomState.extra_ritual_dagger_damage_by_card["default"])
+        self.assertEqual(3, CustomState.extra_ritual_dagger_damage_by_card["different_uuid"])
+
+    def test_ritual_dagger_does_not_power_up_across_paths(self):
+        state = self.given_state(CardId.RITUAL_DAGGER, player_powers={PowerId.STRENGTH: -4})
+        for i in range(9):
+            state.hand.append(get_card(CardId.SHIV))
+        state.monsters[0].current_hp = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(3, CustomState.extra_ritual_dagger_damage_by_card["default"])

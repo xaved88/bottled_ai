@@ -186,3 +186,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_medical_kit_playing_wound_is_good(self):
         self.execute_handler_tests('/battles/general/medical_kit_wound.json', ['play 3'])
 
+
+    def test_go_for_kill_with_powered_up_ritual_dagger(self):
+        self.execute_handler_tests('/battles/general/powered_up_ritual_dagger.json', ['play 3 0'])
