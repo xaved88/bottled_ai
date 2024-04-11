@@ -593,9 +593,9 @@ def __second_wind_post_hook(state: BattleStateInterface, block: int):
 
 def ritual_dagger_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                            target_index: int = -1):
-    if card.uuid not in CustomState.extra_ritual_dagger_damage_by_card:
-        CustomState.extra_ritual_dagger_damage_by_card.update({card.uuid: 0})
-    effect.damage = 15 + CustomState.extra_ritual_dagger_damage_by_card[card.uuid]
+    if card.uuid not in state.extra_ritual_dagger_damage_by_card:
+        state.extra_ritual_dagger_damage_by_card.update({card.uuid: 0})
+    effect.damage = 15 + state.extra_ritual_dagger_damage_by_card[card.uuid]
 
 
 def ritual_dagger_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -610,7 +610,7 @@ def ritual_dagger_upgraded_post_hook(state: BattleStateInterface, effect: CardEf
 
 def __ritual_dagger_post_hook(state: BattleStateInterface, uuid: str, target_index, damage: int):
     if state.monsters[target_index].current_hp <= 0 and not state.monsters[target_index].powers.get(PowerId.MINION):
-        if uuid not in CustomState.extra_ritual_dagger_damage_by_card:
-            CustomState.extra_ritual_dagger_damage_by_card.update({uuid: 0})
-        extra_damage_adjusted = CustomState.extra_ritual_dagger_damage_by_card[uuid] + damage
-        CustomState.extra_ritual_dagger_damage_by_card.update({uuid: extra_damage_adjusted})
+        if uuid not in state.extra_ritual_dagger_damage_by_card:
+            state.extra_ritual_dagger_damage_by_card.update({uuid: 0})
+        extra_damage_adjusted = state.extra_ritual_dagger_damage_by_card[uuid] + damage
+        state.extra_ritual_dagger_damage_by_card.update({uuid: extra_damage_adjusted})
