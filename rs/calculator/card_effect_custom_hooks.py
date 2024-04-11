@@ -8,6 +8,7 @@ from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.enums.power_id import PowerId
 from rs.game.card import CardType
+from rs.machine.custom_state import CustomState
 
 
 def dropkick_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
@@ -520,3 +521,21 @@ def __second_wind_post_hook(state: BattleStateInterface, block: int):
         state.add_player_block(block)
 
     state.hand = cards_to_keep.copy()
+
+
+def ritual_dagger_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    effect.damage = 15 + CustomState.extra_ritual_dagger_damage
+
+
+def ritual_dagger_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __ritual_dagger_post_hook(state, target_index, 3)
+
+
+def ritual_dagger_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __ritual_dagger_post_hook(state, target_index, 5)
+
+
+def __ritual_dagger_post_hook(state: BattleStateInterface, target_index, damage: int):
+    if state.monsters[target_index].current_hp <= 0 and not state.monsters[target_index].powers.get(PowerId.MINION):
+        CustomState.extra_ritual_dagger_damage += damage
+

@@ -525,3 +525,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.SMITE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.RITUAL_DAGGER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)

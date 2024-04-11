@@ -632,4 +632,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SECOND_WIND:
         hook = second_wind_post_hook if not card.upgrade else second_wind_upgraded_post_hook
         return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
+    if card.id == CardId.RITUAL_DAGGER:
+        post_hook = ritual_dagger_post_hook if not card.upgrade else ritual_dagger_upgraded_post_hook
+        return [CardEffects(hits=1, target=TargetType.MONSTER, pre_hooks=[ritual_dagger_pre_hook], post_hooks=[post_hook])]
     return [CardEffects()]

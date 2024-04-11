@@ -199,6 +199,7 @@ class CardId(Enum):
     REPROGRAM = 'reprogram'
     RIDDLE_WITH_HOLES = 'riddle with holes'
     RIP_AND_TEAR = 'rip and tear'
+    RITUAL_DAGGER = 'ritual dagger'
     SADISTIC_NATURE = 'sadistic nature'
     SECOND_WIND = 'second wind'
     SEEING_RED = 'seeing red'
