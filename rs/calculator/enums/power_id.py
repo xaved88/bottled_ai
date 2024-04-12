@@ -82,6 +82,7 @@ class PowerId(Enum):
     REGENERATION_PLAYER = 'regeneration'
     REPAIR = 'repair'
     RETAIN_ALL = 'retain'
+    CUSTOM_RITUAL_DAGGER = 'custom_ritual_dagger'
     SADISTIC = 'sadistic'
     SHACKLED = 'shackled'  # Enemy regains strength at end of turn, not currently relevant
     SHARP_HIDE = 'sharp hide'
