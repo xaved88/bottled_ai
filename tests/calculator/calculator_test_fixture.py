@@ -11,15 +11,14 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.player import Player
 from rs.calculator.monster import Monster
-from rs.machine.custom_state import set_new_game_state, CustomState
+from rs.machine.custom_state import set_new_game_state
 
 
 class CalculatorTestFixture(unittest.TestCase):
 
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
                     relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0,
-                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                    extra_ritual_dagger_damage_by_card: dict = None) -> BattleState:
+                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0) -> BattleState:
         set_new_game_state()
         return BattleState(
             player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
@@ -30,13 +29,11 @@ class CalculatorTestFixture(unittest.TestCase):
             amount_to_discard=amount_to_discard,
             orbs=orbs,
             orb_slots=orb_slots,
-            extra_ritual_dagger_damage_by_card=extra_ritual_dagger_damage_by_card
         )
 
     def when_playing_the_first_card(self, hand_state: BattleState) -> PlayPath:
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
-        CustomState.test_int = len(hand_state.hand)
         plays = list(paths.values())
         if len(plays) > 1:
             return plays[1]
@@ -46,7 +43,6 @@ class CalculatorTestFixture(unittest.TestCase):
     def when_playing_the_whole_hand(self, hand_state: BattleState) -> PlayPath:
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
-        CustomState.test_int = len(hand_state.hand)
         return list(paths.values())[-1]
 
     def see_enemy_lost_hp(self, play: PlayPath, amount: int, enemy_index: int = 0):

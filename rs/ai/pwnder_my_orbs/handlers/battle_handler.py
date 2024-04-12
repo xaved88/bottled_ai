@@ -9,7 +9,6 @@ from rs.calculator.executor import get_best_battle_action
 from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.game.card import CardType
 from rs.machine.command import Command
-from rs.machine.custom_state import CustomState
 from rs.machine.handlers.handler import Handler
 from rs.machine.state import GameState
 

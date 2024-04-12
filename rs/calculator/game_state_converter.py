@@ -13,7 +13,6 @@ from rs.calculator.player import Player
 from rs.calculator.monster import Monster
 from rs.game.card import CardType, Card as GameCard
 from rs.helper.logger import log_calculator_missing_relic, log_calculator_missing_power, log_calculator_missing_card
-from rs.machine.custom_state import CustomState
 from rs.machine.state import GameState
 
 possible_card_ids = set(item.value for item in CardId)
@@ -121,9 +120,5 @@ def create_battle_state(game_state: GameState) -> BattleState:
     orbs = [(OrbId(o.value), a) for o, a in game_state.get_player_orbs()]
     orb_slots = game_state.get_player_orb_slots()
 
-    # additional state
-    extra_ritual_dagger_damage_by_card = CustomState.extra_ritual_dagger_damage_by_card.copy()
-
     return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
-                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots,
-                       extra_ritual_dagger_damage_by_card=extra_ritual_dagger_damage_by_card)
+                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots)
