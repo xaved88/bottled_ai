@@ -591,3 +591,10 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_orb_count(play, 1)
         self.assertEqual(OrbId.LIGHTNING, play.state.orbs[0][0])
 
+    def test_charons_ashes(self):
+        state = self.given_state(CardId.VOID, targets=2, relics={RelicId.CHARONS_ASHES: 1})
+        state.monsters[0].powers[PowerId.VULNERABLE] = 1
+        play = self.when_playing_the_whole_hand(state)
+        state.end_turn()
+        self.see_enemy_lost_hp(play, 3, enemy_index=0)
+        self.see_enemy_lost_hp(play, 3, enemy_index=1)

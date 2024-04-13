@@ -617,4 +617,13 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(block=12 if not card.upgrade else 16, target=TargetType.SELF, retains=True)]
     if card.id == CardId.SMITE:
         return [CardEffects(damage=12 if not card.upgrade else 16, hits=1, target=TargetType.MONSTER, retains=True)]
+    if card.id == CardId.FEEL_NO_PAIN:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAIN: 3 if not card.upgrade else 4})]
+    if card.id == CardId.DARK_EMBRACE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DARK_EMBRACE: 1})]
+    if card.id == CardId.CORRUPTION:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.CORRUPTION: 1})]
+    if card.id == CardId.SENTINEL:
+        # additional effect handled in exhaust_card directly
+        return [CardEffects(block=5 if not card.upgrade else 8, target=TargetType.SELF)]
     return [CardEffects()]

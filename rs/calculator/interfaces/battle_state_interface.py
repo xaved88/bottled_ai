@@ -35,6 +35,10 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         # must be implemented by children
         pass
 
+    def exhaust_card(self, card: CardInterface, handle_remove: bool = True):
+        # must be implemented by children
+        pass
+
     @abc.abstractmethod
     def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True, affected_by_vulnerable: bool = True,
                                      is_attack: bool = True, min_hp_damage: int = 1, is_orbs: bool = False):

@@ -60,6 +60,14 @@ class CalculatorOtherTest(CalculatorTestFixture):
         self.see_player_draw_pile_count(play, 4)
         self.see_player_discard_pile_count(play, 1)
 
+    def test_cards_that_should_exhaust_do_actually_exhaust(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand[0].exhausts = True
+        play = self.when_playing_the_first_card(state)
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_hand_count(play, 0)
+
     def test_ethereal_cards_exhaust_on_turn_end(self):
         state = self.given_state(CardId.ASCENDERS_BANE)
         state.hand.append(get_card(CardId.ASCENDERS_BANE))

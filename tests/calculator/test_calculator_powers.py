@@ -1103,3 +1103,33 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 2)
         self.see_player_discard_pile_count(play, 1)
 
+    def test_feel_no_pain(self):
+        state = self.given_state(CardId.VOID, player_powers={PowerId.FEEL_NO_PAIN: 6})
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_has_block(play, 6)
+
+    def test_feel_no_pain_multiple(self):
+        state = self.given_state(CardId.VOID, player_powers={PowerId.FEEL_NO_PAIN: 6})
+        state.hand.append(get_card(CardId.VOID))
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_exhaust_count(play, 2)
+        self.see_player_has_block(play, 12)
+
+    def test_dark_embrace(self):
+        state = self.given_state(CardId.IMPERVIOUS, player_powers={PowerId.DARK_EMBRACE: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_drew_cards(play, 1)
+
+    def test_corruption(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.CORRUPTION: 1})
+        state.hand.append(get_card(CardId.DEFEND_R))
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(0, play.state.hand[0].cost)
+        self.assertEqual(True, play.state.hand[0].exhausts)
+        self.assertEqual(1, play.state.hand[1].cost)
+        self.assertEqual(False, play.state.hand[1].exhausts)

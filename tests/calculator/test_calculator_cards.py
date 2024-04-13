@@ -328,7 +328,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.assertEqual(13, play.state.player.current_hp)
 
     def test_fiend_fire(self):
-        state = self.given_state(CardId.FIEND_FIRE)
+        state = self.given_state(CardId.FIEND_FIRE, player_powers={PowerId.FEEL_NO_PAIN: 1})
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
@@ -336,6 +336,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 2)
         self.see_player_hand_count(play, 0)
         self.see_cards_played(play, 1)
+        self.see_player_has_block(play, 2)
 
     def test_fiend_fire_with_large_hand(self):
         state = self.given_state(CardId.FIEND_FIRE)
@@ -2261,3 +2262,49 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 1)
         play.end_turn()
         self.see_player_hand_count(play, 1)
+
+    def test_feel_no_pain(self):
+        state = self.given_state(CardId.FEEL_NO_PAIN)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.FEEL_NO_PAIN, 3)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_pile_count(play, 0)
+
+    def test_dark_embrace(self):
+        state = self.given_state(CardId.DARK_EMBRACE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.DARK_EMBRACE, 1)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 0)
+
+    def test_corruption(self):
+        state = self.given_state(CardId.CORRUPTION)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.CORRUPTION, 1)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_discard_pile_count(play, 0)
+
+    def test_sentinel(self):
+        state = self.given_state(CardId.SENTINEL)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 5)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_sentinel_exhausted(self):
+        state = self.given_state(CardId.SENTINEL)
+        state.hand[0].exhausts = True
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 5)
+        self.see_player_spent_energy(play, -1)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_sentinel_upgraded_exhausted(self):
+        state = self.given_state(CardId.SENTINEL, upgrade=1)
+        state.hand[0].exhausts = True
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 8)
+        self.see_player_spent_energy(play, -2)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_exhaust_count(play, 1)

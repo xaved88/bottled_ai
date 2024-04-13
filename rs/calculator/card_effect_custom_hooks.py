@@ -40,8 +40,8 @@ def fiend_fire_pre_hook(state: BattleStateInterface, effect: CardEffectsInterfac
 
 
 def fiend_fire_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
-    while state.hand:
-        state.exhaust_pile.append(state.hand.pop())
+    for _ in range(len(state.hand)):
+        state.exhaust_card(state.hand[0])
 
 
 def immolate_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):

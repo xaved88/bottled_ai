@@ -75,6 +75,14 @@ class BattleState(BattleStateInterface):
             self.transform_from_discard(card, card_index)
             return
 
+        # corruption needs to happen early
+        if self.player.powers.get(PowerId.CORRUPTION):
+            for c in self.hand:
+                if c.type == CardType.SKILL:
+                    c.exhausts = True
+                    if card.cost != -1:
+                        c.cost = 0
+
         # play the card
         self.player.energy -= card.cost
         self.resolve_card_play(card, target_index)
@@ -205,10 +213,13 @@ class BattleState(BattleStateInterface):
         if card in self.hand:  # b/c some cards like fiend fire, will destroy themselves before they follow this route
             idx = self.hand.index(card)
             if card.exhausts:
-                self.exhaust_pile.append(card)
-            elif card.type != CardType.POWER:
+                self.exhaust_card(card)
+            elif card.type == CardType.POWER:
+                del self.hand[idx]
+            else:
                 self.discard_pile.append(card)
-            del self.hand[idx]
+                del self.hand[idx]
+
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
@@ -388,7 +399,7 @@ class BattleState(BattleStateInterface):
 
             # dispose of cards
             if c.ethereal:
-                self.exhaust_pile.append(c)
+                self.exhaust_card(c, handle_remove=False)
             elif c in card_was_auto_played:
                 self.discard_pile.append(c)
             elif c in card_might_retain:
@@ -529,6 +540,29 @@ class BattleState(BattleStateInterface):
 
         if RelicId.TINGSHA in self.relics:
             self.inflict_random_target_damage(3, 1, affected_by_vulnerable=False, is_attack=False)
+
+    def exhaust_card(self, card: CardInterface, handle_remove: bool = True):
+        self.exhaust_pile.append(card)
+        if handle_remove:
+            self.hand.remove(card)
+
+        # post exhaust stuff
+        if self.player.powers.get(PowerId.DARK_EMBRACE):
+            self.draw_cards(self.player.powers.get(PowerId.DARK_EMBRACE, 0))
+
+        if self.player.powers.get(PowerId.FEEL_NO_PAIN):
+            self.add_player_block(self.player.powers.get(PowerId.FEEL_NO_PAIN, 0))
+
+        if self.relics.get(RelicId.CHARONS_ASHES):
+            for m in self.monsters:
+                m.inflict_damage(self.player, 3, 1, vulnerable_modifier=1, is_attack=False)
+
+        # would theoretically go in a post-exhaust hook but at least for now this is the only card that needs it
+        if card.id == CardId.SENTINEL:
+            if not card.upgrade:
+                self.player.energy += 2
+            else:
+                self.player.energy += 3
 
     def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True,
                                      affected_by_vulnerable: bool = True, is_attack: bool = True,

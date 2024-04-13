@@ -39,6 +39,7 @@ class RelicId(Enum):
     CAULDRON = 'cauldron'                           # N/A
     CERAMIC_FISH = 'ceramic fish'                   # N/A
     CHAMPION_BELT = 'champion belt'
+    CHARONS_ASHES = 'charon\u0027s ashes'
     CIRCLET = 'circlet'                             # N/A
     CLOAK_CLASP = 'cloak clasp'                     # N/A
     CLOCKWORK_SOUVENIR = 'clockwork souvenir'       # N/A

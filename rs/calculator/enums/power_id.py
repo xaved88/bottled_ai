@@ -25,9 +25,11 @@ class PowerId(Enum):
     CONFUSED = 'confusion'  # Bot takes the new costs into account
     CONSTRICTED = 'constricted'
     CORPSE_EXPLOSION_POWER = 'corpse explosion'
+    CORRUPTION = 'corruption'
     CREATIVE_AI = 'creative ai'
     CURIOSITY = 'curiosity'
     CURL_UP = 'curl up'
+    DARK_EMBRACE = 'dark embrace'
     DEMON_FORM = 'demon form'
     DEXTERITY = 'dexterity'
     DOUBLE_DAMAGE = 'double damage'
@@ -44,6 +46,7 @@ class PowerId(Enum):
     ESTABLISHMENT = 'establishment'
     EXPLOSIVE = 'explosive'
     FADING = 'fading'  # N/A
+    FEEL_NO_PAIN = 'feel no pain'
     FIRE_BREATHING = 'fire breathing'
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'

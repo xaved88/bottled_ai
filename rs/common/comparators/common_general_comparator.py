@@ -42,11 +42,14 @@ powers_we_like: List[PowerId] = [
     PowerId.ARTIFACT,
     PowerId.BERSERK,
     PowerId.BUFFER,
+    PowerId.CORRUPTION,
+    PowerId.DARK_EMBRACE,
     PowerId.DEMON_FORM,
     PowerId.ELECTRO,
     PowerId.ENVENOM,
     PowerId.ESTABLISHMENT,
     PowerId.EVOLVE,
+    PowerId.FEEL_NO_PAIN,
     PowerId.FIRE_BREATHING,
     PowerId.FOCUS,
     PowerId.HEATSINK,
@@ -68,17 +71,6 @@ powers_we_like: List[PowerId] = [
     PowerId.TOOLS_OF_THE_TRADE,
 ]
 
-
-def add_to_comparison_list(comparisons: List[Comparison], comparison_to_add: Comparison, after: Comparison):
-    index = comparisons.index(after) + 1
-    comparisons.insert(index, comparison_to_add)
-
-
-def move_in_comparison_list(comparisons: List[Comparison], comparison_to_move: Comparison, after: Comparison):
-    comparisons.remove(comparison_to_move)
-    add_to_comparison_list(comparisons, comparison_to_move, after)
-
-
 powers_we_like_less: List[PowerId] = [
     PowerId.DEXTERITY,
     PowerId.STRENGTH,
@@ -91,6 +83,15 @@ powers_we_dislike: List[PowerId] = [
     PowerId.WEAKENED,
     PowerId.BIAS,
 ]
+
+def add_to_comparison_list(comparisons: List[Comparison], comparison_to_add: Comparison, after: Comparison):
+    index = comparisons.index(after) + 1
+    comparisons.insert(index, comparison_to_add)
+
+
+def move_in_comparison_list(comparisons: List[Comparison], comparison_to_move: Comparison, after: Comparison):
+    comparisons.remove(comparison_to_move)
+    add_to_comparison_list(comparisons, comparison_to_move, after)
 
 
 class CommonGeneralComparator(ComparatorInterface):
