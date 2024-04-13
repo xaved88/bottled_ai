@@ -227,6 +227,9 @@ class BattleState(BattleStateInterface):
                 del self.hand[idx]
 
 
+        if card.type == CardType.ATTACK:
+            self.player.add_powers({PowerId.STATE_ATTACKS_THIS_TURN: 1}, self.player.relics, self.player.powers)
+
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
             thousand_cuts_damage = self.player.powers.get(PowerId.THOUSAND_CUTS, 0)

@@ -635,4 +635,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.RITUAL_DAGGER:
         post_hook = ritual_dagger_post_hook if not card.upgrade else ritual_dagger_upgraded_post_hook
         return [CardEffects(hits=1, target=TargetType.MONSTER, pre_hooks=[ritual_dagger_pre_hook], post_hooks=[post_hook])]
+    if card.id == CardId.FINISHER:
+        return [CardEffects(damage=6 if not card.upgrade else 8, target=TargetType.MONSTER,
+                pre_hooks=[finisher_pre_hook])]
     return [CardEffects()]
