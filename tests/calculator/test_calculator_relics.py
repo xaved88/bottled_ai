@@ -598,3 +598,15 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         state.end_turn()
         self.see_enemy_lost_hp(play, 3, enemy_index=0)
         self.see_enemy_lost_hp(play, 3, enemy_index=1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_medical_kit(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.MEDICAL_KIT: 1})
+        for i in range(5):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        state.end_turn()
+        self.see_player_exhaust_count(play, 5)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_enemy_lost_hp(play, 6)

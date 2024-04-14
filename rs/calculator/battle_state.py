@@ -75,13 +75,19 @@ class BattleState(BattleStateInterface):
             self.transform_from_discard(card, card_index)
             return
 
-        # corruption needs to happen early
+        # some stuff needs to happen early
         if self.player.powers.get(PowerId.CORRUPTION):
             for c in self.hand:
                 if c.type == CardType.SKILL:
                     c.exhausts = True
                     if card.cost != -1:
                         c.cost = 0
+
+        if self.relics.get(RelicId.MEDICAL_KIT):
+            for c in self.hand:
+                if c.type == CardType.STATUS:
+                    c.exhausts = True
+                    c.cost = 0
 
         # play the card
         self.player.energy -= card.cost

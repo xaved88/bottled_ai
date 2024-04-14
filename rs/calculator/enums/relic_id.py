@@ -2,7 +2,8 @@ from enum import Enum
 
 
 # NOT IMPLEMENTED
-# 'blue candle' # uh we seem to use this one already despite not having it implemented, i guess because cost changes to 0 or so when we've got it. make sure comparator likes exhausting curses when we add this
+# 'blue candle' # we seem to play this correctly without it being implemented because game adjusts the state correctly.
+# we should adjust the comparisons a bit to make sure we're more aggressively exhausting curses when this is available.
 # 'calipers'
 # 'centennial puzzle'
 # 'dead branch'
@@ -85,6 +86,7 @@ class RelicId(Enum):
     MATRYOSHKA = 'matryoshka'                       # N/A
     MAW_BANK = 'maw bank'                           # N/A
     MEAL_TICKET = 'meal ticket'                     # N/A
+    MEDICAL_KIT = 'medical kit'
     MEMBERSHIP_CARD = 'membership card'             # N/A
     MERCURY_HOURGLASS = 'mercury hourglass'         # We only look at current turn so far, so get this as bonus.
     MOLTEN_EGG = 'molten egg'                       # N/A

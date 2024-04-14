@@ -115,11 +115,11 @@
       "monsters": [
         {
           "is_gone": false,
-          "move_hits": 1,
-          "move_base_damage": 6,
+          "move_hits": 0,
+          "move_base_damage": 0,
           "last_move_id": 1,
           "half_dead": false,
-          "move_adjusted_damage": 9,
+          "move_adjusted_damage": 0,
           "max_hp": 49,
           "intent": "ATTACK",
           "second_last_move_id": 3,
@@ -136,7 +136,7 @@
               "id": "Ritual"
             },
             {
-              "amount": 3,
+              "amount": 0,
               "name": "Strength",
               "id": "Strength"
             }
@@ -162,27 +162,27 @@
         {
           "exhausts": false,
           "is_playable": true,
-          "cost": 2,
-          "name": "Bash",
-          "id": "Bash",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "03f33d60-cffa-4a81-958c-7f956b0346be",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
           "cost": 1,
           "name": "Defend",
           "id": "Defend_R",
           "type": "SKILL",
           "ethereal": false,
-          "uuid": "6f33780e-5c94-449e-a29c-72cad3b2e0c0",
+          "uuid": "3ad164fb-00c4-48a4-be21-c7b1dd4a5968",
           "upgrades": 0,
           "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Wound",
+          "id": "wound",
+          "type": "STATUS",
+          "ethereal": false,
+          "uuid": "6f33780e-5c94-449e-a29c-72cad3b2e0c0",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
           "has_target": false
         },
         {
@@ -202,13 +202,13 @@
           "exhausts": false,
           "is_playable": true,
           "cost": 1,
-          "name": "Ghostly Armor",
-          "id": "Ghostly Armor",
+          "name": "Defend",
+          "id": "Defend_R",
           "type": "SKILL",
-          "ethereal": true,
-          "uuid": "479f8f37-1cba-4956-9dfa-79cb7b14574f",
+          "ethereal": false,
+          "uuid": "3ad164fb-00c4-48a4-be21-c7b1dd4a5968",
           "upgrades": 0,
-          "rarity": "UNCOMMON",
+          "rarity": "BASIC",
           "has_target": false
         }
       ],
@@ -381,8 +381,8 @@
     ],
     "relics": [
       {
-        "name": "Tiny House",
-        "id": "Tiny House",
+        "name": "Medical Kit",
+        "id": "Medical Kit",
         "counter": -1
       }
     ],

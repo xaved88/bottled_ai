@@ -181,3 +181,8 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_retaining_individual_card_is_desirable(self):
         self.execute_handler_tests('/battles/general/save_flying_sleeves.json', ['play 3'])
+
+    # medical kit not really relevant to react to, since the state is adjusted by the game to make status cards playable
+    def test_medical_kit_playing_wound_is_good(self):
+        self.execute_handler_tests('/battles/general/medical_kit_wound.json', ['play 3'])
+
