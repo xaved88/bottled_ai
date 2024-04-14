@@ -626,4 +626,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SENTINEL:
         # additional effect handled in exhaust_card directly
         return [CardEffects(block=5 if not card.upgrade else 8, target=TargetType.SELF)]
+    if card.id == CardId.SEVER_SOUL:
+        return [CardEffects(damage=16 if not card.upgrade else 22, hits=1, target=TargetType.MONSTER,
+                            post_hooks=[sever_soul_post_hook])]
+    if card.id == CardId.SECOND_WIND:
+        hook = second_wind_post_hook if not card.upgrade else second_wind_upgraded_post_hook
+        return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
     return [CardEffects()]

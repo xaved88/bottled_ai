@@ -475,3 +475,48 @@ def ragnarok_upgraded_post_hook(state: BattleStateInterface, effect: CardEffects
 
 def __ragnarok_post_hook(state: BattleStateInterface, damage_and_hits: int):
     state.inflict_random_target_damage(damage_and_hits, damage_and_hits)
+
+
+def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    cards_to_exhaust = []
+    cards_to_keep = []
+
+    for c in state.hand:
+        if c.type != CardType.ATTACK:
+            cards_to_exhaust.append(c)
+        else:
+            cards_to_keep.append(c)
+
+    for c in cards_to_exhaust:
+        state.exhaust_card(c, handle_remove=False)
+
+    state.hand = cards_to_keep.copy()
+
+def second_wind_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    __second_wind_post_hook(state, 5)
+
+
+def second_wind_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
+                                       target_index: int = -1):
+    __second_wind_post_hook(state, 7)
+
+
+def __second_wind_post_hook(state: BattleStateInterface, block: int):
+    cards_to_exhaust = []
+    cards_to_keep = []
+
+    for c in state.hand:
+        if c.type != CardType.ATTACK:
+            cards_to_exhaust.append(c)
+        else:
+            cards_to_keep.append(c)
+
+    times_to_gain_block = len(cards_to_exhaust)
+
+    for c in cards_to_exhaust:
+        state.exhaust_card(c, handle_remove=False)
+    for i in range(times_to_gain_block):
+        state.add_player_block(block)
+
+    state.hand = cards_to_keep.copy()

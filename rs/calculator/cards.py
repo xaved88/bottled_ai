@@ -223,6 +223,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, 0, -1, False, CardType.CURSE, ethereal=True)
     if card_id == CardId.CLUMSY:
         return Card(card_id, 0, -1, False, CardType.CURSE, ethereal=True)
+    if card_id == CardId.SEVER_SOUL:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.SECOND_WIND:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
 
     # Silent
     if card_id == CardId.NEUTRALIZE:
