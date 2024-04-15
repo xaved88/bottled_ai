@@ -4,6 +4,7 @@ from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.battle_state import PLAY_DISCARD, Play
 from rs.calculator.play_path import PlayPath, get_paths_bfs
+from rs.machine.custom_state import CustomState
 from rs.machine.state import GameState
 
 
@@ -27,6 +28,11 @@ def get_best_battle_action(game_state: GameState, comparator: ComparatorInterfac
 
     if path.plays:
         next_move = path.plays[0]
+
+        # create a temp state for finding the state of the custom state after the chosen action
+        state = create_battle_state(game_state)
+        state.transform_from_play(next_move, is_first_play=False)
+        CustomState.extra_ritual_dagger_damage_by_card = state.ritual_dagger_memory.copy()
         if next_move[1] == -1:
             return [f"play {next_move[0] + 1}"]
         if next_move[1] == PLAY_DISCARD:

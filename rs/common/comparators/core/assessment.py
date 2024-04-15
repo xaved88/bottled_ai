@@ -176,3 +176,6 @@ class ComparatorAssessment:
 
     def retained_cards(self) -> int:
         return self.__get_value('retained_cards', lambda: len(self.state.hand))
+
+    def ritual_dagger_power(self) -> int:
+        return self.__get_value('ritual_dagger_power', lambda: sum(self.state.ritual_dagger_memory.values()))

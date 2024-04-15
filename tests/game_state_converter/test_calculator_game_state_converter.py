@@ -59,8 +59,9 @@ class GameStateConverterTest(unittest.TestCase):
         self.assertIn(PowerId.INTERNAL_ECHO_FORM_READY, battle_state.player.powers)
         self.assertEqual(battle_state.player.powers[PowerId.INTERNAL_ECHO_FORM_READY], 2)
 
-    def test_custom_state_is_empty(self):
+    def test_battle_state_loaded_custom_state(self):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
         battle_state = create_battle_state(state)
         self.assertIsNotNone(battle_state)
-        self.assertEqual(True, "default" not in CustomState.extra_ritual_dagger_damage_by_card)
+        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in state.ritual_dagger_memory)
+        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in battle_state.ritual_dagger_memory)
