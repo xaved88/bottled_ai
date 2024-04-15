@@ -3,6 +3,7 @@ from typing import List
 
 from rs.game.deck import Deck
 from rs.machine.command import Command
+from rs.machine.custom_state import CustomState
 from rs.machine.orb import Orb
 
 
@@ -16,6 +17,7 @@ class GameState:
                 self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
+            self.ritual_dagger_memory: dict = CustomState.extra_ritual_dagger_damage_by_card.copy()
 
     def is_game_running(self) -> bool:
         return self.json["in_game"]
