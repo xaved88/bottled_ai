@@ -8,8 +8,6 @@ from enum import Enum
 
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
-    STATE_ATTACKS_THIS_TURN = 'state_attacks_this_turn'
-    STATE_RITUAL_DAGGER = 'state_ritual_dagger'
 
     AMPLIFY = 'amplify'
     ANGER_NOB = 'anger'  # Non-standard naming to distinguish it from Angry

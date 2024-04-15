@@ -3,7 +3,6 @@ from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
-from rs.machine.custom_state import CustomState
 
 
 class CalculatorCardsTest(CalculatorTestFixture):
@@ -2343,7 +2342,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 1)
 
     def test_ritual_dagger_deals_more_damage_when_powered_up(self):
-        state = self.given_state(CardId.RITUAL_DAGGER, player_powers={PowerId.STATE_RITUAL_DAGGER: 3})
+        state = self.given_state(CardId.RITUAL_DAGGER)
+        state.memory.extra_ritual_dagger_damage_by_card["default"] = 3
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_player_spent_energy(play, 1)
@@ -2356,16 +2356,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.see_player_has_power(play, PowerId.STATE_RITUAL_DAGGER, 3)
+        self.assertEqual(3, state.memory.extra_ritual_dagger_damage_by_card["default"])
 
     def test_ritual_dagger_can_power_up_upgraded(self):
-        state = self.given_state(CardId.RITUAL_DAGGER, upgrade=1, player_powers={PowerId.STATE_RITUAL_DAGGER: 3})
+        state = self.given_state(CardId.RITUAL_DAGGER, upgrade=1)
+        state.memory.extra_ritual_dagger_damage_by_card["default"] = 3
         state.monsters[0].current_hp = 5
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.see_player_has_power(play, PowerId.STATE_RITUAL_DAGGER, 8)
+        self.assertEqual(8, state.memory.extra_ritual_dagger_damage_by_card["default"])
 
     def test_ritual_dagger_no_power_up_on_minion(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
@@ -2375,17 +2376,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.see_player_has_power(play, PowerId.STATE_RITUAL_DAGGER, 0)
+        self.assertEqual(0, state.memory.extra_ritual_dagger_damage_by_card["default"])
 
     def test_ritual_dagger_extra_damage_applies_per_uuid(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
         state.hand[0].uuid = "different_uuid"
         state.monsters[0].current_hp = 15
-        CustomState.extra_ritual_dagger_damage_by_card.update({"default": 69})
+        state.memory.extra_ritual_dagger_damage_by_card.update({"default": 69})
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
-        self.assertEqual(69, CustomState.extra_ritual_dagger_damage_by_card["default"])
-        self.assertEqual(3, CustomState.extra_ritual_dagger_damage_by_card["different_uuid"])
+        self.assertEqual(69, state.memory.extra_ritual_dagger_damage_by_card["default"])
+        self.assertEqual(3, state.memory.extra_ritual_dagger_damage_by_card["different_uuid"])
 
     def test_ritual_dagger_does_not_power_up_across_paths(self):
         state = self.given_state(CardId.RITUAL_DAGGER, player_powers={PowerId.STRENGTH: -4})
@@ -2395,7 +2396,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.see_player_has_power(play, PowerId.STATE_RITUAL_DAGGER, 3)
+        self.assertEqual(3, state.memory.extra_ritual_dagger_damage_by_card["default"])
 
     def test_finisher(self):
         state = self.given_state(CardId.FINISHER)
@@ -2403,4 +2404,4 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 10)
         self.see_player_spent_energy(play, 1)
-        self.see_player_has_power(play, PowerId.STATE_ATTACKS_THIS_TURN, 2)
+        self.assertEqual(2, state.memory.attacks_this_turn)
