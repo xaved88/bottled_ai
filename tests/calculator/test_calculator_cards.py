@@ -2398,10 +2398,11 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.assertEqual(3, play.state.ritual_dagger_memory["default"])
 
-    # def test_finisher(self):
-    #     state = self.given_state(CardId.FINISHER)
-    #     state.hand.append(get_card(CardId.SHIV))
-    #     play = self.when_playing_the_whole_hand(state)
-    #     self.see_enemy_lost_hp(play, 10)
-    #     self.see_player_spent_energy(play, 1)
-    #     self.assertEqual(2, play.state.memory.attacks_this_turn)
+    def test_finisher(self):
+        state = self.given_state(CardId.FINISHER)
+        state.hand.append(get_card(CardId.SHIV))
+        state.hand.append(get_card(CardId.SHIV))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 20)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(3, play.state.attacks_this_turn_memory)

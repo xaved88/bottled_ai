@@ -20,6 +20,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
     ritual_dagger_memory: dict
+    attacks_this_turn_memory: int
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):

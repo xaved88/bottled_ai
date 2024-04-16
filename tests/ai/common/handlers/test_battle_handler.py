@@ -3,7 +3,7 @@ import unittest
 
 from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
-from rs.machine.custom_state import set_new_game_state, CustomState
+from rs.machine.custom_state import set_new_game_state, CustomState, set_new_turn_state
 from test_helpers.resources import load_resource_state
 
 
@@ -200,3 +200,13 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_prefer_killing_with_ritual_dagger(self):
         self.execute_handler_tests('/battles/general/kill_with_ritual_dagger.json', ['play 3 0'])
         set_new_game_state()
+
+    def test_custom_finisher_state_is_updated_when_move_chosen(self):
+        self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'])
+        self.assertEqual(1, CustomState.attacks_this_turn)
+
+    def test_custom_finisher_state_is_not_saved_across_battles(self):
+        state = load_resource_state('battles/general/finisher.json')
+        self.assertEqual(0, state.attacks_this_turn_memory)
+        # relies on another test causing attacks_this_turn to be increased
+

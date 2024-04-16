@@ -27,7 +27,7 @@ class BattleState(BattleStateInterface):
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
                  total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                 ritual_dagger_memory: dict = None):
+                 ritual_dagger_memory: dict = None, attacks_this_turn_memory: int = 0):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -44,6 +44,7 @@ class BattleState(BattleStateInterface):
         self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
         self.orb_slots: int = orb_slots
         self.ritual_dagger_memory: dict = {} if ritual_dagger_memory is None else ritual_dagger_memory
+        self.attacks_this_turn_memory: int = 0 if attacks_this_turn_memory is None else attacks_this_turn_memory
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -229,8 +230,8 @@ class BattleState(BattleStateInterface):
                 del self.hand[idx]
 
 
-        # if card.type == CardType.ATTACK:
-        #     self.memory.attacks_this_turn += 1 todo
+        if card.type == CardType.ATTACK:
+            self.attacks_this_turn_memory += 1
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):

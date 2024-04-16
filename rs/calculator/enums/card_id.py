@@ -120,7 +120,7 @@ class CardId(Enum):
     FEEL_NO_PAIN = 'feel no pain'
     FIEND_FIRE = 'fiend fire'
     FINESSE = 'finesse'
-    FINISHER = 'finisher'  # Note: with current bot setup we can't easily remember how many attacks we've played this turn since we recalculate all paths after each card play, so this card is mostly useless as is.
+    FINISHER = 'finisher'
     FIRE_BREATHING = 'fire breathing'
     FISSION = 'fission'
     FLAME_BARRIER = 'flame barrier'

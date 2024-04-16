@@ -614,5 +614,4 @@ def __ritual_dagger_post_hook(state: BattleStateInterface, uuid: str, target_ind
 
 def finisher_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                         target_index: int = -1):
-    None
-    # effect.hits = state.memory.attacks_this_turn
+    effect.hits = state.attacks_this_turn_memory

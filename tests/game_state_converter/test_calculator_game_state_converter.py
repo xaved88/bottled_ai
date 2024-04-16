@@ -65,3 +65,11 @@ class GameStateConverterTest(unittest.TestCase):
         self.assertIsNotNone(battle_state)
         self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in state.ritual_dagger_memory)
         self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in battle_state.ritual_dagger_memory)
+
+    def test_battle_state_loaded_attacks_this_turn(self):
+        CustomState.attacks_this_turn = 5
+        state = load_resource_state("battles/general/battle_state_pen_nib.json")
+        battle_state = create_battle_state(state)
+        self.assertIsNotNone(battle_state)
+        self.assertEqual(5, state.attacks_this_turn_memory)
+        self.assertEqual(5, battle_state.attacks_this_turn_memory)
