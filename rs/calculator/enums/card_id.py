@@ -60,6 +60,7 @@ class CardId(Enum):
     CHILL = 'chill'
     CHOKE = 'choke'
     CLASH = 'clash'
+    CLAW = 'gash'
     CLEAVE = 'cleave'
     CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'

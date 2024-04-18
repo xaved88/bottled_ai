@@ -638,4 +638,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.FINISHER:
         return [CardEffects(damage=6 if not card.upgrade else 8, target=TargetType.MONSTER,
                 pre_hooks=[finisher_pre_hook])]
+    if card.id == CardId.CLAW:
+        pre_hook = claw_pre_hook if not card.upgrade else claw_upgraded_pre_hook
+        return [CardEffects(hits=1, target=TargetType.MONSTER, pre_hooks=[pre_hook], post_hooks=[claw_post_hook])]
     return [CardEffects()]

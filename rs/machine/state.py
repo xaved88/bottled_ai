@@ -3,7 +3,7 @@ from typing import List
 
 from rs.game.deck import Deck
 from rs.machine.command import Command
-from rs.machine.custom_state import CustomState, set_new_turn_state
+from rs.machine.custom_state import CustomState, set_new_turn_state, set_new_battle_state
 from rs.machine.orb import Orb
 
 
@@ -23,7 +23,7 @@ class GameState:
                 CustomState.general_global_memory["last_known_turn"] = current_turn
 
             else:
-                set_new_turn_state()
+                set_new_battle_state()
 
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
             self.memory_ritual_dagger: dict = CustomState.extra_ritual_dagger_damage_by_card.copy()

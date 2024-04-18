@@ -613,5 +613,20 @@ def __ritual_dagger_post_hook(state: BattleStateInterface, uuid: str, target_ind
 
 
 def finisher_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                        target_index: int = -1):
+                      target_index: int = -1):
     effect.hits = state.memory_general["attacks_this_turn"]
+
+
+def claw_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                  target_index: int = -1):
+    effect.damage = 3 + (2 * state.memory_general["claws_played_this_battle"])
+
+
+def claw_upgraded_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                           target_index: int = -1):
+    effect.damage = 5 + (2 * state.memory_general["claws_played_this_battle"])
+
+
+def claw_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                   target_index: int = -1):
+    state.memory_general["claws_played_this_battle"] += 1
