@@ -203,10 +203,10 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_custom_finisher_state_is_updated_when_move_chosen(self):
         self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'])
-        self.assertEqual(1, CustomState.attacks_this_turn)
+        self.assertEqual(1, CustomState.general_global_memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_not_saved_across_battles(self):
         state = load_resource_state('battles/general/finisher.json')
-        self.assertEqual(0, state.attacks_this_turn_memory)
+        self.assertEqual(0, state.memory_general["attacks_this_turn"])
         # relies on another test causing attacks_this_turn to be increased
 

@@ -2343,7 +2343,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_ritual_dagger_deals_more_damage_when_powered_up(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
-        state.ritual_dagger_memory["default"] = 3
+        state.memory_ritual_dagger["default"] = 3
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_player_spent_energy(play, 1)
@@ -2356,17 +2356,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(3, play.state.ritual_dagger_memory["default"])
+        self.assertEqual(3, play.state.memory_ritual_dagger["default"])
 
     def test_ritual_dagger_can_power_up_upgraded(self):
         state = self.given_state(CardId.RITUAL_DAGGER, upgrade=1)
-        state.ritual_dagger_memory["default"] = 3
+        state.memory_ritual_dagger["default"] = 3
         state.monsters[0].current_hp = 5
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(8, play.state.ritual_dagger_memory["default"])
+        self.assertEqual(8, play.state.memory_ritual_dagger["default"])
 
     def test_ritual_dagger_no_power_up_on_minion(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
@@ -2376,17 +2376,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(0, play.state.ritual_dagger_memory["default"])
+        self.assertEqual(0, play.state.memory_ritual_dagger["default"])
 
     def test_ritual_dagger_extra_damage_applies_per_uuid(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
         state.hand[0].uuid = "different_uuid"
         state.monsters[0].current_hp = 15
-        state.ritual_dagger_memory.update({"default": 69})
+        state.memory_ritual_dagger.update({"default": 69})
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
-        self.assertEqual(69, play.state.ritual_dagger_memory["default"])
-        self.assertEqual(3, play.state.ritual_dagger_memory["different_uuid"])
+        self.assertEqual(69, play.state.memory_ritual_dagger["default"])
+        self.assertEqual(3, play.state.memory_ritual_dagger["different_uuid"])
 
     def test_ritual_dagger_does_not_power_up_across_paths(self):
         state = self.given_state(CardId.RITUAL_DAGGER, player_powers={PowerId.STRENGTH: -4})
@@ -2396,7 +2396,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(3, play.state.ritual_dagger_memory["default"])
+        self.assertEqual(3, play.state.memory_ritual_dagger["default"])
 
     def test_finisher(self):
         state = self.given_state(CardId.FINISHER)
@@ -2405,4 +2405,4 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 20)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(3, play.state.attacks_this_turn_memory)
+        self.assertEqual(3, play.state.memory_general["attacks_this_turn"])

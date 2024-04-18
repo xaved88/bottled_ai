@@ -17,8 +17,8 @@ class GameState:
                 self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
-            self.ritual_dagger_memory: dict = CustomState.extra_ritual_dagger_damage_by_card.copy()
-            self.attacks_this_turn_memory: int = CustomState.attacks_this_turn
+            self.memory_ritual_dagger: dict = CustomState.extra_ritual_dagger_damage_by_card.copy()
+            self.memory_general: dict = CustomState.general_global_memory.copy()
 
     def is_game_running(self) -> bool:
         return self.json["in_game"]

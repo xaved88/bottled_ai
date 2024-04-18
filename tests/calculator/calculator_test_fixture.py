@@ -11,14 +11,18 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.player import Player
 from rs.calculator.monster import Monster
+from rs.machine.custom_state import set_new_game_state, CustomState
 
 
 class CalculatorTestFixture(unittest.TestCase):
 
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
                     relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0,
-                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, ritual_dagger_memory: dict = None,
-                    attacks_this_turn_memory: int = 0) -> BattleState:
+                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_ritual_dagger: dict = None,
+                    memory_general: dict = None) -> BattleState:
+
+        set_new_game_state()
+
         return BattleState(
             player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
             hand=[get_card(card_id, None, upgrade)],
@@ -28,8 +32,9 @@ class CalculatorTestFixture(unittest.TestCase):
             amount_to_discard=amount_to_discard,
             orbs=orbs,
             orb_slots=orb_slots,
-            ritual_dagger_memory=ritual_dagger_memory,
-            attacks_this_turn_memory=attacks_this_turn_memory,
+            memory_ritual_dagger=CustomState.extra_ritual_dagger_damage_by_card.copy() if memory_ritual_dagger is None
+            else memory_ritual_dagger,
+            memory_general=CustomState.general_global_memory.copy() if memory_general is None else memory_general,
         )
 
     def when_playing_the_first_card(self, hand_state: BattleState) -> PlayPath:

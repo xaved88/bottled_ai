@@ -19,8 +19,8 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     cards_discarded_this_turn: int
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
-    ritual_dagger_memory: dict
-    attacks_this_turn_memory: int
+    memory_ritual_dagger: dict
+    memory_general: dict
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):
