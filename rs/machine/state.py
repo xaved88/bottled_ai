@@ -3,7 +3,7 @@ from typing import List
 
 from rs.game.deck import Deck
 from rs.machine.command import Command
-from rs.machine.custom_state import CustomState
+from rs.machine.custom_state import CustomState, set_new_turn_state
 from rs.machine.orb import Orb
 
 
@@ -16,6 +16,15 @@ class GameState:
                 self.draw_pile: Deck = Deck(json_state["game_state"]["combat_state"]["draw_pile"])
                 self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
+
+                current_turn = json_state["game_state"]["combat_state"]["turn"]
+                if CustomState.general_global_memory["last_known_turn"] != current_turn:
+                    set_new_turn_state()
+                CustomState.general_global_memory["last_known_turn"] = current_turn
+
+            else:
+                set_new_turn_state()
+
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
             self.memory_ritual_dagger: dict = CustomState.extra_ritual_dagger_damage_by_card.copy()
             self.memory_general: dict = CustomState.general_global_memory.copy()
