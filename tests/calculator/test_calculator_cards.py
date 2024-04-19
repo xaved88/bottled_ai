@@ -2475,3 +2475,57 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 1)
         self.assertEqual(2, play.state.memory_by_card[CardId.GENETIC_ALGORITHM]["default"])
         self.assertEqual(69, play.state.memory_by_card[CardId.RITUAL_DAGGER]["default"])
+
+    def test_steam_barrier(self):
+        state = self.given_state(CardId.STEAM_BARRIER)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 6)
+        self.see_player_spent_energy(play, 0)
+        self.assertEqual(1, play.state.memory_by_card[CardId.STEAM_BARRIER]["default"])
+
+    def test_steam_barrier_upgraded(self):
+        state = self.given_state(CardId.STEAM_BARRIER, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 8)
+        self.assertEqual(1, play.state.memory_by_card[CardId.STEAM_BARRIER]["default"])
+
+    def test_steam_barrier_powers_down(self):
+        state = self.given_state(CardId.STEAM_BARRIER)
+        state.memory_by_card[CardId.STEAM_BARRIER] = {"default": 2}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 4)
+        self.assertEqual(3, play.state.memory_by_card[CardId.STEAM_BARRIER]["default"])
+
+    def test_steam_barrier_does_not_go_below_0(self):
+        state = self.given_state(CardId.STEAM_BARRIER)
+        state.memory_by_card[CardId.STEAM_BARRIER] = {"default": 10}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 0)
+        self.assertEqual(11, play.state.memory_by_card[CardId.STEAM_BARRIER]["default"])
+
+    def test_glass_knife(self):
+        state = self.given_state(CardId.GLASS_KNIFE)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 16)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(2, play.state.memory_by_card[CardId.GLASS_KNIFE]["default"])
+
+    def test_glass_knife_upgraded(self):
+        state = self.given_state(CardId.GLASS_KNIFE, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 24)
+        self.assertEqual(2, play.state.memory_by_card[CardId.GLASS_KNIFE]["default"])
+
+    def test_glass_knife_powers_down(self):
+        state = self.given_state(CardId.GLASS_KNIFE)
+        state.memory_by_card[CardId.GLASS_KNIFE] = {"default": 2}
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.assertEqual(4, play.state.memory_by_card[CardId.GLASS_KNIFE]["default"])
+
+    def test_glass_knife_does_not_go_below_0(self):
+        state = self.given_state(CardId.GLASS_KNIFE)
+        state.memory_by_card[CardId.GLASS_KNIFE] = {"default": 10}
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.assertEqual(12, play.state.memory_by_card[CardId.GLASS_KNIFE]["default"])

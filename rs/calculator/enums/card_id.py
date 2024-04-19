@@ -134,6 +134,7 @@ class CardId(Enum):
     FUSION = 'fusion'
     GHOSTLY_ARMOR = 'ghostly armor'
     GLACIER = 'glacier'
+    GLASS_KNIFE = 'glass knife'
     GENETIC_ALGORITHM = 'genetic algorithm'
     GO_FOR_THE_EYES = 'go for the eyes'
     GOOD_INSTINCTS = 'good instincts'
@@ -219,6 +220,7 @@ class CardId(Enum):
     SNEAKY_STRIKE = 'underhanded strike'  # Weird id alert!
     SPOT_WEAKNESS = 'spot weakness'
     STACK = 'stack'
+    STEAM_BARRIER = 'steam'
     STORM = 'storm'
     STORM_OF_STEEL = 'storm of steel'
     STREAMLINE = 'streamline'

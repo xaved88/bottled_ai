@@ -643,4 +643,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.GENETIC_ALGORITHM:
         return [CardEffects(target=TargetType.SELF, pre_hooks=[genetic_algorithm_pre_hook],
                             post_hooks=[genetic_algorithm_post_hook])]
+    if card.id == CardId.STEAM_BARRIER:
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[steam_barrier_pre_hook],
+                            post_hooks=[steam_barrier_post_hook])]
+    if card.id == CardId.GLASS_KNIFE:
+        return [CardEffects(hits=2, target=TargetType.MONSTER, pre_hooks=[glass_knife_pre_hook],
+                            post_hooks=[glass_knife_post_hook])]
     return [CardEffects()]

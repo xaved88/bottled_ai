@@ -192,6 +192,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
                     ethereal=True if not upgrade else False, exhausts=True)
     if card_id == CardId.DEEP_BREATH:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.RITUAL_DAGGER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.ENLIGHTENMENT:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.IMPATIENCE:
@@ -357,6 +359,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.SKILL)
     if card_id == CardId.GRAND_FINALE:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.GLASS_KNIFE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.WRAITH_FORM:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.PIERCING_WAIL:
@@ -508,6 +512,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.CLAW:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.STEAM_BARRIER:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
 
     # watcher
     if card_id == CardId.FLYING_SLEEVES:
@@ -529,6 +535,4 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.SENTINEL:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.SMITE:
-        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
-    if card_id == CardId.RITUAL_DAGGER:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)

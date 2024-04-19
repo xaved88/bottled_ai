@@ -631,3 +631,29 @@ def genetic_algorithm_post_hook(state: BattleStateInterface, effect: CardEffects
                                 target_index: int = -1):
     extra_block = 2 if not card.upgrade else 3
     state.memory_by_card[CardId.GENETIC_ALGORITHM][card.uuid] += extra_block
+
+
+def steam_barrier_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                           target_index: int = -1):
+    base_block = 6 if not card.upgrade else 8
+    if card.uuid not in state.memory_by_card[CardId.STEAM_BARRIER]:
+        state.memory_by_card[CardId.STEAM_BARRIER][card.uuid] = 0
+    effect.block = base_block - state.memory_by_card[CardId.STEAM_BARRIER][card.uuid]
+
+
+def steam_barrier_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                            target_index: int = -1):
+    state.memory_by_card[CardId.STEAM_BARRIER][card.uuid] += 1
+
+
+def glass_knife_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                         target_index: int = -1):
+    base_damage = 8 if not card.upgrade else 12
+    if card.uuid not in state.memory_by_card[CardId.GLASS_KNIFE]:
+        state.memory_by_card[CardId.GLASS_KNIFE][card.uuid] = 0
+    effect.damage = base_damage - state.memory_by_card[CardId.GLASS_KNIFE][card.uuid]
+
+
+def glass_knife_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
+    state.memory_by_card[CardId.GLASS_KNIFE][card.uuid] += 2

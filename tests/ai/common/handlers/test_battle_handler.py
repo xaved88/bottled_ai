@@ -235,3 +235,15 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])
+
+    def test_steam_barrier_not_saved_outside_battle(self):
+        self.execute_handler_tests('battles/general/basic.json', ['play 5 0'])
+        CustomState.memory_by_card[CardId.STEAM_BARRIER] = {"test": 4}
+        load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
+        self.assertEqual(False, "test" in CustomState.memory_by_card[CardId.STEAM_BARRIER])
+
+    def test_glass_knife_not_saved_outside_battle(self):
+        self.execute_handler_tests('battles/general/basic.json', ['play 5 0'])
+        CustomState.memory_by_card[CardId.GLASS_KNIFE] = {"test": 4}
+        load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
+        self.assertEqual(False, "test" in CustomState.memory_by_card[CardId.GLASS_KNIFE])
