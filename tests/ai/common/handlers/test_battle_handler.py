@@ -201,37 +201,37 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_custom_finisher_state_is_updated_when_move_chosen(self):
         self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'])
-        self.assertEqual(1, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_saved_within_turn(self):
         self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        self.assertEqual(1, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
         load_resource_state('battles/general/basic_turn_1.json', set_new_game=False)
-        self.assertEqual(1, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_not_saved_across_turn(self):
         self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        self.assertEqual(1, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
         load_resource_state('battles/general/basic_turn_2.json', set_new_game=False)
-        self.assertEqual(0, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(0, CustomState.memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_not_saved_outside_battle(self):
         self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        self.assertEqual(1, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
         load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
-        self.assertEqual(0, CustomState.general_global_memory["attacks_this_turn"])
+        self.assertEqual(0, CustomState.memory["attacks_this_turn"])
 
     def test_custom_claw_state_is_saved_across_turns(self):
         self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        CustomState.general_global_memory["claws_played_this_battle"] = 1
+        CustomState.memory["claws_played_this_battle"] = 1
         load_resource_state('battles/general/basic_turn_2.json', set_new_game=False)
-        self.assertEqual(1, CustomState.general_global_memory["claws_played_this_battle"])
+        self.assertEqual(1, CustomState.memory["claws_played_this_battle"])
 
     def test_custom_claw_state_is_not_saved_outside_battle(self):
         self.execute_handler_tests('battles/general/claw.json', ['play 1 0'])
-        self.assertEqual(1, CustomState.general_global_memory["claws_played_this_battle"])
+        self.assertEqual(1, CustomState.memory["claws_played_this_battle"])
         load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
-        self.assertEqual(0, CustomState.general_global_memory["claws_played_this_battle"])
+        self.assertEqual(0, CustomState.memory["claws_played_this_battle"])
 
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])

@@ -606,18 +606,18 @@ def ritual_dagger_post_hook(state: BattleStateInterface, effect: CardEffectsInte
 
 def finisher_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                       target_index: int = -1):
-    effect.hits = state.memory_general["attacks_this_turn"]
+    effect.hits = state.memory["attacks_this_turn"]
 
 
 def claw_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                   target_index: int = -1):
     base_damage = 3 if not card.upgrade else 5
-    effect.damage = base_damage + (2 * state.memory_general["claws_played_this_battle"])
+    effect.damage = base_damage + (2 * state.memory["claws_played_this_battle"])
 
 
 def claw_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                    target_index: int = -1):
-    state.memory_general["claws_played_this_battle"] += 1
+    state.memory["claws_played_this_battle"] += 1
 
 
 def genetic_algorithm_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

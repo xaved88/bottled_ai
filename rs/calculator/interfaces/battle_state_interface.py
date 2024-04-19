@@ -21,7 +21,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
     memory_by_card: dict[CardId, dict]
-    memory_general: dict
+    memory: dict
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):

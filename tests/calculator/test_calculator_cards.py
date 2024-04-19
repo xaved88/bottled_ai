@@ -2405,23 +2405,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 20)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(3, play.state.memory_general["attacks_this_turn"])
+        self.assertEqual(3, play.state.memory["attacks_this_turn"])
 
     def test_claw(self):
         state = self.given_state(CardId.CLAW)
-        state.memory_general["claws_played_this_battle"] = 1
+        state.memory["claws_played_this_battle"] = 1
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 5)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(2, play.state.memory_general["claws_played_this_battle"])
+        self.assertEqual(2, play.state.memory["claws_played_this_battle"])
 
     def test_claw_upgraded(self):
         state = self.given_state(CardId.CLAW, upgrade=1)
-        state.memory_general["claws_played_this_battle"] = 1
+        state.memory["claws_played_this_battle"] = 1
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 7)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(2, play.state.memory_general["claws_played_this_battle"])
+        self.assertEqual(2, play.state.memory["claws_played_this_battle"])
 
     def test_multiple_claws(self):
         state = self.given_state(CardId.CLAW)
@@ -2430,7 +2430,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 15)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(3, play.state.memory_general["claws_played_this_battle"])
+        self.assertEqual(3, play.state.memory["claws_played_this_battle"])
 
     def test_genetic_algorithm(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)

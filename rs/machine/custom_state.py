@@ -2,7 +2,7 @@ from rs.calculator.enums.card_id import CardId
 
 
 class CustomState:
-    general_global_memory = dict()
+    memory = dict()
     memory_by_card: dict[CardId, dict] = {}  # the nested dict is: [uuid, some_useful_number]
 
 
@@ -19,13 +19,13 @@ def set_new_game_state():
 def set_new_battle_state():
     CustomState.memory_by_card[CardId.STEAM_BARRIER] = {"": 0}
     CustomState.memory_by_card[CardId.GLASS_KNIFE] = {"": 0}
-    CustomState.general_global_memory.update({"claws_played_this_battle": 0})
+    CustomState.memory.update({"claws_played_this_battle": 0})
 
     set_new_turn_state()
 
 
 def set_new_turn_state():
-    CustomState.general_global_memory.update({"attacks_this_turn": 0})
-    CustomState.general_global_memory.update({"last_known_turn": 0})
+    CustomState.memory.update({"attacks_this_turn": 0})
+    CustomState.memory.update({"last_known_turn": 0})
 
 
