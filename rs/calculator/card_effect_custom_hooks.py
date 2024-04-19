@@ -592,9 +592,9 @@ def __second_wind_post_hook(state: BattleStateInterface, block: int):
 
 def ritual_dagger_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                            target_index: int = -1):
-    if card.uuid not in state.memory_ritual_dagger:
-        state.memory_ritual_dagger[card.uuid] = 0
-    effect.damage = 15 + state.memory_ritual_dagger[card.uuid]
+    if card.uuid not in state.memory_by_card[CardId.RITUAL_DAGGER]:
+        state.memory_by_card[CardId.RITUAL_DAGGER][card.uuid] = 0
+    effect.damage = 15 + state.memory_by_card[CardId.RITUAL_DAGGER][card.uuid]
 
 
 def ritual_dagger_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -609,7 +609,7 @@ def ritual_dagger_upgraded_post_hook(state: BattleStateInterface, effect: CardEf
 
 def __ritual_dagger_post_hook(state: BattleStateInterface, uuid: str, target_index, damage: int):
     if state.monsters[target_index].current_hp <= 0 and not state.monsters[target_index].powers.get(PowerId.MINION):
-        state.memory_ritual_dagger[uuid] += damage
+        state.memory_by_card[CardId.RITUAL_DAGGER][uuid] += damage
 
 
 def finisher_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

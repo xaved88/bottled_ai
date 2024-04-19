@@ -26,8 +26,8 @@ class GameState:
                 set_new_battle_state()
 
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
-            self.memory_ritual_dagger: dict = CustomState.extra_ritual_dagger_damage_by_card.copy()
-            self.memory_general: dict = CustomState.general_global_memory.copy()
+            self.memory_by_card = CustomState.memory_by_card.copy()
+            self.memory_general = CustomState.general_global_memory.copy()
 
     def is_game_running(self) -> bool:
         return self.json["in_game"]

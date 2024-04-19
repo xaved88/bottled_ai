@@ -18,7 +18,7 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
                     relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0,
-                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_ritual_dagger: dict = None,
+                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_by_card: dict = None,
                     memory_general: dict = None) -> BattleState:
 
         set_new_game_state()
@@ -32,8 +32,7 @@ class CalculatorTestFixture(unittest.TestCase):
             amount_to_discard=amount_to_discard,
             orbs=orbs,
             orb_slots=orb_slots,
-            memory_ritual_dagger=CustomState.extra_ritual_dagger_damage_by_card.copy() if memory_ritual_dagger is None
-            else memory_ritual_dagger,
+            memory_by_card=CustomState.memory_by_card.copy() if memory_by_card is None else memory_by_card,
             memory_general=CustomState.general_global_memory.copy() if memory_general is None else memory_general,
         )
 

@@ -27,7 +27,7 @@ class BattleState(BattleStateInterface):
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
                  total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                 memory_ritual_dagger: dict = None, memory_general: dict = None):
+                 memory_by_card: dict[CardId, dict] = None, memory_general: dict = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -43,7 +43,7 @@ class BattleState(BattleStateInterface):
         self.__starting_energy: int = 0  # transient and used only internally
         self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
         self.orb_slots: int = orb_slots
-        self.memory_ritual_dagger: dict = {} if memory_ritual_dagger is None else memory_ritual_dagger
+        self.memory_by_card: dict[CardId, dict] = {} if memory_by_card is None else memory_by_card
         self.memory_general: dict = {} if memory_general is None else memory_general
 
     def get_plays(self) -> List[Play]:

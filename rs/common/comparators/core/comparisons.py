@@ -18,8 +18,8 @@ def most_optimal_winning_battle(best: CA, challenger: CA) -> Optional[bool]:
     if best.player_max_hp() != challenger.player_max_hp():
         return challenger.player_max_hp() > best.player_max_hp()
 
-    if best.ritual_dagger_power() != challenger.ritual_dagger_power():
-        return challenger.ritual_dagger_power() > best.ritual_dagger_power()
+    if best.power_up_cards_across_battles() != challenger.power_up_cards_across_battles():
+        return challenger.power_up_cards_across_battles() > best.power_up_cards_across_battles()
 
     if best.incoming_damage() != challenger.incoming_damage():
         return challenger.incoming_damage() < best.incoming_damage()
@@ -179,6 +179,6 @@ def most_retained_cards(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.retained_cards() > best.retained_cards()
 
 
-def most_powered_up_ritual_dagger(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.ritual_dagger_power() == challenger.ritual_dagger_power() \
-        else challenger.ritual_dagger_power() > best.ritual_dagger_power()
+def most_powered_up_cards_across_battles(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.power_up_cards_across_battles() == challenger.power_up_cards_across_battles() \
+        else challenger.power_up_cards_across_battles() > best.power_up_cards_across_battles()

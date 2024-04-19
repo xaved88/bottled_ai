@@ -32,7 +32,7 @@ def get_best_battle_action(game_state: GameState, comparator: ComparatorInterfac
         # create a temp state for finding the state of the custom state after the chosen action
         state = create_battle_state(game_state)
         state.transform_from_play(next_move, is_first_play=False)  # not sure if it's ok that I'm setting that false
-        CustomState.extra_ritual_dagger_damage_by_card = state.memory_ritual_dagger.copy()
+        CustomState.memory_by_card = state.memory_by_card.copy()
         CustomState.general_global_memory = state.memory_general.copy()
 
         if next_move[1] == -1:

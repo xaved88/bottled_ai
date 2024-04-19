@@ -30,7 +30,7 @@ default_comparisons = [
     most_less_good_player_powers,
     least_enemy_artifacts,
     most_bad_cards_exhausted,
-    most_powered_up_ritual_dagger,
+    most_powered_up_cards_across_battles,
     least_incoming_damage,
     most_ethereal_cards_saved_for_later,
     most_retained_cards,

@@ -1,5 +1,6 @@
 import unittest
 
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
@@ -63,8 +64,8 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
         battle_state = create_battle_state(state)
         self.assertIsNotNone(battle_state)
-        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in state.memory_ritual_dagger)
-        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in battle_state.memory_ritual_dagger)
+        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in state.memory_by_card[CardId.RITUAL_DAGGER])
+        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in battle_state.memory_by_card[CardId.RITUAL_DAGGER])
 
     def test_battle_state_loaded_attacks_this_turn(self):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
