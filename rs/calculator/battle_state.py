@@ -15,6 +15,7 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.enums.relic_id import RelicId
 from rs.game.card import CardType
+from rs.machine.custom_state import Memory
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
 PLAY_DISCARD = -2
@@ -27,7 +28,7 @@ class BattleState(BattleStateInterface):
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
                  total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                 memory: dict = None, memory_by_card: dict[CardId, dict] = None):
+                 memory=None, memory_by_card: dict[CardId, dict] = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -43,7 +44,7 @@ class BattleState(BattleStateInterface):
         self.__starting_energy: int = 0  # transient and used only internally
         self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
         self.orb_slots: int = orb_slots
-        self.memory: dict = {} if memory is None else memory
+        self.memory: None = None if memory is None else memory
         self.memory_by_card: dict[CardId, dict] = {} if memory_by_card is None else memory_by_card
 
     def get_plays(self) -> List[Play]:
@@ -231,7 +232,7 @@ class BattleState(BattleStateInterface):
 
 
         if card.type == CardType.ATTACK:
-            self.memory["attacks_this_turn"] += 1
+            self.memory.attacks_this_turn += 1
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
@@ -481,6 +482,9 @@ class BattleState(BattleStateInterface):
                 if orb.name[0] == "D":
                     state_string += str(amount)
                 state_string += str(self.orb_slots)
+
+        # # memory
+        # state_string += "M"
 
         return state_string
 

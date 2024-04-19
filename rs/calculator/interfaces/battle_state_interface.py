@@ -7,6 +7,7 @@ from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
+from rs.machine.custom_state import Memory
 
 
 class BattleStateInterface(metaclass=abc.ABCMeta):
@@ -21,7 +22,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
     memory_by_card: dict[CardId, dict]
-    memory: dict
+    memory: None
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):

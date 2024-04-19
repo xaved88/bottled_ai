@@ -3,13 +3,13 @@ from typing import List
 
 from rs.game.deck import Deck
 from rs.machine.command import Command
-from rs.machine.custom_state import CustomState, set_new_turn_state, set_new_battle_state, set_new_game_state
+from rs.machine.custom_state import CustomState, set_new_turn_state, set_new_battle_state, set_new_game_state, Memory
 from rs.machine.orb import Orb
 
 
 class GameState:
     def __init__(self, json_state: json):
-        if len(CustomState.memory) == 0:
+        if len(CustomState.memory_by_card) == 0:
             set_new_game_state()
 
         self.json = json_state
@@ -21,16 +21,16 @@ class GameState:
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
 
                 current_turn = json_state["game_state"]["combat_state"]["turn"]
-                if CustomState.memory["last_known_turn"] != current_turn:
+                if Memory.last_known_turn != current_turn:
                     set_new_turn_state()
-                CustomState.memory["last_known_turn"] = current_turn
+                Memory.last_known_turn = current_turn
 
             else:
                 set_new_battle_state()
 
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
             self.memory_by_card = CustomState.memory_by_card.copy()
-            self.memory = CustomState.memory.copy()
+            self.memory = Memory
 
     def is_game_running(self) -> bool:
         return self.json["in_game"]
