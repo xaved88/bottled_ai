@@ -18,8 +18,11 @@ def most_optimal_winning_battle(best: CA, challenger: CA) -> Optional[bool]:
     if best.player_max_hp() != challenger.player_max_hp():
         return challenger.player_max_hp() > best.player_max_hp()
 
-    if best.power_up_cards_across_battles() != challenger.power_up_cards_across_battles():
-        return challenger.power_up_cards_across_battles() > best.power_up_cards_across_battles()
+    if best.power_up_ritual_dagger() != challenger.power_up_ritual_dagger():
+        return challenger.power_up_ritual_dagger() > best.power_up_ritual_dagger()
+
+    if best.power_up_genetic_algorithm() != challenger.power_up_genetic_algorithm():
+        return challenger.power_up_genetic_algorithm() > best.power_up_genetic_algorithm()
 
     if best.incoming_damage() != challenger.incoming_damage():
         return challenger.incoming_damage() < best.incoming_damage()
@@ -179,6 +182,11 @@ def most_retained_cards(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.retained_cards() > best.retained_cards()
 
 
-def most_powered_up_cards_across_battles(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.power_up_cards_across_battles() == challenger.power_up_cards_across_battles() \
-        else challenger.power_up_cards_across_battles() > best.power_up_cards_across_battles()
+def most_powered_up_ritual_dagger(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.power_up_ritual_dagger() == challenger.power_up_ritual_dagger() \
+        else challenger.power_up_ritual_dagger() > best.power_up_ritual_dagger()
+
+
+def most_powered_up_genetic_algorithm(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.power_up_genetic_algorithm() == challenger.power_up_genetic_algorithm() \
+        else challenger.power_up_genetic_algorithm() > best.power_up_genetic_algorithm()

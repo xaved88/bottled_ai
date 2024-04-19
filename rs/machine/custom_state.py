@@ -9,6 +9,7 @@ class CustomState:
 def set_new_game_state():
     CustomState.memory_by_card.clear()
     CustomState.memory_by_card.update({CardId.RITUAL_DAGGER: {"": 0}})
+    CustomState.memory_by_card.update({CardId.GENETIC_ALGORITHM: {"": 0}})
     CustomState.memory_by_card[CardId.RITUAL_DAGGER] = {"test_uuid_powered_up_ritual_dagger": 3}  # for test
 
     set_new_battle_state()

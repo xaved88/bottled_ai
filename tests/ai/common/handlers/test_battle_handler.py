@@ -233,3 +233,5 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
         self.assertEqual(0, CustomState.general_global_memory["claws_played_this_battle"])
 
+    def test_play_genetic_algorithm_when_nothing_better_to_do(self):
+        self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])

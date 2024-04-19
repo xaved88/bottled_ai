@@ -2431,3 +2431,47 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 15)
         self.see_player_spent_energy(play, 0)
         self.assertEqual(3, play.state.memory_general["claws_played_this_battle"])
+
+    def test_genetic_algorithm(self):
+        state = self.given_state(CardId.GENETIC_ALGORITHM)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 1)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_genetic_algorithm_blocks_more_powered_up_and_can_power_up(self):
+        state = self.given_state(CardId.GENETIC_ALGORITHM)
+        state.memory_by_card[CardId.GENETIC_ALGORITHM] = {"default": 2}
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 3)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(4, play.state.memory_by_card[CardId.GENETIC_ALGORITHM]["default"])
+
+    def test_genetic_algorithm_can_power_up_upgraded(self):
+        state = self.given_state(CardId.GENETIC_ALGORITHM, upgrade=1)
+        state.memory_by_card[CardId.GENETIC_ALGORITHM] = {"default": 2}
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 3)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(5, play.state.memory_by_card[CardId.GENETIC_ALGORITHM]["default"])
+
+    def test_genetic_algorithm_blocks_per_uuid(self):
+        state = self.given_state(CardId.GENETIC_ALGORITHM)
+        state.hand[0].uuid = "different_uuid"
+        state.memory_by_card[CardId.GENETIC_ALGORITHM] = {"default": 69}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 1)
+        self.assertEqual(69, play.state.memory_by_card[CardId.GENETIC_ALGORITHM]["default"])
+        self.assertEqual(2, play.state.memory_by_card[CardId.GENETIC_ALGORITHM]["different_uuid"])
+
+    def test_same_uuid_different_cards_do_not_overlap(self):
+        state = self.given_state(CardId.GENETIC_ALGORITHM)
+        state.hand[0].uuid = "default"
+        state.hand.append(get_card(CardId.RITUAL_DAGGER))
+        state.memory_by_card[CardId.RITUAL_DAGGER] = {"default": 69}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 1)
+        self.assertEqual(2, play.state.memory_by_card[CardId.GENETIC_ALGORITHM]["default"])
+        self.assertEqual(69, play.state.memory_by_card[CardId.RITUAL_DAGGER]["default"])
