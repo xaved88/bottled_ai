@@ -3,12 +3,15 @@ from typing import List
 
 from rs.game.deck import Deck
 from rs.machine.command import Command
-from rs.machine.custom_state import CustomState, set_new_turn_state, set_new_battle_state
+from rs.machine.custom_state import CustomState, set_new_turn_state, set_new_battle_state, set_new_game_state
 from rs.machine.orb import Orb
 
 
 class GameState:
     def __init__(self, json_state: json):
+        if len(CustomState.general_global_memory) == 0:
+            set_new_game_state()
+
         self.json = json_state
         if "game_state" in json_state:
             if "combat_state" in json_state["game_state"]:
