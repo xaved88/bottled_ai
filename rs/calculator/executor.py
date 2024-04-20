@@ -4,7 +4,7 @@ from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.battle_state import PLAY_DISCARD, Play
 from rs.calculator.play_path import PlayPath, get_paths_bfs
-from rs.machine.custom_state import CustomState, Memory
+from rs.machine.custom_state import CustomState
 from rs.machine.state import GameState
 
 
@@ -33,10 +33,7 @@ def get_best_battle_action(game_state: GameState, comparator: ComparatorInterfac
         state = create_battle_state(game_state)
         state.transform_from_play(next_move, is_first_play=False)  # not sure if it's ok that I'm setting that false
         CustomState.memory_by_card = state.memory_by_card.copy()
-
-        # Memory.attacks_this_turn = state.memory
-        # Memory.claws_played_this_battle = state.memory.claws_played_this_battle
-        # Memory.last_known_turn = state.memory.last_known_turn
+        CustomState.memory = state.memory.copy()
 
         if next_move[1] == -1:
             return [f"play {next_move[0] + 1}"]
