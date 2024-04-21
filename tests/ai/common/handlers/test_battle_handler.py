@@ -4,7 +4,6 @@ import unittest
 from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.calculator.enums.card_id import CardId
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
-from rs.machine.custom_state import CustomState
 from test_helpers.resources import load_resource_state
 
 
@@ -57,7 +56,8 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/play_slimed.json', ['play 1'])
 
     def test_do_not_discard_bad_ethereal_cards(self):
-        self.execute_handler_tests('/battles/general/discard_hold_on_to_bad_ethereals.json', ['choose 2', 'confirm', 'wait 30'])
+        self.execute_handler_tests('/battles/general/discard_hold_on_to_bad_ethereals.json',
+                                   ['choose 2', 'confirm', 'wait 30'])
 
     def test_save_unnecessary_apparition_for_later(self):
         self.execute_handler_tests('/battles/general/save_unnecessary_apparition_for_later.json',
@@ -193,57 +193,65 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/powered_up_ritual_dagger.json', ['play 3 0'])
 
     def test_custom_state_outside_battle_state_is_updated_when_move_chosen(self):
-        self.execute_handler_tests('/battles/general/powered_up_ritual_dagger.json', ['play 3 0'])
-        self.assertEqual(6, CustomState.memory_by_card[CardId.RITUAL_DAGGER]["test_uuid_powered_up_ritual_dagger"])
+        new_state = self.execute_handler_tests('/battles/general/powered_up_ritual_dagger.json', ['play 3 0'])
+        self.assertEqual(6, new_state.the_bots_memory_book.memory_by_card[CardId.RITUAL_DAGGER][
+            "test_uuid_powered_up_ritual_dagger"])
 
     def test_prefer_killing_with_ritual_dagger(self):
         self.execute_handler_tests('/battles/general/kill_with_ritual_dagger.json', ['play 3 0'])
 
     def test_custom_finisher_state_is_updated_when_move_chosen(self):
-        self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'])
-        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
+        new_state = self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'])
+        self.assertEqual(1, new_state.the_bots_memory_book.memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_saved_within_turn(self):
-        self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
-        load_resource_state('battles/general/basic_turn_1.json', set_new_game=False)
-        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
+        new_state = self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
+        self.assertEqual(1, new_state.the_bots_memory_book.memory["attacks_this_turn"])
+        final_state = load_resource_state('battles/general/basic_turn_1.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(1, final_state.the_bots_memory_book.memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_not_saved_across_turn(self):
-        self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
-        load_resource_state('battles/general/basic_turn_2.json', set_new_game=False)
-        self.assertEqual(0, CustomState.memory["attacks_this_turn"])
+        new_state = self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
+        self.assertEqual(1, new_state.the_bots_memory_book.memory["attacks_this_turn"])
+        final_state = load_resource_state('battles/general/basic_turn_2.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(0, final_state.the_bots_memory_book.memory["attacks_this_turn"])
 
     def test_custom_finisher_state_is_not_saved_outside_battle(self):
-        self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        self.assertEqual(1, CustomState.memory["attacks_this_turn"])
-        load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
-        self.assertEqual(0, CustomState.memory["attacks_this_turn"])
+        new_state = self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
+        self.assertEqual(1, new_state.the_bots_memory_book.memory["attacks_this_turn"])
+        final_state = load_resource_state('card_reward/card_reward_take.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(0, final_state.the_bots_memory_book.memory["attacks_this_turn"])
 
     def test_custom_claw_state_is_saved_across_turns(self):
-        self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
-        CustomState.memory["claws_played_this_battle"] = 1
-        load_resource_state('battles/general/basic_turn_2.json', set_new_game=False)
-        self.assertEqual(1, CustomState.memory["claws_played_this_battle"])
+        new_state = self.execute_handler_tests('battles/general/basic_turn_1.json', ['play 5 0'])
+        new_state.the_bots_memory_book.memory["claws_played_this_battle"] = 1
+        final_state = load_resource_state('battles/general/basic_turn_2.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(1, final_state.the_bots_memory_book.memory["claws_played_this_battle"])
 
     def test_custom_claw_state_is_not_saved_outside_battle(self):
-        self.execute_handler_tests('battles/general/claw.json', ['play 1 0'])
-        self.assertEqual(1, CustomState.memory["claws_played_this_battle"])
-        load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
-        self.assertEqual(0, CustomState.memory["claws_played_this_battle"])
+        new_state = self.execute_handler_tests('battles/general/claw.json', ['play 1 0'])
+        self.assertEqual(1, new_state.the_bots_memory_book.memory["claws_played_this_battle"])
+        final_state = load_resource_state('card_reward/card_reward_take.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(0, final_state.the_bots_memory_book.memory["claws_played_this_battle"])
 
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])
 
     def test_steam_barrier_not_saved_outside_battle(self):
-        self.execute_handler_tests('battles/general/basic.json', ['play 5 0'])
-        CustomState.memory_by_card[CardId.STEAM_BARRIER] = {"test": 4}
-        load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
-        self.assertEqual(False, "test" in CustomState.memory_by_card[CardId.STEAM_BARRIER])
+        new_state = self.execute_handler_tests('battles/general/basic.json', ['play 5 0'])
+        new_state.the_bots_memory_book.memory_by_card[CardId.STEAM_BARRIER] = {"test": 4}
+        final_state = load_resource_state('card_reward/card_reward_take.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(False, "test" in final_state.the_bots_memory_book.memory_by_card[CardId.STEAM_BARRIER])
 
     def test_glass_knife_not_saved_outside_battle(self):
-        self.execute_handler_tests('battles/general/basic.json', ['play 5 0'])
-        CustomState.memory_by_card[CardId.GLASS_KNIFE] = {"test": 4}
-        load_resource_state('card_reward/card_reward_take.json', set_new_game=False)
-        self.assertEqual(False, "test" in CustomState.memory_by_card[CardId.GLASS_KNIFE])
+        new_state = self.execute_handler_tests('battles/general/basic.json', ['play 5 0'])
+        new_state.the_bots_memory_book.memory_by_card[CardId.GLASS_KNIFE] = {"test": 4}
+        final_state = load_resource_state('card_reward/card_reward_take.json',
+                                          memory_book=new_state.the_bots_memory_book)
+        self.assertEqual(False, "test" in final_state.the_bots_memory_book.memory_by_card[CardId.GLASS_KNIFE])
