@@ -25,6 +25,6 @@ class BaseTestHandlerFixture(unittest.TestCase):
             self.fail("No handler found that could handle")
 
         if expected is not None:
-            self.assertEqual(expected, actual)
+            self.assertEqual(expected, actual.commands)
 
         return state

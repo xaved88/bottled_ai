@@ -72,13 +72,14 @@ class Game:
             for handler in self.strategy.handlers + DEFAULT_GAME_HANDLERS:
                 if handler.can_handle(self.last_state):
                     log_to_run("Handler: " + str(handler))
-                    commands = handler.handle(self.last_state)
-                    if not commands:
+                    action = handler.handle(self.last_state)
+                    if not action:
                         continue
-                    for command in commands:
+                    for command in action.commands:
                         self.__send_command(command)
-                        # TODO - actually set the bots memory book (look to the todo in the executor)
                         # self.__send_command("wait 30")  # for slowing things down so you can see what's going on!
+                    if action.memory_book is not None:
+                        self.the_bots_memory_book = action.memory_book
                     handled = True
                     break
             if not handled:
