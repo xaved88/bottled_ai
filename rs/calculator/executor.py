@@ -1,10 +1,12 @@
-from typing import List
+from typing import List, Optional
 
 from rs.calculator.battle_state import PLAY_DISCARD, Play
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.play_path import PlayPath, get_paths_bfs
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
+from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 
 
 def get_best_battle_path(game_state: GameState, comparator: ComparatorInterface, max_path_count) -> PlayPath:
@@ -23,7 +25,7 @@ def get_best_battle_path(game_state: GameState, comparator: ComparatorInterface,
 
 
 def get_best_battle_action(game_state: GameState, comparator: ComparatorInterface, max_path_count: int = 11_000) -> \
-List[str]:
+        Optional[HandlerAction]:
     path = get_best_battle_path(game_state, comparator, max_path_count)
 
     if path.plays:
@@ -34,15 +36,14 @@ List[str]:
         state.transform_from_play(next_move, is_first_play=False)  # not sure if it's ok that I'm setting that false
 
         # TODO -> refactor these side effects
-        game_state.the_bots_memory_book.memory_by_card = state.memory_by_card.copy()
-        game_state.the_bots_memory_book.memory = state.memory.copy()
+        memory_book = TheBotsMemoryBook(memory_by_card=state.memory_by_card.copy(), memory=state.memory.copy())
 
         if next_move[1] == -1:
-            return [f"play {next_move[0] + 1}"]
+            return HandlerAction(commands=[f"play {next_move[0] + 1}"], memory_book=memory_book)
         if next_move[1] == PLAY_DISCARD:
-            return get_discard_commands(path.plays)
-        return [f"play {next_move[0] + 1} {next_move[1]}"]
-    return []
+            return HandlerAction(commands=get_discard_commands(path.plays), memory_book=memory_book)
+        return HandlerAction(commands=[f"play {next_move[0] + 1} {next_move[1]}"], memory_book=memory_book)
+    return None
 
 
 def get_discard_commands(plays: List[Play]) -> List[str]:

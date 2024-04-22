@@ -52,7 +52,7 @@ class BattleHandler(Handler):
     def handle(self, state: GameState) -> HandlerAction:
         actions = get_best_battle_action(state, self.select_comparator(state), self.max_path_count)
         if actions:
-            return HandlerAction(commands=actions)
-        if state.has_command(Command.PLAY):
-            return HandlerAction(commands=["end"])
-        return HandlerAction(commands=[])
+            return actions
+        if state.has_command(Command.END):
+            return HandlerAction(commands=["end"], memory_book=None)
+        return HandlerAction(commands=[], memory_book=None)
