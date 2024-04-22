@@ -4,6 +4,7 @@ from config import presentation_mode, p_delay
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
@@ -16,5 +17,5 @@ class CommonCardRewardTakeFirstCardHandler(Handler):
                and (state.game_state()["room_phase"] == "COMPLETE" or state.game_state()["room_phase"] == "EVENT" or
                     state.game_state()["room_phase"] == "COMBAT")
 
-    def handle(self, state: GameState) -> List[str]:
-        return ["choose 0", "wait 30"]
+    def handle(self, state: GameState) -> HandlerAction:
+        return HandlerAction(commands=["choose 0", "wait 30"])

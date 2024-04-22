@@ -18,20 +18,20 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_doesnt_play_burn(self):
         state = load_resource_state('battles/general/burns.json')
-        self.assertEqual(['play 2 0'], CommonBattleHandler().handle(state))
+        self.assertEqual(['play 2 0'], CommonBattleHandler().handle(state).commands)
 
     @unittest.skip("we only want to run this test occasionally")
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
         state = load_resource_state('battles/general/complex_case.json')
-        self.assertEqual(['play 5'], CommonBattleHandler().handle(state))
+        self.assertEqual(['play 5'], CommonBattleHandler().handle(state).commands)
         end = time.perf_counter()
         if end > start + 40:
             self.fail("Process took too long!")
 
     def test_another_simple_case(self):
         state = load_resource_state('battles/general/another_simple.json')
-        self.assertEqual(['play 5'], CommonBattleHandler().handle(state))
+        self.assertEqual(['play 5'], CommonBattleHandler().handle(state).commands)
 
     def test_discard_works_correctly(self):
         self.execute_handler_tests('/battles/general/discard.json', ['choose 1', 'confirm', 'wait 30'])

@@ -4,6 +4,7 @@ from config import presentation_mode, p_delay, p_delay_s
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 # most important on top
@@ -62,16 +63,16 @@ class CommonCombatRewardHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \
-               and state.screen_type() == ScreenType.COMBAT_REWARD.value
+            and state.screen_type() == ScreenType.COMBAT_REWARD.value
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
 
         # Chug a Fruit Juice straight away
         for idx, pot in enumerate(state.get_held_potion_names()):
             if pot == 'fruit juice':
                 if presentation_mode:
-                    return [p_delay, "potion use " + str(idx), p_delay_s]
-                return ["wait 30", "potion use " + str(idx)]
+                    return HandlerAction(commands=[p_delay, "potion use " + str(idx), p_delay_s])
+                return HandlerAction(commands=["wait 30", "potion use " + str(idx)])
 
         # Do pickups
         choice = 'did not choose'
@@ -101,7 +102,7 @@ class CommonCombatRewardHandler(Handler):
                         break
                     for idx, pot in enumerate(state.get_held_potion_names()):
                         if pot == least_desired_potion:
-                            return ["wait 30", "potion discard " + str(idx)]
+                            return HandlerAction(commands=["wait 30", "potion discard " + str(idx)])
 
                     # edge-case:
                     # full potions + two waiting potions: one strongly desired (more than our inventory potions), and one not desired (less than our inventory potions)
@@ -115,7 +116,7 @@ class CommonCombatRewardHandler(Handler):
 
         if choice != 'did not choose':
             if presentation_mode:
-                return [p_delay, "choose " + choice, p_delay_s]
-            return ["choose " + choice]
+                return HandlerAction(commands=[p_delay, "choose " + choice, p_delay_s])
+            return HandlerAction(commands=["choose " + choice])
 
-        return ["proceed"]
+        return HandlerAction(commands=["proceed"])

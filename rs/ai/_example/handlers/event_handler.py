@@ -4,6 +4,7 @@ from config import presentation_mode, p_delay, p_delay_s, slow_events
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
@@ -13,17 +14,17 @@ class EventHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.EVENT.value and state.has_command(Command.CHOOSE)
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
 
         if len(state.get_choice_list()) == 1:  # If there's just one option, take it.
             if presentation_mode or slow_events:
-                return [p_delay, "choose 0", "wait 30"]
-            return ["choose 0", "wait 30"]
+                return HandlerAction(commands=[p_delay, "choose 0", "wait 30"])
+            return HandlerAction(commands=["choose 0", "wait 30"])
 
         if self.find_event_choice(state):  # Otherwise figure out what to do below!
             if presentation_mode or slow_events:
-                return [p_delay, self.find_event_choice(state), p_delay_s]
-            return [self.find_event_choice(state), "wait 30"]
+                return HandlerAction(commands=[p_delay, self.find_event_choice(state), p_delay_s])
+            return HandlerAction(commands=[self.find_event_choice(state), "wait 30"])
 
     def find_event_choice(self, state: GameState) -> str:
         hp_per = state.get_player_health_percentage() * 100

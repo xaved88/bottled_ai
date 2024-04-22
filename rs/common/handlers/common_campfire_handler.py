@@ -5,6 +5,7 @@ from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import standard_card
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
@@ -16,7 +17,7 @@ class CommonCampfireHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) and state.screen_type() == ScreenType.REST.value
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         can_rest = 'rest' in state.get_choice_list()
         can_toke = 'toke' in state.get_choice_list()
         can_lift = 'lift' in state.get_choice_list()
@@ -45,5 +46,5 @@ class CommonCampfireHandler(Handler):
             choice = "toke"
 
         if presentation_mode:
-            return [p_delay, "choose " + choice, p_delay]
-        return ["choose " + choice]
+            return HandlerAction(commands=[p_delay, "choose " + choice, p_delay])
+        return HandlerAction(commands=["choose " + choice])

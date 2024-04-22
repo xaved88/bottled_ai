@@ -4,6 +4,7 @@ from config import presentation_mode, p_delay
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 default_preferences = [
@@ -56,7 +57,7 @@ class CommonBossRelicHandler(Handler):
         # can be implemented by the children
         pass
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         # we have to copy this, otherwise it will modify the prefs list until the bot is rerun
         prefs = self.pref.copy()
 
@@ -68,9 +69,9 @@ class CommonBossRelicHandler(Handler):
         for p in prefs:
             if p in state.get_choice_list():
                 if presentation_mode:
-                    return [p_delay, "choose " + str(state.get_choice_list().index(p)), p_delay]
-                return ["choose " + str(state.get_choice_list().index(p))]
+                    return HandlerAction(commands=[p_delay, "choose " + str(state.get_choice_list().index(p)), p_delay])
+                return HandlerAction(commands=["choose " + str(state.get_choice_list().index(p))])
 
         if presentation_mode:
-            return [p_delay, "skip", p_delay, "proceed", p_delay]
-        return ["skip", "proceed"]
+            return HandlerAction(commands=[p_delay, "skip", p_delay, "proceed", p_delay])
+        return HandlerAction(commands=["skip", "proceed"])
