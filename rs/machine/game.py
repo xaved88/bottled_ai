@@ -4,7 +4,7 @@ from typing import Optional
 from rs.api.client import Client
 from rs.helper.controller import await_controller
 from rs.helper.general import can_handle_screenshots
-from rs.helper.logger import init_run_logging, log_to_run, log
+from rs.helper.logger import init_run_logging, log_to_run
 from rs.helper.seed import get_seed_string
 from rs.helper.snapshot_logger import log_snapshot
 from rs.machine.ai_strategy import AiStrategy
@@ -18,6 +18,7 @@ from rs.machine.handlers.default_play import DefaultPlayHandler
 from rs.machine.handlers.default_shop import DefaultShopHandler
 from rs.machine.handlers.default_wait import DefaultWaitHandler
 from rs.machine.state import GameState
+from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 
 DEFAULT_GAME_HANDLERS = [
     DefaultLeaveHandler(),
@@ -36,10 +37,12 @@ class Game:
     def __init__(self, client: Client, strategy: AiStrategy):
         self.client = client
         self.strategy = strategy
+        self.the_bots_memory_book = TheBotsMemoryBook()
         self.last_state: Optional[GameState] = None
         self.game_over_handler: DefaultGameOverHandler = DefaultGameOverHandler()
 
     def start(self, seed: str = "", take_snapshots: bool = False):
+        self.the_bots_memory_book.set_new_game_state()
         self.run_elites = []
         self.last_elite = ""
         self.run_bosses = []
@@ -69,12 +72,13 @@ class Game:
             for handler in self.strategy.handlers + DEFAULT_GAME_HANDLERS:
                 if handler.can_handle(self.last_state):
                     log_to_run("Handler: " + str(handler))
-                    commands = handler.handle(self.last_state)
-                    if not commands:
+                    action = handler.handle(self.last_state)
+                    if not action:
                         continue
-                    for command in commands:
+                    if action.memory_book is not None:
+                        self.the_bots_memory_book = action.memory_book
+                    for command in action.commands:
                         self.__send_command(command)
-                        # self.__send_command("wait 30")  # for slowing things down so you can see what's going on!
                     handled = True
                     break
             if not handled:
@@ -85,13 +89,15 @@ class Game:
         if self.take_snapshots and self.last_state and 'game_state' in self.last_state.json and 'floor' in self.last_state.game_state():
             log_snapshot(self.last_state.floor(), command)
 
-        self.last_state = GameState(json.loads(self.client.send_message(command)))
+        self.last_state = GameState(json.loads(self.client.send_message(command)), self.the_bots_memory_book)
 
     def __send_silent_command(self, command: str):
-        self.last_state = GameState(json.loads(self.client.send_message(command, silent=True)))
+        self.last_state = GameState(json.loads(self.client.send_message(command, silent=True)),
+                                    self.the_bots_memory_book)
 
     def __send_setup_command(self, command: str):
-        self.last_state = GameState(json.loads(self.client.send_message(command, before_run=True)))
+        self.last_state = GameState(json.loads(self.client.send_message(command, before_run=True)),
+                                    self.the_bots_memory_book)
 
     def __handle_state_based_logging(self):
         monsters = self.last_state.get_monsters()

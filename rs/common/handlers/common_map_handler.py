@@ -6,6 +6,7 @@ from rs.game.path import PathHandlerConfig
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 default_config = PathHandlerConfig(
@@ -36,7 +37,7 @@ class CommonMapHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.MAP.value and state.has_command(Command.CHOOSE)
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         # Get the math and paths set up
         n = state.game_state()["screen_state"]["current_node"]
         current_position = str(n["x"]) + "_" + str(n["y"])
@@ -47,5 +48,6 @@ class CommonMapHandler(Handler):
 
         # this will actually screw us with winged boots, as there are more choices and we'd be picking from a different list...
         if presentation_mode or slow_pathing:
-            return [p_delay, "choose " + str(game_map.get_path_choice_from_choices(state.get_choice_list()))]
-        return ["choose " + str(game_map.get_path_choice_from_choices(state.get_choice_list()))]
+            return HandlerAction(
+                commands=[p_delay, "choose " + str(game_map.get_path_choice_from_choices(state.get_choice_list()))])
+        return HandlerAction(commands=["choose " + str(game_map.get_path_choice_from_choices(state.get_choice_list()))])

@@ -32,6 +32,7 @@ def make_card(card: GameCard) -> CardInterface:
         card_type=card.type,
         ethereal=card.ethereal,
         exhausts=card.exhausts,
+        uuid=card.uuid,
     )
 
 
@@ -119,5 +120,10 @@ def create_battle_state(game_state: GameState) -> BattleState:
     orbs = [(OrbId(o.value), a) for o, a in game_state.get_player_orbs()]
     orb_slots = game_state.get_player_orb_slots()
 
+    # get custom state
+    memory_by_card = game_state.memory_by_card.copy()
+    memory = game_state.memory.copy()
+
     return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
-                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots)
+                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots, memory=memory,
+                       memory_by_card=memory_by_card)

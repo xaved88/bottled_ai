@@ -1,6 +1,7 @@
 import abc
 from typing import List, Tuple
 
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.monster_interface import MonsterInterface
@@ -19,6 +20,8 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     cards_discarded_this_turn: int
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
+    memory_by_card: dict[CardId, dict]
+    memory: dict
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):

@@ -10,6 +10,7 @@ from rs.common.comparators.waiting_lagavulin_comparator import WaitingLagavulinC
 from rs.game.card import CardType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
@@ -48,10 +49,10 @@ class CommonBattleHandler(Handler):
             return WaitingLagavulinComparator()
         return CommonGeneralComparator()
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         actions = get_best_battle_action(state, self.select_comparator(state), self.max_path_count)
         if actions:
             return actions
-        if state.has_command(Command.PLAY):
-            return ["end"]
-        return []
+        if state.has_command(Command.END):
+            return HandlerAction(commands=["end"], memory_book=None)
+        return HandlerAction(commands=[], memory_book=None)

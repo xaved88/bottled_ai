@@ -5,7 +5,7 @@ from rs.game.card import CardType
 
 class Card(CardInterface):
     def __init__(self, card_id: CardId, upgrade: int, cost: int, needs_target: bool, card_type: CardType,
-                 ethereal: bool = False, exhausts: bool = False, retains: bool = False):
+                 ethereal: bool = False, exhausts: bool = False, uuid: str = "default"):
         self.id: CardId = card_id
         self.upgrade: int = upgrade
         self.cost: int = cost  # energy cost. Maybe -1 for no cost and not playable statuses?
@@ -13,6 +13,7 @@ class Card(CardInterface):
         self.ethereal: bool = ethereal
         self.exhausts: bool = exhausts
         self.type: CardType = card_type
+        self.uuid: str = uuid
 
     def get_state_string(self) -> str:
         return f"{self.id.value}+{self.upgrade}+{self.cost},"
@@ -191,6 +192,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
                     ethereal=True if not upgrade else False, exhausts=True)
     if card_id == CardId.DEEP_BREATH:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.RITUAL_DAGGER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.ENLIGHTENMENT:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.IMPATIENCE:
@@ -356,6 +359,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.SKILL)
     if card_id == CardId.GRAND_FINALE:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.GLASS_KNIFE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.WRAITH_FORM:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.PIERCING_WAIL:
@@ -476,6 +481,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.REBOOT:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.GENETIC_ALGORITHM:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.BARRAGE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.MELTER:
@@ -503,6 +510,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.EQUILIBRIUM:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.CLAW:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.STEAM_BARRIER:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
 
     # watcher
     if card_id == CardId.FLYING_SLEEVES:

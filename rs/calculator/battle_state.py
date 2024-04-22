@@ -26,7 +26,8 @@ class BattleState(BattleStateInterface):
                  discard_pile: List[CardInterface] = None, exhaust_pile: List[CardInterface] = None,
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
-                 total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0):
+                 total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
+                 memory: dict = None, memory_by_card: dict[CardId, dict] = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -42,6 +43,8 @@ class BattleState(BattleStateInterface):
         self.__starting_energy: int = 0  # transient and used only internally
         self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
         self.orb_slots: int = orb_slots
+        self.memory: dict = {} if memory is None else memory
+        self.memory_by_card: dict[CardId, dict] = {} if memory_by_card is None else memory_by_card
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -162,7 +165,7 @@ class BattleState(BattleStateInterface):
         for effect in effects:
             # custom pre hooks
             for hook in effect.pre_hooks:
-                hook(self, effect, target_index)
+                hook(self, effect, card, target_index)
 
             # heal
             if effect.heal:
@@ -227,6 +230,9 @@ class BattleState(BattleStateInterface):
                 del self.hand[idx]
 
 
+        if card.type == CardType.ATTACK:
+            self.memory["attacks_this_turn"] += 1
+
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
             thousand_cuts_damage = self.player.powers.get(PowerId.THOUSAND_CUTS, 0)
@@ -279,7 +285,7 @@ class BattleState(BattleStateInterface):
         for effect in effects:
             # custom post hooks
             for hook in effect.post_hooks:
-                hook(self, effect, target_index)
+                hook(self, effect, card, target_index)
 
             # apply any powers from the card
             if effect.applies_powers:
@@ -398,7 +404,7 @@ class BattleState(BattleStateInterface):
             for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
                 # for various curses and burns
                 for hook in effect.end_turn_hooks:
-                    hook(self, effect, None)
+                    hook(self, effect, None, None)
                     card_was_auto_played.append(c)
                 if effect.retains or self.player.powers.get(PowerId.RETAIN_ALL, 0):
                     card_might_retain.append(c)
@@ -529,7 +535,7 @@ class BattleState(BattleStateInterface):
         # self_discarded hook
         for effect in get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand):
             for hook in effect.post_self_discarded_hooks:
-                hook(self, effect, None)
+                hook(self, effect, card, None)
         # others_discarded hook
         for hand_card in self.hand:
             for effect in get_card_effects(hand_card, self.player, self.draw_pile, self.discard_pile, self.hand):
@@ -602,7 +608,6 @@ class BattleState(BattleStateInterface):
         if amount > 0 and self.player.powers.get(PowerId.JUGGERNAUT, 0):
             self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1,
                                               affected_by_vulnerable=False, is_attack=False)
-
 
     def kill_monsters(self):
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.

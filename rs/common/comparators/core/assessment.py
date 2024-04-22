@@ -176,3 +176,11 @@ class ComparatorAssessment:
 
     def retained_cards(self) -> int:
         return self.__get_value('retained_cards', lambda: len(self.state.hand))
+
+    def power_up_ritual_dagger(self) -> int:
+        return self.__get_value('power_up_ritual_dagger',
+                                lambda: sum(self.state.memory_by_card[CardId.RITUAL_DAGGER].values()))
+
+    def power_up_genetic_algorithm(self) -> int:
+        return self.__get_value('power_up_genetic_algorithm',
+                                lambda: sum(self.state.memory_by_card[CardId.GENETIC_ALGORITHM].values()))

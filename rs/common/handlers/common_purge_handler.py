@@ -4,6 +4,7 @@ from config import presentation_mode, p_delay
 from rs.game.card import CardType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
@@ -18,7 +19,7 @@ class CommonPurgeHandler(Handler):
                and state.game_state()["screen_state"]["for_purge"] \
                and len(self.get_choices(state)) > -1
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         commands = []
         amount = 1
         if 'screen_state' in state.game_state() and 'num_cards' in state.game_state()['screen_state']:
@@ -28,7 +29,7 @@ class CommonPurgeHandler(Handler):
                 commands.append(p_delay)
             commands.append("choose " + str(c))
             commands.append("wait 30")
-        return commands
+        return HandlerAction(commands=commands)
 
     def get_choices(self, state: GameState) -> List[int]:
         choice_list = state.get_choice_list()

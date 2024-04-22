@@ -4,10 +4,12 @@ from typing import List
 from rs.game.deck import Deck
 from rs.machine.command import Command
 from rs.machine.orb import Orb
+from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 
 
 class GameState:
-    def __init__(self, json_state: json):
+    def __init__(self, json_state: json, the_bots_memory_book: TheBotsMemoryBook):
+        self.the_bots_memory_book: TheBotsMemoryBook = the_bots_memory_book
         self.json = json_state
         if "game_state" in json_state:
             if "combat_state" in json_state["game_state"]:
@@ -15,7 +17,18 @@ class GameState:
                 self.draw_pile: Deck = Deck(json_state["game_state"]["combat_state"]["draw_pile"])
                 self.discard_pile: Deck = Deck(json_state["game_state"]["combat_state"]["discard_pile"])
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
+
+                current_turn = json_state["game_state"]["combat_state"]["turn"]
+                if self.the_bots_memory_book.memory["last_known_turn"] != current_turn:
+                    self.the_bots_memory_book.set_new_turn_state()
+                self.the_bots_memory_book.memory["last_known_turn"] = current_turn
+
+            else:
+                self.the_bots_memory_book.set_new_battle_state()
+
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
+            self.memory_by_card = self.the_bots_memory_book.memory_by_card.copy()
+            self.memory = self.the_bots_memory_book.memory.copy()
 
     def is_game_running(self) -> bool:
         return self.json["in_game"]

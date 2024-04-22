@@ -30,6 +30,8 @@ default_comparisons = [
     most_less_good_player_powers,
     least_enemy_artifacts,
     most_bad_cards_exhausted,
+    most_powered_up_ritual_dagger,
+    most_powered_up_genetic_algorithm,
     least_incoming_damage,
     most_ethereal_cards_saved_for_later,
     most_retained_cards,
@@ -100,7 +102,7 @@ class CommonGeneralComparator(ComparatorInterface):
         self.comparisons: List[Comparison] = default_comparisons if comparisons is None else comparisons
         self.assessment_config: ComparatorAssessmentConfig = \
             ComparatorAssessmentConfig(powers_we_like, powers_we_like_less, powers_we_dislike) \
-                if assessment_config is None else assessment_config
+            if assessment_config is None else assessment_config
 
     def does_challenger_defeat_the_best(self, best_state: BattleState, challenger_state: BattleState,
                                         original: BattleState) -> bool:

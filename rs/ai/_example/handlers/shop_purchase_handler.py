@@ -3,6 +3,7 @@ from typing import List
 from config import presentation_mode, p_delay, p_delay_s
 from rs.game.screen_type import ScreenType
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 standard_cards_to_purge: list[str] = [
@@ -44,16 +45,16 @@ class ShopPurchaseHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.SHOP_SCREEN.value
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         choice = self.find_choice(state)
         if choice:
             idx = state.get_choice_list().index(choice)
             if presentation_mode:
-                return [p_delay, "choose " + str(idx), p_delay_s, "wait 30"]
-            return ["choose " + str(idx), "wait 30"]
+                return HandlerAction(commands=[p_delay, "choose " + str(idx), p_delay_s, "wait 30"])
+            return HandlerAction(commands=["choose " + str(idx), "wait 30"])
         if presentation_mode:
-            return ["wait " + p_delay, "return", "proceed"]
-        return ["return", "proceed"]
+            return HandlerAction(commands=["wait " + p_delay, "return", "proceed"])
+        return HandlerAction(commands=["return", "proceed"])
 
     def find_choice(self, state: GameState) -> str:
         gold = state.game_state()['gold']

@@ -3,6 +3,7 @@ from typing import List
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
+from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 # see also combat_reward_handler.py for discarding potions
@@ -21,7 +22,7 @@ class PotionsBaseHandler(Handler):
         # must be implemented by children
         pass
 
-    def handle(self, state: GameState) -> List[str]:
+    def handle(self, state: GameState) -> HandlerAction:
         pot = self.get_potions_to_play(state)[0]
         wait_command = "wait 30"
         if pot['requires_target']:
@@ -32,8 +33,8 @@ class PotionsBaseHandler(Handler):
                     break
                 if not monster['is_gone']:
                     target = m_index
-            return [wait_command, "potion use " + str(pot['idx']) + " " + str(target), wait_command]
-        return [wait_command, "potion use " + str(pot['idx']), wait_command]
+            return HandlerAction(commands=[wait_command, "potion use " + str(pot['idx']) + " " + str(target), wait_command])
+        return HandlerAction(commands=[wait_command, "potion use " + str(pot['idx']), wait_command])
 
     def get_potions_to_play(self, state: GameState) -> List[dict]:
         to_play = []
