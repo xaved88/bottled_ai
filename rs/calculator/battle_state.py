@@ -468,6 +468,12 @@ class BattleState(BattleStateInterface):
         for card in drawhand:
             state_string += card.get_state_string()
 
+        # memory book
+        state_string += "m"
+        for card_id in self.memory_by_card.keys():
+            for uuid in self.memory_by_card[card_id].keys():
+                state_string += card_id.value + uuid + str(self.memory_by_card[card_id][uuid])
+
         # relics
         state_string += "r"
         for relic in self.relics.keys():
