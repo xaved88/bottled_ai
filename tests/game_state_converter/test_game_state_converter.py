@@ -39,3 +39,7 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("card_reward/card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
         deck_list = state.get_deck_card_list_upgrade_stripped_from_name()
         self.assertEqual({'bash': 1, 'defend': 4, 'strike': 3, 'twin strike': 2}, deck_list)
+
+    def test_custom_state_is_initialized_if_missing(self):
+        state = load_resource_state("battles/general/battle_state_pen_nib.json", memory_book=None)
+        self.assertEqual(True, state.memory is not None)
