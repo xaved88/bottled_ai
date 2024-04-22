@@ -10,7 +10,6 @@ class TheBotsMemoryBook:
     def set_new_game_state(self):
         self.memory_by_card.clear()
         self.memory_by_card[CardId.RITUAL_DAGGER] = {"": 0}
-        self.memory_by_card[CardId.RITUAL_DAGGER] = {"test_uuid_powered_up_ritual_dagger": 3}
         self.memory_by_card[CardId.GENETIC_ALGORITHM] = {"": 0}
 
         self.set_new_battle_state()
@@ -27,4 +26,9 @@ class TheBotsMemoryBook:
         self.memory.update({"attacks_this_turn": 0})
         self.memory.update({"last_known_turn": 0})
 
-
+    @staticmethod
+    def new_default(last_known_turn: int = 0):
+        new_memory_book = TheBotsMemoryBook()
+        new_memory_book.set_new_game_state()
+        new_memory_book.memory["last_known_turn"] = last_known_turn
+        return new_memory_book

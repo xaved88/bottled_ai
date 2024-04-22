@@ -34,8 +34,6 @@ def get_best_battle_action(game_state: GameState, comparator: ComparatorInterfac
         # create a temp state for finding the state of the custom state after the chosen action
         state = create_battle_state(game_state)
         state.transform_from_play(next_move, is_first_play=False)  # not sure if it's ok that I'm setting that false
-
-        # TODO -> refactor these side effects
         memory_book = TheBotsMemoryBook(memory_by_card=state.memory_by_card.copy(), memory=state.memory.copy())
 
         if next_move[1] == -1:

@@ -146,7 +146,7 @@
           "has_target": false
         },
         {
-          "exhausts": false,
+          "exhausts": true,
           "is_playable": true,
           "cost": 1,
           "name": "Ritual Dagger",

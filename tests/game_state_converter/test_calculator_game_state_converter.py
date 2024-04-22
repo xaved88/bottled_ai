@@ -1,9 +1,9 @@
 import unittest
 
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.game_state_converter import create_battle_state
 from rs.machine.custom_state import CustomState
 from test_helpers.resources import load_resource_state
 
@@ -64,8 +64,8 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
         battle_state = create_battle_state(state)
         self.assertIsNotNone(battle_state)
-        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in state.memory_by_card[CardId.RITUAL_DAGGER])
-        self.assertEqual(True, "test_uuid_powered_up_ritual_dagger" in battle_state.memory_by_card[CardId.RITUAL_DAGGER])
+        self.assertIsNotNone(state.memory_by_card[CardId.RITUAL_DAGGER])
+        self.assertIsNotNone(battle_state.memory_by_card[CardId.RITUAL_DAGGER])
 
     def test_battle_state_loaded_attacks_this_turn(self):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
@@ -77,5 +77,5 @@ class GameStateConverterTest(unittest.TestCase):
     def test_custom_state_is_initialized_if_missing(self):
         CustomState.memory.clear()
         CustomState.memory_by_card.clear()
-        state = load_resource_state("battles/general/battle_state_pen_nib.json", set_new_game=False)
+        state = load_resource_state("battles/general/battle_state_pen_nib.json")
         self.assertEqual(0, state.memory["attacks_this_turn"])
