@@ -50,6 +50,12 @@ class CalculatorTestFixture(unittest.TestCase):
         get_paths(PlayPath([], hand_state), paths)
         return list(paths.values())[-1]
 
+    def when_getting_all_paths(self, hand_state: BattleState) -> list[PlayPath]:
+        paths = {}
+        get_paths(PlayPath([], hand_state), paths)
+        return list(paths.values())
+
+
     def see_enemy_lost_hp(self, play: PlayPath, amount: int, enemy_index: int = 0):
         self.assertEqual(amount, 100 - play.state.monsters[enemy_index].current_hp)
 

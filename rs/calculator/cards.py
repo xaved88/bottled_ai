@@ -16,7 +16,7 @@ class Card(CardInterface):
         self.uuid: str = uuid
 
     def get_state_string(self) -> str:
-        return f"{self.id.value}+{self.upgrade}+{self.cost},"
+        return f"{self.id.value}{self.upgrade}{self.cost},"
 
 
 def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
