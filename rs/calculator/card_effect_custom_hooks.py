@@ -545,8 +545,8 @@ def __ragnarok_post_hook(state: BattleStateInterface, damage_and_hits: int):
     state.inflict_random_target_damage(damage_and_hits, damage_and_hits)
 
 
-def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
-                                       target_index: int = -1):
+def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                         target_index: int = -1):
     cards_to_exhaust = []
     cards_to_keep = []
 
@@ -561,12 +561,14 @@ def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterfa
 
     state.hand = cards_to_keep.copy()
 
-def second_wind_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+
+def second_wind_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
     __second_wind_post_hook(state, 5)
 
 
-def second_wind_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
-                                       target_index: int = -1):
+def second_wind_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                                   target_index: int = -1):
     __second_wind_post_hook(state, 7)
 
 
