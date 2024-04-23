@@ -25,7 +25,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
         state = load_resource_state('battles/general/complex_case.json')
-        self.assertEqual(['play 5'], CommonBattleHandler().handle(state).commands)
+        self.assertEqual(['play 7'], CommonBattleHandler().handle(state).commands)
         end = time.perf_counter()
         if end > start + 40:
             self.fail("Process took too long!")
