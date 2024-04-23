@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 import unittest
 
@@ -21,7 +23,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         state = load_resource_state('battles/general/burns.json')
         self.assertEqual(['play 2 0'], CommonBattleHandler().handle(state).commands)
 
-    @unittest.skip("we only want to run this test occasionally")
+    @unittest.skipUnless(os.environ.get('EXTENSIVE_TESTS'), "we only want to run this expensive test occasionally")
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
         state = load_resource_state('battles/general/complex_case.json')
@@ -188,7 +190,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     # medical kit not really relevant to react to, since the state is adjusted by the game to make status cards playable
     def test_medical_kit_playing_wound_is_good(self):
         self.execute_handler_tests('/battles/general/medical_kit_wound.json', ['play 3'])
-
 
     def test_go_for_kill_with_powered_up_ritual_dagger(self):
         card_uuid = "test_uuid_powered_up_ritual_dagger"
