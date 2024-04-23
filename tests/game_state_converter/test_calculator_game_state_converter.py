@@ -4,6 +4,7 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.game_state_converter import create_battle_state
+from rs.calculator.interfaces.memory_items import MemoryItem
 from test_helpers.resources import load_resource_state
 
 
@@ -70,5 +71,5 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
         battle_state = create_battle_state(state)
         self.assertIsNotNone(battle_state)
-        self.assertEqual(0, state.memory["attacks_this_turn"])
-        self.assertEqual(0, battle_state.memory["attacks_this_turn"])
+        self.assertEqual(0, state.memory[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(0, battle_state.memory[MemoryItem.ATTACKS_THIS_TURN])

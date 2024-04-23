@@ -1,6 +1,7 @@
 import json
 from typing import List
 
+from rs.calculator.interfaces.memory_items import MemoryItem
 from rs.game.deck import Deck
 from rs.machine.command import Command
 from rs.machine.orb import Orb
@@ -19,9 +20,9 @@ class GameState:
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
 
                 current_turn = json_state["game_state"]["combat_state"]["turn"]
-                if self.the_bots_memory_book.memory["last_known_turn"] != current_turn:
+                if self.the_bots_memory_book.memory[MemoryItem.LAST_KNOWN_TURN] != current_turn:
                     self.the_bots_memory_book.set_new_turn_state()
-                self.the_bots_memory_book.memory["last_known_turn"] = current_turn
+                self.the_bots_memory_book.memory[MemoryItem.LAST_KNOWN_TURN] = current_turn
 
             else:
                 self.the_bots_memory_book.set_new_battle_state()

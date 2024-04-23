@@ -5,6 +5,7 @@ import unittest
 
 from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.interfaces.memory_items import MemoryItem
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 from test_helpers.resources import load_resource_state
@@ -203,21 +204,21 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_memory_book_attacks_per_turn_is_updated(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory["attacks_this_turn"] = 2
+        mb.memory[MemoryItem.ATTACKS_THIS_TURN] = 2
         new_mb = self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'], mb)
-        self.assertEqual(3, new_mb.memory["attacks_this_turn"])
+        self.assertEqual(3, new_mb.memory[MemoryItem.ATTACKS_THIS_TURN])
 
     def test_memory_book_claw_state_persists_when_a_different_card_is_played(self):
         mb = TheBotsMemoryBook.new_default()
-        mb.memory["claws_played_this_battle"] = 1
+        mb.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 1
         new_mb = self.execute_handler_tests('battles/general/basic_turn_1.json', memory_book=mb)
-        self.assertEqual(1, new_mb.memory["claws_played_this_battle"])
+        self.assertEqual(1, new_mb.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
 
     def test_memory_book_claw_state_increases_when_claw_is_played(self):
         mb = TheBotsMemoryBook.new_default()
-        mb.memory["claws_played_this_battle"] = 1
+        mb.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 1
         new_mb = self.execute_handler_tests('battles/general/claw.json', memory_book=mb)
-        self.assertEqual(2, new_mb.memory["claws_played_this_battle"])
+        self.assertEqual(2, new_mb.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
 
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])

@@ -9,6 +9,7 @@ from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
+from rs.calculator.interfaces.memory_items import MemoryItem
 from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.enums.power_id import PowerId
@@ -229,9 +230,8 @@ class BattleState(BattleStateInterface):
                 self.discard_pile.append(card)
                 del self.hand[idx]
 
-
         if card.type == CardType.ATTACK:
-            self.memory["attacks_this_turn"] += 1
+            self.memory[MemoryItem.ATTACKS_THIS_TURN] += 1
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
