@@ -38,6 +38,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         # must be implemented by children
         pass
 
+    @abc.abstractmethod
     def exhaust_card(self, card: CardInterface, handle_remove: bool = True):
         # must be implemented by children
         pass
@@ -70,6 +71,16 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def repeat_card(self, card: CardInterface, target_index: int, repeating_power, power_lost_if_incomplete: bool = True):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def edit_memory_by_card(self, card_id: CardId, uuid: str, value: int):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def read_memory_by_card(self, card_id: CardId, uuid: str) -> int:
         # must be implemented by children
         pass
 

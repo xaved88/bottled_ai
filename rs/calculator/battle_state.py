@@ -698,6 +698,16 @@ class BattleState(BattleStateInterface):
         while len(self.orbs) > self.orb_slots:
             self.evoke_orbs()
 
+    def edit_memory_by_card(self, card_id: CardId, uuid: str, value: int = 0):
+        if uuid not in self.memory_by_card[card_id]:
+            self.memory_by_card[card_id][uuid] = 0
+        self.memory_by_card[card_id][uuid] += value
+
+    def read_memory_by_card(self, card_id: CardId, uuid: str) -> int:
+        if uuid not in self.memory_by_card[card_id]:
+            self.memory_by_card[card_id][uuid] = 0
+        return self.memory_by_card[card_id][uuid]
+
     def is_turn_forced_to_be_over(self) -> bool:
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:
             return True  # all monsters are dead
