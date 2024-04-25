@@ -2461,7 +2461,9 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
         state.hand[0].uuid = "different_uuid"
         state.edit_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 69)
+        print(state.memory_by_card)
         play = self.when_playing_the_first_card(state)
+        print(play.state.memory_by_card)
         self.see_player_has_block(play, 1)
         self.assertEqual(69, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
         self.assertEqual(2, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM, "different_uuid"))

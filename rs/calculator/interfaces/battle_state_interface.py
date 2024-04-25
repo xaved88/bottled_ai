@@ -4,6 +4,7 @@ from typing import List, Tuple
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
+from rs.calculator.interfaces.memory_items import ResetSchedule
 from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
@@ -20,7 +21,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     cards_discarded_this_turn: int
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
-    memory_by_card: dict[CardId, dict]
+    memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]]
     memory: dict
 
     @abc.abstractmethod

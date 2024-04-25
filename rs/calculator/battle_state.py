@@ -9,7 +9,7 @@ from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.enums.power_id import PowerId
@@ -28,7 +28,7 @@ class BattleState(BattleStateInterface):
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
                  total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                 memory: dict = None, memory_by_card: dict[CardId, dict] = None):
+                 memory: dict = None, memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -45,7 +45,8 @@ class BattleState(BattleStateInterface):
         self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
         self.orb_slots: int = orb_slots
         self.memory: dict = {} if memory is None else memory
-        self.memory_by_card: dict[CardId, dict] = {} if memory_by_card is None else memory_by_card
+        self.memory_by_card: dict[
+            CardId, dict[ResetSchedule, dict[str, int]]] = {} if memory_by_card is None else memory_by_card
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -471,8 +472,9 @@ class BattleState(BattleStateInterface):
         # memory book
         state_string += "m"
         for card_id in self.memory_by_card.keys():
-            for uuid in self.memory_by_card[card_id].keys():
-                state_string += card_id.value + uuid + str(self.memory_by_card[card_id][uuid])
+            for reset_schedule in self.memory_by_card[card_id].keys():
+                for uuid in self.memory_by_card[card_id][reset_schedule].keys():
+                    state_string += card_id.value + uuid + str(self.memory_by_card[card_id][reset_schedule][uuid])
 
         # relics
         state_string += "r"
@@ -699,14 +701,20 @@ class BattleState(BattleStateInterface):
             self.evoke_orbs()
 
     def edit_memory_by_card(self, card_id: CardId, uuid: str, value: int = 0):
-        if uuid not in self.memory_by_card[card_id]:
-            self.memory_by_card[card_id][uuid] = 0
-        self.memory_by_card[card_id][uuid] += value
+        reset_schedule = next(iter(self.memory_by_card[card_id].keys()))
+
+        if uuid not in self.memory_by_card[card_id][reset_schedule]:
+            self.memory_by_card[card_id][reset_schedule] = {uuid: 0}
+
+        self.memory_by_card[card_id][reset_schedule][uuid] += value
 
     def read_memory_by_card(self, card_id: CardId, uuid: str) -> int:
-        if uuid not in self.memory_by_card[card_id]:
-            self.memory_by_card[card_id][uuid] = 0
-        return self.memory_by_card[card_id][uuid]
+        reset_schedule = next(iter(self.memory_by_card[card_id].keys()))
+
+        if uuid not in self.memory_by_card[card_id][reset_schedule]:
+            self.memory_by_card[card_id][reset_schedule][uuid] = 0
+
+        return self.memory_by_card[card_id][reset_schedule][uuid]
 
     def is_turn_forced_to_be_over(self) -> bool:
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:

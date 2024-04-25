@@ -3,23 +3,31 @@ from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 
 
 class TheBotsMemoryBook:
-    def __init__(self, memory: dict[MemoryItem, int] = None, memory_by_card: dict[CardId, dict[str, int]] = None):
+    def __init__(self, memory: dict[MemoryItem, int] = None,
+                 memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
         self.memory = {} if memory is None else memory
         self.memory_by_card = {} if memory_by_card is None else memory_by_card
 
     def set_new_game_state(self):
-        self.memory_by_card.clear()
-        self.initialize_memory_by_card(CardId.RITUAL_DAGGER)
-        self.initialize_memory_by_card(CardId.GENETIC_ALGORITHM)
+        for card_id in [
+            CardId.GENETIC_ALGORITHM,
+            CardId.GLASS_KNIFE,
+            CardId.RITUAL_DAGGER,
+            CardId.STEAM_BARRIER,
+        ]:
+            self.initialize_memory_by_card(card_id)
 
         self.set_new_battle_state()
         self.set_new_turn_state()
 
     def set_new_battle_state(self):
-        self.initialize_memory_by_card(CardId.STEAM_BARRIER)
-        self.initialize_memory_by_card(CardId.GLASS_KNIFE)
-
         self.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 0
+
+        # clear memory_by_card based on reset_schedule
+        for card_id, schedule_dict in self.memory_by_card.items():
+            for reset_schedule in schedule_dict.keys():
+                if reset_schedule == ResetSchedule.BATTLE:
+                    self.initialize_memory_by_card(card_id)
 
         self.set_new_turn_state()
 
@@ -28,7 +36,15 @@ class TheBotsMemoryBook:
         self.memory[MemoryItem.LAST_KNOWN_TURN] = 0
 
     def initialize_memory_by_card(self, card_id: CardId):
-        self.memory_by_card[card_id] = {"": 0}
+        reset_schedule = {}
+
+        match card_id:
+            case CardId.GENETIC_ALGORITHM: reset_schedule = ResetSchedule.GAME
+            case CardId.GLASS_KNIFE: reset_schedule = ResetSchedule.BATTLE
+            case CardId.RITUAL_DAGGER: reset_schedule = ResetSchedule.GAME
+            case CardId.STEAM_BARRIER: reset_schedule = ResetSchedule.BATTLE
+
+        self.memory_by_card[card_id] = {reset_schedule: {"": 0}}
 
     @staticmethod
     def new_default(last_known_turn: int = 0):

@@ -5,7 +5,7 @@ import unittest
 
 from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 from test_helpers.resources import load_resource_state
@@ -195,9 +195,10 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_go_for_kill_with_powered_up_ritual_dagger(self):
         card_uuid = "test_uuid_powered_up_ritual_dagger"
         mb = TheBotsMemoryBook.new_default()
-        mb.memory_by_card[CardId.RITUAL_DAGGER] = {card_uuid: 3}
+        reset_schedule = next(iter(mb.memory_by_card[CardId.RITUAL_DAGGER].keys()))
+        mb.memory_by_card[CardId.RITUAL_DAGGER][reset_schedule] = {card_uuid: 3}
         new_mb = self.execute_handler_tests('/battles/general/powered_up_ritual_dagger.json', ['play 3 0'], mb)
-        self.assertEqual(6, new_mb.memory_by_card[CardId.RITUAL_DAGGER][card_uuid])
+        self.assertEqual(6, new_mb.memory_by_card[CardId.RITUAL_DAGGER][reset_schedule][card_uuid])
 
     def test_prefer_killing_with_ritual_dagger(self):
         self.execute_handler_tests('/battles/general/kill_with_ritual_dagger.json', ['play 3 0'])
@@ -223,8 +224,16 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])
 
-    def test_glass_knife_not_saved_outside_battle(self):
-        card_memory = {CardId.GLASS_KNIFE: {"test": 4}}
+    def test_ritual_dagger_saved_outside_battle(self):
+        card_memory = {CardId.RITUAL_DAGGER: {ResetSchedule.GAME: {"test": 4}}}
         final_state = load_resource_state('card_reward/card_reward_take.json',
                                           memory_book=TheBotsMemoryBook(memory_by_card=card_memory))
-        self.assertEqual(False, "test" in final_state.the_bots_memory_book.memory_by_card[CardId.GLASS_KNIFE])
+        self.assertEqual(True, "test" in final_state.the_bots_memory_book.memory_by_card[CardId.RITUAL_DAGGER][
+            ResetSchedule.GAME])
+
+    def test_glass_knife_not_saved_outside_battle(self):
+        card_memory = {CardId.GLASS_KNIFE: {ResetSchedule.BATTLE: {"test": 4}}}
+        final_state = load_resource_state('card_reward/card_reward_take.json',
+                                          memory_book=TheBotsMemoryBook(memory_by_card=card_memory))
+        self.assertEqual(False, "test" in final_state.the_bots_memory_book.memory_by_card[CardId.GLASS_KNIFE][
+            ResetSchedule.BATTLE])

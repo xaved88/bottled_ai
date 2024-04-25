@@ -1,7 +1,7 @@
 import unittest
 
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 from test_helpers.resources import load_resource_state
 
@@ -10,9 +10,21 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
 
     def test_memory_of_steam_barrier_is_reset_outside_of_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory_by_card[CardId.STEAM_BARRIER] = {"test": 4}
+        mb.memory_by_card[CardId.STEAM_BARRIER][ResetSchedule.BATTLE] = {"test": 4}
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
-        self.assertEqual(False, "test" in new_state.memory_by_card[CardId.STEAM_BARRIER])
+        self.assertEqual(False, "test" in new_state.memory_by_card[CardId.STEAM_BARRIER][ResetSchedule.BATTLE])
+
+    def test_memory_of_ritual_dagger_is_not_reset_outside_of_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME] = {"test": 4}
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(True, "test" in new_state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME])
+
+    def test_memory_of_glass_knife_is_reset_outside_of_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_by_card[CardId.GLASS_KNIFE][ResetSchedule.BATTLE] = {"test": 4}
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(False, "test" in new_state.memory_by_card[CardId.GLASS_KNIFE][ResetSchedule.BATTLE])
 
     def test_memory_of_claws_played_is_reset_outside_of_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)

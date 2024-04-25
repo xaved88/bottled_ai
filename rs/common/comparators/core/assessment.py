@@ -4,6 +4,7 @@ from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.memory_items import ResetSchedule
 from rs.calculator.powers import get_power_count
 from rs.game.card import CardType
 
@@ -179,8 +180,10 @@ class ComparatorAssessment:
 
     def power_up_ritual_dagger(self) -> int:
         return self.__get_value('power_up_ritual_dagger',
-                                lambda: sum(self.state.memory_by_card[CardId.RITUAL_DAGGER].values()))
+                                lambda: sum(
+                                    self.state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME].values()))
 
     def power_up_genetic_algorithm(self) -> int:
         return self.__get_value('power_up_genetic_algorithm',
-                                lambda: sum(self.state.memory_by_card[CardId.GENETIC_ALGORITHM].values()))
+                                lambda: sum(
+                                    self.state.memory_by_card[CardId.GENETIC_ALGORITHM][ResetSchedule.GAME].values()))
