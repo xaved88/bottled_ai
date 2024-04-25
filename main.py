@@ -1,6 +1,7 @@
 import time
 import traceback
 
+from rs.ai.claw_is_law.claw_is_law import CLAW_IS_LAW
 from rs.ai.pwnder_my_orbs.pwnder_my_orbs import PWNDER_MY_ORBS
 from rs.helper.seed import make_random_seed
 from rs.api.client import Client
@@ -10,10 +11,10 @@ from rs.helper.logger import log, init_log, log_new_run_sequence
 take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything.
 # If there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
-    'MY5A4CK5V5C7',
+    # 'MY5A4CK5V5C7',
 ]
 run_amount = 1
-strategy = PWNDER_MY_ORBS
+strategy = CLAW_IS_LAW
 
 if __name__ == "__main__":
     init_log()

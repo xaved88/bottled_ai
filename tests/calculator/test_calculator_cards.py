@@ -1,3 +1,5 @@
+from unittest import skip
+
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
@@ -1495,6 +1497,15 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
         self.see_enemy_lost_hp(play, 15)
+        self.assertEqual(1, play.state.discard_pile[0].cost)
+
+    def test_streamline_does_not_go_below_0(self):
+        state = self.given_state(CardId.STREAMLINE)
+        state.hand[0].cost = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 15)
+        self.assertEqual(0, play.state.discard_pile[0].cost)
 
     def test_turbo(self):
         state = self.given_state(CardId.TURBO)
@@ -2140,6 +2151,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 2)
         self.see_enemy_lost_hp(play, 10)
         self.see_hand_card_is(play, CardId.ANGER, 0)
+
+    @skip("we only want to run this expensive test occasionally")
+    def test_all_for_one_retrieves_and_plays_discounted_streamline(self):
+        state = self.given_state(CardId.ALL_FOR_ONE)
+        state.hand.append(get_card(CardId.STREAMLINE))
+        state.hand[1].cost = 1
+        print(state.hand)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_enemy_lost_hp(play, 40)
 
     def test_equilibrium(self):
         state = self.given_state(CardId.EQUILIBRIUM)

@@ -473,7 +473,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         hook = auto_shields_post_hook if not card.upgrade else auto_shields_upgraded_post_hook
         return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
     if card.id == CardId.STREAMLINE:
-        return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1)]
+        return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1, post_hooks=[streamline_post_hook])]
     if card.id == CardId.TURBO:
         return [
             CardEffects(target=TargetType.SELF, energy_gain=2 if not card.upgrade else 3, post_hooks=[turbo_post_hook])]

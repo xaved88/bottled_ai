@@ -652,3 +652,10 @@ def glass_knife_pre_hook(state: BattleStateInterface, effect: CardEffectsInterfa
 def glass_knife_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                           target_index: int = -1):
     state.add_memory_by_card(card.id, card.uuid, 2)
+
+
+def streamline_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                         target_index: int = -1):
+    card.cost -= 1
+    if card.cost < 0:
+        card.cost = 0
