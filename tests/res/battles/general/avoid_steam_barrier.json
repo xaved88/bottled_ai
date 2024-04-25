@@ -50,50 +50,26 @@
       "monsters": [
         {
           "is_gone": false,
-          "move_hits": 0,
-          "move_base_damage": 6,
+          "move_hits": 1,
+          "move_base_damage": 5,
           "last_move_id": 1,
           "half_dead": false,
-          "move_adjusted_damage": 9,
+          "move_adjusted_damage": 5,
           "max_hp": 49,
           "intent": "ATTACK",
           "second_last_move_id": 3,
           "move_id": 1,
           "name": "Cultist",
           "current_hp": 22,
-          "block": 15,
+          "block": 500,
           "id": "Cultist",
           "powers": [
-            {
-              "amount": 3,
-              "just_applied": false,
-              "name": "Ritual",
-              "id": "Ritual"
-            },
-            {
-              "amount": 3,
-              "name": "Strength",
-              "id": "Strength"
-            }
           ]
         }
       ],
       "turn": 3,
       "limbo": [],
       "hand": [
-        {
-          "exhausts": true,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Genetic Algorithm",
-          "id": "Genetic Algorithm",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "9bcc18ee-70b1-43d8-9199-28dd5c92d8d8",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
         {
           "exhausts": false,
           "is_playable": true,
@@ -106,6 +82,32 @@
           "upgrades": 0,
           "rarity": "COMMON",
           "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Defend",
+          "id": "Defend_G",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "56ffc8be98-a656-4be9-a614-4178b634ed5b",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Steam Barrier",
+          "id": "steam",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "56c8bggge98-a656-4be9-a614-4178b634ed5b",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
         }
       ],
       "player": {
@@ -114,7 +116,7 @@
         "block": 0,
         "max_hp": 85,
         "powers": [],
-        "energy": 3
+        "energy": 1
       }
     },
     "deck": [

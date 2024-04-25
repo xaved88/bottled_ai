@@ -237,3 +237,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
                                           memory_book=TheBotsMemoryBook(memory_by_card=card_memory))
         self.assertEqual(False, "test" in final_state.the_bots_memory_book.memory_by_card[CardId.GLASS_KNIFE][
             ResetSchedule.BATTLE])
+
+    def test_avoid_playing_steam_barrier_if_not_necessary(self):
+        self.execute_handler_tests('/battles/general/avoid_steam_barrier.json', ['play 2'])

@@ -35,6 +35,7 @@ default_comparisons = [
     least_incoming_damage,
     most_ethereal_cards_saved_for_later,
     most_retained_cards,
+    least_powered_down_steam_barrier,
     most_energy,
 ]
 

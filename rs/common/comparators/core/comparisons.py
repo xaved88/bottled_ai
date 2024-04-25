@@ -190,3 +190,8 @@ def most_powered_up_ritual_dagger(best: CA, challenger: CA) -> Optional[bool]:
 def most_powered_up_genetic_algorithm(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.power_up_genetic_algorithm() == challenger.power_up_genetic_algorithm() \
         else challenger.power_up_genetic_algorithm() > best.power_up_genetic_algorithm()
+
+
+def least_powered_down_steam_barrier(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.power_down_steam_barrier() == challenger.power_down_steam_barrier() \
+        else challenger.power_down_steam_barrier() < best.power_down_steam_barrier()

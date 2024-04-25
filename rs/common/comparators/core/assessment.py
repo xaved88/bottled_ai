@@ -187,3 +187,8 @@ class ComparatorAssessment:
         return self.__get_value('power_up_genetic_algorithm',
                                 lambda: sum(
                                     self.state.memory_by_card[CardId.GENETIC_ALGORITHM][ResetSchedule.GAME].values()))
+
+    def power_down_steam_barrier(self) -> int:
+        return self.__get_value('power_down_steam_barrier',
+                                lambda: sum(
+                                    self.state.memory_by_card[CardId.STEAM_BARRIER][ResetSchedule.BATTLE].values()))
