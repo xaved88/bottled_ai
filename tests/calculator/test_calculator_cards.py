@@ -2343,7 +2343,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_ritual_dagger_deals_more_damage_when_powered_up(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
-        state.edit_memory_by_card(CardId.RITUAL_DAGGER, "default", 3)
+        state.add_memory_by_card(CardId.RITUAL_DAGGER, "default", 3)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_player_spent_energy(play, 1)
@@ -2356,17 +2356,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(3, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+        self.assertEqual(3, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
 
     def test_ritual_dagger_can_power_up_upgraded(self):
         state = self.given_state(CardId.RITUAL_DAGGER, upgrade=1)
-        state.edit_memory_by_card(CardId.RITUAL_DAGGER, "default", 3)
+        state.add_memory_by_card(CardId.RITUAL_DAGGER, "default", 3)
         state.monsters[0].current_hp = 5
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(8, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+        self.assertEqual(8, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
 
     def test_ritual_dagger_no_power_up_on_minion(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
@@ -2376,17 +2376,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(0, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+        self.assertEqual(0, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
 
     def test_ritual_dagger_extra_damage_applies_per_uuid(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
         state.hand[0].uuid = "different_uuid"
         state.monsters[0].current_hp = 15
-        state.edit_memory_by_card(CardId.RITUAL_DAGGER, "default", 69)
+        state.add_memory_by_card(CardId.RITUAL_DAGGER, "default", 69)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
-        self.assertEqual(69, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "default"))
-        self.assertEqual(3, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "different_uuid"))
+        self.assertEqual(69, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+        self.assertEqual(3, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "different_uuid"))
 
     def test_ritual_dagger_does_not_power_up_across_paths(self):
         state = self.given_state(CardId.RITUAL_DAGGER, player_powers={PowerId.STRENGTH: -4})
@@ -2396,7 +2396,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(3, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+        self.assertEqual(3, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
 
     def test_finisher(self):
         state = self.given_state(CardId.FINISHER)
@@ -2405,23 +2405,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 20)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(3, play.state.memory[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(3, play.state.get_memory_value(MemoryItem.ATTACKS_THIS_TURN))
 
     def test_claw(self):
         state = self.given_state(CardId.CLAW)
-        state.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 1
+        state.add_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE, 1)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 5)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(2, play.state.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+        self.assertEqual(2, play.state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
 
     def test_claw_upgraded(self):
         state = self.given_state(CardId.CLAW, upgrade=1)
-        state.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 1
+        state.add_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE, 1)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 7)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(2, play.state.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+        self.assertEqual(2, play.state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
 
     def test_multiple_claws(self):
         state = self.given_state(CardId.CLAW)
@@ -2430,7 +2430,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 15)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(3, play.state.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+        self.assertEqual(3, play.state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
 
     def test_genetic_algorithm(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
@@ -2441,93 +2441,91 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_genetic_algorithm_blocks_more_powered_up_and_can_power_up(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
-        state.edit_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 2)
+        state.add_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 2)
         play = self.when_playing_the_whole_hand(state)
         self.see_player_has_block(play, 3)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(4, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM,"default"))
+        self.assertEqual(4, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
 
     def test_genetic_algorithm_can_power_up_upgraded(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM, upgrade=1)
-        state.edit_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 2)
+        state.add_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 2)
         play = self.when_playing_the_whole_hand(state)
         self.see_player_has_block(play, 3)
         self.see_player_spent_energy(play, 1)
         self.see_player_exhaust_count(play, 1)
-        self.assertEqual(5, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
+        self.assertEqual(5, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
 
     def test_genetic_algorithm_blocks_per_uuid(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
         state.hand[0].uuid = "different_uuid"
-        state.edit_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 69)
-        print(state.memory_by_card)
+        state.add_memory_by_card(CardId.GENETIC_ALGORITHM, "default", 69)
         play = self.when_playing_the_first_card(state)
-        print(play.state.memory_by_card)
         self.see_player_has_block(play, 1)
-        self.assertEqual(69, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
-        self.assertEqual(2, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM, "different_uuid"))
+        self.assertEqual(69, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
+        self.assertEqual(2, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "different_uuid"))
 
     def test_same_uuid_different_cards_do_not_overlap(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
         state.hand[0].uuid = "default"
         state.hand.append(get_card(CardId.RITUAL_DAGGER))
-        state.edit_memory_by_card(CardId.RITUAL_DAGGER, "default", 69)
+        state.add_memory_by_card(CardId.RITUAL_DAGGER, "default", 69)
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 1)
-        self.assertEqual(2, play.state.read_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
-        self.assertEqual(69, play.state.read_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+        self.assertEqual(2, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
+        self.assertEqual(69, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
 
     def test_steam_barrier(self):
         state = self.given_state(CardId.STEAM_BARRIER)
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 6)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(1, play.state.read_memory_by_card(CardId.STEAM_BARRIER,"default"))
+        self.assertEqual(1, play.state.get_memory_by_card(CardId.STEAM_BARRIER, "default"))
 
     def test_steam_barrier_upgraded(self):
         state = self.given_state(CardId.STEAM_BARRIER, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 8)
-        self.assertEqual(1, play.state.read_memory_by_card(CardId.STEAM_BARRIER, "default"))
+        self.assertEqual(1, play.state.get_memory_by_card(CardId.STEAM_BARRIER, "default"))
 
     def test_steam_barrier_powers_down(self):
         state = self.given_state(CardId.STEAM_BARRIER)
-        state.edit_memory_by_card(CardId.STEAM_BARRIER, "default", 2)
+        state.add_memory_by_card(CardId.STEAM_BARRIER, "default", 2)
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 4)
-        self.assertEqual(3, play.state.read_memory_by_card(CardId.STEAM_BARRIER, "default"))
+        self.assertEqual(3, play.state.get_memory_by_card(CardId.STEAM_BARRIER, "default"))
 
     def test_steam_barrier_does_not_go_below_0(self):
         state = self.given_state(CardId.STEAM_BARRIER)
-        state.edit_memory_by_card(CardId.STEAM_BARRIER, "default", 10)
+        state.add_memory_by_card(CardId.STEAM_BARRIER, "default", 10)
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 0)
-        self.assertEqual(11, play.state.read_memory_by_card(CardId.STEAM_BARRIER, "default"))
+        self.assertEqual(11, play.state.get_memory_by_card(CardId.STEAM_BARRIER, "default"))
 
     def test_glass_knife(self):
         state = self.given_state(CardId.GLASS_KNIFE)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 16)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(2, play.state.read_memory_by_card(CardId.GLASS_KNIFE, "default"))
+        self.assertEqual(2, play.state.get_memory_by_card(CardId.GLASS_KNIFE, "default"))
 
     def test_glass_knife_upgraded(self):
         state = self.given_state(CardId.GLASS_KNIFE, upgrade=1)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 24)
-        self.assertEqual(2, play.state.read_memory_by_card(CardId.GLASS_KNIFE, "default"))
+        self.assertEqual(2, play.state.get_memory_by_card(CardId.GLASS_KNIFE, "default"))
 
     def test_glass_knife_powers_down(self):
         state = self.given_state(CardId.GLASS_KNIFE)
-        state.edit_memory_by_card(CardId.GLASS_KNIFE, "default", 2)
+        state.add_memory_by_card(CardId.GLASS_KNIFE, "default", 2)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 12)
-        self.assertEqual(4, play.state.read_memory_by_card(CardId.GLASS_KNIFE, "default"))
+        self.assertEqual(4, play.state.get_memory_by_card(CardId.GLASS_KNIFE, "default"))
 
     def test_glass_knife_does_not_go_below_0(self):
         state = self.given_state(CardId.GLASS_KNIFE)
-        state.edit_memory_by_card(CardId.GLASS_KNIFE, "default", 10)
+        state.add_memory_by_card(CardId.GLASS_KNIFE, "default", 10)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
-        self.assertEqual(12, play.state.read_memory_by_card(CardId.GLASS_KNIFE, "default"))
+        self.assertEqual(12, play.state.get_memory_by_card(CardId.GLASS_KNIFE, "default"))

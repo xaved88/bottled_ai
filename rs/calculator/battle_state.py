@@ -28,7 +28,7 @@ class BattleState(BattleStateInterface):
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
                  amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
                  total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                 memory: dict = None, memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
+                 memory_general: dict = None, memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -44,7 +44,7 @@ class BattleState(BattleStateInterface):
         self.__starting_energy: int = 0  # transient and used only internally
         self.orbs: List[(OrbId, int)] = [] if orbs is None else orbs
         self.orb_slots: int = orb_slots
-        self.memory: dict = {} if memory is None else memory
+        self.memory_general: dict = {} if memory_general is None else memory_general
         self.memory_by_card: dict[
             CardId, dict[ResetSchedule, dict[str, int]]] = {} if memory_by_card is None else memory_by_card
 
@@ -232,7 +232,7 @@ class BattleState(BattleStateInterface):
                 del self.hand[idx]
 
         if card.type == CardType.ATTACK:
-            self.memory[MemoryItem.ATTACKS_THIS_TURN] += 1
+            self.add_memory_value(MemoryItem.ATTACKS_THIS_TURN, 1)
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
@@ -700,21 +700,30 @@ class BattleState(BattleStateInterface):
         while len(self.orbs) > self.orb_slots:
             self.evoke_orbs()
 
-    def edit_memory_by_card(self, card_id: CardId, uuid: str, value: int = 0):
+    def add_memory_by_card(self, card_id: CardId, uuid: str, value_to_add: int):
         reset_schedule = next(iter(self.memory_by_card[card_id].keys()))
 
         if uuid not in self.memory_by_card[card_id][reset_schedule]:
             self.memory_by_card[card_id][reset_schedule] = {uuid: 0}
 
-        self.memory_by_card[card_id][reset_schedule][uuid] += value
+        self.memory_by_card[card_id][reset_schedule][uuid] += value_to_add
 
-    def read_memory_by_card(self, card_id: CardId, uuid: str) -> int:
+    def get_memory_by_card(self, card_id: CardId, uuid: str) -> int:
         reset_schedule = next(iter(self.memory_by_card[card_id].keys()))
 
         if uuid not in self.memory_by_card[card_id][reset_schedule]:
             self.memory_by_card[card_id][reset_schedule][uuid] = 0
 
         return self.memory_by_card[card_id][reset_schedule][uuid]
+
+    def add_memory_value(self, item: MemoryItem, value: int):
+        if item not in self.memory_general:
+            self.memory_general[item] = 0
+
+        self.memory_general[item] += value
+
+    def get_memory_value(self, item: MemoryItem) -> int:
+        return self.memory_general[item]
 
     def is_turn_forced_to_be_over(self) -> bool:
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:

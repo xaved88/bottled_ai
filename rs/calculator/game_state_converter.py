@@ -122,8 +122,8 @@ def create_battle_state(game_state: GameState) -> BattleState:
 
     # get custom state
     memory_by_card = game_state.memory_by_card.copy()
-    memory = game_state.memory.copy()
+    memory_general = game_state.memory_general.copy()
 
     return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
-                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots, memory=memory,
+                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots, memory_general=memory_general,
                        memory_by_card=memory_by_card)

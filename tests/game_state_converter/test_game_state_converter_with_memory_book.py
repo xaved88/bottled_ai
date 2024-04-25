@@ -28,24 +28,24 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
 
     def test_memory_of_claws_played_is_reset_outside_of_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 4
+        mb.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 4
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
-        self.assertEqual(0, new_state.memory[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+        self.assertEqual(0, new_state.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
 
     def test_memory_of_attacks_this_turn_is_not_reset_while_in_the_same_turn(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory[MemoryItem.ATTACKS_THIS_TURN] = 4
+        mb.memory_general[MemoryItem.ATTACKS_THIS_TURN] = 4
         new_state = load_resource_state('battles/general/basic_turn_1.json', memory_book=mb)
-        self.assertEqual(4, new_state.memory[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(4, new_state.memory_general[MemoryItem.ATTACKS_THIS_TURN])
 
     def test_memory_of_attacks_this_turn_is_reset_when_entering_a_new_turn(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory[MemoryItem.ATTACKS_THIS_TURN] = 4
+        mb.memory_general[MemoryItem.ATTACKS_THIS_TURN] = 4
         new_state = load_resource_state('battles/general/basic_turn_2.json', memory_book=mb)
-        self.assertEqual(0, new_state.memory[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(0, new_state.memory_general[MemoryItem.ATTACKS_THIS_TURN])
 
     def test_memory_of_attacks_this_turn_is_reset_when_leaving_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory[MemoryItem.ATTACKS_THIS_TURN] = 4
+        mb.memory_general[MemoryItem.ATTACKS_THIS_TURN] = 4
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
-        self.assertEqual(0, new_state.memory[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(0, new_state.memory_general[MemoryItem.ATTACKS_THIS_TURN])

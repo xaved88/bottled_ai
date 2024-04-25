@@ -71,5 +71,5 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("battles/general/battle_state_pen_nib.json")
         battle_state = create_battle_state(state)
         self.assertIsNotNone(battle_state)
-        self.assertEqual(0, state.memory[MemoryItem.ATTACKS_THIS_TURN])
-        self.assertEqual(0, battle_state.memory[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(0, state.memory_general[MemoryItem.ATTACKS_THIS_TURN])
+        self.assertEqual(0, battle_state.memory_general[MemoryItem.ATTACKS_THIS_TURN])

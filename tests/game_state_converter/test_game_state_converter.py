@@ -42,4 +42,4 @@ class GameStateConverterTest(unittest.TestCase):
 
     def test_custom_state_is_initialized_if_missing(self):
         state = load_resource_state("battles/general/battle_state_pen_nib.json", memory_book=None)
-        self.assertEqual(True, state.memory is not None)
+        self.assertEqual(True, state.memory_general is not None)

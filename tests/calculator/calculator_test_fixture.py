@@ -33,7 +33,7 @@ class CalculatorTestFixture(unittest.TestCase):
             orbs=orbs,
             orb_slots=orb_slots,
             memory_by_card=memory_book.memory_by_card.copy(),
-            memory=memory_book.memory.copy(),
+            memory_general=memory_book.memory_general.copy(),
         )
 
     def when_playing_the_first_card(self, hand_state: BattleState) -> PlayPath:

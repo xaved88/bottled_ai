@@ -20,16 +20,16 @@ class GameState:
                 self.exhaust_pile: Deck = Deck(json_state["game_state"]["combat_state"]["exhaust_pile"])
 
                 current_turn = json_state["game_state"]["combat_state"]["turn"]
-                if self.the_bots_memory_book.memory[MemoryItem.LAST_KNOWN_TURN] != current_turn:
+                if self.the_bots_memory_book.memory_general[MemoryItem.LAST_KNOWN_TURN] != current_turn:
                     self.the_bots_memory_book.set_new_turn_state()
-                self.the_bots_memory_book.memory[MemoryItem.LAST_KNOWN_TURN] = current_turn
+                self.the_bots_memory_book.memory_general[MemoryItem.LAST_KNOWN_TURN] = current_turn
 
             else:
                 self.the_bots_memory_book.set_new_battle_state()
 
             self.deck: Deck = Deck(json_state["game_state"]["deck"])
             self.memory_by_card = self.the_bots_memory_book.memory_by_card.copy()
-            self.memory = self.the_bots_memory_book.memory.copy()
+            self.memory_general = self.the_bots_memory_book.memory_general.copy()
 
     def is_game_running(self) -> bool:
         return self.json["in_game"]

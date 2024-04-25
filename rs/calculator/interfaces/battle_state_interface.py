@@ -4,7 +4,7 @@ from typing import List, Tuple
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.memory_items import ResetSchedule
+from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem
 from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
@@ -22,7 +22,7 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
     orbs: List[Tuple[OrbId, int]]
     orb_slots: int
     memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]]
-    memory: dict
+    memory_general: dict
 
     @abc.abstractmethod
     def draw_cards(self, amount: int):
@@ -76,12 +76,22 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def edit_memory_by_card(self, card_id: CardId, uuid: str, value: int):
+    def add_memory_by_card(self, card_id: CardId, uuid: str, value_to_add: int):
         # must be implemented by children
         pass
 
     @abc.abstractmethod
-    def read_memory_by_card(self, card_id: CardId, uuid: str) -> int:
+    def get_memory_by_card(self, card_id: CardId, uuid: str) -> int:
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def add_memory_value(self, item: MemoryItem, value: int):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def get_memory_value(self, item: MemoryItem) -> int:
         # must be implemented by children
         pass
 
