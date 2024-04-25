@@ -37,7 +37,7 @@ default_comparisons = [
 ]
 
 
-class GeneralComparator(CommonGeneralComparator):
+class PmoGeneralComparator(CommonGeneralComparator):
 
     def __init__(self, comparisons: List[Comparison] = None):
         powers_we_love = [
