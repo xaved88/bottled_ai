@@ -195,3 +195,8 @@ def most_powered_up_genetic_algorithm(best: CA, challenger: CA) -> Optional[bool
 def least_powered_down_steam_barrier(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.power_down_steam_barrier() == challenger.power_down_steam_barrier() \
         else challenger.power_down_steam_barrier() < best.power_down_steam_barrier()
+
+
+def most_powered_up_claws(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.powered_up_claws() == challenger.powered_up_claws() \
+        else challenger.powered_up_claws() > best.powered_up_claws()

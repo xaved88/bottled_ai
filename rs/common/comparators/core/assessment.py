@@ -4,7 +4,7 @@ from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
-from rs.calculator.interfaces.memory_items import ResetSchedule
+from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem
 from rs.calculator.powers import get_power_count
 from rs.game.card import CardType
 
@@ -192,3 +192,7 @@ class ComparatorAssessment:
         return self.__get_value('power_down_steam_barrier',
                                 lambda: sum(
                                     self.state.memory_by_card[CardId.STEAM_BARRIER][ResetSchedule.BATTLE].values()))
+
+    def powered_up_claws(self) -> int:
+        return self.__get_value('powered_up_claws',
+                                lambda: self.state.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])

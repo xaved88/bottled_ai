@@ -240,3 +240,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_avoid_playing_steam_barrier_if_not_necessary(self):
         self.execute_handler_tests('/battles/general/avoid_steam_barrier.json', ['play 2'])
+
+    def test_play_claws_to_power_them_up(self):
+        self.execute_handler_tests('/battles/general/play_claws_despite_high_block.json', ['play 4 0'])

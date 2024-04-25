@@ -34,6 +34,7 @@ default_comparisons = [
     most_powered_up_genetic_algorithm,
     least_incoming_damage,
     most_ethereal_cards_saved_for_later,
+    most_powered_up_claws,
     most_retained_cards,
     least_powered_down_steam_barrier,
     most_energy,
