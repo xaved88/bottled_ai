@@ -1,4 +1,4 @@
-from rs.ai.pwnder_my_orbs.comparators.general_comparator import default_comparisons, GeneralComparator
+from rs.ai.pwnder_my_orbs.comparators.pmo_general_comparator import default_comparisons, PmoGeneralComparator
 from rs.common.comparators.common_general_comparator import move_in_comparison_list, add_to_comparison_list
 from rs.common.comparators.core.comparisons import *
 
@@ -18,6 +18,6 @@ move_in_comparison_list(comparisons, comparison_to_move=most_bad_cards_exhausted
 add_to_comparison_list(comparisons, comparison_to_add=hate_bias, after=most_optimal_winning_battle)
 
 
-class BigFightComparator(GeneralComparator):
+class PmoBigFightComparator(PmoGeneralComparator):
     def __init__(self):
         super().__init__(comparisons)

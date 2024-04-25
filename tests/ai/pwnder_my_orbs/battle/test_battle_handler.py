@@ -1,11 +1,11 @@
 import unittest
 
 from ai.pwnder_my_orbs.pmo_test_handler_fixture import PmoTestHandlerFixture
-from rs.ai.pwnder_my_orbs.handlers.battle_handler import BattleHandler
+from rs.common.handlers.common_battle_handler import CommonBattleHandler
 
 
 class BattleHandlerTestCase(PmoTestHandlerFixture):
-    handler = BattleHandler
+    handler = CommonBattleHandler
 
     def test_plays_dualcast(self):
         self.execute_handler_tests('battles/with_orbs/defect_with_orb_and_dualcast.json', ['play 2'])

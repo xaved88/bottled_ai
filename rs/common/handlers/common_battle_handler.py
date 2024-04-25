@@ -1,7 +1,7 @@
-from typing import List
+from dataclasses import dataclass, field
 
-from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.executor import get_best_battle_action
+from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.common.comparators.big_fight_comparator import BigFightComparator
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from rs.common.comparators.gremlin_nob_comparator import GremlinNobComparator
@@ -14,16 +14,27 @@ from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
+@dataclass
+class BattleHandlerConfig:
+    big_fight_floors: list[int] = field(default_factory=lambda: [33, 50])
+    big_fight_comparator: ComparatorInterface = BigFightComparator
+    gremlin_nob_comparator: ComparatorInterface = GremlinNobComparator
+    three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
+    waiting_lagavulin_comparator: ComparatorInterface = WaitingLagavulinComparator
+    general_comparator: ComparatorInterface = CommonGeneralComparator
+
+
 class CommonBattleHandler(Handler):
 
-    def __init__(self, max_path_count: int = 11_000):
+    def __init__(self, config: BattleHandlerConfig = BattleHandlerConfig(), max_path_count: int = 11_000):
+        self.config: BattleHandlerConfig = config
         self.max_path_count: int = max_path_count
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
 
     def select_comparator(self, state: GameState) -> ComparatorInterface:
-        big_fight = state.floor() == 33 or state.floor() == 50
+        big_fight = state.floor() in self.config.big_fight_floors
 
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
 
@@ -40,14 +51,14 @@ class CommonBattleHandler(Handler):
                                       or state.has_relic("Ice Cream")
 
         if big_fight:
-            return BigFightComparator()
+            return self.config.big_fight_comparator()
         elif gremlin_nob_is_present:
-            return GremlinNobComparator()
+            return self.config.gremlin_nob_comparator()
         elif three_sentries_are_alive:
-            return ThreeSentriesComparator()
+            return self.config.three_sentries_comparator()
         elif lagavulin_is_sleeping and lagavulin_is_worth_delaying:
-            return WaitingLagavulinComparator()
-        return CommonGeneralComparator()
+            return self.config.waiting_lagavulin_comparator()
+        return self.config.general_comparator()
 
     def handle(self, state: GameState) -> HandlerAction:
         actions = get_best_battle_action(state, self.select_comparator(state), self.max_path_count)
