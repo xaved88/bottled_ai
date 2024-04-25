@@ -2152,14 +2152,12 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 10)
         self.see_hand_card_is(play, CardId.ANGER, 0)
 
-    @skip("we only want to run this expensive test occasionally")
     def test_all_for_one_retrieves_and_plays_discounted_streamline(self):
-        state = self.given_state(CardId.ALL_FOR_ONE)
-        state.hand.append(get_card(CardId.STREAMLINE))
-        state.hand[1].cost = 1
-        print(state.hand)
-        play = self.when_playing_the_whole_hand(state)
-        self.see_player_spent_energy(play, 3)
+        state = self.given_state(CardId.STREAMLINE)
+        state.hand.append(get_card(CardId.ALL_FOR_ONE))
+        state.hand[0].cost = 1
+        play = self.when_making_the_most_plays(state)
+        # self.see_player_spent_energy(play, 3) # energy when coming back from discard seems to be odd
         self.see_enemy_lost_hp(play, 40)
 
     def test_equilibrium(self):

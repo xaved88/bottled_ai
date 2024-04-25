@@ -50,6 +50,11 @@ class CalculatorTestFixture(unittest.TestCase):
         get_paths(PlayPath([], hand_state), paths)
         return list(paths.values())[-1]
 
+    def when_making_the_most_plays(self, hand_state: BattleState) -> PlayPath:
+        paths = self.when_getting_all_paths(hand_state)
+        largest = max(paths, key=lambda path: len(path.plays))
+        return largest
+
     def when_getting_all_paths(self, hand_state: BattleState) -> list[PlayPath]:
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
