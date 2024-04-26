@@ -470,6 +470,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.RAMPAGE)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 8)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(5, play.state.get_memory_by_card(CardId.RAMPAGE, "default"))
+
+    def test_rampage_respects_and_increases_its_memory(self):
+        state = self.given_state(CardId.RAMPAGE)
+        state.add_memory_by_card(CardId.RAMPAGE, "default", 5)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 13)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(10, play.state.get_memory_by_card(CardId.RAMPAGE, "default"))
 
     def test_metallicize(self):
         state = self.given_state(CardId.METALLICIZE)
@@ -2576,3 +2586,48 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_drew_cards(play, 4)
         self.see_player_discard_pile_count(play, 1)
+
+    def test_blizzard(self):
+        state = self.given_state(CardId.BLIZZARD)
+        state.add_memory_value(MemoryItem.FROST_THIS_BATTLE, 4)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(4, play.state.get_memory_value(MemoryItem.FROST_THIS_BATTLE))
+
+    def test_frost_value_increases(self):
+        state = self.given_state(CardId.COOLHEADED)
+        state.add_memory_value(MemoryItem.FROST_THIS_BATTLE, 4)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_drew_cards(play, 1)
+        self.assertEqual(5, play.state.get_memory_value(MemoryItem.FROST_THIS_BATTLE))
+
+    def test_blizzard_does_nothing(self):
+        state = self.given_state(CardId.BLIZZARD)
+        state.add_memory_value(MemoryItem.FROST_THIS_BATTLE, 0)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.FROST_THIS_BATTLE))
+
+    def test_thunder_strike(self):
+        state = self.given_state(CardId.THUNDER_STRIKE, targets=2)
+        state.add_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE, 4)
+        play = self.when_playing_the_first_card(state)
+        self.see_random_damage_dealt(play, 28)
+        self.see_player_spent_energy(play, 3)
+        self.assertEqual(4, play.state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE))
+
+    def test_lightning_value_increases(self):
+        state = self.given_state(CardId.ZAP)
+        state.add_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE, 4)
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(5, play.state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE))
+
+    def test_thunder_strike_does_nothing(self):
+        state = self.given_state(CardId.THUNDER_STRIKE, targets=2)
+        state.add_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE, 0)
+        play = self.when_playing_the_first_card(state)
+        self.see_random_damage_dealt(play, 0)
+        self.see_player_spent_energy(play, 3)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE))

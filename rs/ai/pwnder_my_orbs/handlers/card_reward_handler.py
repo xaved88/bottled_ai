@@ -29,7 +29,7 @@ priorities = [
         ('cold snap', 1),
         ('doom and gloom', 1),
         ('streamline', 1),
-        # ('ftl', 1),
+        ('ftl', 1),
         ('sweeping beam', 1),
         ('bullseye', 1),
         ('compile driver', 2),

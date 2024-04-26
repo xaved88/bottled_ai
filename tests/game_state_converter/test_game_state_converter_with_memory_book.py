@@ -55,3 +55,15 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 4
         new_state = load_resource_state('battles/general/basic_turn_2.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.CARDS_THIS_TURN])
+
+    def test_memory_of_frost_this_battle_is_reset_when_leaving_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.FROST_THIS_BATTLE] = 4
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(0, new_state.memory_general[MemoryItem.FROST_THIS_BATTLE])
+
+    def test_memory_of_lightning_this_battle_turn_is_reset_when_leaving_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 4
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(0, new_state.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE])

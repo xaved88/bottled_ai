@@ -46,7 +46,7 @@ class RelicId(Enum):
     CLOCKWORK_SOUVENIR = 'clockwork souvenir'       # N/A
     COFFEE_DRIPPER = 'coffee dripper'               # N/A
     CULTIST_HEADPIECE = 'cultist headpiece'         # N/A
-    CRACKED_CORE = 'cracked core'                   # N/A
+    CRACKED_CORE = 'cracked core'
     CURSED_KEY = 'cursed key'                       # N/A
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DATA_DISK = 'data disk'                         # N/A

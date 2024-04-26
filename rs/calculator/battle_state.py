@@ -688,6 +688,12 @@ class BattleState(BattleStateInterface):
                     pass
 
     def channel_orb(self, orb_id: OrbId, triggered_by_darkness_upgraded: bool = False):
+
+        if orb_id == OrbId.LIGHTNING:
+            self.add_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE, 1)
+        if orb_id == OrbId.FROST:
+            self.add_memory_value(MemoryItem.FROST_THIS_BATTLE, 1)
+
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         amount = 1 if orb_id is not OrbId.DARK else 6 + focus
         if self.orb_slots > 0:

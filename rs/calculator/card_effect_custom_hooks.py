@@ -3,6 +3,7 @@ import math
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_interface import CardInterface
@@ -666,3 +667,28 @@ def ftl_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card
     threshold = 3 if not card.upgrade else 4
     if state.get_memory_value(MemoryItem.CARDS_THIS_TURN) < threshold:
         state.draw_cards(1)
+
+
+def rampage_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                     target_index: int = -1):
+    effect.damage = 8 + state.get_memory_by_card(card.id, card.uuid)
+
+
+def rampage_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                      target_index: int = -1):
+    extra_damage = 5 if not card.upgrade else 8
+    state.add_memory_by_card(card.id, card.uuid, extra_damage)
+
+
+def blizzard_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                      target_index: int = -1):
+    effect.damage = 2 * state.get_memory_value(MemoryItem.FROST_THIS_BATTLE)
+
+
+def thunder_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                            target_index: int = -1):
+    cracked_core_relic = 0 if RelicId.CRACKED_CORE not in state.relics else 1
+    hits = state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE) + cracked_core_relic
+    damage = 7 if not card.upgrade else 9
+
+    state.inflict_random_target_damage(damage, hits)

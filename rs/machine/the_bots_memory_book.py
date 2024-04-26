@@ -12,6 +12,7 @@ class TheBotsMemoryBook:
         for card_id in [
             CardId.GENETIC_ALGORITHM,
             CardId.GLASS_KNIFE,
+            CardId.RAMPAGE,
             CardId.RITUAL_DAGGER,
             CardId.STEAM_BARRIER,
         ]:
@@ -22,6 +23,8 @@ class TheBotsMemoryBook:
 
     def set_new_battle_state(self):
         self.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 0
+        self.memory_general[MemoryItem.FROST_THIS_BATTLE] = 0
+        self.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 0
 
         # clear memory_by_card based on reset_schedule
         for card_id, schedule_dict in self.memory_by_card.items():
@@ -42,6 +45,7 @@ class TheBotsMemoryBook:
         match card_id:
             case CardId.GENETIC_ALGORITHM: reset_schedule = ResetSchedule.GAME
             case CardId.GLASS_KNIFE: reset_schedule = ResetSchedule.BATTLE
+            case CardId.RAMPAGE: reset_schedule = ResetSchedule.BATTLE
             case CardId.RITUAL_DAGGER: reset_schedule = ResetSchedule.GAME
             case CardId.STEAM_BARRIER: reset_schedule = ResetSchedule.BATTLE
 

@@ -123,13 +123,15 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.INFLAME:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 3})]
     if card.id == CardId.FIRE_BREATHING:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FIRE_BREATHING: 6 if not card.upgrade else 10})]
+        return [
+            CardEffects(target=TargetType.SELF, applies_powers={PowerId.FIRE_BREATHING: 6 if not card.upgrade else 10})]
     if card.id == CardId.EVOLVE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.EVOLVE: 1 if not card.upgrade else 2})]
     if card.id == CardId.DEMON_FORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEMON_FORM: 2 if not card.upgrade else 3})]
     if card.id == CardId.BERSERK:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.VULNERABLE: 2 if not card.upgrade else 1, PowerId.BERSERK: 1})]
+        return [CardEffects(target=TargetType.SELF,
+                            applies_powers={PowerId.VULNERABLE: 2 if not card.upgrade else 1, PowerId.BERSERK: 1})]
     if card.id == CardId.INTIMIDATE:
         return [CardEffects(target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.WEAKENED: 1 if not card.upgrade else 2})]
@@ -205,10 +207,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.RAGE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.RAGE: 3 if not card.upgrade else 5})]
     if card.id == CardId.RAMPAGE:
-        return [CardEffects(target=TargetType.MONSTER, damage=8, hits=1)]
+        return [CardEffects(target=TargetType.MONSTER, damage=8, hits=1, pre_hooks=[rampage_pre_hook],
+                            post_hooks=[rampage_post_hook])]
     if card.id == CardId.SWORD_BOOMERANG:
         hook = sword_boomerang_post_hook if not card.upgrade else sword_boomerang_upgraded_post_hook
-        return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
+        return [CardEffects(post_hooks=[hook])]
     if card.id == CardId.JUGGERNAUT:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.JUGGERNAUT: 5 if not card.upgrade else 7})]
     if card.id == CardId.METALLICIZE:
@@ -465,9 +468,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=11 if not card.upgrade else 15, hits=1),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1})]
     if card.id == CardId.FTL:
-        return [CardEffects(target=TargetType.MONSTER, damage=5 if not card.upgrade else 6, hits=1, pre_hooks=[ftl_pre_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=5 if not card.upgrade else 6, hits=1,
+                            pre_hooks=[ftl_pre_hook])]
     if card.id == CardId.SCRAPE:
-        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, draw=4 if not card.upgrade else 5)]
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
+                            draw=4 if not card.upgrade else 5)]
     if card.id == CardId.BOOT_SEQUENCE:
         return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
     if card.id == CardId.STACK:
@@ -477,7 +482,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         hook = auto_shields_post_hook if not card.upgrade else auto_shields_upgraded_post_hook
         return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
     if card.id == CardId.STREAMLINE:
-        return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1, post_hooks=[streamline_post_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1,
+                            post_hooks=[streamline_post_hook])]
     if card.id == CardId.TURBO:
         return [
             CardEffects(target=TargetType.SELF, energy_gain=2 if not card.upgrade else 3, post_hooks=[turbo_post_hook])]
@@ -523,7 +529,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.FUSION:
         return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.PLASMA])]
     if card.id == CardId.CHAOS:
-        orbs = [OrbId.INTERNAL_RANDOM_ORB] if not card.upgrade else [OrbId.INTERNAL_RANDOM_ORB, OrbId.INTERNAL_RANDOM_ORB]
+        orbs = [OrbId.INTERNAL_RANDOM_ORB] if not card.upgrade else [OrbId.INTERNAL_RANDOM_ORB,
+                                                                     OrbId.INTERNAL_RANDOM_ORB]
         return [CardEffects(target=TargetType.SELF, channel_orbs=orbs)]
     if card.id == CardId.DARKNESS:
         hook = darkness_post_hook if not card.upgrade else darkness_upgraded_post_hook
@@ -611,7 +618,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(damage=5 if not card.upgrade else 8, hits=1, target=TargetType.ALL_MONSTERS)]
     if card.id == CardId.CONCLUDE:
         return [CardEffects(damage=12 if not card.upgrade else 16, hits=1, target=TargetType.ALL_MONSTERS,
-                post_hooks=[conclude_post_hook])]
+                            post_hooks=[conclude_post_hook])]
     if card.id == CardId.RAGNAROK:
         hook = ragnarok_post_hook if not card.upgrade else ragnarok_upgraded_post_hook
         return [CardEffects(target=TargetType.ALL_MONSTERS, post_hooks=[hook])]
@@ -622,7 +629,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SMITE:
         return [CardEffects(damage=12 if not card.upgrade else 16, hits=1, target=TargetType.MONSTER, retains=True)]
     if card.id == CardId.FEEL_NO_PAIN:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAIN: 3 if not card.upgrade else 4})]
+        return [
+            CardEffects(target=TargetType.SELF, applies_powers={PowerId.FEEL_NO_PAIN: 3 if not card.upgrade else 4})]
     if card.id == CardId.DARK_EMBRACE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DARK_EMBRACE: 1})]
     if card.id == CardId.CORRUPTION:
@@ -641,7 +649,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             post_hooks=[ritual_dagger_post_hook])]
     if card.id == CardId.FINISHER:
         return [CardEffects(damage=6 if not card.upgrade else 8, target=TargetType.MONSTER,
-                pre_hooks=[finisher_pre_hook])]
+                            pre_hooks=[finisher_pre_hook])]
     if card.id == CardId.CLAW:
         return [CardEffects(hits=1, target=TargetType.MONSTER, pre_hooks=[claw_pre_hook], post_hooks=[claw_post_hook])]
     if card.id == CardId.GENETIC_ALGORITHM:
@@ -653,4 +661,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.GLASS_KNIFE:
         return [CardEffects(hits=2, target=TargetType.MONSTER, pre_hooks=[glass_knife_pre_hook],
                             post_hooks=[glass_knife_post_hook])]
+    if card.id == CardId.BLIZZARD:
+        return [CardEffects(hits=1, target=TargetType.ALL_MONSTERS, pre_hooks=[blizzard_pre_hook])]
+    if card.id == CardId.THUNDER_STRIKE:
+        return [CardEffects(pre_hooks=[thunder_strike_pre_hook])]
     return [CardEffects()]

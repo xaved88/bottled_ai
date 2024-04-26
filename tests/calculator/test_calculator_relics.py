@@ -2,6 +2,7 @@ from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.interfaces.memory_items import MemoryItem
 from rs.calculator.play_path import PlayPath
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
@@ -583,6 +584,7 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         state.end_turn()
         self.see_orb_count(play, 2)
         self.assertEqual(OrbId.FROST, play.state.orbs[1][0])
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.FROST_THIS_BATTLE))
 
     def test_frozen_core_not_enough_slots(self):
         state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=1, orbs=[(OrbId.LIGHTNING, 1)])
@@ -610,3 +612,11 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 0)
         self.see_player_discard_pile_count(play, 1)
         self.see_enemy_lost_hp(play, 6)
+
+    def test_cracked_orb_increases_lightning_strike_damage(self):
+        state = self.given_state(CardId.THUNDER_STRIKE, targets=2, relics={RelicId.CRACKED_CORE: 1})
+        state.add_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE, 0)
+        play = self.when_playing_the_first_card(state)
+        self.see_random_damage_dealt(play, 7)
+        self.see_player_spent_energy(play, 3)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE))
