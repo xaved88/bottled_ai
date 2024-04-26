@@ -36,7 +36,7 @@ class ShopPurchaseHandler(Handler):
 
         self.cards_to_buy = [
             "All For One",
-            "Claw",
+            "Gash",
         ]
 
     def can_handle(self, state: GameState) -> bool:

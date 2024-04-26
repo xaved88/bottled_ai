@@ -150,7 +150,7 @@
           "is_playable": true,
           "cost": 2,
           "name": "Equilibrium",
-          "id": "equilibrium",
+          "id": "undo",
           "type": "SKILL",
           "ethereal": false,
           "uuid": "59ea9b49-fe24-4a4a-bb99-32eabea15ff1",

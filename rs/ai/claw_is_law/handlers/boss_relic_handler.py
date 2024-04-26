@@ -12,10 +12,10 @@ class BossRelicHandler(CommonBossRelicHandler):
             "sozu",
             # "runic dome", we will love this, but only once we make custom comparators for it.
             "cursed key",
+            "runic pyramid",
             "philosopher\u0027s stone",
             "fusion hammer",
             "ectoplasm",  # conditionally removed
-            "runic pyramid",
             "busted crown",  # conditionally removed
             "coffee dripper",  # conditionally removed
             "slaver\u0027s collar",
