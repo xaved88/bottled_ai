@@ -42,7 +42,7 @@ class CardId(Enum):
     BLUDGEON = 'bludgeon'
     BLUR = 'blur'
     BODY_SLAM = 'body slam'
-    BOOT_SEQUENCE = 'boot sequence'
+    BOOT_SEQUENCE = 'bootsequence'  # Weird id alert!
     BOUNCING_FLASK = 'bouncing flask'
     BOWLING_BASH = 'bowling bash'
     BUFFER = 'buffer'
@@ -60,7 +60,7 @@ class CardId(Enum):
     CHILL = 'chill'
     CHOKE = 'choke'
     CLASH = 'clash'
-    CLAW = 'gash'
+    CLAW = 'gash'  # Weird id alert!
     CLEAVE = 'cleave'
     CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'
@@ -111,7 +111,7 @@ class CardId(Enum):
     ENLIGHTENMENT = 'enlightenment'
     ENTRENCH = 'entrench'
     ENVENOM = 'envenom'
-    EQUILIBRIUM = 'undo'
+    EQUILIBRIUM = 'undo'  # Weird id alert!
     ESCAPE_PLAN = 'escape plan'
     ESTABLISHMENT = 'establishment'
     EVISCERATE = 'eviscerate'
@@ -205,7 +205,7 @@ class CardId(Enum):
     RIP_AND_TEAR = 'rip and tear'
     RITUAL_DAGGER = 'ritual dagger'
     SADISTIC_NATURE = 'sadistic nature'
-    SCRAPE = 'scrape'
+    SCRAPE = 'scrape'  # Ignores the fact that we throw away non-0 cards after draw
     SECOND_WIND = 'second wind'
     SEEING_RED = 'seeing red'
     SELF_REPAIR = 'self repair'
@@ -222,7 +222,7 @@ class CardId(Enum):
     SNEAKY_STRIKE = 'underhanded strike'  # Weird id alert!
     SPOT_WEAKNESS = 'spot weakness'
     STACK = 'stack'
-    STEAM_BARRIER = 'steam'
+    STEAM_BARRIER = 'steam'  # Weird id alert!
     STORM = 'storm'
     STORM_OF_STEEL = 'storm of steel'
     STREAMLINE = 'streamline'

@@ -465,9 +465,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=11 if not card.upgrade else 15, hits=1),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1})]
     if card.id == CardId.FTL:
-        return [CardEffects(target=TargetType.MONSTER, damage=5 if not card.upgrade else 6, hits=1)]
+        return [CardEffects(target=TargetType.MONSTER, damage=5 if not card.upgrade else 6, hits=1, pre_hooks=[ftl_pre_hook])]
     if card.id == CardId.SCRAPE:
-        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, draw=4)]
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, draw=4 if not card.upgrade else 5)]
     if card.id == CardId.BOOT_SEQUENCE:
         return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
     if card.id == CardId.STACK:

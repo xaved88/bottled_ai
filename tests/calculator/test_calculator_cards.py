@@ -2428,19 +2428,19 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_claw(self):
         state = self.given_state(CardId.CLAW)
-        state.add_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE, 1)
+        state.add_memory_value(MemoryItem.CLAWS_THIS_BATTLE, 1)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 5)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(2, play.state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
+        self.assertEqual(2, play.state.get_memory_value(MemoryItem.CLAWS_THIS_BATTLE))
 
     def test_claw_upgraded(self):
         state = self.given_state(CardId.CLAW, upgrade=1)
-        state.add_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE, 1)
+        state.add_memory_value(MemoryItem.CLAWS_THIS_BATTLE, 1)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 7)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(2, play.state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
+        self.assertEqual(2, play.state.get_memory_value(MemoryItem.CLAWS_THIS_BATTLE))
 
     def test_multiple_claws(self):
         state = self.given_state(CardId.CLAW)
@@ -2449,7 +2449,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 15)
         self.see_player_spent_energy(play, 0)
-        self.assertEqual(3, play.state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
+        self.assertEqual(3, play.state.get_memory_value(MemoryItem.CLAWS_THIS_BATTLE))
 
     def test_genetic_algorithm(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
@@ -2548,3 +2548,31 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
         self.assertEqual(12, play.state.get_memory_by_card(CardId.GLASS_KNIFE, "default"))
+
+    def test_ftl(self):
+        state = self.given_state(CardId.FTL)
+        state.add_memory_value(MemoryItem.CARDS_THIS_TURN, 2)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_drew_cards(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+        self.assertEqual(3, play.state.get_memory_value(MemoryItem.CARDS_THIS_TURN))
+
+    def test_ftl_does_not_draw(self):
+        state = self.given_state(CardId.FTL, upgrade=1)
+        state.add_memory_value(MemoryItem.CARDS_THIS_TURN, 4)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_drew_cards(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.assertEqual(5, play.state.get_memory_value(MemoryItem.CARDS_THIS_TURN))
+
+    def test_scrape(self):
+        state = self.given_state(CardId.SCRAPE)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 4)
+        self.see_player_discard_pile_count(play, 1)

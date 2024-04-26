@@ -211,15 +211,15 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_memory_book_claw_state_persists_when_a_different_card_is_played(self):
         mb = TheBotsMemoryBook.new_default()
-        mb.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 1
+        mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 1
         new_mb = self.execute_handler_tests('battles/general/basic_turn_1.json', memory_book=mb)
-        self.assertEqual(1, new_mb.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+        self.assertEqual(1, new_mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE])
 
     def test_memory_book_claw_state_increases_when_claw_is_played(self):
         mb = TheBotsMemoryBook.new_default()
-        mb.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 1
+        mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 1
         new_mb = self.execute_handler_tests('battles/general/claw.json', memory_book=mb)
-        self.assertEqual(2, new_mb.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+        self.assertEqual(2, new_mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE])
 
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
         self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])

@@ -613,12 +613,12 @@ def finisher_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface,
 def claw_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                   target_index: int = -1):
     base_damage = 3 if not card.upgrade else 5
-    effect.damage = base_damage + (2 * state.get_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE))
+    effect.damage = base_damage + (2 * state.get_memory_value(MemoryItem.CLAWS_THIS_BATTLE))
 
 
 def claw_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                    target_index: int = -1):
-    state.add_memory_value(MemoryItem.CLAWS_PLAYED_THIS_BATTLE, 1)
+    state.add_memory_value(MemoryItem.CLAWS_THIS_BATTLE, 1)
 
 
 def genetic_algorithm_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -659,3 +659,10 @@ def streamline_post_hook(state: BattleStateInterface, effect: CardEffectsInterfa
     card.cost -= 1
     if card.cost < 0:
         card.cost = 0
+
+
+def ftl_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                 target_index: int = -1):
+    threshold = 3 if not card.upgrade else 4
+    if state.get_memory_value(MemoryItem.CARDS_THIS_TURN) < threshold:
+        state.draw_cards(1)

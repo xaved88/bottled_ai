@@ -195,4 +195,4 @@ class ComparatorAssessment:
 
     def powered_up_claws(self) -> int:
         return self.__get_value('powered_up_claws',
-                                lambda: self.state.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE])
+                                lambda: self.state.memory_general[MemoryItem.CLAWS_THIS_BATTLE])

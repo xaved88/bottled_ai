@@ -21,7 +21,7 @@ class TheBotsMemoryBook:
         self.set_new_turn_state()
 
     def set_new_battle_state(self):
-        self.memory_general[MemoryItem.CLAWS_PLAYED_THIS_BATTLE] = 0
+        self.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 0
 
         # clear memory_by_card based on reset_schedule
         for card_id, schedule_dict in self.memory_by_card.items():
@@ -34,6 +34,7 @@ class TheBotsMemoryBook:
     def set_new_turn_state(self):
         self.memory_general[MemoryItem.ATTACKS_THIS_TURN] = 0
         self.memory_general[MemoryItem.LAST_KNOWN_TURN] = 0
+        self.memory_general[MemoryItem.CARDS_THIS_TURN] = 0
 
     def initialize_memory_by_card(self, card_id: CardId):
         reset_schedule = {}

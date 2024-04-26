@@ -233,6 +233,7 @@ class BattleState(BattleStateInterface):
 
         if card.type == CardType.ATTACK:
             self.add_memory_value(MemoryItem.ATTACKS_THIS_TURN, 1)
+        self.add_memory_value(MemoryItem.CARDS_THIS_TURN, 1)
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
