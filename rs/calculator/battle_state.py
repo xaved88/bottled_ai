@@ -100,20 +100,25 @@ class BattleState(BattleStateInterface):
 
         # repeats
         if self.player.powers.get(PowerId.INTERNAL_ECHO_FORM_READY):
-            self.repeat_card(card, target_index, PowerId.INTERNAL_ECHO_FORM_READY, power_lost_if_incomplete=False)
+            self.repeat_card(card, target_index, PowerId.INTERNAL_ECHO_FORM_READY, lose_repeat_even_if_incomplete=False)
         if self.player.powers.get(PowerId.DUPLICATION_POTION_POWER):
-            self.repeat_card(card, target_index, PowerId.DUPLICATION_POTION_POWER, power_lost_if_incomplete=False)
+            self.repeat_card(card, target_index, PowerId.DUPLICATION_POTION_POWER, lose_repeat_even_if_incomplete=False)
         if self.player.powers.get(PowerId.AMPLIFY) and card.type == CardType.POWER:
             self.repeat_card(card, target_index, PowerId.AMPLIFY)
         if self.player.powers.get(PowerId.BURST) and card.type == CardType.SKILL:
             self.repeat_card(card, target_index, PowerId.BURST)
         if self.player.powers.get(PowerId.DOUBLE_TAP) and card.type == CardType.ATTACK:
             self.repeat_card(card, target_index, PowerId.DOUBLE_TAP)
+        if self.relics.get(RelicId.NECRONOMICON) and self.get_memory_value(MemoryItem.NECRONOMICON_READY) and card.type == CardType.ATTACK and card.cost >= 2:
+            self.repeat_card(card, target_index, RelicId.NECRONOMICON)
 
-    def repeat_card(self, card: CardInterface, target_index: int, repeating_power,
-                    power_lost_if_incomplete: bool = True):
-        if power_lost_if_incomplete:
-            self.player.powers[repeating_power] -= 1
+    def repeat_card(self, card: CardInterface, target_index: int, reason_to_repeat,
+                    lose_repeat_even_if_incomplete: bool = True):
+        if lose_repeat_even_if_incomplete:
+            if type(reason_to_repeat) == PowerId:
+                self.player.powers[reason_to_repeat] -= 1
+            if reason_to_repeat == RelicId.NECRONOMICON:
+                self.add_memory_value(MemoryItem.NECRONOMICON_READY, -1)
 
         if self.is_turn_forced_to_be_over():
             return
@@ -122,8 +127,9 @@ class BattleState(BattleStateInterface):
         # todo -> battle is over
         self.resolve_card_play(card, target_index)
 
-        if not power_lost_if_incomplete:
-            self.player.powers[repeating_power] -= 1
+        if not lose_repeat_even_if_incomplete:
+            if type(reason_to_repeat) == PowerId:
+                self.player.powers[reason_to_repeat] -= 1
 
     def resolve_card_play(self, card: CardInterface, target_index: int):
         effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
@@ -171,7 +177,7 @@ class BattleState(BattleStateInterface):
 
             # heal
             if effect.heal:
-                self.player.heal(effect.heal)
+                self.player.heal(effect.heal, True, self.relics)
 
             # deal damage to target
             if effect.hits:
@@ -351,7 +357,7 @@ class BattleState(BattleStateInterface):
                         monster.inflict_damage(self.player, 5, 1, vulnerable_modifier=1, is_attack=False)
 
         if RelicId.BIRD_FACED_URN in self.relics and card.type == CardType.POWER:
-            self.player.heal(2)
+            self.player.heal(2, True, self.relics)
 
         if RelicId.UNCEASING_TOP in self.relics and len(self.hand) == 0:
             self.draw_cards(1)
@@ -371,7 +377,7 @@ class BattleState(BattleStateInterface):
         if RelicId.FROZEN_CORE in self.relics and len(self.orbs) < self.orb_slots:
             self.channel_orb(OrbId.FROST)
 
-        self.trigger_orbs_end_of_turn()
+        self.trigger_orbs_passives()
 
         if RelicId.CLOAK_CLASP in self.relics:
             self.add_player_block(len(self.hand))
@@ -393,7 +399,7 @@ class BattleState(BattleStateInterface):
                                        vulnerable_modifier=1, is_attack=False)
 
         if self.player.powers.get(PowerId.REGENERATION_PLAYER, 0) and self.player.current_hp > 0:
-            self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0))
+            self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0), True, self.relics)
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 
         # deal with the remaining cards in hand
@@ -431,7 +437,7 @@ class BattleState(BattleStateInterface):
                 monster.powers[PowerId.POISON] -= 1
                 monster.inflict_damage(monster, poison, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
             if monster.powers.get(PowerId.REGENERATE_ENEMY) and monster.current_hp > 0:
-                monster.heal(monster.powers.get(PowerId.REGENERATE_ENEMY))
+                monster.heal(monster.powers.get(PowerId.REGENERATE_ENEMY), False, self.relics)
 
         # last check in case there were some more monsters that should die
         self.kill_monsters()
@@ -643,21 +649,22 @@ class BattleState(BattleStateInterface):
                                                    vulnerable_modifier=1,
                                                    is_attack=False)
 
-    def trigger_orbs_end_of_turn(self):
+    def trigger_orbs_passives(self):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
         for index, (orb, amount) in enumerate(self.orbs):
-            if orb == OrbId.LIGHTNING:
-                if self.player.powers.get(PowerId.ELECTRO):
-                    for m in self.monsters:
-                        m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False,
-                                         is_orbs=True)
-                else:
-                    self.inflict_random_target_damage(base_damage=3 + focus, hits=1, affected_by_vulnerable=False,
-                                                      is_attack=False, is_orbs=True)
-            elif orb == OrbId.FROST:
-                self.add_player_block(2 + focus)
-            elif orb == OrbId.DARK:
-                self.orbs[index] = (OrbId.DARK, amount + 6 + focus)
+            for _ in range(1 + (index == 0 and RelicId.GOLD_PLATED_CABLES in self.relics)):
+                if orb == OrbId.LIGHTNING:
+                    if self.player.powers.get(PowerId.ELECTRO):
+                        for m in self.monsters:
+                            m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False,
+                                             is_orbs=True)
+                    else:
+                        self.inflict_random_target_damage(base_damage=3 + focus, hits=1, affected_by_vulnerable=False,
+                                                          is_attack=False, is_orbs=True)
+                elif orb == OrbId.FROST:
+                    self.add_player_block(2 + focus)
+                elif orb == OrbId.DARK:
+                    self.orbs[index] = (OrbId.DARK, amount + 6 + focus)
 
     def evoke_orbs(self, amount: int = 1, times: int = 1):
         focus = self.player.powers.get(PowerId.FOCUS, 0)
@@ -728,6 +735,8 @@ class BattleState(BattleStateInterface):
             self.memory_general[item] = 0
 
         self.memory_general[item] += value
+        if self.memory_general[item] < 0:
+            self.memory_general[item] = 0
 
     def get_memory_value(self, item: MemoryItem) -> int:
         return self.memory_general[item]

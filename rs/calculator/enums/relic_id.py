@@ -12,6 +12,9 @@ from enum import Enum
 # 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
+# 'dolly's mirror'
+# 'ssserpent head' should go into map handler I guess
+# 'brimstone' - probaly need to be more aggressive when we have this
 # and several others that aren't listed yet
 
 
@@ -48,10 +51,12 @@ class RelicId(Enum):
     CULTIST_HEADPIECE = 'cultist headpiece'         # N/A
     CRACKED_CORE = 'cracked core'
     CURSED_KEY = 'cursed key'                       # N/A
+    DAMARU = 'damaru'                               # N/A
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DATA_DISK = 'data disk'                         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
+    ENCHIRIDION = 'enchiridion'                     # N/A
     EMPTY_CAGE = 'empty cage'                       # N/A
     EMOTION_CHIP = 'emotion chip'                   # N/A unless we choose to care about it in a comparator
     ETERNAL_FEATHER = 'eternal feather'             # N/A
@@ -63,7 +68,7 @@ class RelicId(Enum):
     GAMBLING_CHIP = 'gambling chip'                 # Handled outside of calculator by a Discard Handler
     GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
-    GOLD_PLATED_CABLES = 'gold-plated cables'       # N/A
+    GOLD_PLATED_CABLES = 'gold-plated cables'
     GOLDEN_IDOL = 'golden idol'                     # N/A
     GREMLIN_HORN = 'gremlin horn'
     GREMLIN_VISAGE = 'gremlin visage'               # N/A
@@ -81,8 +86,10 @@ class RelicId(Enum):
     LANTERN = 'lantern'                             # N/A
     LEES_WAFFLE = 'lee\u0027s waffle'               # N/A
     LETTER_OPENER = 'letter opener'
+    MAGIC_FLOWER = 'magic flower'
     MANGO = 'mango'                                 # N/A
     MARK_OF_PAIN = 'mark of pain'                   # N/A
+    MARK_OF_THE_BLOOM = 'mark of the bloom'
     MATRYOSHKA = 'matryoshka'                       # N/A
     MAW_BANK = 'maw bank'                           # N/A
     MEAL_TICKET = 'meal ticket'                     # N/A
@@ -91,6 +98,7 @@ class RelicId(Enum):
     MERCURY_HOURGLASS = 'mercury hourglass'         # We only look at current turn so far, so get this as bonus.
     MOLTEN_EGG = 'molten egg'                       # N/A
     MUTAGENIC_STRENGTH = 'mutagenic strength'       # Covered by Strength
+    NECRONOMICON = 'necronomicon'
     NINJA_SCROLL = 'ninja scroll'                   # N/A
     NLOTHS_HUNGRY_FACE = 'n\u0027loth\u0027s hungry face' # N/A
     NUCLEAR_BATTERY = 'nuclear battery'             # N/A
@@ -113,6 +121,7 @@ class RelicId(Enum):
     POTION_BELT = 'potion belt'                     # N/A
     PRAYER_WHEEL = 'prayer wheel'                   # N/A
     PRESERVED_INSECT = 'preserved insect'           # N/A
+    PRISMATIC_SHARD = 'prismatic shard'             # N/A
     PURE_WATER = 'pure water'                       # N/A
     QUESTION_CARD = 'question card'                 # N/A
     RED_MASK = 'red mask'                           # N/A
@@ -126,6 +135,7 @@ class RelicId(Enum):
     SHURIKEN = 'shuriken'
     SINGING_BOWL = 'singing bowl'                   # N/A
     SLAVERS_COLLAR = 'slaver\u0027s collar'         # N/A
+    SLING_OF_COURAGE = 'sling of courage'           # N/A
     SMILING_MASK = 'smiling mask'                   # N/A
     SNECKO_EYE = 'snecko eye'
     SNECKO_SKULL = 'snecko skull'

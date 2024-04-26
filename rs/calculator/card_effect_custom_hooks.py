@@ -96,7 +96,7 @@ def __spot_weakness_post_hook(state: BattleStateInterface, target_index: int, am
 def reaper_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                      target_index: int = -1):
     if hasattr(effect, 'hp_damage'):
-        state.player.heal(effect.hp_damage)
+        state.player.heal(effect.hp_damage, True, state.relics)
 
 
 def apotheosis_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -687,8 +687,9 @@ def blizzard_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface,
 
 def thunder_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                             target_index: int = -1):
+    damage = 7 if not card.upgrade else 9
+
     cracked_core_relic = 0 if RelicId.CRACKED_CORE not in state.relics else 1
     hits = state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE) + cracked_core_relic
-    damage = 7 if not card.upgrade else 9
 
     state.inflict_random_target_damage(damage, hits)

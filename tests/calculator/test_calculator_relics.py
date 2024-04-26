@@ -151,7 +151,8 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 1)
 
     def test_odd_mushroom_reduces_incoming_damage(self):
-        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1}, relics={RelicId.ODD_MUSHROOM: 1})
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.VULNERABLE: 1},
+                                 relics={RelicId.ODD_MUSHROOM: 1})
         state.monsters[0].damage = 10
         state.monsters[0].hits = 1
         play = self.when_playing_the_first_card(state)
@@ -400,7 +401,8 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.POISON, 2)
 
     def test_snecko_skull_and_envenom_power_interaction_advanced(self):
-        state = self.given_state(CardId.POISONED_STAB, player_powers={PowerId.ENVENOM: 1}, relics={RelicId.SNECKO_SKULL: 1})
+        state = self.given_state(CardId.POISONED_STAB, player_powers={PowerId.ENVENOM: 1},
+                                 relics={RelicId.SNECKO_SKULL: 1})
         state.monsters[0].powers[PowerId.POISON] = 1
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 6)
@@ -579,7 +581,8 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 5)
 
     def test_frozen_core(self):
-        state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=2, orbs=[(OrbId.LIGHTNING, 1)])
+        state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=2,
+                                 orbs=[(OrbId.LIGHTNING, 1)])
         play = self.when_playing_the_first_card(state)
         state.end_turn()
         self.see_orb_count(play, 2)
@@ -587,7 +590,8 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.assertEqual(1, play.state.get_memory_value(MemoryItem.FROST_THIS_BATTLE))
 
     def test_frozen_core_not_enough_slots(self):
-        state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=1, orbs=[(OrbId.LIGHTNING, 1)])
+        state = self.given_state(CardId.WOUND, relics={RelicId.FROZEN_CORE: 1}, orb_slots=1,
+                                 orbs=[(OrbId.LIGHTNING, 1)])
         play = self.when_playing_the_first_card(state)
         state.end_turn()
         self.see_orb_count(play, 1)
@@ -620,3 +624,49 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_random_damage_dealt(play, 7)
         self.see_player_spent_energy(play, 3)
         self.assertEqual(0, play.state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE))
+
+    def test_magic_flower_increases_healing(self):
+        state = self.given_state(CardId.BANDAGE_UP, relics={RelicId.MAGIC_FLOWER: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_lost_hp(play, -6)
+
+    def test_magic_flower_healing_removes_decimals(self):
+        state = self.given_state(CardId.INFLAME, relics={RelicId.MAGIC_FLOWER: 1, RelicId.BIRD_FACED_URN: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_lost_hp(play, -3)
+
+    def test_gold_plated_cables(self):
+        state = self.given_state(CardId.WOUND, orbs=[(OrbId.LIGHTNING, 1), (OrbId.LIGHTNING, 1), (OrbId.FROST, 1)],
+                                 relics={RelicId.GOLD_PLATED_CABLES: 1})
+        play = self.when_playing_the_whole_hand(state)
+        state.end_turn()
+        self.see_enemy_lost_hp(play, 9)
+
+    def test_mark_of_the_bloom(self):
+        state = self.given_state(CardId.BANDAGE_UP, relics={RelicId.MARK_OF_THE_BLOOM: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_lost_hp(play, 0)
+
+    def test_necronomicon_triggers(self):
+        state = self.given_state(CardId.CARNAGE, relics={RelicId.NECRONOMICON: 1})
+        self.assertEqual(1, state.get_memory_value(MemoryItem.NECRONOMICON_READY))
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 40)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.NECRONOMICON_READY))
+
+    def test_necronomicon_does_not_trigger(self):
+        state = self.given_state(CardId.CARNAGE, relics={RelicId.NECRONOMICON: 1})
+        state.add_memory_value(MemoryItem.NECRONOMICON_READY, -1)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 20)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.NECRONOMICON_READY))
+
+    def test_necronomicon_duplication_stops_when_enemy_is_dead_but_still_reduces_counter(self):
+        state = self.given_state(CardId.CARNAGE, relics={RelicId.INK_BOTTLE: 0, RelicId.NECRONOMICON: 1})
+        self.assertEqual(1, state.get_memory_value(MemoryItem.NECRONOMICON_READY))
+        state.monsters[0].current_hp = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_relic_value(play, RelicId.INK_BOTTLE, 1)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.NECRONOMICON_READY))
+

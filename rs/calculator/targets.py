@@ -182,7 +182,13 @@ class Target(TargetInterface):
             state += k + str(self.powers[PowerId(k)]) + ","
         return state
 
-    def heal(self, amount: int):
-        self.current_hp += amount
-        if self.current_hp > self.max_hp:
-            self.current_hp = self.max_hp
+    def heal(self, amount: int, is_player: bool, relics: Relics):
+        if is_player and relics.get(RelicId.MARK_OF_THE_BLOOM):
+            return
+        else:
+            if is_player and relics.get(RelicId.MAGIC_FLOWER):
+                self.current_hp += round(amount * 1.5)
+            else:
+                self.current_hp += amount
+            if self.current_hp > self.max_hp:
+                self.current_hp = self.max_hp

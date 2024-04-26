@@ -31,6 +31,6 @@ class TargetInterface(metaclass=abc.ABCMeta):
         # must be implemented by children
         pass
 
-    def heal(self, amount: int):
+    def heal(self, amount: int, is_player: bool, relics: Relics):
         # must be implemented by children
         pass
