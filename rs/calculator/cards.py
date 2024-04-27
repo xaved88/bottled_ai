@@ -96,6 +96,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.SHOCKWAVE:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.WHIRLWIND:
+        return Card(card_id, upgrade, Cost.x_cost, False, CardType.ATTACK)
     if card_id == CardId.BLUDGEON:
         return Card(card_id, upgrade, 3 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.FEED:

@@ -3,19 +3,19 @@ from typing import List, Tuple
 
 from rs.calculator.card_cost import Cost
 from rs.calculator.card_effects import get_card_effects
-from rs.calculator.interfaces.card_effects_interface import TargetType
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
+from rs.calculator.interfaces.card_effects_interface import TargetType
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
-from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
-from rs.calculator.enums.relic_id import RelicId
 from rs.game.card import CardType
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
@@ -96,8 +96,11 @@ class BattleState(BattleStateInterface):
                     c.cost = 0
 
         # play the card
-        self.player.energy -= card.cost
+        if card.cost != Cost.x_cost:
+            self.player.energy -= card.cost
         self.resolve_card_play(card, target_index)
+        if card.cost == Cost.x_cost:
+            self.player.energy = 0
 
         # repeats
         if self.player.powers.get(PowerId.INTERNAL_ECHO_FORM_READY):
@@ -760,7 +763,7 @@ def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[Ca
     if card.cost == Cost.unplayable:
         return False
     # in general, has enough energy
-    if player.energy < card.cost:
+    if player.energy < card.cost != Cost.x_cost:
         return False
     # entangled case
     if card.type == CardType.ATTACK and player.powers.get(PowerId.ENTANGLED):

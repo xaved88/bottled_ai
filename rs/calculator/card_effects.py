@@ -8,6 +8,7 @@ from rs.calculator.interfaces.card_effect_hooks_interface import CardEffectCusto
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface, TargetType
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.powers import Powers
+from rs.calculator.util import get_x_trigger_amount
 
 
 class CardEffects(CardEffectsInterface):
@@ -88,6 +89,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(damage=9 if not card.upgrade else 10, hits=1, draw=1, target=TargetType.MONSTER)]
     if card.id == CardId.SHRUG_IT_OFF:
         return [CardEffects(block=8 if not card.upgrade else 11, draw=1, target=TargetType.SELF)]
+    if card.id == CardId.WHIRLWIND:
+        base_damage = 5 if not card.upgrade else 8
+        return [CardEffects(damage=base_damage, hits=get_x_trigger_amount(player), target=TargetType.ALL_MONSTERS)]
     if card.id == CardId.THUNDERCLAP:
         return [CardEffects(damage=4 if not card.upgrade else 6, hits=1, target=TargetType.ALL_MONSTERS,
                             applies_powers={PowerId.VULNERABLE: 1})]
