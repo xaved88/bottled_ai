@@ -41,6 +41,7 @@ class PowerId(Enum):
     ELECTRO = 'electro'
     ENERGIZED = 'energizedblue'  # It affects a future turn though, so we mostly don't do anything with it.
     ENTANGLED = 'entangled'
+    EQUILIBRIUM = 'equilibrium'
     ENVENOM = 'envenom'
     EVOLVE = 'evolve'
     ESTABLISHMENT = 'establishment'

@@ -13,6 +13,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'all for one',
             'go for the eyes',
             'beam cell',
+            'reinforced body',
             'scrape',
             'reboot',
             'steam barrier',

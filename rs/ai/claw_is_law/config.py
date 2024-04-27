@@ -9,7 +9,7 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'streamline': 1,
     'equilibrium': 1,
     'hyperbeam': 1,
-    'reboot': 4,
+    'reinforced body': 1,
     'ftl': 3,
     'scrape': 1,
     'steam barrier': 3,
@@ -22,7 +22,15 @@ DESIRED_CARDS_FROM_POTIONS: dict[str, int] = {
     'echo form': 1,
     'apotheosis': 1,
     'all for one': 2,
+    'machine learning': 3,
+    'buffer': 2,
+    'self repair': 2,
     'claw': 8,
+    'core surge': 2,
+    'defragment': 2,
+    'loop': 1,
+    'ftl': 5,
+
 }
 
 HIGH_PRIORITY_UPGRADES = [
