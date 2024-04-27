@@ -414,23 +414,31 @@ class BattleState(BattleStateInterface):
 
         for c in self.hand:
             was_auto_played = None
-            might_stay = None
+            might_stay_retain = None
+            might_stay_pyramid = None
 
             for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
                 # for various curses and burns
                 for hook in effect.end_turn_hooks:
                     hook(self, effect, None, None)
                     was_auto_played = c
-                if effect.retains or self.player.powers.get(PowerId.EQUILIBRIUM, 0) or self.player.relics.get(
-                        RelicId.RUNIC_PYRAMID):
-                    might_stay = c
+                if effect.retains or self.player.powers.get(PowerId.EQUILIBRIUM, 0):
+                    might_stay_retain = c
+                elif self.player.relics.get(RelicId.RUNIC_PYRAMID):
+                    might_stay_pyramid = c
 
             # dispose of cards
             if c.ethereal:
                 self.exhaust_card(c, handle_remove=False)
             elif c is was_auto_played:
                 self.discard_pile.append(c)
-            elif c is might_stay:
+            elif c is might_stay_retain:
+                if self.player.powers.get(PowerId.ESTABLISHMENT):
+                    c.cost -= 1
+                    if c.cost <= 0:
+                        c.cost = 0
+                cards_to_keep.append(c)
+            elif c is might_stay_pyramid:
                 cards_to_keep.append(c)
             else:
                 self.discard_pile.append(c)

@@ -975,7 +975,9 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 12)
 
     def test_doubling_effects_interacting_with_each_other(self):
-        state = self.given_state(CardId.INFLAME, player_powers={PowerId.AMPLIFY: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1}, relics={RelicId.INK_BOTTLE: 0})
+        state = self.given_state(CardId.INFLAME,
+                                 player_powers={PowerId.AMPLIFY: 1, PowerId.INTERNAL_ECHO_FORM_READY: 1},
+                                 relics={RelicId.INK_BOTTLE: 0})
         play = self.when_playing_the_first_card(state)
         self.see_relic_value(play, RelicId.INK_BOTTLE, 3)
         self.see_player_has_power(play, PowerId.STRENGTH, 6)
@@ -1133,3 +1135,25 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.assertEqual(True, play.state.hand[0].exhausts)
         self.assertEqual(1, play.state.hand[1].cost)
         self.assertEqual(False, play.state.hand[1].exhausts)
+
+    def test_establishment_reduces_card_cost(self):
+        state = self.given_state(CardId.FLYING_SLEEVES, player_powers={PowerId.ESTABLISHMENT: 1})
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(0, play.state.hand[0].cost)
+
+    def test_equilibrium_makes_card_eligible_for_retain_effects(self):
+        state = self.given_state(CardId.STRIKE_R,
+                                 player_powers={PowerId.ESTABLISHMENT: 1, PowerId.EQUILIBRIUM: 1})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(0, play.state.hand[0].cost)
+
+    def test_establishment_does_not_lower_card_cost_passed_0(self):
+        state = self.given_state(CardId.SHIV, player_powers={PowerId.ESTABLISHMENT: 1, PowerId.EQUILIBRIUM: 1})
+        state.hand.append(get_card(CardId.SHIV))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(0, play.state.hand[0].cost)

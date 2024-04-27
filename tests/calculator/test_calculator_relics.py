@@ -729,7 +729,7 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 2)
         self.see_player_discard_pile_count(play, 1)
 
-    def test_retain_all_overlapping_with_pyramid_and_individual_retain_does_not_duplicate_cards(self):
+    def test_runic_pyramid_overlapping_with_equilibrium_and_individual_retain_does_not_duplicate_cards(self):
         state = self.given_state(CardId.FLYING_SLEEVES, relics={RelicId.RUNIC_PYRAMID: 1},
                                  player_powers={PowerId.EQUILIBRIUM: 1})
         state.hand.append(get_card(CardId.FLYING_SLEEVES))
@@ -739,3 +739,10 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_cards_played(play, 1)
         self.see_player_hand_count(play, 2)
         self.see_player_discard_pile_count(play, 1)
+
+    def test_runic_pyramid_does_not_trigger_retain_effects(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.RUNIC_PYRAMID: 1}, player_powers={PowerId.ESTABLISHMENT: 1})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(1, play.state.hand[0].cost)
