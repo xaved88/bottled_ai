@@ -18,6 +18,7 @@ class CardEffects(CardEffectsInterface):
             hits: int = 0,
             blockable: bool = True,
             block: int = 0,
+            block_times: int = 0,
             target: TargetType = TargetType.SELF,
             applies_powers=None,
             energy_gain: int = 0,
@@ -37,6 +38,7 @@ class CardEffects(CardEffectsInterface):
         self.hits: int = hits
         self.blockable: bool = blockable
         self.block: int = block
+        self.block_times: int = block_times
         self.target: TargetType = target
         self.applies_powers: Powers = dict() if applies_powers is None else applies_powers
         self.energy_gain: int = energy_gain
@@ -541,9 +543,17 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
     if card.id == CardId.DUALCAST:
         return [CardEffects(target=TargetType.SELF, post_hooks=[dualcast_post_hook])]
+    if card.id == CardId.MULTI_CAST:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[multicast_post_hook])]
     if card.id == CardId.BALL_LIGHTNING:
         return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
                             channel_orbs=[OrbId.LIGHTNING])]
+    if card.id == CardId.TEMPEST:
+        x_amount = get_x_trigger_amount(player) + min(card.upgrade, 1)
+        return [CardEffects(target=TargetType.SELF, channel_orbs=[OrbId.LIGHTNING] * x_amount)]
+    if card.id == CardId.REINFORCED_BODY:
+        return [CardEffects(target=TargetType.SELF, block=7 if not card.upgrade else 9,
+                            block_times=get_x_trigger_amount(player))]
     if card.id == CardId.COOLHEADED:
         return [CardEffects(draw=1 if not card.upgrade else 2, target=TargetType.SELF, channel_orbs=[OrbId.FROST])]
     if card.id == CardId.COLD_SNAP:
@@ -606,6 +616,13 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.AMPLIFY: 1 if not card.upgrade else 2})]
     if card.id == CardId.BURST:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BURST: 1 if not card.upgrade else 2})]
+    if card.id == CardId.MALAISE:
+        x_amount = get_x_trigger_amount(player) if not card.upgrade else get_x_trigger_amount(player) + 1
+        return [CardEffects(target=TargetType.MONSTER,
+                            applies_powers={PowerId.WEAKENED: x_amount, PowerId.STRENGTH: -x_amount})]
+    if card.id == CardId.SKEWER:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10,
+                            hits=get_x_trigger_amount(player))]
     if card.id == CardId.DOUBLE_TAP:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DOUBLE_TAP: 1 if not card.upgrade else 2})]
     if card.id == CardId.EQUILIBRIUM:

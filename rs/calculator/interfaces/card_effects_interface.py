@@ -22,6 +22,7 @@ class CardEffectsInterface:
     hits: int
     blockable: bool
     block: int
+    block_times: int
     applies_powers: Powers
     target: TargetType
     energy_gain: int

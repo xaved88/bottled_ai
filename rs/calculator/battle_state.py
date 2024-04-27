@@ -113,7 +113,8 @@ class BattleState(BattleStateInterface):
             self.repeat_card(card, target_index, PowerId.BURST)
         if self.player.powers.get(PowerId.DOUBLE_TAP) and card.type == CardType.ATTACK:
             self.repeat_card(card, target_index, PowerId.DOUBLE_TAP)
-        if self.relics.get(RelicId.NECRONOMICON) and self.get_memory_value(MemoryItem.NECRONOMICON_READY) and card.type == CardType.ATTACK and card.cost >= 2:
+        if self.relics.get(RelicId.NECRONOMICON) and self.get_memory_value(
+                MemoryItem.NECRONOMICON_READY) and card.type == CardType.ATTACK and card.cost >= 2:
             self.repeat_card(card, target_index, RelicId.NECRONOMICON)
 
     def repeat_card(self, card: CardInterface, target_index: int, reason_to_repeat,
@@ -212,7 +213,7 @@ class BattleState(BattleStateInterface):
             if effect.block:
                 block = max(effect.block + self.player.powers.get(PowerId.DEXTERITY, 0), 0)
                 frail_mod = 0.75 if self.player.powers.get(PowerId.FRAIL, 0) else 1
-                self.add_player_block(math.floor(block * frail_mod))
+                self.add_player_block(math.floor(block * frail_mod) * max(1, effect.block_times))
 
             # orbs
             if effect.channel_orbs:
