@@ -1,3 +1,4 @@
+from rs.calculator.card_cost import Cost
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.game.card import CardType
@@ -102,17 +103,17 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.FIEND_FIRE:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.WOUND:
-        return Card(card_id, 0, -1, False, CardType.STATUS)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.STATUS)
     if card_id == CardId.DAZED:
-        return Card(card_id, 0, -1, False, CardType.STATUS, ethereal=True)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.STATUS, ethereal=True)
     if card_id == CardId.VOID:
-        return Card(card_id, 0, -1, False, CardType.STATUS, ethereal=True)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.STATUS, ethereal=True)
     if card_id == CardId.SLIMED:
         return Card(card_id, 0, 1 if cost is None else cost, False, CardType.STATUS, exhausts=True)
     if card_id == CardId.IMMOLATE:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.BURN:
-        return Card(card_id, upgrade, -1, False, CardType.STATUS)
+        return Card(card_id, upgrade, Cost.unplayable, False, CardType.STATUS)
     if card_id == CardId.IMPERVIOUS:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.LIMIT_BREAK:
@@ -122,13 +123,13 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.JAX:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.DRAW_FREE_EARLY:
-        return Card(card_id, 0, -1, False, CardType.FAKE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
     if card_id == CardId.DRAW_FREE:
-        return Card(card_id, 0, -1, False, CardType.FAKE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
     if card_id == CardId.DRAW_PAY_EARLY:
-        return Card(card_id, 0, -1, False, CardType.FAKE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
     if card_id == CardId.DRAW_PAY:
-        return Card(card_id, 0, -1, False, CardType.FAKE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
     if card_id == CardId.BODY_SLAM:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, True, CardType.ATTACK)
@@ -207,25 +208,25 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.POWER)
 
     if card_id == CardId.PAIN:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.REGRET:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.DECAY:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.DOUBT:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.SHAME:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.CURSE_OF_THE_BELL:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.PARASITE:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.INJURY:
-        return Card(card_id, 0, -1, False, CardType.CURSE)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.ASCENDERS_BANE:
-        return Card(card_id, 0, -1, False, CardType.CURSE, ethereal=True)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE, ethereal=True)
     if card_id == CardId.CLUMSY:
-        return Card(card_id, 0, -1, False, CardType.CURSE, ethereal=True)
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE, ethereal=True)
     if card_id == CardId.SEVER_SOUL:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.SECOND_WIND:
@@ -322,9 +323,9 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.DEADLY_POISON:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
     if card_id == CardId.TACTICIAN:
-        return Card(card_id, upgrade, -1, False, CardType.SKILL)
+        return Card(card_id, upgrade, Cost.unplayable, False, CardType.SKILL)
     if card_id == CardId.REFLEX:
-        return Card(card_id, upgrade, -1, False, CardType.SKILL)
+        return Card(card_id, upgrade, Cost.unplayable, False, CardType.SKILL)
     if card_id == CardId.CONCENTRATE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.FLECHETTES:
