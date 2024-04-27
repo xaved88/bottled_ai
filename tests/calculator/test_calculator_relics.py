@@ -120,6 +120,13 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_relic_value(play, RelicId.PEN_NIB, 0)
 
+    def test_pen_nib_increments_with_empty_x_cost_attack(self):
+        state = self.given_state(CardId.WHIRLWIND)
+        state.player.energy = 0
+        state.relics[RelicId.PEN_NIB] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_relic_value(play, RelicId.PEN_NIB, 4)
+
     def test_ornamental_fan_increments(self):
         state = self.given_state(CardId.STRIKE_R)
         state.relics[RelicId.ORNAMENTAL_FAN] = 0
