@@ -2,10 +2,9 @@ from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
-from rs.calculator.interfaces.memory_items import MemoryItem
-from rs.calculator.play_path import PlayPath
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.memory_items import MemoryItem
 
 
 class CalculatorRelicsTest(CalculatorTestFixture):
@@ -677,3 +676,16 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_relic_value(play, RelicId.INK_BOTTLE, 1)
         self.assertEqual(0, play.state.get_memory_value(MemoryItem.NECRONOMICON_READY))
 
+    def test_chemical_x_increases_x_cost_cards_when_there_is_energy(self):
+        state = self.given_state(CardId.WHIRLWIND, relics={RelicId.CHEMICAL_X: 1})
+        state.player.energy = 2
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 20)
+        self.see_player_has_energy(play, 0)
+
+    def test_chemical_x_increases_x_cost_cards_when_there_is_no_energy(self):
+        state = self.given_state(CardId.WHIRLWIND, relics={RelicId.CHEMICAL_X: 1})
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_has_energy(play, 0)
