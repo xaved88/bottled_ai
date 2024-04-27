@@ -12,6 +12,11 @@ class PlayPath:
     def end_turn(self):
         self.state.end_turn()
 
+    def is_valid(self):
+        if self.state.must_discard and len(self.plays) == 0:
+            return False
+        return True
+
 
 def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
     path_state = path.state.get_state_hash()
@@ -46,10 +51,8 @@ def get_paths_bfs(state: BattleState, max_path_count: int):
         path_state = path.state.get_state_hash()
         if path_state in explored_paths:
             continue
-        # otherwise keep it
-        explored_paths[path_state] = path
 
-        # and then queue up all the next states that could happen
+        # queue up all the next states that could happen
         if path.state.amount_to_discard:
             plays = path.state.get_discards()
         else:
@@ -61,5 +64,10 @@ def get_paths_bfs(state: BattleState, max_path_count: int):
             new_plays: List[Play] = path.plays.copy()
             new_plays.append(play)
             unexplored_paths.append(PlayPath(new_plays, new_state))
+
+
+        # and keep it if it's a valid path
+        if path.is_valid():
+            explored_paths[path_state] = path
 
     return explored_paths

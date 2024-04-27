@@ -28,7 +28,7 @@ def get_best_battle_action(game_state: GameState, comparator: ComparatorInterfac
         Optional[HandlerAction]:
     path = get_best_battle_path(game_state, comparator, max_path_count)
 
-    if path.plays:
+    if path and path.plays:
         next_move = path.plays[0]
 
         # create a temp state for finding the state of the custom state after the chosen action

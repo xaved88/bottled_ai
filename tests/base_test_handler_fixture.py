@@ -17,11 +17,13 @@ class BaseTestHandlerFixture(unittest.TestCase):
         actual = HandlerAction(commands=["empty"])
         for h in self.ai_handlers:
             if h.can_handle(state):
+                actual = h.handle(state)
+                if actual is None:
+                    continue
                 if type(h) is self.handler:
-                    actual = h.handle(state)
                     break
                 else:
-                    self.fail(f"Expected handler {self.handler}, instead got {type(h)}")
+                    self.fail(f"Expected handler {self.handler}, instead was handled by {type(h)}")
 
         if actual.commands == ["empty"]:
             self.fail("No handler found that could handle")

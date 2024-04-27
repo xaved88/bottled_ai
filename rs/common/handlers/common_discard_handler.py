@@ -1,5 +1,3 @@
-from typing import List
-
 from config import presentation_mode, p_delay
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command

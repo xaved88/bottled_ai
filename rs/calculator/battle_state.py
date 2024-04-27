@@ -27,9 +27,10 @@ class BattleState(BattleStateInterface):
     def __init__(self, player: PlayerInterface, hand: List[CardInterface] = None,
                  discard_pile: List[CardInterface] = None, exhaust_pile: List[CardInterface] = None,
                  draw_pile: List[CardInterface] = None, monsters: List[MonsterInterface] = None, relics: Relics = None,
-                 amount_to_discard: int = 0, cards_discarded_this_turn: int = 0, total_random_damage_dealt: int = 0,
-                 total_random_poison_added: int = 0, orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
-                 memory_general: dict = None, memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
+                 must_discard: bool = False, amount_to_discard: int = 0, cards_discarded_this_turn: int = 0,
+                 total_random_damage_dealt: int = 0, total_random_poison_added: int = 0,
+                 orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_general: dict = None,
+                 memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -37,6 +38,7 @@ class BattleState(BattleStateInterface):
         self.draw_pile: List[CardInterface] = [] if draw_pile is None else draw_pile
         self.monsters: List[MonsterInterface] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
+        self.must_discard: bool = must_discard
         self.amount_to_discard: int = amount_to_discard
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
         self.total_random_damage_dealt: int = total_random_damage_dealt
