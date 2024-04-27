@@ -409,6 +409,10 @@ class BattleState(BattleStateInterface):
             self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0), True, self.relics)
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 
+        if self.player.powers.get(PowerId.STUDY, 0):
+            for i in range(self.player.powers.get(PowerId.STUDY, 0)):
+                self.draw_pile.append(get_card(CardId.INSIGHT))
+
         # deal with the remaining cards in hand
         cards_to_keep: list[CardInterface] = []
 

@@ -557,3 +557,13 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.SMITE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.BATTLE_HYMN:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.STUDY:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.JUDGEMENT:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
+    if card_id == CardId.SCRAWL:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)

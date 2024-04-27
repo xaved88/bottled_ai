@@ -700,3 +700,10 @@ def thunder_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInte
     hits = state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE) + cracked_core_relic
 
     state.inflict_random_target_damage(damage, hits)
+
+
+def judgement_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                        target_index: int = -1):
+    hp_threshold = 30 if not card.upgrade else 40
+    if state.monsters[target_index].current_hp <= hp_threshold:
+        state.monsters[target_index].current_hp = 0

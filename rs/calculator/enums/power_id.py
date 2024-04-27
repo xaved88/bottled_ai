@@ -16,6 +16,7 @@ class PowerId(Enum):
     AFTER_IMAGE = 'after image'
     ARTIFACT = 'artifact'
     BARRICADE = 'barricade'
+    BATTLE_HYMN = 'battle hymn'
     BIAS = 'bias'
     BERSERK = 'berserk'
     BLUR = 'blur'
@@ -89,6 +90,7 @@ class PowerId(Enum):
     SPLIT = 'split'
     STORM = 'storm'
     STRENGTH = 'strength'
+    STUDY = 'study'
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     THIEVERY = 'thievery'  # N/A
     THORNS = 'thorns'

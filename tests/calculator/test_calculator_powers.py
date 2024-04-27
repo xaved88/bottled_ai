@@ -1157,3 +1157,15 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.assertEqual(0, play.state.hand[0].cost)
+
+    def test_study_adds_card_to_draw(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.STUDY: 1})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(1, len(play.state.draw_pile))
+
+    def test_study_adds_more_card_to_draw(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.STUDY: 2})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(2, len(play.state.draw_pile))

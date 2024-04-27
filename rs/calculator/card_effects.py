@@ -476,6 +476,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.FTL:
         return [CardEffects(target=TargetType.MONSTER, damage=5 if not card.upgrade else 6, hits=1,
                             pre_hooks=[ftl_pre_hook])]
+    if card.id == CardId.BLIZZARD:
+        return [CardEffects(hits=1, target=TargetType.ALL_MONSTERS, pre_hooks=[blizzard_pre_hook])]
+    if card.id == CardId.THUNDER_STRIKE:
+        return [CardEffects(pre_hooks=[thunder_strike_pre_hook])]
     if card.id == CardId.SCRAPE:
         return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
                             draw=4 if not card.upgrade else 5)]
@@ -632,6 +636,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=2, retains=True)]
     if card.id == CardId.ESTABLISHMENT:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ESTABLISHMENT: 1})]
+    if card.id == CardId.BATTLE_HYMN:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BATTLE_HYMN: 1})]
+    if card.id == CardId.STUDY:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STUDY: 1})]
     if card.id == CardId.BOWLING_BASH:
         return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10,
                             pre_hooks=[bowling_bash_pre_hook])]
@@ -682,8 +690,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.GLASS_KNIFE:
         return [CardEffects(hits=2, target=TargetType.MONSTER, pre_hooks=[glass_knife_pre_hook],
                             post_hooks=[glass_knife_post_hook])]
-    if card.id == CardId.BLIZZARD:
-        return [CardEffects(hits=1, target=TargetType.ALL_MONSTERS, pre_hooks=[blizzard_pre_hook])]
-    if card.id == CardId.THUNDER_STRIKE:
-        return [CardEffects(pre_hooks=[thunder_strike_pre_hook])]
+    if card.id == CardId.JUDGEMENT:
+        return [CardEffects(target=TargetType.MONSTER, post_hooks=[judgement_post_hook])]
+    if card.id == CardId.SCRAWL:
+        return [CardEffects(target=TargetType.SELF, draw=10 - len(hand) + 1)]
+        # The +1 is for accounting for the SCRAWL that doesn't disappear until after we've resolved the play.
     return [CardEffects()]

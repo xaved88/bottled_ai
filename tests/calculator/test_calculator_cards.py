@@ -2198,6 +2198,18 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.ESTABLISHMENT, 1)
 
+    def test_battle_hymn(self):
+        state = self.given_state(CardId.BATTLE_HYMN)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.BATTLE_HYMN, 1)
+
+    def test_study(self):
+        state = self.given_state(CardId.STUDY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.STUDY, 1)
+
     def test_strike_p(self):
         state = self.given_state(CardId.STRIKE_P)
         play = self.when_playing_the_first_card(state)
@@ -2631,3 +2643,41 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_random_damage_dealt(play, 0)
         self.see_player_spent_energy(play, 3)
         self.assertEqual(0, play.state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE))
+
+    def test_judgement(self):
+        state = self.given_state(CardId.JUDGEMENT)
+        state.monsters[0].current_hp = 15
+        state.monsters[0].block = 40
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_hp_is(play, 0)
+
+    def test_judgement_upgraded(self):
+        state = self.given_state(CardId.JUDGEMENT, upgrade=1)
+        state.monsters[0].current_hp = 40
+        state.monsters[0].block = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_hp_is(play, 0)
+
+    def test_judgement_does_not_kill(self):
+        state = self.given_state(CardId.JUDGEMENT)
+        state.monsters[0].current_hp = 31
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_hp_is(play, 31)
+
+    def test_scrawl(self):
+        state = self.given_state(CardId.SCRAWL)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 9)
+
+    def test_scrawl_draws_1(self):
+        state = self.given_state(CardId.SCRAWL)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 1)
