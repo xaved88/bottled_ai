@@ -115,6 +115,10 @@ class GameState:
         state = self.screen_state()
         return 0 if not state else state["max_cards"]
 
+    def screen_state_must_pick_card(self):
+        state = self.screen_state()
+        return 1 if not state else state["can_pick_zero"]
+
     def current_action(self):
         if self.game_state()["screen_type"] == "HAND_SELECT":
             return self.game_state()["current_action"]

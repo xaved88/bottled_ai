@@ -1,3 +1,5 @@
+from typing import Optional
+
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 

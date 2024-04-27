@@ -243,3 +243,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_play_claws_to_power_them_up(self):
         self.execute_handler_tests('/battles/general/play_claws_despite_high_block.json', ['play 4 0'])
+
+    def test_discard_bug_case(self):
+        self.execute_handler_tests('/other/broken_discard_bug.json', ['choose 1', 'confirm', 'wait 30'])

@@ -1,17 +1,17 @@
 from typing import List
 
+from rs.calculator.battle_state import BattleState
 from rs.calculator.card_cost import Cost
 from rs.calculator.cards import Card
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.powers import Powers
-from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
-from rs.calculator.enums.relic_id import RelicId
-from rs.calculator.player import Player
 from rs.calculator.monster import Monster
+from rs.calculator.player import Player
 from rs.game.card import CardType, Card as GameCard
 from rs.helper.logger import log_calculator_missing_relic, log_calculator_missing_power, log_calculator_missing_card
 from rs.machine.state import GameState
@@ -114,6 +114,7 @@ def create_battle_state(game_state: GameState) -> BattleState:
     exhaust_pile = [make_card(card) for card in game_state.exhaust_pile.cards]
 
     # get discard action state
+    must_discard = not game_state.screen_state_must_pick_card()
     amount_to_discard = game_state.screen_state_max_cards()
     cards_discarded_this_turn = game_state.get_cards_discarded_this_turn()
 
@@ -125,6 +126,6 @@ def create_battle_state(game_state: GameState) -> BattleState:
     memory_by_card = game_state.memory_by_card.copy()
     memory_general = game_state.memory_general.copy()
 
-    return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, amount_to_discard,
-                       cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots, memory_general=memory_general,
-                       memory_by_card=memory_by_card)
+    return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, must_discard,
+                       amount_to_discard, cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots,
+                       memory_general=memory_general, memory_by_card=memory_by_card)
