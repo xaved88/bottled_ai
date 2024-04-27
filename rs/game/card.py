@@ -23,6 +23,7 @@ class CardType(Enum):
     STATUS = "STATUS"
     CURSE = "CURSE"
     FAKE = "FAKE"
+    OTHER = "OTHER"
 
 
 class CardRarity(Enum):

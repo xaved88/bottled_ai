@@ -7,6 +7,7 @@ from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
+from rs.game.card import CardType
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 from test_helpers.resources import load_resource_state
 
@@ -246,3 +247,19 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_discard_bug_case(self):
         self.execute_handler_tests('/other/broken_discard_bug.json', ['choose 1', 'confirm', 'wait 30'])
+
+    def test_memory_book_knows_that_an_attack_was_played_last(self):
+        mb = TheBotsMemoryBook.new_default()
+        new_mb = self.execute_handler_tests('battles/general/attack.json', memory_book=mb)
+        self.assertEqual(CardType.ATTACK, new_mb.memory_general[MemoryItem.TYPE_LAST_PLAYED])
+
+    def test_memory_book_knows_that_a_skill_was_played_last(self):
+        mb = TheBotsMemoryBook.new_default()
+        new_mb = self.execute_handler_tests('battles/general/skill.json', memory_book=mb)
+        self.assertEqual(CardType.SKILL, new_mb.memory_general[MemoryItem.TYPE_LAST_PLAYED])
+
+    def test_memory_book_knows_that_some_irrelevant_type_was_played_last(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = CardType.ATTACK
+        new_mb = self.execute_handler_tests('battles/general/power.json', memory_book=mb)
+        self.assertEqual(CardType.OTHER, new_mb.memory_general[MemoryItem.TYPE_LAST_PLAYED])

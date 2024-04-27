@@ -6,6 +6,7 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.game.card import CardType
 
 
 class CalculatorCardsTest(CalculatorTestFixture):
@@ -2681,3 +2682,85 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_drew_cards(play, 1)
+
+    def test_crush_joints(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.hand.append(get_card(CardId.CRUSH_JOINTS))
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+
+    def test_crush_joints_triggers(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.CRUSH_JOINTS))
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 14)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 1)
+
+    def test_crush_joints_triggers_upgraded(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.CRUSH_JOINTS))
+        state.hand[1].upgrade = 1
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 16)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 2)
+
+    def test_sash_whip(self):
+        state = self.given_state(CardId.CLEAVE)
+        state.hand.append(get_card(CardId.SASH_WHIP))
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 16)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 0)
+
+    def test_sash_whip_triggers(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.hand.append(get_card(CardId.SASH_WHIP))
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 1)
+
+    def test_sash_whip_triggers_upgraded(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.hand.append(get_card(CardId.SASH_WHIP))
+        state.hand[1].upgrade = 1
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
+
+    def test_follow_up(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.hand.append(get_card(CardId.FOLLOW_UP))
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_discard_pile_count(play, 2)
+        self.see_player_spent_energy(play, 2)
+
+    def test_follow_up_triggers(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.FOLLOW_UP))
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 13)
+        self.see_player_discard_pile_count(play, 2)
+        self.see_player_spent_energy(play, 1)
+
+    def test_sanctity(self):
+        state = self.given_state(CardId.CLEAVE)
+        state.hand.append(get_card(CardId.SANCTITY))
+        play = self.when_making_the_most_plays(state)
+        self.see_player_has_block(play, 6)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_drew_cards(play, 0)
+
+    def test_sanctity_triggers(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.hand.append(get_card(CardId.SANCTITY))
+        play = self.when_making_the_most_plays(state)
+        self.see_player_has_block(play, 11)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_drew_cards(play, 2)

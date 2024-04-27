@@ -36,9 +36,10 @@ class TheBotsMemoryBook:
 
     def set_new_turn_state(self):
         self.memory_general[MemoryItem.ATTACKS_THIS_TURN] = 0
-        self.memory_general[MemoryItem.LAST_KNOWN_TURN] = 0
         self.memory_general[MemoryItem.CARDS_THIS_TURN] = 0
+        self.memory_general[MemoryItem.LAST_KNOWN_TURN] = 0
         self.memory_general[MemoryItem.NECRONOMICON_READY] = 1
+        self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
 
     def initialize_memory_by_card(self, card_id: CardId):
         reset_schedule = {}

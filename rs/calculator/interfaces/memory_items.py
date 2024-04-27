@@ -9,6 +9,7 @@ class MemoryItem(Enum):
     LAST_KNOWN_TURN = auto()
     NECRONOMICON_READY = auto()
     LIGHTNING_THIS_BATTLE = auto()
+    TYPE_LAST_PLAYED = auto()
 
 
 class ResetSchedule(Enum):

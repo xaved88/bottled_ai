@@ -233,6 +233,18 @@ class BattleState(BattleStateInterface):
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
 
+        # memory stuff
+        last_played = MemoryItem.TYPE_LAST_PLAYED
+        if card.type == CardType.ATTACK:
+            self.add_memory_value(MemoryItem.ATTACKS_THIS_TURN, 1)
+            self.add_memory_value(last_played, CardType.ATTACK)
+        elif card.type == CardType.SKILL:
+            self.add_memory_value(last_played, CardType.SKILL)
+        else:
+            self.add_memory_value(last_played, CardType.OTHER)
+
+        self.add_memory_value(MemoryItem.CARDS_THIS_TURN, 1)
+
         # dispose of cards being played
         if card in self.hand:  # b/c some cards like fiend fire, will destroy themselves before they follow this route
             idx = self.hand.index(card)
@@ -243,10 +255,6 @@ class BattleState(BattleStateInterface):
             else:
                 self.discard_pile.append(card)
                 del self.hand[idx]
-
-        if card.type == CardType.ATTACK:
-            self.add_memory_value(MemoryItem.ATTACKS_THIS_TURN, 1)
-        self.add_memory_value(MemoryItem.CARDS_THIS_TURN, 1)
 
         # post card play PLAYER power checks
         if self.player.powers.get(PowerId.THOUSAND_CUTS):
@@ -750,15 +758,18 @@ class BattleState(BattleStateInterface):
 
         return self.memory_by_card[card_id][reset_schedule][uuid]
 
-    def add_memory_value(self, item: MemoryItem, value: int):
+    def add_memory_value(self, item: MemoryItem, value):
         if item not in self.memory_general:
             self.memory_general[item] = 0
 
-        self.memory_general[item] += value
-        if self.memory_general[item] < 0:
-            self.memory_general[item] = 0
+        if item is MemoryItem.TYPE_LAST_PLAYED:
+            self.memory_general[item] = value
+        else:
+            self.memory_general[item] += value
+            if self.memory_general[item] < 0:
+                self.memory_general[item] = 0
 
-    def get_memory_value(self, item: MemoryItem) -> int:
+    def get_memory_value(self, item: MemoryItem):
         return self.memory_general[item]
 
     def is_turn_forced_to_be_over(self) -> bool:

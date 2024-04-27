@@ -695,4 +695,16 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SCRAWL:
         return [CardEffects(target=TargetType.SELF, draw=10 - len(hand) + 1)]
         # The +1 is for accounting for the SCRAWL that doesn't disappear until after we've resolved the play.
+    if card.id == CardId.SANCTITY:
+        return [CardEffects(block=6 if not card.upgrade else 9, target=TargetType.SELF,
+                            pre_hooks=[sanctity_pre_hook])]
+    if card.id == CardId.CRUSH_JOINTS:
+        return [CardEffects(damage=8 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
+                            pre_hooks=[crush_joints_pre_hook])]
+    if card.id == CardId.SASH_WHIP:
+        return [CardEffects(damage=8 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
+                            pre_hooks=[sash_whip_pre_hook])]
+    if card.id == CardId.FOLLOW_UP:
+        return [CardEffects(damage=7 if not card.upgrade else 11, hits=1, target=TargetType.MONSTER,
+                            pre_hooks=[follow_up_pre_hook])]
     return [CardEffects()]

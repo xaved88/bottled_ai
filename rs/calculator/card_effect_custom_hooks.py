@@ -707,3 +707,29 @@ def judgement_post_hook(state: BattleStateInterface, effect: CardEffectsInterfac
     hp_threshold = 30 if not card.upgrade else 40
     if state.monsters[target_index].current_hp <= hp_threshold:
         state.monsters[target_index].current_hp = 0
+
+
+def crush_joints_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
+    amount = 1 if not card.upgrade else 2
+    if state.get_memory_value(MemoryItem.TYPE_LAST_PLAYED) is CardType.ATTACK:
+        effect.applies_powers.update({PowerId.VULNERABLE: amount})
+
+
+def sash_whip_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                       target_index: int = -1):
+    amount = 1 if not card.upgrade else 2
+    if state.get_memory_value(MemoryItem.TYPE_LAST_PLAYED) is CardType.SKILL:
+        effect.applies_powers.update({PowerId.WEAKENED: amount})
+
+
+def follow_up_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                       target_index: int = -1):
+    if state.get_memory_value(MemoryItem.TYPE_LAST_PLAYED) is CardType.ATTACK:
+        state.player.energy += 1
+
+
+def sanctity_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                      target_index: int = -1):
+    if state.get_memory_value(MemoryItem.TYPE_LAST_PLAYED) is CardType.SKILL:
+        effect.draw = 2

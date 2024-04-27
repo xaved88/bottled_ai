@@ -86,12 +86,12 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def add_memory_value(self, item: MemoryItem, value: int):
+    def add_memory_value(self, item: MemoryItem, value):
         # must be implemented by children
         pass
 
     @abc.abstractmethod
-    def get_memory_value(self, item: MemoryItem) -> int:
+    def get_memory_value(self, item: MemoryItem):
         # must be implemented by children
         pass
 

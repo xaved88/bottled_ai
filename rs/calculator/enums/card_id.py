@@ -78,6 +78,7 @@ class CardId(Enum):
     CORPSE_EXPLOSION = 'corpse explosion'
     CORRUPTION = 'corruption'
     CREATIVE_AI = 'creative ai'
+    CRUSH_JOINTS = 'crush joints'
     CURSE_OF_THE_BELL = 'curseofthebell'  # Weird id alert!
     CRIPPLING_CLOUD = 'crippling poison'
     DAGGER_THROW = 'dagger throw'
@@ -132,6 +133,7 @@ class CardId(Enum):
     FLEX = 'flex'
     FLYING_KNEE = 'flying knee'
     FLYING_SLEEVES = 'flying sleeves'
+    FOLLOW_UP = 'follow-up'
     FOOTWORK = 'footwork'
     FTL = 'ftl'
     FUSION = 'fusion'
@@ -211,6 +213,8 @@ class CardId(Enum):
     RIP_AND_TEAR = 'rip and tear'
     RITUAL_DAGGER = 'ritual dagger'
     SADISTIC_NATURE = 'sadistic nature'
+    SANCTITY = 'sanctity'
+    SASH_WHIP = 'sash whip'
     SCRAPE = 'scrape'  # Ignores the fact that we throw away non-0 cards after draw
     SCRAWL = 'scrawl'
     SECOND_WIND = 'second wind'
