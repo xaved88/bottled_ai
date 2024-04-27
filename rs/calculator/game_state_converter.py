@@ -1,5 +1,6 @@
 from typing import List
 
+from rs.calculator.card_cost import Cost
 from rs.calculator.cards import Card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
@@ -22,12 +23,12 @@ def make_card(card: GameCard) -> CardInterface:
     card_id = card.id.lower()
     if card_id not in possible_card_ids:
         log_calculator_missing_card(card_id)
-        return Card(CardId.FAKE, 0, -1, False, CardType.FAKE)
+        return Card(CardId.FAKE, 0, Cost.unplayable, False, CardType.FAKE)
     return Card(
         card_id=CardId(card.id.lower()),
         # todo - some sort of logging here for ones we don't know. treat as wounds maybe? What about battle trance?
         upgrade=card.upgrades,
-        cost=card.cost if card.is_playable else -1,
+        cost=card.cost if card.is_playable else Cost.unplayable,
         needs_target=card.has_target,
         card_type=card.type,
         ethereal=card.ethereal,

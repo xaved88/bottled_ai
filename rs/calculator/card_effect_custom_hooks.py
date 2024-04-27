@@ -1,5 +1,6 @@
 import math
 
+from rs.calculator.card_cost import Cost
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
@@ -177,7 +178,7 @@ def bane_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, car
 def bullet_time_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                           target_index: int = -1):
     for card in state.hand:
-        if card.cost != -1:
+        if card.cost != Cost.unplayable:
             card.cost = 0
 
 

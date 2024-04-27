@@ -1,6 +1,7 @@
 import math
 from typing import List, Tuple
 
+from rs.calculator.card_cost import Cost
 from rs.calculator.card_effects import get_card_effects
 from rs.calculator.interfaces.card_effects_interface import TargetType
 from rs.calculator.cards import get_card
@@ -85,7 +86,7 @@ class BattleState(BattleStateInterface):
             for c in self.hand:
                 if c.type == CardType.SKILL:
                     c.exhausts = True
-                    if card.cost != -1:
+                    if card.cost != Cost.unplayable:
                         c.cost = 0
 
         if self.relics.get(RelicId.MEDICAL_KIT):
@@ -756,7 +757,7 @@ class BattleState(BattleStateInterface):
 def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],
                      draw_pile_count: int) -> bool:
     # unplayable cards like burn, wound, and reflex
-    if card.cost == -1:
+    if card.cost == Cost.unplayable:
         return False
     # in general, has enough energy
     if player.energy < card.cost:
