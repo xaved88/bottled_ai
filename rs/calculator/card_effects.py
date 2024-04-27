@@ -627,7 +627,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DOUBLE_TAP: 1 if not card.upgrade else 2})]
     if card.id == CardId.EQUILIBRIUM:
         return [CardEffects(target=TargetType.SELF, block=13 if not card.upgrade else 16,
-                            applies_powers={PowerId.RETAIN_ALL: 1})]
+                            applies_powers={PowerId.EQUILIBRIUM: 1})]
     if card.id == CardId.FLYING_SLEEVES:
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=2, retains=True)]
     if card.id == CardId.ESTABLISHMENT:

@@ -131,7 +131,7 @@ class RelicId(Enum):
     RING_OF_THE_SNAKE = 'ring of the snake'         # N/A
     RUNIC_CAPACITOR = 'runic capacitor'             # N/A
     RUNIC_DOME = 'runic dome'                       # We see 0 incoming damage so we yolo attack
-    RUNIC_PYRAMID = 'runic pyramid'                 # N/A
+    RUNIC_PYRAMID = 'runic pyramid'
     SHOVEL = 'shovel'                               # N/A
     SHURIKEN = 'shuriken'
     SINGING_BOWL = 'singing bowl'                   # N/A

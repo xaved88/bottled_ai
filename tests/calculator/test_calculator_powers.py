@@ -1066,16 +1066,16 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_lost_hp(play, 50)
 
-    def test_retain_all_holds_onto_hand(self):
-        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.RETAIN_ALL: 1})
+    def test_equilibrium_holds_onto_hand(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.EQUILIBRIUM: 1})
         state.hand.append(get_card(CardId.DEFEND_G))
         state.hand.append(get_card(CardId.DEFEND_G))
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_hand_count(play, 2)
 
-    def test_retain_all_does_not_retain_ethereals(self):
-        state = self.given_state(CardId.WOUND, player_powers={PowerId.RETAIN_ALL: 1})
+    def test_equilibrium_does_not_retain_ethereals(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.EQUILIBRIUM: 1})
         state.hand.append(get_card(CardId.WOUND))
         state.hand.append(get_card(CardId.VOID))
         play = self.when_playing_the_whole_hand(state)
@@ -1084,8 +1084,8 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 2)
         self.see_player_discard_pile_count(play, 0)
 
-    def test_retain_all_does_not_retain_auto_played_end_of_turn_cards(self):
-        state = self.given_state(CardId.REGRET, player_powers={PowerId.RETAIN_ALL: 1})
+    def test_equilibrium_does_not_retain_auto_played_end_of_turn_cards(self):
+        state = self.given_state(CardId.REGRET, player_powers={PowerId.EQUILIBRIUM: 1})
         play = self.when_playing_the_whole_hand(state)
         play.end_turn()
         self.see_player_lost_hp(play, 1)
@@ -1093,8 +1093,8 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 0)
         self.see_player_discard_pile_count(play, 1)
 
-    def test_retain_all_does_not_duplicate_retained_cards(self):
-        state = self.given_state(CardId.FLYING_SLEEVES, player_powers={PowerId.RETAIN_ALL: 1})
+    def test_equilibrium_does_not_duplicate_retained_cards(self):
+        state = self.given_state(CardId.FLYING_SLEEVES, player_powers={PowerId.EQUILIBRIUM: 1})
         state.hand.append(get_card(CardId.FLYING_SLEEVES))
         state.hand.append(get_card(CardId.FLYING_SLEEVES))
         play = self.when_playing_the_first_card(state)

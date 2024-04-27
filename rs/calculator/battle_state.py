@@ -410,31 +410,32 @@ class BattleState(BattleStateInterface):
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 
         # deal with the remaining cards in hand
-        cards_to_retain: list[CardInterface] = []
+        cards_to_keep: list[CardInterface] = []
 
         for c in self.hand:
-            card_was_auto_played: list[CardInterface] = []
-            card_might_retain: list[CardInterface] = []
+            was_auto_played = None
+            might_stay = None
 
             for effect in get_card_effects(c, self.player, self.draw_pile, self.discard_pile, self.hand):
                 # for various curses and burns
                 for hook in effect.end_turn_hooks:
                     hook(self, effect, None, None)
-                    card_was_auto_played.append(c)
-                if effect.retains or self.player.powers.get(PowerId.RETAIN_ALL, 0):
-                    card_might_retain.append(c)
+                    was_auto_played = c
+                if effect.retains or self.player.powers.get(PowerId.EQUILIBRIUM, 0) or self.player.relics.get(
+                        RelicId.RUNIC_PYRAMID):
+                    might_stay = c
 
             # dispose of cards
             if c.ethereal:
                 self.exhaust_card(c, handle_remove=False)
-            elif c in card_was_auto_played:
+            elif c is was_auto_played:
                 self.discard_pile.append(c)
-            elif c in card_might_retain:
-                cards_to_retain.append(c)
+            elif c is might_stay:
+                cards_to_keep.append(c)
             else:
                 self.discard_pile.append(c)
 
-        self.hand = cards_to_retain.copy()
+        self.hand = cards_to_keep.copy()
 
         # this is getting into the enemy's turn now
         # enemy powers

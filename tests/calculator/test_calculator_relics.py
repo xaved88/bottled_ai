@@ -1,4 +1,5 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
+from rs.calculator.card_effects import get_card_effects
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
@@ -689,3 +690,52 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 10)
         self.see_player_has_energy(play, 0)
+
+    def test_runic_pyramid_holds_onto_hand(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.RUNIC_PYRAMID: 1})
+        state.hand.append(get_card(CardId.DEFEND_G))
+        state.hand.append(get_card(CardId.DEFEND_G))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_hand_count(play, 2)
+
+    def test_runic_pyramid_does_not_retain_ethereals(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.RUNIC_PYRAMID: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        state.hand.append(get_card(CardId.VOID))
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 0)
+
+    def test_runic_pyramid_does_not_retain_auto_played_end_of_turn_cards(self):
+        state = self.given_state(CardId.REGRET, relics={RelicId.RUNIC_PYRAMID: 1})
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 2)
+        self.see_player_exhaust_count(play, 0)
+        self.see_player_hand_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_runic_pyramid_does_not_duplicate_retained_cards(self):
+        state = self.given_state(CardId.FLYING_SLEEVES, relics={RelicId.RUNIC_PYRAMID: 1})
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_retain_all_overlapping_with_pyramid_and_individual_retain_does_not_duplicate_cards(self):
+        state = self.given_state(CardId.FLYING_SLEEVES, relics={RelicId.RUNIC_PYRAMID: 1},
+                                 player_powers={PowerId.EQUILIBRIUM: 1})
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        state.hand.append(get_card(CardId.FLYING_SLEEVES))
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_cards_played(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 1)

@@ -2175,7 +2175,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
         self.see_player_has_block(play, 13)
-        self.see_player_has_power(play, PowerId.RETAIN_ALL, 1)
+        self.see_player_has_power(play, PowerId.EQUILIBRIUM, 1)
 
     def test_flying_sleeves(self):
         state = self.given_state(CardId.FLYING_SLEEVES)
