@@ -382,6 +382,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
                     exhausts=True if not upgrade else False)
     if card_id == CardId.BURST:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.MALAISE:
+        return Card(card_id, upgrade, Cost.x_cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.SKEWER:
+        return Card(card_id, upgrade, Cost.x_cost, True, CardType.ATTACK)
 
     # defect
     if card_id == CardId.STRIKE_B:
@@ -525,6 +529,12 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.THUNDER_STRIKE:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.MULTI_CAST:
+        return Card(card_id, upgrade, Cost.x_cost, False, CardType.SKILL)
+    if card_id == CardId.TEMPEST:
+        return Card(card_id, upgrade, Cost.x_cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.REINFORCED_BODY:
+        return Card(card_id, upgrade, Cost.x_cost, False, CardType.SKILL)
 
     # watcher
     if card_id == CardId.FLYING_SLEEVES:

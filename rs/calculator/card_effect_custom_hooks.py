@@ -4,12 +4,13 @@ from rs.calculator.card_cost import Cost
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
-from rs.calculator.enums.relic_id import RelicId
-from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
-from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
-from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
+from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
+from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.util import get_x_trigger_amount
 from rs.game.card import CardType
 
 
@@ -339,6 +340,11 @@ def electrodynamics_pre_hook(state: BattleStateInterface, effect: CardEffectsInt
 def dualcast_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                        target_index: int = -1):
     state.evoke_orbs(1, 2)
+
+
+def multicast_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                        target_index: int = -1):
+    state.evoke_orbs(1, get_x_trigger_amount(state.player) + min(card.upgrade, 1))
 
 
 def capacitor_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
