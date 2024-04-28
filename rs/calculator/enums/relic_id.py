@@ -108,6 +108,7 @@ class RelicId(Enum):
     ODDLY_SMOOTH_STONE = 'oddly smooth stone'       # Covered by Dexterity
     OLD_COIN = 'old coin'                           # N/A
     OMAMORI = 'omamori'                             # N/A
+    ORANGE_PELLETS = 'orange pellets'
     ORICHALCUM = 'orichalcum'
     ORNAMENTAL_FAN = 'ornamental fan'
     ORREY = 'orrey'                                 # N/A

@@ -39,6 +39,9 @@ class TheBotsMemoryBook:
         self.memory_general[MemoryItem.CARDS_THIS_TURN] = 0
         self.memory_general[MemoryItem.LAST_KNOWN_TURN] = 0
         self.memory_general[MemoryItem.NECRONOMICON_READY] = 1
+        self.memory_general[MemoryItem.ORANGE_PELLETS_ATTACK] = 0
+        self.memory_general[MemoryItem.ORANGE_PELLETS_SKILL] = 0
+        self.memory_general[MemoryItem.ORANGE_PELLETS_POWER] = 0
         self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
 
     def initialize_memory_by_card(self, card_id: CardId):

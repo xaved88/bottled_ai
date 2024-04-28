@@ -741,8 +741,24 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 1)
 
     def test_runic_pyramid_does_not_trigger_retain_effects(self):
-        state = self.given_state(CardId.STRIKE_R, relics={RelicId.RUNIC_PYRAMID: 1}, player_powers={PowerId.ESTABLISHMENT: 1})
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.RUNIC_PYRAMID: 1},
+                                 player_powers={PowerId.ESTABLISHMENT: 1})
         state.hand.append(get_card(CardId.STRIKE_R))
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.assertEqual(1, play.state.hand[0].cost)
+
+    def test_orange_pellets_clear_debuffs_when_triggered(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.ORANGE_PELLETS: 1},
+                                 player_powers={PowerId.WEAKENED: 4})
+        state.hand.append(get_card(CardId.DEFEND_R))
+        state.hand.append(get_card(CardId.INFLAME))
+        play = self.when_making_the_most_plays(state)
+        self.see_player_has_power(play, PowerId.WEAKENED, 0)
+
+    def test_orange_pellets_does_nothing_if_not_triggerd(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.ORANGE_PELLETS: 1},
+                                 player_powers={PowerId.WEAKENED: 4})
+        state.hand.append(get_card(CardId.DEFEND_R))
+        play = self.when_making_the_most_plays(state)
+        self.see_player_has_power(play, PowerId.WEAKENED, 4)

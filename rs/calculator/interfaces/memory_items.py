@@ -10,6 +10,9 @@ class MemoryItem(Enum):
     NECRONOMICON_READY = auto()
     LIGHTNING_THIS_BATTLE = auto()
     TYPE_LAST_PLAYED = auto()
+    ORANGE_PELLETS_ATTACK = auto()
+    ORANGE_PELLETS_SKILL = auto()
+    ORANGE_PELLETS_POWER = auto()
 
 
 class ResetSchedule(Enum):

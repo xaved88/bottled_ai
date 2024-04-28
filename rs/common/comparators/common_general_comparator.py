@@ -3,6 +3,7 @@ from typing import Callable, List
 from rs.calculator.battle_state import BattleState
 from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.enums.power_id import PowerId
+from rs.calculator.powers import DEBUFFS
 from rs.common.comparators.core.assessment import ComparatorAssessmentConfig
 from rs.common.comparators.core.comparisons import *
 
@@ -85,12 +86,7 @@ powers_we_like_less: List[PowerId] = [
     PowerId.ENERGIZED,
 ]
 
-powers_we_dislike: List[PowerId] = [
-    PowerId.FRAIL,
-    PowerId.VULNERABLE,
-    PowerId.WEAKENED,
-    PowerId.BIAS,
-]
+powers_we_dislike: List[PowerId] = DEBUFFS.copy()
 
 def add_to_comparison_list(comparisons: List[Comparison], comparison_to_add: Comparison, after: Comparison):
     index = comparisons.index(after) + 1

@@ -261,7 +261,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_memory_book_knows_that_some_irrelevant_type_was_played_last(self):
         mb = TheBotsMemoryBook.new_default()
         mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = CardType.ATTACK
-        new_mb = self.execute_handler_tests('battles/general/power.json', memory_book=mb)
+        new_mb = self.execute_handler_tests('battles/general/play_slimed.json', memory_book=mb)
         self.assertEqual(CardType.OTHER, new_mb.memory_general[MemoryItem.TYPE_LAST_PLAYED])
 
     def test_prefer_removing_more_plated_armor(self):

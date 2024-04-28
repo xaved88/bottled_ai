@@ -16,6 +16,7 @@ from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
+from rs.calculator.powers import DEBUFFS
 from rs.game.card import CardType
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
@@ -235,11 +236,21 @@ class BattleState(BattleStateInterface):
 
         # memory stuff
         last_played = MemoryItem.TYPE_LAST_PLAYED
+        orange_pellets = True if RelicId.ORANGE_PELLETS in self.relics else False
+
         if card.type == CardType.ATTACK:
             self.add_memory_value(MemoryItem.ATTACKS_THIS_TURN, 1)
             self.add_memory_value(last_played, CardType.ATTACK)
+            if orange_pellets:
+                self.add_memory_value(MemoryItem.ORANGE_PELLETS_ATTACK, 1)
         elif card.type == CardType.SKILL:
             self.add_memory_value(last_played, CardType.SKILL)
+            if orange_pellets:
+                self.add_memory_value(MemoryItem.ORANGE_PELLETS_SKILL, 1)
+        elif card.type == CardType.POWER:
+            self.add_memory_value(last_played, CardType.POWER)
+            if orange_pellets:
+                self.add_memory_value(MemoryItem.ORANGE_PELLETS_POWER, 1)
         else:
             self.add_memory_value(last_played, CardType.OTHER)
 
@@ -376,6 +387,14 @@ class BattleState(BattleStateInterface):
 
         if RelicId.UNCEASING_TOP in self.relics and len(self.hand) == 0:
             self.draw_cards(1)
+
+        if RelicId.ORANGE_PELLETS in self.relics \
+                and self.get_memory_value(MemoryItem.ORANGE_PELLETS_ATTACK) \
+                and self.get_memory_value(MemoryItem.ORANGE_PELLETS_SKILL) \
+                and self.get_memory_value(MemoryItem.ORANGE_PELLETS_POWER):
+            for power in self.player.powers:
+                if power in DEBUFFS:
+                    self.player.powers[power] = 0
 
         self.kill_monsters()
 

@@ -73,3 +73,14 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 4
         new_state = load_resource_state('battles/general/basic_turn_2.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.TYPE_LAST_PLAYED])
+
+    def test_orange_pellet_memory_is_reset_when_entering_a_new_turn(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.ORANGE_PELLETS_ATTACK] = 4
+        mb.memory_general[MemoryItem.ORANGE_PELLETS_SKILL] = 4
+        mb.memory_general[MemoryItem.ORANGE_PELLETS_POWER] = 4
+        new_state = load_resource_state('battles/general/basic_turn_2.json', memory_book=mb)
+        self.assertEqual(0, new_state.memory_general[MemoryItem.ORANGE_PELLETS_ATTACK])
+        self.assertEqual(0, new_state.memory_general[MemoryItem.ORANGE_PELLETS_SKILL])
+        self.assertEqual(0, new_state.memory_general[MemoryItem.ORANGE_PELLETS_POWER])
+
