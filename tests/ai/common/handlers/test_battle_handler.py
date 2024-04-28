@@ -263,3 +263,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = CardType.ATTACK
         new_mb = self.execute_handler_tests('battles/general/power.json', memory_book=mb)
         self.assertEqual(CardType.OTHER, new_mb.memory_general[MemoryItem.TYPE_LAST_PLAYED])
+
+    def test_prefer_removing_more_plated_armor(self):
+        self.execute_handler_tests('/battles/with_orbs/remove_plated_armor.json', ['play 1'])

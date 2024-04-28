@@ -191,7 +191,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_has_block(play, 4)
 
-    def test_plated_armor_gets_reduced_by_damage(self):
+    def test_plated_armor_gets_reduced_by_attack_damage(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.PLATED_ARMOR: 4})
         state.player.block = 0
         state.monsters[0].damage = 5
@@ -200,6 +200,15 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_lost_hp(play, 6)
         self.see_player_has_power(play, PowerId.PLATED_ARMOR, 2)
+
+    def test_plated_armor_does_not_get_reduced_by_orb_damage(self):
+        state = self.given_state(CardId.DUALCAST, orb_slots=3, orbs=[(OrbId.LIGHTNING, 1)])
+        state.monsters[0].powers[PowerId.PLATED_ARMOR] = 4
+        # Technically wrong because we don't model Block from Plated Armor on monsters since it's handled by the game
+        state.monsters[0].block = 4
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_enemy_has_power(play, PowerId.PLATED_ARMOR, 4)
 
     def test_buffer_blocks_incoming_damage(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.BUFFER: 1})

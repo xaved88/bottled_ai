@@ -200,3 +200,8 @@ def least_powered_down_steam_barrier(best: CA, challenger: CA) -> Optional[bool]
 def most_powered_up_claws(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.powered_up_claws() == challenger.powered_up_claws() \
         else challenger.powered_up_claws() > best.powered_up_claws()
+
+
+def lowest_enemy_plated_armor(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.enemy_plated_armor() == challenger.enemy_plated_armor() \
+        else challenger.enemy_plated_armor() < best.enemy_plated_armor()

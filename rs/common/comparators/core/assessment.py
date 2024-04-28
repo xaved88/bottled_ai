@@ -147,7 +147,7 @@ class ComparatorAssessment:
                                 lambda: sum([m.powers.get(PowerId.ARTIFACT, 0) for m in self.state.monsters]))
 
     def barricaded_block(self) -> int:
-        return self.__get_value('enemy_artifacts', lambda: sum(
+        return self.__get_value('barricaded_block', lambda: sum(
             [m.block for m in self.state.monsters if m.powers.get(PowerId.BARRICADE, 0) != 0]))
 
     def nob_adjusted_scaling_damage(self) -> int:
@@ -196,3 +196,8 @@ class ComparatorAssessment:
     def powered_up_claws(self) -> int:
         return self.__get_value('powered_up_claws',
                                 lambda: self.state.memory_general[MemoryItem.CLAWS_THIS_BATTLE])
+
+    def enemy_plated_armor(self) -> int:
+        return self.__get_value('enemy_plated_armor', lambda: sum(
+            [m.powers.get(PowerId.PLATED_ARMOR, 0) for m in self.state.monsters if
+             m.powers.get(PowerId.PLATED_ARMOR, 0) != 0]))

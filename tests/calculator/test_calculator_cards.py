@@ -281,6 +281,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.player.powers[PowerId.STRENGTH] = 3
         state.monsters[0].powers[PowerId.PLATED_ARMOR] = 5
         play = self.when_playing_the_first_card(state)
+        # Technically incorrect but we do not model Plated Armor adding block to monsters
         self.see_enemy_lost_hp(play, 20)
         self.see_enemy_has_power(play, PowerId.PLATED_ARMOR, 1)
 

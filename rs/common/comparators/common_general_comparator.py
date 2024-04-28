@@ -23,6 +23,7 @@ default_comparisons = [
     lowest_health_monster,
     lowest_total_monster_health,
     lowest_barricaded_block,
+    lowest_enemy_plated_armor,
     most_channeled_orbs,
     most_draw_pay_early,
     most_draw_pay,
