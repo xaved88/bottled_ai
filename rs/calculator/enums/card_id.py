@@ -181,7 +181,7 @@ class CardId(Enum):
     NOXIOUS_FUMES = 'noxious fumes'
     OFFERING = 'offering'
     OUTMANEUVER = 'outmaneuver'
-    OVERCLOCK = 'overclock'
+    OVERCLOCK = 'steam power'
     PAIN = 'pain'
     PANACEA = 'panacea'
     PANACHE = 'panache'  # We currently have damage provided by triggering the Panache power hardcoded to 10. It's the first power we've run into that has multiple values associated with it.
@@ -203,7 +203,7 @@ class CardId(Enum):
     RAMPAGE = 'rampage'
     REAPER = 'reaper'
     REBOOT = 'reboot'
-    RECURSION = 'recursion'
+    RECURSION = 'redo'
     REFLEX = 'reflex'
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'
