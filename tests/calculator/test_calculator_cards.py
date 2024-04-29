@@ -2146,11 +2146,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         for j in range(5):
             state.discard_pile.append(get_card(CardId.WOUND))
         state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        state.discard_pile.append(get_card(CardId.NEUTRALIZE))
+        state.discard_pile.append(get_card(CardId.NEUTRALIZE))
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
         self.see_enemy_lost_hp(play, 10)
         self.see_player_hand_count(play, 10)
-        self.see_player_discard_pile_count(play, 6)
+        self.see_player_discard_pile_count(play, 9)
         self.see_hand_card_is(play, CardId.NEUTRALIZE, 8)
         self.see_hand_card_is(play, CardId.NEUTRALIZE, 9)
 
