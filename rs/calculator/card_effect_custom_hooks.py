@@ -477,26 +477,20 @@ def darkness_upgraded_post_hook(state: BattleStateInterface, effect: CardEffects
 
 def all_for_one_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                           target_index: int = -1):
-    hand_space = 10 - len(state.hand) + 1  # +1 because we didn't dispose of All For One yet
-    discard_length = len(state.discard_pile)
-    discard_index = 0
+    hand_space = 10 - len(state.hand)
+    retrieval_list = []
+    irrelevant_list = []
 
-    discard_pile_working_copy = state.discard_pile.copy()
-    discard_pile_working_copy.reverse()
+    state.discard_pile.reverse()
 
-    for _ in range(discard_length):
-        if hand_space < 1:
-            break
-        card = discard_pile_working_copy[discard_index]
-        if card.cost == 0:
-            del discard_pile_working_copy[discard_index]
-            state.hand.append(get_card(card.id))
-            hand_space -= 1
+    for c in state.discard_pile:
+        if c.cost == 0 and not len(retrieval_list) == hand_space:
+            retrieval_list.append(c)
         else:
-            discard_index += 1
+            irrelevant_list.append(c)
 
-    discard_pile_working_copy.reverse()
-    state.discard_pile = discard_pile_working_copy.copy()
+    state.hand.extend(retrieval_list)
+    state.discard_pile = irrelevant_list.copy()
 
 
 def decay_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
