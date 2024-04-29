@@ -99,6 +99,7 @@ class CardId(Enum):
     DEFLECT = 'deflect'
     DEFRAGMENT = 'defragment'
     DEMON_FORM = 'demon form'
+    DEVOTION = 'devotion'
     DIE_DIE_DIE = 'die die die'
     DISARM = 'disarm'
     DRAMATIC_ENTRANCE = 'dramatic entrance'
@@ -196,6 +197,7 @@ class CardId(Enum):
     POISONED_STAB = 'poisoned stab'
     POMMEL_STRIKE = 'pommel strike'
     POWER_THROUGH = 'power through'
+    PRAY = 'pray'
     PREDATOR = 'predator'
     PREPARED = 'prepared'
     PROSTRATE = 'prostrate'
@@ -269,6 +271,7 @@ class CardId(Enum):
     VIGILANCE = 'vigilance'
     VOID = 'void'
     WHIRLWIND = 'whirlwind'
+    WORSHIP = 'worship'
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
     WRAITH_FORM = 'wraith form v2'  # Weird id alert!

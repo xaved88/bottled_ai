@@ -724,6 +724,16 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.PROSTRATE:
         amount_of_mantra = 2 if not card.upgrade else 3
         return [CardEffects(target=TargetType.SELF, block=4, applies_powers={PowerId.MANTRA: amount_of_mantra})]
+    if card.id == CardId.WORSHIP:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA: 5},
+                            retains=False if not card.upgrade else True)]
     if card.id == CardId.MIRACLE:
         return [CardEffects(target=TargetType.SELF, energy_gain=1 if not card.upgrade else 2, retains=True)]
+    if card.id == CardId.DEVOTION:
+        amount = 2 if not card.upgrade else 3
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEVOTION: amount})]
+    if card.id == CardId.PRAY:
+        amount_of_mantra = 3 if not card.upgrade else 4
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA: amount_of_mantra},
+                            post_hooks=[pray_post_hook])]
     return [CardEffects()]

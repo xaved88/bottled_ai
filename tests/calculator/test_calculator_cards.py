@@ -2777,3 +2777,34 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         play.end_turn()
         self.see_player_spent_energy(play, -1)
+
+    def test_devotion(self):
+        state = self.given_state(CardId.DEVOTION)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.DEVOTION, 2)
+
+    def test_pray(self):
+        state = self.given_state(CardId.PRAY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.MANTRA, 3)
+        self.see_player_draw_pile_count(play, 1)
+        self.assertEqual(play.state.draw_pile[0].id, CardId.INSIGHT)
+
+    def test_worship(self):
+        state = self.given_state(CardId.WORSHIP)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.MANTRA, 5)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_worship_upgraded(self):
+        state = self.given_state(CardId.WORSHIP, upgrade=1)
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_discard_pile_count(play, 0)
+        self.see_hand_card_is(play, CardId.WORSHIP)
+
+    

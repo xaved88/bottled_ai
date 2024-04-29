@@ -733,3 +733,8 @@ def sanctity_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface,
                       target_index: int = -1):
     if state.get_memory_value(MemoryItem.TYPE_LAST_PLAYED) is CardType.SKILL:
         effect.draw = 2
+
+
+def pray_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                   target_index: int = -1):
+    state.draw_pile.append(get_card(CardId.INSIGHT))

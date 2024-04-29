@@ -32,6 +32,7 @@ class PowerId(Enum):
     CURL_UP = 'curl up'
     DARK_EMBRACE = 'dark embrace'
     DEMON_FORM = 'demon form'
+    DEVOTION = 'devotion'
     DEXTERITY = 'dexterity'
     DOUBLE_DAMAGE = 'double damage'
     DOUBLE_TAP = 'double tap'
