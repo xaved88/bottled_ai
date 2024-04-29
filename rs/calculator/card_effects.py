@@ -719,4 +719,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.LIKE_WATER:
         amount = 5 if not card.upgrade else 7
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.LIKE_WATER: amount})]
+    if card.id == CardId.ERUPTION:
+        return [CardEffects(damage=9, hits=1, target=TargetType.MONSTER, sets_stance=StanceType.WRATH)]
+    if card.id == CardId.PROSTRATE:
+        amount_of_mantra = 2 if not card.upgrade else 3
+        return [CardEffects(target=TargetType.SELF, block=4, applies_powers={PowerId.MANTRA: amount_of_mantra})]
+    if card.id == CardId.MIRACLE:
+        return [CardEffects(target=TargetType.SELF, energy_gain=1 if not card.upgrade else 2, retains=True)]
     return [CardEffects()]

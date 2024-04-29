@@ -1,7 +1,6 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.interfaces.memory_items import StanceType, MemoryItem
@@ -98,3 +97,40 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_player_has_block(play, 8)
         self.see_player_discard_pile_count(play, 1)
         self.see_stance(play, StanceType.CALM)
+
+    def test_eruption(self):
+        state = self.given_state(CardId.ERUPTION)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_stance(play, StanceType.WRATH)
+
+    def test_prostrate(self):
+        state = self.given_state(CardId.PROSTRATE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_block(play, 4)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_has_power(play, PowerId.MANTRA, 2)
+
+    def test_enter_divinity(self):
+        state = self.given_state(CardId.PROSTRATE, player_powers={PowerId.MANTRA: 9})
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.DIVINITY)
+        self.see_player_has_energy(play, 8)
+        self.see_player_has_power(play, PowerId.MANTRA, 1)
+
+    def test_divinity_triples_damage_dealt(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.DIVINITY)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 18)
+
+    def test_enter_divinity_and_exit_calm(self):
+        state = self.given_state(CardId.PROSTRATE, player_powers={PowerId.MANTRA: 9})
+        state.add_memory_value(MemoryItem.STANCE, StanceType.CALM)
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.DIVINITY)
+        self.see_player_has_energy(play, 10)
+        self.see_player_has_power(play, PowerId.MANTRA, 1)

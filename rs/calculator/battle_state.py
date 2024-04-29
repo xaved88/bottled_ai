@@ -176,6 +176,9 @@ class BattleState(BattleStateInterface):
         if self.get_memory_value(MemoryItem.STANCE) == StanceType.WRATH:
             for effect in effects:
                 effect.damage *= 2
+        if self.get_memory_value(MemoryItem.STANCE) == StanceType.DIVINITY:
+            for effect in effects:
+                effect.damage *= 3
         player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
 
         player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
@@ -241,9 +244,6 @@ class BattleState(BattleStateInterface):
             # discard
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
-
-            if effect.sets_stance:
-                self.change_stance(effect.sets_stance)
 
         # memory stuff
         last_played = MemoryItem.TYPE_LAST_PLAYED
@@ -332,6 +332,10 @@ class BattleState(BattleStateInterface):
             for hook in effect.post_hooks:
                 hook(self, effect, card, target_index)
 
+            # stance
+            if effect.sets_stance:
+                self.change_stance(effect.sets_stance)
+
             # apply any powers from the card
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
@@ -406,6 +410,12 @@ class BattleState(BattleStateInterface):
             for power in self.player.powers:
                 if power in DEBUFFS:
                     self.player.powers[power] = 0
+
+        # special late case for Mantra
+        if self.player.powers.get(PowerId.MANTRA):
+            if self.player.powers[PowerId.MANTRA] >= 10:
+                self.player.powers[PowerId.MANTRA] -= 10
+                self.change_stance(StanceType.DIVINITY)
 
         self.kill_monsters()
 
@@ -813,6 +823,8 @@ class BattleState(BattleStateInterface):
         if current_stance is StanceType.CALM and new_stance is not StanceType.CALM:
             extra_energy = 2 if RelicId.VIOLET_LOTUS not in self.relics else 3
             self.player.energy += extra_energy
+        if current_stance != StanceType.DIVINITY and new_stance is StanceType.DIVINITY:
+            self.player.energy += 3
 
         self.add_memory_value(MemoryItem.STANCE, new_stance)
 

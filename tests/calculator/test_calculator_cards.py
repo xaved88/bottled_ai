@@ -2771,3 +2771,9 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.LIKE_WATER, 5)
+
+    def test_miracle(self):
+        state = self.given_state(CardId.MIRACLE)
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_spent_energy(play, -1)

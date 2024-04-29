@@ -5,4 +5,4 @@ class Character(Enum):
     IRONCLAD = "Ironclad"
     SILENT = "Silent"
     DEFECT = "Defect"
-    # WATCHER = "Watcher"
+    WATCHER = "Watcher"

@@ -68,6 +68,7 @@ class PowerId(Enum):
     MACHINE_LEARNING = 'machine learning'
     MAGNETISM = 'magnetism'
     MALLEABLE = 'malleable'
+    MANTRA = 'mantra'
     MAYHEM = 'mayhem'
     METALLICIZE = 'metallicize'
     MINION = 'minion'

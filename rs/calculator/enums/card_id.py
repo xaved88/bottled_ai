@@ -116,6 +116,7 @@ class CardId(Enum):
     ENTRENCH = 'entrench'
     ENVENOM = 'envenom'
     EQUILIBRIUM = 'undo'  # Weird id alert!
+    ERUPTION = 'eruption'
     ESCAPE_PLAN = 'escape plan'
     ESTABLISHMENT = 'establishment'
     EVISCERATE = 'eviscerate'
@@ -178,6 +179,7 @@ class CardId(Enum):
     METALLICIZE = 'metallicize'
     METEOR_STRIKE = 'meteor strike'
     MIND_BLAST = 'mind blast'
+    MIRACLE = 'miracle'
     MULTI_CAST = 'multicast'
     NEUTRALIZE = 'neutralize'
     NOXIOUS_FUMES = 'noxious fumes'
@@ -196,6 +198,7 @@ class CardId(Enum):
     POWER_THROUGH = 'power through'
     PREDATOR = 'predator'
     PREPARED = 'prepared'
+    PROSTRATE = 'prostrate'
     PROTECT = 'protect'
     PUMMEL = 'pummel'
     QUICK_SLASH = 'quick slash'
