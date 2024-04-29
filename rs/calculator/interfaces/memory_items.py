@@ -13,9 +13,18 @@ class MemoryItem(Enum):
     ORANGE_PELLETS_ATTACK = auto()
     ORANGE_PELLETS_SKILL = auto()
     ORANGE_PELLETS_POWER = auto()
+    STANCE = auto()
 
 
 class ResetSchedule(Enum):
     GAME = auto()
     BATTLE = auto()
     TURN = auto()
+
+
+class StanceType(Enum):
+    NO_STANCE = auto()
+    CALM = auto()
+    WRATH = auto()
+    DIVINITY = auto()
+

@@ -6,6 +6,7 @@ from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.card_effect_hooks_interface import CardEffectCustomHook, CardEffectCustomHookWithCard
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface, TargetType
+from rs.calculator.interfaces.memory_items import StanceType
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.powers import Powers
 from rs.calculator.util import get_x_trigger_amount
@@ -32,7 +33,8 @@ class CardEffects(CardEffectsInterface):
             amount_to_discard: int = 0,
             add_cards_to_hand: [CardInterface, int] = None,
             channel_orbs: List[OrbId] = None,
-            retains: bool = False
+            retains: bool = False,
+            sets_stance: StanceType = None,
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -56,6 +58,7 @@ class CardEffects(CardEffectsInterface):
         self.add_cards_to_hand: [CardInterface, int] = add_cards_to_hand
         self.channel_orbs: List[OrbId] = [] if channel_orbs is None else channel_orbs
         self.retains: bool = retains
+        self.sets_stance: StanceType = sets_stance
 
 
 def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: List[CardInterface],
@@ -707,4 +710,13 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.FOLLOW_UP:
         return [CardEffects(damage=7 if not card.upgrade else 11, hits=1, target=TargetType.MONSTER,
                             pre_hooks=[follow_up_pre_hook])]
+    if card.id == CardId.CRESCENDO:
+        return [CardEffects(target=TargetType.SELF, retains=True, sets_stance=StanceType.WRATH)]
+    if card.id == CardId.TRANQUILITY:
+        return [CardEffects(target=TargetType.SELF, retains=True, sets_stance=StanceType.CALM)]
+    if card.id == CardId.VIGILANCE:
+        return [CardEffects(target=TargetType.SELF, block=8 if not card.upgrade else 12, sets_stance=StanceType.CALM)]
+    if card.id == CardId.LIKE_WATER:
+        amount = 5 if not card.upgrade else 7
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.LIKE_WATER: amount})]
     return [CardEffects()]

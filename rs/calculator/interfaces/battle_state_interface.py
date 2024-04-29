@@ -4,7 +4,7 @@ from typing import List, Tuple
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem
+from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem, StanceType
 from rs.calculator.interfaces.monster_interface import MonsterInterface
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
@@ -92,6 +92,11 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_memory_value(self, item: MemoryItem):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def change_stance(self, stance: StanceType):
         # must be implemented by children
         pass
 

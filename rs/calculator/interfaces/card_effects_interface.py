@@ -3,6 +3,7 @@ from typing import List
 
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.interfaces.card_interface import CardInterface
+from rs.calculator.interfaces.memory_items import StanceType
 from rs.calculator.interfaces.powers import Powers
 from typing import TYPE_CHECKING
 
@@ -38,3 +39,4 @@ class CardEffectsInterface:
     add_cards_to_hand: [CardInterface, int]
     channel_orbs: List[OrbId]
     retains: bool
+    sets_stance: StanceType

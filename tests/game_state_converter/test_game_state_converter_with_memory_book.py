@@ -1,7 +1,7 @@
 import unittest
 
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule, StanceType
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 from test_helpers.resources import load_resource_state
 
@@ -62,7 +62,7 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.FROST_THIS_BATTLE])
 
-    def test_memory_of_lightning_this_battle_turn_is_reset_when_leaving_battle(self):
+    def test_memory_of_lightning_this_battle_is_reset_when_leaving_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
         mb.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 4
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
@@ -84,3 +84,14 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         self.assertEqual(0, new_state.memory_general[MemoryItem.ORANGE_PELLETS_SKILL])
         self.assertEqual(0, new_state.memory_general[MemoryItem.ORANGE_PELLETS_POWER])
 
+    def test_memory_of_stance_not_reset_across_turns(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.STANCE] = StanceType.CALM
+        new_state = load_resource_state('battles/general/basic_turn_2.json', memory_book=mb)
+        self.assertEqual(StanceType.CALM, new_state.memory_general[MemoryItem.STANCE])
+
+    def test_memory_of_stance_is_reset_when_leaving_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.STANCE] = StanceType.CALM
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(StanceType.NO_STANCE, new_state.memory_general[MemoryItem.STANCE])

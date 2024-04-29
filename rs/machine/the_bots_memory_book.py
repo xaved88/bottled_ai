@@ -1,9 +1,9 @@
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule, StanceType
 
 
 class TheBotsMemoryBook:
-    def __init__(self, memory_general: dict[MemoryItem, int] = None,
+    def __init__(self, memory_general: dict = None,
                  memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
         self.memory_general = {} if memory_general is None else memory_general
         self.memory_by_card = {} if memory_by_card is None else memory_by_card
@@ -25,6 +25,7 @@ class TheBotsMemoryBook:
         self.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.FROST_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 0
+        self.memory_general[MemoryItem.STANCE] = StanceType.NO_STANCE
 
         # clear memory_by_card based on reset_schedule
         for card_id, schedule_dict in self.memory_by_card.items():

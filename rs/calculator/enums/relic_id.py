@@ -147,7 +147,7 @@ class RelicId(Enum):
     STRIKE_DUMMY = 'strike dummy'
     SUNDIAL = 'sundial'
     SYMBIOTIC_VIRUS = 'symbiotic virus'             # N/A
-    TEARDROP_LOCKET = 'teardrop locket'             # N/A
+    TEARDROP_LOCKET = 'teardrop locket'
     THE_ABACUS = 'the abacus'
     THE_BOOT = 'the boot'
     THE_COURIER = 'the courier'                     # N/A
@@ -164,6 +164,7 @@ class RelicId(Enum):
     UNCEASING_TOP = 'unceasing top'
     VAJRA = 'vajra'                                 # Covered by Strength
     VELVET_CHOKER = 'velvet choker'
+    VIOLET_LOTUS = 'violet lotus'
     WAR_PAINT = 'war paint'                         # N/A
     WARPED_TONGS = 'warped tongs'                   # Not relevant within a single turn
     WHETSTONE = 'whetstone'                         # N/A

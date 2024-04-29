@@ -62,6 +62,7 @@ class PowerId(Enum):
     INTANGIBLE_ENEMY = 'intangible'
     INTERNAL_ECHO_FORM_READY = 'echo form ready'  # internal use only, for marking whether echo form can be used
     JUGGERNAUT = 'juggernaut'
+    LIKE_WATER = 'like water'
     LOCK_ON = 'lockon'
     LOOP = 'loop'
     MACHINE_LEARNING = 'machine learning'

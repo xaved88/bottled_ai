@@ -575,3 +575,13 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.SANCTITY:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.CRESCENDO:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.TRANQUILITY:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.VIGILANCE:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.LIKE_WATER:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)

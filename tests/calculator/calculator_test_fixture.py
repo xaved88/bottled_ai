@@ -6,6 +6,7 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.memory_items import StanceType, MemoryItem
 from rs.calculator.play_path import PlayPath, get_paths
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
@@ -18,7 +19,8 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def given_state(self, card_id: CardId, upgrade: int = 0, targets: int = 1, player_powers=None,
                     relics: Relics = None, cards_discarded_this_turn: int = 0, amount_to_discard: int = 0,
-                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_book: TheBotsMemoryBook = None) -> BattleState:
+                    orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0,
+                    memory_book: TheBotsMemoryBook = None) -> BattleState:
 
         if memory_book is None:
             memory_book = TheBotsMemoryBook.new_default()
@@ -59,7 +61,6 @@ class CalculatorTestFixture(unittest.TestCase):
         paths = {}
         get_paths(PlayPath([], hand_state), paths)
         return list(paths.values())
-
 
     def see_enemy_lost_hp(self, play: PlayPath, amount: int, enemy_index: int = 0):
         self.assertEqual(amount, 100 - play.state.monsters[enemy_index].current_hp)
@@ -137,3 +138,6 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def see_relic_value(self, play: PlayPath, relic_id: RelicId, value: int):
         self.assertEqual(value, play.state.relics.get(relic_id))
+
+    def see_stance(self, play: PlayPath, expected_stance: StanceType):
+        self.assertEqual(expected_stance, play.state.get_memory_value(MemoryItem.STANCE))

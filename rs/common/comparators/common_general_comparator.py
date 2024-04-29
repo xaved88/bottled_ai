@@ -64,6 +64,7 @@ powers_we_like: List[PowerId] = [
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE_PLAYER,
     PowerId.JUGGERNAUT,
+    PowerId.LIKE_WATER,
     PowerId.LOOP,
     PowerId.MACHINE_LEARNING,
     PowerId.MAYHEM,

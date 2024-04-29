@@ -12,7 +12,7 @@ from rs.calculator.helper import pickle_deepcopy
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_effects_interface import TargetType
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule, StanceType
 from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
 from rs.calculator.interfaces.relics import Relics
@@ -76,6 +76,11 @@ class BattleState(BattleStateInterface):
     def transform_from_play(self, play: Play, is_first_play: bool):
         self.__is_first_play = is_first_play
         self.__starting_energy = self.player.energy
+
+        if RelicId.TEARDROP_LOCKET in self.relics and \
+                self.get_memory_value(MemoryItem.CARDS_THIS_TURN) == 0 and \
+                self.get_memory_value(MemoryItem.LAST_KNOWN_TURN) == 1:
+            self.change_stance(StanceType.CALM)
 
         (card_index, target_index) = play
         card = self.hand[card_index]
@@ -168,6 +173,9 @@ class BattleState(BattleStateInterface):
         if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
             for effect in effects:
                 effect.damage *= 2
+        if self.get_memory_value(MemoryItem.STANCE) == StanceType.WRATH:
+            for effect in effects:
+                effect.damage *= 2
         player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
 
         player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
@@ -233,6 +241,9 @@ class BattleState(BattleStateInterface):
             # discard
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
+
+            if effect.sets_stance:
+                self.change_stance(effect.sets_stance)
 
         # memory stuff
         last_played = MemoryItem.TYPE_LAST_PLAYED
@@ -416,6 +427,9 @@ class BattleState(BattleStateInterface):
         if RelicId.CLOAK_CLASP in self.relics:
             self.add_player_block(len(self.hand))
 
+        if self.player.powers.get(PowerId.LIKE_WATER) and self.get_memory_value(MemoryItem.STANCE) == StanceType.CALM:
+            self.add_player_block(self.player.powers.get(PowerId.LIKE_WATER, 0))
+
         if RelicId.STONE_CALENDAR in self.relics and self.relics[RelicId.STONE_CALENDAR] == 7:
             for monster in self.monsters:
                 if monster.current_hp > 0:
@@ -497,6 +511,8 @@ class BattleState(BattleStateInterface):
                     RelicId.PAPER_KRANE) else 0.6
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
+                if self.get_memory_value(MemoryItem.STANCE) is StanceType.WRATH:
+                    damage *= 2
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
             if monster.powers.get(PowerId.EXPLOSIVE):
@@ -781,7 +797,8 @@ class BattleState(BattleStateInterface):
         if item not in self.memory_general:
             self.memory_general[item] = 0
 
-        if item is MemoryItem.TYPE_LAST_PLAYED:
+        if item is MemoryItem.TYPE_LAST_PLAYED or \
+                item is MemoryItem.STANCE:
             self.memory_general[item] = value
         else:
             self.memory_general[item] += value
@@ -790,6 +807,14 @@ class BattleState(BattleStateInterface):
 
     def get_memory_value(self, item: MemoryItem):
         return self.memory_general[item]
+
+    def change_stance(self, new_stance: StanceType):
+        current_stance = self.get_memory_value(MemoryItem.STANCE)
+        if current_stance is StanceType.CALM and new_stance is not StanceType.CALM:
+            extra_energy = 2 if RelicId.VIOLET_LOTUS not in self.relics else 3
+            self.player.energy += extra_energy
+
+        self.add_memory_value(MemoryItem.STANCE, new_stance)
 
     def is_turn_forced_to_be_over(self) -> bool:
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:
