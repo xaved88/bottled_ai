@@ -736,4 +736,13 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         amount_of_mantra = 3 if not card.upgrade else 4
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA: amount_of_mantra},
                             post_hooks=[pray_post_hook])]
+    if card.id == CardId.EMPTY_BODY:
+        return [
+            CardEffects(block=7 if not card.upgrade else 10, target=TargetType.SELF, sets_stance=StanceType.NO_STANCE)]
+    if card.id == CardId.EMPTY_FIST:
+        return [CardEffects(damage=9 if not card.upgrade else 14, hits=1, target=TargetType.MONSTER,
+                            sets_stance=StanceType.NO_STANCE)]
+    if card.id == CardId.EMPTY_MIND:
+        return [
+            CardEffects(draw=2 if not card.upgrade else 3, target=TargetType.SELF, sets_stance=StanceType.NO_STANCE)]
     return [CardEffects()]

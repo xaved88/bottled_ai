@@ -112,6 +112,9 @@ class CardId(Enum):
     DUALCAST = 'dualcast'
     ECHO_FORM = 'echo form'
     ELECTRODYNAMICS = 'electrodynamics'
+    EMPTY_BODY = 'empty body'
+    EMPTY_FIST = 'empty fist'
+    EMPTY_MIND = 'empty mind'
     ENDLESS_AGONY = 'endless agony'  # Note: the special bits of this card aren't relevant for our current calculator.
     ENLIGHTENMENT = 'enlightenment'
     ENTRENCH = 'entrench'

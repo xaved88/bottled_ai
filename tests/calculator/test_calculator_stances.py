@@ -134,3 +134,27 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_stance(play, StanceType.DIVINITY)
         self.see_player_has_energy(play, 10)
         self.see_player_has_power(play, PowerId.MANTRA, 1)
+
+    def test_empty_body(self):
+        state = self.given_state(CardId.EMPTY_BODY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 7)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_stance(play, StanceType.NO_STANCE)
+
+    def test_empty_fist(self):
+        state = self.given_state(CardId.EMPTY_FIST)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_stance(play, StanceType.NO_STANCE)
+
+    def test_empty_mind(self):
+        state = self.given_state(CardId.EMPTY_MIND)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_stance(play, StanceType.NO_STANCE)
