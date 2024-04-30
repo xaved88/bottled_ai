@@ -481,8 +481,6 @@ def all_for_one_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
     retrieval_list = []
     irrelevant_list = []
 
-    state.discard_pile.reverse()
-
     for c in state.discard_pile:
         if c.cost == 0 and not len(retrieval_list) == hand_space:
             retrieval_list.append(c)

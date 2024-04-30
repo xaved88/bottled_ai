@@ -158,3 +158,21 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_player_drew_cards(play, 2)
         self.see_player_discard_pile_count(play, 1)
         self.see_stance(play, StanceType.NO_STANCE)
+
+    def test_mental_fortress_power(self):
+        state = self.given_state(CardId.CRESCENDO, player_powers={PowerId.MENTAL_FORTRESS: 4})
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 4)
+        self.see_stance(play, StanceType.WRATH)
+
+    def test_flurry_of_blows(self):
+        state = self.given_state(CardId.CRESCENDO)
+        state.discard_pile.append(get_card(CardId.FLURRY_OF_BLOWS))
+        state.discard_pile.append(get_card(CardId.FLURRY_OF_BLOWS))
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.WRATH)
+        self.see_player_hand_count(play, 2)
+        self.see_enemy_lost_hp(play, 0)
+        self.assertEqual(CardId.FLURRY_OF_BLOWS, play.state.hand[0].id)

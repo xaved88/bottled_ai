@@ -93,3 +93,38 @@ class CalculatorOtherTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_hand_count(play, 0)
         self.see_player_discard_pile_count(play, 3)
+
+    def test_retrieve_from_discard_single(self):
+        state = self.given_state(CardId.WOUND)
+        for i in range(5):
+            state.discard_pile.append(get_card(CardId.CLEAVE))
+        play = self.when_playing_the_first_card(state)
+        play.state.retrieve_from_discard(CardId.CLEAVE, just_one=True)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 4)
+        self.see_hand_card_is(play, CardId.WOUND, 0)
+        self.see_hand_card_is(play, CardId.CLEAVE, 1)
+
+    def test_retrieve_from_discard_multiple(self):
+        state = self.given_state(CardId.WOUND)
+        for i in range(5):
+            state.discard_pile.append(get_card(CardId.CLEAVE))
+        play = self.when_playing_the_first_card(state)
+        play.state.retrieve_from_discard(CardId.CLEAVE, just_one=False)
+        self.see_player_hand_count(play, 6)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_hand_card_is(play, CardId.WOUND, 0)
+        self.see_hand_card_is(play, CardId.CLEAVE, 1)
+
+    def test_retrieve_from_discard_limited_by_hand_size(self):
+        state = self.given_state(CardId.WOUND)
+        for i in range(8):
+            state.hand.append(get_card(CardId.WOUND))
+        for i in range(5):
+            state.discard_pile.append(get_card(CardId.CLEAVE))
+        play = self.when_playing_the_first_card(state)
+        play.state.retrieve_from_discard(CardId.CLEAVE, just_one=False)
+        self.see_player_hand_count(play, 10)
+        self.see_player_discard_pile_count(play, 4)
+        self.see_hand_card_is(play, CardId.WOUND, 0)
+        self.see_hand_card_is(play, CardId.CLEAVE, 9)

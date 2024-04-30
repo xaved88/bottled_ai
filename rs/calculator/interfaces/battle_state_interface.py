@@ -100,6 +100,10 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         # must be implemented by children
         pass
 
+    def retrieve_from_discard(self, retrieval_target: CardId, just_one=True):
+        # must be implemented by children
+        pass
+
     @abc.abstractmethod
     def end_turn(self):
         # must be implemented by children

@@ -745,4 +745,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.EMPTY_MIND:
         return [
             CardEffects(draw=2 if not card.upgrade else 3, target=TargetType.SELF, sets_stance=StanceType.NO_STANCE)]
+    if card.id == CardId.MENTAL_FORTRESS:
+        amount = 4 if not card.upgrade else 6
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MENTAL_FORTRESS: amount})]
+    if card.id == CardId.FLURRY_OF_BLOWS:
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
     return [CardEffects()]

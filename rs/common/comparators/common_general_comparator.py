@@ -70,6 +70,7 @@ powers_we_like: List[PowerId] = [
     PowerId.MACHINE_LEARNING,
     PowerId.MAYHEM,
     PowerId.MANTRA,
+    PowerId.MENTAL_FORTRESS,
     PowerId.METALLICIZE,
     PowerId.NOXIOUS_FUMES,
     PowerId.PANACHE,

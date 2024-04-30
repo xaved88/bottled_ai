@@ -2157,16 +2157,6 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_hand_card_is(play, CardId.NEUTRALIZE, 8)
         self.see_hand_card_is(play, CardId.NEUTRALIZE, 9)
 
-    def test_all_for_one_pulls_from_end_of_discard_list(self):
-        state = self.given_state(CardId.ALL_FOR_ONE)
-        for _ in range(15):
-            state.discard_pile.append(get_card(CardId.NEUTRALIZE))
-        state.discard_pile.append(get_card(CardId.ANGER))
-        play = self.when_playing_the_first_card(state)
-        self.see_player_spent_energy(play, 2)
-        self.see_enemy_lost_hp(play, 10)
-        self.see_hand_card_is(play, CardId.ANGER, 0)
-
     def test_all_for_one_retrieves_and_plays_discounted_streamline(self):
         state = self.given_state(CardId.STREAMLINE)
         state.hand.append(get_card(CardId.ALL_FOR_ONE))
@@ -2810,4 +2800,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 0)
         self.see_hand_card_is(play, CardId.WORSHIP)
 
-    
+    def test_mental_fortress(self):
+        state = self.given_state(CardId.MENTAL_FORTRESS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.MENTAL_FORTRESS, 4)
