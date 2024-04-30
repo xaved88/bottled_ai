@@ -270,3 +270,5 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_do_not_waste_time_on_generating_more_energy_when_winning_battle(self):
         self.execute_handler_tests('/battles/general/do_not_waste_time_generating_more_energy.json', ['play 3 0'])
 
+    def test_do_not_end_when_we_can_still_generate_energy_for_plays(self):
+        self.execute_handler_tests('/battles/general/no_energy_but_can_generate_some.json', ['play 3'])

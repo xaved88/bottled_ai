@@ -821,7 +821,7 @@ class BattleState(BattleStateInterface):
         return self.memory_general[item]
 
     def change_stance(self, new_stance: StanceType):
-        current_stance = self.get_memory_value(MemoryItem.STANCE)
+        current_stance = self.get_stance()
 
         if current_stance != new_stance:
 

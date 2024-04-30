@@ -176,7 +176,7 @@ class ComparatorAssessment:
         return 0
 
     def cards_left_in_hand(self) -> int:
-        return self.__get_value('retained_cards', lambda: len(self.state.hand))
+        return self.__get_value('cards_left_in_hand', lambda: len(self.state.hand))
 
     def power_up_ritual_dagger(self) -> int:
         return self.__get_value('power_up_ritual_dagger',
