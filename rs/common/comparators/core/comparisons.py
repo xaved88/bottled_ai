@@ -39,8 +39,12 @@ def most_optimal_winning_battle(best: CA, challenger: CA) -> Optional[bool]:
     if best.ink_bottle_counter() != challenger.ink_bottle_counter():
         return challenger.ink_bottle_counter() > best.ink_bottle_counter()
 
+    if best.cards_left_in_hand() != challenger.cards_left_in_hand():
+        return challenger.cards_left_in_hand() > best.cards_left_in_hand()
+
     if best.energy() != challenger.energy():
         return challenger.energy() > best.energy()
+
     return False
 
 
@@ -177,9 +181,9 @@ def most_channeled_orbs(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.channeled_orb_count() > best.channeled_orb_count()
 
 
-def most_retained_cards(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.retained_cards() == challenger.retained_cards() \
-        else challenger.retained_cards() > best.retained_cards()
+def most_cards_left_in_hand(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.cards_left_in_hand() == challenger.cards_left_in_hand() \
+        else challenger.cards_left_in_hand() > best.cards_left_in_hand()
 
 
 def most_powered_up_ritual_dagger(best: CA, challenger: CA) -> Optional[bool]:

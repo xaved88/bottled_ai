@@ -266,3 +266,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_prefer_removing_more_plated_armor(self):
         self.execute_handler_tests('/battles/with_orbs/remove_plated_armor.json', ['play 1'])
+
+    def test_do_not_waste_time_on_generating_more_energy_when_winning_battle(self):
+        self.execute_handler_tests('/battles/general/do_not_waste_time_generating_more_energy.json', ['play 3 0'])
+

@@ -176,7 +176,7 @@ class CardId(Enum):
     JUGGERNAUT = 'juggernaut'
     LEAP = 'leap'
     LEG_SWEEP = 'leg sweep'
-    LIKE_WATER = 'like water'
+    LIKE_WATER = 'likewater'
     LIMIT_BREAK = 'limit break'
     LOOP = 'loop'
     MACHINE_LEARNING = 'machine learning'

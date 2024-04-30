@@ -175,7 +175,7 @@ class ComparatorAssessment:
             return self.__get_value('repair_count', lambda: self.state.player.powers.get(PowerId.REPAIR, 0))
         return 0
 
-    def retained_cards(self) -> int:
+    def cards_left_in_hand(self) -> int:
         return self.__get_value('retained_cards', lambda: len(self.state.hand))
 
     def power_up_ritual_dagger(self) -> int:

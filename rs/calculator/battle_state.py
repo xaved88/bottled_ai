@@ -523,7 +523,7 @@ class BattleState(BattleStateInterface):
                     RelicId.PAPER_KRANE) else 0.6
                 monster_strength = monster.powers.get(PowerId.STRENGTH, 0)
                 damage = max(math.floor((monster.damage + monster_strength) * monster_weak_modifier), 0)
-                if self.get_memory_value(MemoryItem.STANCE) is StanceType.WRATH:
+                if self.get_stance() is StanceType.WRATH:
                     damage *= 2
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
 
