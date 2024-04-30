@@ -112,9 +112,9 @@ class CardId(Enum):
     DUALCAST = 'dualcast'
     ECHO_FORM = 'echo form'
     ELECTRODYNAMICS = 'electrodynamics'
-    EMPTY_BODY = 'empty body'
-    EMPTY_FIST = 'empty fist'
-    EMPTY_MIND = 'empty mind'
+    EMPTY_BODY = 'emptybody'  # Weird id alert!
+    EMPTY_FIST = 'emptyfist'  # Weird id alert!
+    EMPTY_MIND = 'emptymind'  # Weird id alert!
     ENDLESS_AGONY = 'endless agony'  # Note: the special bits of this card aren't relevant for our current calculator.
     ENLIGHTENMENT = 'enlightenment'
     ENTRENCH = 'entrench'
@@ -126,7 +126,7 @@ class CardId(Enum):
     EVISCERATE = 'eviscerate'
     EVOLVE = 'evolve'
     EXPERTISE = 'expertise'
-    FEAR_NO_EVIL = 'fear no evil'
+    FEAR_NO_EVIL = 'fearnoevil'  # Weird id alert!
     FEED = 'feed'
     FEEL_NO_PAIN = 'feel no pain'
     FIEND_FIRE = 'fiend fire'
@@ -138,7 +138,7 @@ class CardId(Enum):
     FLASH_OF_STEEL = 'flash of steel'
     FLECHETTES = 'flechettes'
     FLEX = 'flex'
-    FLURRY_OF_BLOWS = 'flurry of blows'
+    FLURRY_OF_BLOWS = 'flurryofblows'  # Weird id alert!
     FLYING_KNEE = 'flying knee'
     FLYING_SLEEVES = 'flying sleeves'
     FOLLOW_UP = 'follow-up'
@@ -167,7 +167,7 @@ class CardId(Enum):
     INFINITE_BLADES = 'infinite blades'
     INFLAME = 'inflame'
     INJURY = 'injury'
-    INNER_PEACE = 'inner peace'
+    INNER_PEACE = 'innerpeace'
     INSIGHT = 'insight'
     INTIMIDATE = 'intimidate'
     IRON_WAVE = 'iron wave'
@@ -185,7 +185,7 @@ class CardId(Enum):
     MASTER_OF_STRATEGY = 'master of strategy'
     MAYHEM = 'mayhem'
     MELTER = 'melter'
-    MENTAL_FORTRESS = 'mental fortress'
+    MENTAL_FORTRESS = 'mentalfortress'
     METALLICIZE = 'metallicize'
     METEOR_STRIKE = 'meteor strike'
     MIND_BLAST = 'mind blast'
@@ -273,7 +273,7 @@ class CardId(Enum):
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     THUNDERCLAP = 'thunderclap'
     THUNDER_STRIKE = 'thunder strike'
-    TRANQUILITY = 'tranquility'
+    TRANQUILITY = 'clearthemind'  # Weird id alert!
     TRIP = 'trip'
     TURBO = 'turbo'
     TWIN_STRIKE = 'twin strike'

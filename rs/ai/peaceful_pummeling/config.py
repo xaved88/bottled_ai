@@ -1,9 +1,23 @@
 CARD_REMOVAL_PRIORITY_LIST = ['strike', 'strike+', 'defend', 'defend+']
 
 DESIRED_CARDS_FOR_DECK: dict[str, int] = {
-    'prostrate': 2,
     'tranquility': 3,
     'crescendo': 3,
+    'like water': 2,
+    'empty body': 2,
+    'empty fist': 2,
+    'empty mind': 2,
+    'indignation': 1,
+    'rushdown': 1,
+    'tantrum': 2,
+    'mental fortress': 2,
+    'fear no evil': 2,
+    'halt': 2,
+    'inner peace': 2,
+    'flurry of blows': 2,
+    'prostrate': 2,
+    'worship': 2,
+    'pray': 1,
 }
 
 DESIRED_CARDS_FROM_POTIONS: dict[str, int] = {
