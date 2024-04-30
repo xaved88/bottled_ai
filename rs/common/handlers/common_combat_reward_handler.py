@@ -50,9 +50,9 @@ default_desired_potions = [
     'smoke bomb',
     'elixir potion',
     'liquid memories',
-    'snecko oil',
+    'snecko oil'
+    'stance potion',
 ]
-default_desired_potions.reverse()
 
 
 class CommonCombatRewardHandler(Handler):
@@ -60,6 +60,7 @@ class CommonCombatRewardHandler(Handler):
     def __init__(self, undesired_relics: List[str] = None, desired_potions: List[str] = None):
         self.undesired_relics: List[str] = [] if undesired_relics is None else undesired_relics
         self.desired_potions: List[str] = default_desired_potions if desired_potions is None else desired_potions
+        self.desired_potions.reverse()
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \

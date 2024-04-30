@@ -14,3 +14,6 @@ class CardRewardHandlerTestCase(SgTestHandlerFixture):
     # leaving this disabled for now since the check I'm doing is potentially too fragile
     # def test_skip_relic_multiple_relics_take_second(self):
     #     self.execute_handler_tests('/combat_reward/combat_reward_relics_2_take_second.json', ['proceed'])
+
+    def test_skips_least_desired_potion_when_full(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_least_desired_not_in_hand.json', ['proceed'])

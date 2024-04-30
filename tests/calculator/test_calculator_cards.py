@@ -614,6 +614,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.REGRET)
         for i in range(4):
             state.hand.append(get_card(CardId.WOUND))
+        state.player.block = 3
         play = self.when_playing_the_first_card(state)
         play.state.end_turn()
         self.see_player_lost_hp(play, 5)

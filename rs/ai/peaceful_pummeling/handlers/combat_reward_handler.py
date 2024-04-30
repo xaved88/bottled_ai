@@ -40,7 +40,7 @@ class CombatRewardHandler(CommonCombatRewardHandler):
             'essence of darkness'
             'fire potion',
             'explosive potion',
-            'focus potion',  # down-prioritized this since we intentionally lose a lot of Focus with this strategy
+            'focus potion',
             'speed potion',
             'block potion',
             'cunning potion',
@@ -49,5 +49,5 @@ class CombatRewardHandler(CommonCombatRewardHandler):
             'elixir potion',
             'liquid memories',
             'snecko oil',
-            'stance potion'  # We might not know how to use it yet
+            'stance potion',  # We might not know how to use it yet
         ])
