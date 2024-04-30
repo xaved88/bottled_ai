@@ -228,7 +228,7 @@ class CardId(Enum):
     RIDDLE_WITH_HOLES = 'riddle with holes'
     RIP_AND_TEAR = 'rip and tear'
     RITUAL_DAGGER = 'ritual dagger'
-    RUSHDOWN = 'rushdown'
+    RUSHDOWN = 'adaptation'
     SADISTIC_NATURE = 'sadistic nature'
     SANCTITY = 'sanctity'
     SASH_WHIP = 'sash whip'
