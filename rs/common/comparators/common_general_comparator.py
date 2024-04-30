@@ -77,6 +77,7 @@ powers_we_like: List[PowerId] = [
     PowerId.PHANTASMAL,
     PowerId.PLATED_ARMOR,
     PowerId.REPAIR,
+    PowerId.RUSHDOWN,
     PowerId.SADISTIC,
     PowerId.STUDY,
     PowerId.THORNS,

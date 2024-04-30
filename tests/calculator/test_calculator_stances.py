@@ -176,3 +176,26 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 2)
         self.see_enemy_lost_hp(play, 0)
         self.assertEqual(CardId.FLURRY_OF_BLOWS, play.state.hand[0].id)
+
+    def test_rushdown_power(self):
+        state = self.given_state(CardId.CRESCENDO, player_powers={PowerId.RUSHDOWN: 4})
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.WRATH)
+        self.see_player_drew_cards(play, 4)
+
+    def test_inner_peace_goes_calm_if_not_calm(self):
+        state = self.given_state(CardId.INNER_PEACE)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 0)
+        self.see_stance(play, StanceType.CALM)
+
+    def test_inner_peace_draws_if_calm(self):
+        state = self.given_state(CardId.INNER_PEACE)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.CALM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 3)
+        self.see_stance(play, StanceType.CALM)

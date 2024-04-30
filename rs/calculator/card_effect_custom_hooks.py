@@ -9,7 +9,7 @@ from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.interfaces.battle_state_interface import BattleStateInterface
 from rs.calculator.interfaces.card_effects_interface import CardEffectsInterface
 from rs.calculator.interfaces.card_interface import CardInterface
-from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.interfaces.memory_items import MemoryItem, StanceType
 from rs.calculator.util import get_x_trigger_amount
 from rs.game.card import CardType
 
@@ -730,3 +730,17 @@ def sanctity_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface,
 def pray_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                    target_index: int = -1):
     state.draw_pile.append(get_card(CardId.INSIGHT))
+
+
+def tantrum_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                      target_index: int = -1):
+    state.draw_pile.append(get_card(CardId.TANTRUM))
+
+
+def inner_peace_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
+    if state.get_stance() == StanceType.CALM:
+        amount_to_draw = 3 if not card.upgrade else 4
+        state.draw_cards(amount_to_draw)
+    else:
+        effect.sets_stance = StanceType.CALM

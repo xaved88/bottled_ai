@@ -5,7 +5,7 @@ from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
-from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.interfaces.memory_items import MemoryItem, StanceType
 from rs.game.card import CardType
 
 
@@ -2805,3 +2805,18 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.MENTAL_FORTRESS, 4)
+
+    def test_rushdown(self):
+        state = self.given_state(CardId.RUSHDOWN)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.RUSHDOWN, 2)
+
+    def test_tantrum(self):
+        state = self.given_state(CardId.TANTRUM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_stance(play, StanceType.WRATH)

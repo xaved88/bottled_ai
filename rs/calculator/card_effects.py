@@ -719,6 +719,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.LIKE_WATER:
         amount = 5 if not card.upgrade else 7
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.LIKE_WATER: amount})]
+    if card.id == CardId.RUSHDOWN:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.RUSHDOWN: 2})]
     if card.id == CardId.ERUPTION:
         return [CardEffects(damage=9, hits=1, target=TargetType.MONSTER, sets_stance=StanceType.WRATH)]
     if card.id == CardId.PROSTRATE:
@@ -750,4 +752,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MENTAL_FORTRESS: amount})]
     if card.id == CardId.FLURRY_OF_BLOWS:
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
+    if card.id == CardId.TANTRUM:
+        return [CardEffects(target=TargetType.MONSTER, damage=3, hits=3 if not card.upgrade else 4,
+                            sets_stance=StanceType.WRATH, post_hooks=[tantrum_post_hook])]
+    if card.id == CardId.INNER_PEACE:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[inner_peace_post_hook])]
     return [CardEffects()]

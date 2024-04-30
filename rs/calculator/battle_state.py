@@ -274,6 +274,8 @@ class BattleState(BattleStateInterface):
                 self.exhaust_card(card)
             elif card.type == CardType.POWER:
                 del self.hand[idx]
+            elif card.id == CardId.TANTRUM:
+                del self.hand[idx]
             else:
                 self.discard_pile.append(card)
                 del self.hand[idx]
@@ -821,23 +823,33 @@ class BattleState(BattleStateInterface):
     def change_stance(self, new_stance: StanceType):
         current_stance = self.get_memory_value(MemoryItem.STANCE)
 
-        # exiting calm
-        if current_stance is StanceType.CALM and new_stance is not StanceType.CALM:
-            extra_energy = 2 if RelicId.VIOLET_LOTUS not in self.relics else 3
-            self.player.energy += extra_energy
-
-        # entering divinity
-        if new_stance is StanceType.DIVINITY and current_stance != StanceType.DIVINITY:
-            self.player.energy += 3
-
-        # exiting any stance
         if current_stance != new_stance:
+
+            # exiting calm
+            if current_stance is StanceType.CALM:
+                extra_energy = 2 if RelicId.VIOLET_LOTUS not in self.relics else 3
+                self.player.energy += extra_energy
+
+            # entering divinity
+            if new_stance is StanceType.DIVINITY:
+                self.player.energy += 3
+
+            # entering wrath
+            if new_stance is StanceType.WRATH:
+                if self.player.powers.get(PowerId.RUSHDOWN):
+                    self.draw_cards(self.player.powers.get(PowerId.RUSHDOWN, 0))
+
+            # exiting any stance
             self.retrieve_from_discard(CardId.FLURRY_OF_BLOWS, just_one=False)
 
             if self.player.powers.get(PowerId.MENTAL_FORTRESS):
                 self.add_player_block(self.player.powers.get(PowerId.MENTAL_FORTRESS, 0))
 
-        self.add_memory_value(MemoryItem.STANCE, new_stance)
+            self.add_memory_value(MemoryItem.STANCE, new_stance)
+
+    def get_stance(self) -> StanceType:
+        current_stance = self.get_memory_value(MemoryItem.STANCE)
+        return current_stance
 
     def retrieve_from_discard(self, retrieval_target: CardId, just_one=True):
         hand_space = 10 - len(self.hand)

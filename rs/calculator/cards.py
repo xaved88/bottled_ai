@@ -606,5 +606,12 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.MENTAL_FORTRESS:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.RUSHDOWN:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.FLURRY_OF_BLOWS:
         return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.TANTRUM:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.INNER_PEACE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
