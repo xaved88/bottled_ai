@@ -157,7 +157,7 @@
         {
           "exhausts": false,
           "is_playable": false,
-          "cost": -1,
+          "cost": -2,
           "name": "Doubt",
           "id": "doubt",
           "type": "CURSE",
