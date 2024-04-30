@@ -518,7 +518,7 @@ def burn_upgraded_end_turn_hook(state: BattleStateInterface, effect: CardEffects
 
 def regret_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                          target_index: int = -1):
-    state.player.inflict_damage(state.player, len(state.hand), 1, vulnerable_modifier=1, is_attack=False)
+    state.player.inflict_damage(state.player, len(state.hand), 1, blockable=False, vulnerable_modifier=1, is_attack=False)
     # this will probably be off by 1 if there are 2 regrets since ingame they'd be handled one by one
 
 
