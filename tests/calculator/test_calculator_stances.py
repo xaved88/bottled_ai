@@ -177,6 +177,15 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0)
         self.assertEqual(CardId.FLURRY_OF_BLOWS, play.state.hand[0].id)
 
+    def test_tantrum(self):
+        state = self.given_state(CardId.TANTRUM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_draw_pile_count(play, 1)
+        self.see_stance(play, StanceType.WRATH)
+
     def test_rushdown_power(self):
         state = self.given_state(CardId.CRESCENDO, player_powers={PowerId.RUSHDOWN: 4})
         state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
@@ -199,3 +208,70 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_drew_cards(play, 3)
         self.see_stance(play, StanceType.CALM)
+
+    def test_indignation_goes_wrath_if_not_wrath(self):
+        state = self.given_state(CardId.INDIGNATION)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 0)
+        self.see_stance(play, StanceType.WRATH)
+
+    def test_indignation_applies_vulnerable_if_wrath(self):
+        state = self.given_state(CardId.INDIGNATION, targets=2)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 3, 0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 3, 0)
+        self.see_stance(play, StanceType.WRATH)
+
+    def test_indignation_applies_vulnerable_if_wrath_upgraded(self):
+        state = self.given_state(CardId.INDIGNATION, upgrade=1, targets=2)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 5, 0)
+        self.see_enemy_has_power(play, PowerId.VULNERABLE, 5, 0)
+        self.see_stance(play, StanceType.WRATH)
+
+    def test_fear_no_evil_triggers(self):
+        state = self.given_state(CardId.FEAR_NO_EVIL)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        state.monsters[0].hits = 1
+        state.monsters[0].damage = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_stance(play, StanceType.CALM)
+
+    def test_fear_no_evil_does_not_triggers(self):
+        state = self.given_state(CardId.FEAR_NO_EVIL)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        state.monsters[0].hits = 0
+        state.monsters[0].damage = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_stance(play, StanceType.NO_STANCE)
+
+    def test_halt_triggers(self):
+        state = self.given_state(CardId.HALT)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_block(play, 12)
+
+    def test_halt_triggers_upgraded(self):
+        state = self.given_state(CardId.HALT, upgrade=1)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_block(play, 18)
+
+    def test_halt_does_not_trigger(self):
+        state = self.given_state(CardId.HALT)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_block(play, 3)

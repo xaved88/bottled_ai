@@ -126,6 +126,7 @@ class CardId(Enum):
     EVISCERATE = 'eviscerate'
     EVOLVE = 'evolve'
     EXPERTISE = 'expertise'
+    FEAR_NO_EVIL = 'fear no evil'
     FEED = 'feed'
     FEEL_NO_PAIN = 'feel no pain'
     FIEND_FIRE = 'fiend fire'
@@ -151,6 +152,7 @@ class CardId(Enum):
     GO_FOR_THE_EYES = 'go for the eyes'
     GOOD_INSTINCTS = 'good instincts'
     GRAND_FINALE = 'grand finale'
+    HALT = 'halt'
     HAND_OF_GREED = 'handofgreed'  # Weird id alert!
     HEATSINKS = 'heatsinks'
     HEAVY_BLADE = 'heavy blade'
@@ -161,6 +163,7 @@ class CardId(Enum):
     IMMOLATE = 'immolate'
     IMPATIENCE = 'impatience'
     IMPERVIOUS = 'impervious'
+    INDIGNATION = 'indignation'
     INFINITE_BLADES = 'infinite blades'
     INFLAME = 'inflame'
     INJURY = 'injury'

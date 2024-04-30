@@ -757,4 +757,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             sets_stance=StanceType.WRATH, post_hooks=[tantrum_post_hook])]
     if card.id == CardId.INNER_PEACE:
         return [CardEffects(target=TargetType.SELF, post_hooks=[inner_peace_post_hook])]
+    if card.id == CardId.INDIGNATION:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[indignation_post_hook])]
+    if card.id == CardId.FEAR_NO_EVIL:
+        return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1,
+                            post_hooks=[fear_no_evil_post_hook])]
+    if card.id == CardId.HALT:
+        return [CardEffects(target=TargetType.SELF, block=3 if not card.upgrade else 4, post_hooks=[halt_post_hook])]
     return [CardEffects()]

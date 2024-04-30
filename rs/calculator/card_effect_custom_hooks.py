@@ -744,3 +744,26 @@ def inner_peace_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
         state.draw_cards(amount_to_draw)
     else:
         effect.sets_stance = StanceType.CALM
+
+
+def indignation_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
+    if state.get_stance() == StanceType.WRATH:
+        amount_to_add = 3 if not card.upgrade else 5
+        for m in state.monsters:
+            m.add_powers({PowerId.VULNERABLE: amount_to_add}, state.relics, state.player.powers)
+    else:
+        effect.sets_stance = StanceType.WRATH
+
+
+def fear_no_evil_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                           target_index: int = -1):
+    if state.monsters[target_index].hits:
+        state.change_stance(StanceType.CALM)
+
+
+def halt_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                   target_index: int = -1):
+    if state.get_stance() is StanceType.WRATH:
+        amount = 9 if not card.upgrade else 14
+        state.add_player_block(amount)
