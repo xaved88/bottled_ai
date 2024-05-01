@@ -30,7 +30,7 @@ class CardId(Enum):
     BANE = 'bane'
     BASH = 'bash'
     BARRAGE = 'barrage'
-    BATTLE_HYMN = 'battle hymn'
+    BATTLE_HYMN = 'battlehymn'
     BATTLE_TRANCE = 'battle trance'
     BEAM_CELL = 'beam cell'
     BERSERK = 'berserk'
@@ -143,7 +143,7 @@ class CardId(Enum):
     FLEX = 'flex'
     FLURRY_OF_BLOWS = 'flurryofblows'  # Weird id alert!
     FLYING_KNEE = 'flying knee'
-    FLYING_SLEEVES = 'flying sleeves'
+    FLYING_SLEEVES = 'flyingsleeves'
     FOLLOW_UP = 'follow-up'
     FOOTWORK = 'footwork'
     FTL = 'ftl'

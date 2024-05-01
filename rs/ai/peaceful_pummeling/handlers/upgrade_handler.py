@@ -19,6 +19,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'master reality',
             'wreath of flame',
             'evaluate',
+            'flying sleeves',
             'deceive reality',
             'like water',
             'empty body',

@@ -19,6 +19,7 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'empty fist': 2,
     'empty mind': 1,
     'indignation': 1,
+    'flying sleeves': 1,
     'rushdown': 1,
     'tantrum': 2,
     'mental fortress': 2,
