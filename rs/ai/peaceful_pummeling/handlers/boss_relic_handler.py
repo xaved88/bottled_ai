@@ -9,10 +9,10 @@ class BossRelicHandler(CommonBossRelicHandler):
     def __init__(self):
         super().__init__(preferred_relic_list=[
             "sozu",
-            "runic dome",
             "philosopher\u0027s stone",
             "ectoplasm",
-            "velvet choker",
+            "violet lotus"
+            "holy water"
             "cursed key",
             "fusion hammer",
             "snecko eye",
@@ -20,12 +20,14 @@ class BossRelicHandler(CommonBossRelicHandler):
             "busted crown",  # removed if already have another energy relic or it's act 1
             "coffee dripper",  # removed if already have another energy relic or it's act 1
             "slaver\u0027s collar",
+            "velvet choker",
             "runic cube",
             "runic pyramid",
             "black blood",
             "calling bell",
             "empty cage",
             "black star",
+            "runic dome",
             "sacred bark",
         ])
 

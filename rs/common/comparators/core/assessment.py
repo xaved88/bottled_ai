@@ -4,7 +4,7 @@ from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
-from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem
+from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem, StanceType
 from rs.calculator.powers import get_power_count
 from rs.game.card import CardType
 
@@ -13,11 +13,13 @@ T = TypeVar('T')
 
 class ComparatorAssessmentConfig:
     def __init__(self, powers_we_like: List[PowerId], powers_we_like_less: List[PowerId],
-                 powers_we_dislike: List[PowerId], powers_we_love: List[PowerId] = None):
+                 powers_we_dislike: List[PowerId], powers_we_love: List[PowerId] = None,
+                 cards_that_exit_wrath: List[CardId] = None):
         self.powers_we_love: List[PowerId] = [] if powers_we_love is None else powers_we_love
         self.powers_we_like: List[PowerId] = powers_we_like
         self.powers_we_like_less: List[PowerId] = powers_we_like_less
         self.powers_we_dislike: List[PowerId] = powers_we_dislike
+        self.cards_that_exit_wrath: List[CardId] = [] if cards_that_exit_wrath is None else cards_that_exit_wrath
 
 
 class ComparatorAssessment:
@@ -201,3 +203,16 @@ class ComparatorAssessment:
         return self.__get_value('enemy_plated_armor', lambda: sum(
             [m.powers.get(PowerId.PLATED_ARMOR, 0) for m in self.state.monsters if
              m.powers.get(PowerId.PLATED_ARMOR, 0) != 0]))
+
+    def stance_is_calm(self) -> int:
+        return self.__get_value('stance_is_calm',
+                                lambda: 1 if self.state.memory_general[MemoryItem.STANCE] == StanceType.CALM else 0)
+
+    def stance_is_not_wrath(self) -> int:
+        exit_plan = False
+        for c in self.state.hand:
+            if c.id in self.config.cards_that_exit_wrath:
+                exit_plan = True
+        return self.__get_value('stance_is_not_wrath',
+                                lambda: 1 if self.state.memory_general[
+                                                 MemoryItem.STANCE] == StanceType.WRATH and not exit_plan else 0)

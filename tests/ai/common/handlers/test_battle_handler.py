@@ -5,7 +5,7 @@ import unittest
 
 from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.calculator.enums.card_id import CardId
-from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule, StanceType
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.game.card import CardType
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
@@ -198,32 +198,32 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         mb = TheBotsMemoryBook.new_default()
         reset_schedule = next(iter(mb.memory_by_card[CardId.RITUAL_DAGGER].keys()))
         mb.memory_by_card[CardId.RITUAL_DAGGER][reset_schedule] = {card_uuid: 3}
-        new_mb = self.execute_handler_tests('/battles/general/powered_up_ritual_dagger.json', ['play 3 0'], mb)
+        new_mb = self.execute_handler_tests('/battles/memory/powered_up_ritual_dagger.json', ['play 3 0'], mb)
         self.assertEqual(6, new_mb.memory_by_card[CardId.RITUAL_DAGGER][reset_schedule][card_uuid])
 
     def test_prefer_killing_with_ritual_dagger(self):
-        self.execute_handler_tests('/battles/general/kill_with_ritual_dagger.json', ['play 3 0'])
+        self.execute_handler_tests('/battles/memory/kill_with_ritual_dagger.json', ['play 3 0'])
 
     def test_memory_book_attacks_per_turn_is_updated(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
         mb.memory_general[MemoryItem.ATTACKS_THIS_TURN] = 2
-        new_mb = self.execute_handler_tests('/battles/general/finisher.json', ['play 4 0'], mb)
+        new_mb = self.execute_handler_tests('/battles/memory/finisher.json', ['play 4 0'], mb)
         self.assertEqual(3, new_mb.memory_general[MemoryItem.ATTACKS_THIS_TURN])
 
     def test_memory_book_claw_state_persists_when_a_different_card_is_played(self):
         mb = TheBotsMemoryBook.new_default()
         mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 1
-        new_mb = self.execute_handler_tests('battles/general/basic_turn_1.json', memory_book=mb)
+        new_mb = self.execute_handler_tests('battles/memory/basic_turn_1.json', memory_book=mb)
         self.assertEqual(1, new_mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE])
 
     def test_memory_book_claw_state_increases_when_claw_is_played(self):
         mb = TheBotsMemoryBook.new_default()
         mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 1
-        new_mb = self.execute_handler_tests('battles/general/claw.json', memory_book=mb)
+        new_mb = self.execute_handler_tests('battles/memory/claw.json', memory_book=mb)
         self.assertEqual(2, new_mb.memory_general[MemoryItem.CLAWS_THIS_BATTLE])
 
     def test_play_genetic_algorithm_when_nothing_better_to_do(self):
-        self.execute_handler_tests('/battles/general/play_genetic_algorithm.json', ['play 1'])
+        self.execute_handler_tests('/battles/memory/play_genetic_algorithm.json', ['play 1'])
 
     def test_ritual_dagger_saved_outside_battle(self):
         card_memory = {CardId.RITUAL_DAGGER: {ResetSchedule.GAME: {"test": 4}}}
@@ -243,7 +243,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/avoid_steam_barrier.json', ['play 2'])
 
     def test_play_claws_to_power_them_up(self):
-        self.execute_handler_tests('/battles/general/play_claws_despite_high_block.json', ['play 4 0'])
+        self.execute_handler_tests('/battles/memory/play_claws_despite_high_block.json', ['play 4 0'])
 
     def test_discard_bug_case(self):
         self.execute_handler_tests('/other/broken_discard_bug.json', ['choose 1', 'confirm', 'wait 30'])
@@ -272,3 +272,18 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_do_not_end_when_we_can_still_generate_energy_for_plays(self):
         self.execute_handler_tests('/battles/general/no_energy_but_can_generate_some.json', ['play 3'])
+
+    def test_prefer_ending_in_calm(self):
+        self.execute_handler_tests('/battles/stances/vigilance_only_useful_for_calm.json', ['play 1'])
+
+    def test_prefer_exiting_wrath(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.STANCE] = StanceType.WRATH
+        self.execute_handler_tests('/battles/stances/prefer_exiting_wrath.json', memory_book=mb,
+                                   expected=['play 1 0'])
+
+    def test_stay_in_wrath_safely(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.STANCE] = StanceType.WRATH
+        self.execute_handler_tests('/battles/stances/stay_in_wrath_safely.json', memory_book=mb,
+                                   expected=['end'])

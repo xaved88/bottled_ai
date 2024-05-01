@@ -1,11 +1,6 @@
 from enum import Enum
 
 
-# NOT IMPLEMENTED but probably should be
-#
-# there are many others that aren't listed
-
-
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
 
@@ -72,14 +67,16 @@ class PowerId(Enum):
     MANTRA = 'mantra'
     MAYHEM = 'mayhem'
     MENTAL_FORTRESS = 'mental fortress'
-    MASTER_REALITY = 'masterreality'
+    MASTER_REALITY = 'masterrealitypower'
     METALLICIZE = 'metallicize'
     MINION = 'minion'
     MODE_SHIFT = 'mode shift'
     NEXT_TURN_BLOCK = 'next turn block'  # It affects a future turn though, so we mostly don't do anything with it.
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
-    PANACHE = 'panache'  # We currently have damage provided by triggering the Panache power hardcoded to 10. It's the first power we've run into that has multiple values associated with it.
+    PANACHE = 'panache'
+    # We currently have damage provided by triggering the Panache power hardcoded to 10.
+    # It's the first power we've run into that has multiple values associated with it.
     PEN_NIB_POWER = 'pen nib'  # Covered by Pen Nib relic counting
     PHANTASMAL = 'phantasmal'
     POISON = 'poison'

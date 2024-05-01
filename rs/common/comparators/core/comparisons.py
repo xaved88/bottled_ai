@@ -209,3 +209,13 @@ def most_powered_up_claws(best: CA, challenger: CA) -> Optional[bool]:
 def lowest_enemy_plated_armor(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.enemy_plated_armor() == challenger.enemy_plated_armor() \
         else challenger.enemy_plated_armor() < best.enemy_plated_armor()
+
+
+def stance_is_not_wrath(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.stance_is_not_wrath() == challenger.stance_is_not_wrath() \
+        else challenger.stance_is_not_wrath() < best.stance_is_not_wrath()
+
+
+def stance_is_calm(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.stance_is_calm() == challenger.stance_is_calm() \
+        else challenger.stance_is_calm() > best.stance_is_calm()

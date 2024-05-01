@@ -1,6 +1,7 @@
 from typing import Callable, List
 
 from rs.calculator.battle_state import BattleState
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.powers import DEBUFFS
@@ -39,6 +40,8 @@ default_comparisons = [
     most_ethereal_cards_saved_for_later,
     most_powered_up_claws,
     most_cards_left_in_hand,
+    stance_is_not_wrath,
+    stance_is_calm,
     least_powered_down_steam_barrier,
     most_energy,
 ]
@@ -92,7 +95,18 @@ powers_we_like_less: List[PowerId] = [
     PowerId.ENERGIZED,
 ]
 
+cards_that_exit_wrath: List[CardId] = [
+    CardId.EMPTY_BODY,
+    CardId.EMPTY_FIST,
+    CardId.EMPTY_MIND,
+    CardId.FEAR_NO_EVIL,
+    CardId.INNER_PEACE,
+    CardId.TRANQUILITY,
+    CardId.VIGILANCE,
+]
+
 powers_we_dislike: List[PowerId] = DEBUFFS.copy()
+
 
 def add_to_comparison_list(comparisons: List[Comparison], comparison_to_add: Comparison, after: Comparison):
     index = comparisons.index(after) + 1
@@ -109,8 +123,9 @@ class CommonGeneralComparator(ComparatorInterface):
     def __init__(self, comparisons: List[Comparison] = None, assessment_config: ComparatorAssessmentConfig = None):
         self.comparisons: List[Comparison] = default_comparisons if comparisons is None else comparisons
         self.assessment_config: ComparatorAssessmentConfig = \
-            ComparatorAssessmentConfig(powers_we_like, powers_we_like_less, powers_we_dislike) \
-            if assessment_config is None else assessment_config
+            ComparatorAssessmentConfig(powers_we_like, powers_we_like_less, powers_we_dislike,
+                                       cards_that_exit_wrath=cards_that_exit_wrath) \
+                if assessment_config is None else assessment_config
 
     def does_challenger_defeat_the_best(self, best_state: BattleState, challenger_state: BattleState,
                                         original: BattleState) -> bool:
