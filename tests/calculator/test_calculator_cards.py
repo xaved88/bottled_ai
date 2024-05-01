@@ -2858,3 +2858,94 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.MASTER_REALITY, 1)
+
+    def test_carve_reality(self):
+        state = self.given_state(CardId.CARVE_REALITY)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_hand_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+        self.assertEqual(CardId.SMITE, play.state.hand[0].id)
+
+    def test_perseverance(self):
+        state = self.given_state(CardId.PERSEVERANCE)
+        state.hand.append(get_card(CardId.PERSEVERANCE))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_has_block(play, 5)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_hand_count(play, 1)
+
+    def test_perseverance_blocks_more_powered_up_and_can_power_up(self):
+        state = self.given_state(CardId.PERSEVERANCE, upgrade=1)
+        state.add_memory_by_card(CardId.PERSEVERANCE, "default", 2)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_has_block(play, 9)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(5, play.state.get_memory_by_card(CardId.PERSEVERANCE, "default"))
+
+    def test_reach_heaven(self):
+        state = self.given_state(CardId.REACH_HEAVEN)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+        self.assertEqual(CardId.THROUGH_VIOLENCE, play.state.draw_pile[0].id)
+
+    def test_through_violence(self):
+        state = self.given_state(CardId.THROUGH_VIOLENCE)
+        state.hand.append(get_card(CardId.THROUGH_VIOLENCE))
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 20)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_hand_count(play, 1)
+
+    def test_signature_move(self):
+        state = self.given_state(CardId.SIGNATURE_MOVE)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 30)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_signature_cannot_be_played(self):
+        state = self.given_state(CardId.SIGNATURE_MOVE)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.player.energy = 2
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_wheel_kick(self):
+        state = self.given_state(CardId.WHEEL_KICK)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 15)
+        self.see_player_drew_cards(play, 2)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_spirit_shield(self):
+        state = self.given_state(CardId.SPIRIT_SHIELD)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 0)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_spirit_shield_multiple_cards(self):
+        state = self.given_state(CardId.SPIRIT_SHIELD)
+        for i in range(3):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 9)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_spirit_shield_upgraded(self):
+        state = self.given_state(CardId.SPIRIT_SHIELD, upgrade=1)
+        for i in range(3):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 12)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_discard_pile_count(play, 1)

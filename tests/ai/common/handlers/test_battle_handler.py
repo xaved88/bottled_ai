@@ -287,3 +287,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         mb.memory_general[MemoryItem.STANCE] = StanceType.WRATH
         self.execute_handler_tests('/battles/stances/stay_in_wrath_safely.json', memory_book=mb,
                                    expected=['end'])
+
+    def test_prefer_generating_card_over_not(self):
+        self.execute_handler_tests('/battles/general/play_carve_reality.json', ['play 1 0'])

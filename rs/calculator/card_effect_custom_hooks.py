@@ -60,7 +60,6 @@ def limit_break_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
         state.player.powers[PowerId.STRENGTH] *= 2
 
 
-
 def spot_weakness_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                             target_index: int = -1):
     __spot_weakness_post_hook(state, target_index, 3)
@@ -737,3 +736,22 @@ def halt_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, ca
     if state.get_stance() is StanceType.WRATH:
         amount = 9 if not card.upgrade else 14
         state.add_player_block(amount)
+
+
+def perseverance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
+    base_block = 5 if not card.upgrade else 7
+    effect.block = base_block + state.get_memory_by_card(card.id, card.uuid)
+
+
+def perseverance_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                           target_index: int = -1):
+    extra_block = 2 if not card.upgrade else 3
+    state.add_memory_by_card(card.id, card.uuid, extra_block)
+
+
+def spirit_shield_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                           target_index: int = -1):
+    multiplier = 3 if not card.upgrade else 4
+    amount_of_block = len(state.hand) * multiplier
+    state.add_player_block(amount_of_block)

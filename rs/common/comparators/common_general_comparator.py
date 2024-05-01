@@ -87,6 +87,7 @@ powers_we_like: List[PowerId] = [
     PowerId.THORNS,
     PowerId.THOUSAND_CUTS,
     PowerId.TOOLS_OF_THE_TRADE,
+    PowerId.VIGOR,
 ]
 
 powers_we_like_less: List[PowerId] = [

@@ -917,6 +917,8 @@ def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[Ca
     # special card-specific logic, like clash
     if card.id == CardId.CLASH and len([1 for c in hand if c.type != CardType.ATTACK]):
         return False
+    if card.id == CardId.SIGNATURE_MOVE and len([1 for c in hand if c.type is CardType.ATTACK and c.id != CardId.SIGNATURE_MOVE]):
+        return False
     if card.id == CardId.GRAND_FINALE and draw_pile_count != 0:
         return False
 

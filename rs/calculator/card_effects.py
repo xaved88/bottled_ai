@@ -785,4 +785,26 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                         spawn_cards_in_hand=(get_card(CardId.SAFETY), 1))]
     if card.id == CardId.MASTER_REALITY:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MASTER_REALITY: 1})]
+    if card.id == CardId.CARVE_REALITY:
+        return [
+            CardEffects(damage=6 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
+                        spawn_cards_in_hand=(get_card(CardId.SMITE), 1))]
+    if card.id == CardId.PERSEVERANCE:
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[perseverance_pre_hook],
+                            post_hooks=[perseverance_post_hook], retains=True)]
+    if card.id == CardId.REACH_HEAVEN:
+        return [
+            CardEffects(damage=10 if not card.upgrade else 15, hits=1, target=TargetType.MONSTER,
+                        spawn_cards_in_draw=(get_card(CardId.THROUGH_VIOLENCE), 1))]
+    if card.id == CardId.THROUGH_VIOLENCE:
+        return [
+            CardEffects(damage=20 if not card.upgrade else 30, hits=1, target=TargetType.MONSTER, retains=True)]
+    if card.id == CardId.SIGNATURE_MOVE:
+        return [
+            CardEffects(damage=30 if not card.upgrade else 40, hits=1, target=TargetType.MONSTER)]
+    if card.id == CardId.WHEEL_KICK:
+        return [
+            CardEffects(damage=15 if not card.upgrade else 20, hits=1, target=TargetType.MONSTER, draw=2)]
+    if card.id == CardId.SPIRIT_SHIELD:
+        return [CardEffects(target=TargetType.SELF, post_hooks=[spirit_shield_post_hook])]
     return [CardEffects()]

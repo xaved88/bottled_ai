@@ -12,6 +12,7 @@ class TheBotsMemoryBook:
         for card_id in [
             CardId.GENETIC_ALGORITHM,
             CardId.GLASS_KNIFE,
+            CardId.PERSEVERANCE,
             CardId.RAMPAGE,
             CardId.RITUAL_DAGGER,
             CardId.STEAM_BARRIER,
@@ -51,6 +52,7 @@ class TheBotsMemoryBook:
         match card_id:
             case CardId.GENETIC_ALGORITHM: reset_schedule = ResetSchedule.GAME
             case CardId.GLASS_KNIFE: reset_schedule = ResetSchedule.BATTLE
+            case CardId.PERSEVERANCE: reset_schedule = ResetSchedule.BATTLE
             case CardId.RAMPAGE: reset_schedule = ResetSchedule.BATTLE
             case CardId.RITUAL_DAGGER: reset_schedule = ResetSchedule.GAME
             case CardId.STEAM_BARRIER: reset_schedule = ResetSchedule.BATTLE

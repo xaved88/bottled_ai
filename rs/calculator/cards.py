@@ -632,3 +632,17 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.MASTER_REALITY:
         base_cost = 1 if not upgrade else 0
         return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.CARVE_REALITY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.REACH_HEAVEN:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.THROUGH_VIOLENCE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.PERSEVERANCE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.SPIRIT_SHIELD:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.SIGNATURE_MOVE:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.WHEEL_KICK:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
