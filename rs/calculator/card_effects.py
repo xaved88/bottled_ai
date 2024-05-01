@@ -790,8 +790,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
             CardEffects(damage=6 if not card.upgrade else 10, hits=1, target=TargetType.MONSTER,
                         spawn_cards_in_hand=(get_card(CardId.SMITE), 1))]
     if card.id == CardId.PERSEVERANCE:
-        return [CardEffects(target=TargetType.SELF, pre_hooks=[perseverance_pre_hook],
-                            post_hooks=[perseverance_post_hook], retains=True)]
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[perseverance_pre_hook], retains=True)]
     if card.id == CardId.REACH_HEAVEN:
         return [
             CardEffects(damage=10 if not card.upgrade else 15, hits=1, target=TargetType.MONSTER,

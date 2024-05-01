@@ -2877,13 +2877,21 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 1)
         self.see_player_hand_count(play, 1)
 
-    def test_perseverance_blocks_more_powered_up_and_can_power_up(self):
+    def test_perseverance_blocks_more_when_powered_up(self):
         state = self.given_state(CardId.PERSEVERANCE, upgrade=1)
         state.add_memory_by_card(CardId.PERSEVERANCE, "default", 2)
         play = self.when_playing_the_whole_hand(state)
         self.see_player_has_block(play, 9)
         self.see_player_spent_energy(play, 1)
-        self.assertEqual(5, play.state.get_memory_by_card(CardId.PERSEVERANCE, "default"))
+        self.assertEqual(2, play.state.get_memory_by_card(CardId.PERSEVERANCE, "default"))
+
+    def test_perseverance_powers_up_by_retaining(self):
+        state = self.given_state(CardId.PERSEVERANCE, upgrade=1)
+        state.player.energy = 0
+        play = self.when_playing_the_whole_hand(state)
+        play.state.end_turn()
+        self.see_player_has_block(play, 0)
+        self.assertEqual(3, play.state.get_memory_by_card(CardId.PERSEVERANCE, "default"))
 
     def test_reach_heaven(self):
         state = self.given_state(CardId.REACH_HEAVEN)

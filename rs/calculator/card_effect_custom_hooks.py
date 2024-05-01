@@ -744,14 +744,8 @@ def perseverance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterf
     effect.block = base_block + state.get_memory_by_card(card.id, card.uuid)
 
 
-def perseverance_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                           target_index: int = -1):
-    extra_block = 2 if not card.upgrade else 3
-    state.add_memory_by_card(card.id, card.uuid, extra_block)
-
-
 def spirit_shield_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                           target_index: int = -1):
+                            target_index: int = -1):
     multiplier = 3 if not card.upgrade else 4
     amount_of_block = len(state.hand) * multiplier
     state.add_player_block(amount_of_block)

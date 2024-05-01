@@ -488,7 +488,6 @@ class BattleState(BattleStateInterface):
                 elif self.player.relics.get(RelicId.RUNIC_PYRAMID):
                     might_stay_pyramid = c
 
-            # dispose of cards
             if c.ethereal:
                 self.exhaust_card(c, handle_remove=False)
             elif c is was_auto_played:
@@ -498,6 +497,8 @@ class BattleState(BattleStateInterface):
                     c.cost -= 1
                     if c.cost <= 0:
                         c.cost = 0
+                if c.id is CardId.PERSEVERANCE:
+                    self.add_memory_by_card(c.id, c.uuid, 2 if not c.upgrade else 3)
                 cards_to_keep.append(c)
             elif c is might_stay_pyramid:
                 cards_to_keep.append(c)
