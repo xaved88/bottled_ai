@@ -30,7 +30,17 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def add_cards_to_hand(self, card: CardInterface, amount: int):
+    def spawn_in_hand(self, card: CardInterface, amount: int = 1):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def spawn_in_draw(self, card_to_spawn: CardInterface, amount: int = 1):
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def spawn_in_discard(self, card_to_spawn: CardInterface, amount: int = 1):
         # must be implemented by children
         pass
 
@@ -100,10 +110,12 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         # must be implemented by children
         pass
 
+    @abc.abstractmethod
     def get_stance(self) -> StanceType:
         # must be implemented by children
         pass
 
+    @abc.abstractmethod
     def retrieve_from_discard(self, retrieval_target: CardId, just_one=True):
         # must be implemented by children
         pass

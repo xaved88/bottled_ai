@@ -2,7 +2,7 @@ from ai.common.co_test_handler_fixture import CoTestHandlerFixture
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
 
 
-class CardRewardHandlerTestCase(CoTestHandlerFixture):
+class CombatRewardHandlerTestCase(CoTestHandlerFixture):
     handler = CommonCombatRewardHandler
 
     def test_chug_fruit_juice(self):

@@ -54,30 +54,11 @@ def fiend_fire_post_hook(state: BattleStateInterface, effect: CardEffectsInterfa
         state.exhaust_card(state.hand[0])
 
 
-def immolate_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                       target_index: int = -1):
-    state.discard_pile.append(get_card(CardId.BURN))
-
-
 def limit_break_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                           target_index: int = -1):
     if state.player.powers.get(PowerId.STRENGTH):
         state.player.powers[PowerId.STRENGTH] *= 2
 
-
-def wild_strike_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                          target_index: int = -1):
-    state.draw_pile.append(get_card(CardId.WOUND))
-
-
-def reckless_charge_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                              target_index: int = -1):
-    state.draw_pile.append(get_card(CardId.DAZED))
-
-
-def power_through_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                            target_index: int = -1):
-    state.add_cards_to_hand(get_card(CardId.WOUND), 2)
 
 
 def spot_weakness_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -121,7 +102,7 @@ def storm_of_steel_post_hook(state: BattleStateInterface, effect: CardEffectsInt
     amount = len(state.hand)
     for _ in range(amount):
         state.discard_card(state.hand[0])
-    state.add_cards_to_hand(get_card(CardId.SHIV), amount)
+    state.spawn_in_hand(get_card(CardId.SHIV), amount)
 
 
 def storm_of_steel_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -129,7 +110,7 @@ def storm_of_steel_upgraded_post_hook(state: BattleStateInterface, effect: CardE
     amount = len(state.hand)
     for _ in range(amount):
         state.discard_card(state.hand[0])
-    state.add_cards_to_hand(get_card(CardId.SHIV, upgrade=1), amount)
+    state.spawn_in_hand(get_card(CardId.SHIV, upgrade=1), amount)
 
 
 def eviscerate_post_others_discarded_hook(card: CardInterface):
@@ -302,11 +283,6 @@ def __auto_shields_post_hook(state: BattleStateInterface, block: int):
         state.add_player_block(block)
 
 
-def turbo_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                    target_index: int = -1):
-    state.discard_pile.append(get_card(CardId.VOID))
-
-
 def aggregate_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                         target_index: int = -1):
     __aggregate_post_hook(state, 4)
@@ -325,11 +301,6 @@ def __aggregate_post_hook(state: BattleStateInterface, divide_by_this: int):
 def double_energy_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                             target_index: int = -1):
     state.player.energy *= 2
-
-
-def overclock_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                        target_index: int = -1):
-    state.discard_pile.append(get_card(CardId.BURN))
 
 
 def electrodynamics_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -518,7 +489,8 @@ def burn_upgraded_end_turn_hook(state: BattleStateInterface, effect: CardEffects
 
 def regret_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                          target_index: int = -1):
-    state.player.inflict_damage(state.player, len(state.hand), 1, blockable=False, vulnerable_modifier=1, is_attack=False)
+    state.player.inflict_damage(state.player, len(state.hand), 1, blockable=False, vulnerable_modifier=1,
+                                is_attack=False)
     # this will probably be off by 1 if there are 2 regrets since ingame they'd be handled one by one
 
 
@@ -727,14 +699,12 @@ def sanctity_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface,
         effect.draw = 2
 
 
-def pray_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                   target_index: int = -1):
-    state.draw_pile.append(get_card(CardId.INSIGHT))
-
-
 def tantrum_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                       target_index: int = -1):
-    state.draw_pile.append(get_card(CardId.TANTRUM))
+    card_to_add = get_card(CardId.TANTRUM)
+    card_to_add.upgrade = card.upgrade
+    state.draw_pile.append(card_to_add)
+    # the special removal of this card is handled in battle_state
 
 
 def inner_peace_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

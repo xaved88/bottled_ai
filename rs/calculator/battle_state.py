@@ -327,7 +327,7 @@ class BattleState(BattleStateInterface):
             if monster.powers.get(PowerId.HEX):
                 if card.type != CardType.ATTACK:
                     for i in range(monster.powers.get(PowerId.HEX)):
-                        self.draw_pile.append(get_card(CardId.DAZED))
+                        self.spawn_in_draw(get_card(CardId.DAZED))
 
         for effect in effects:
             # custom post hooks
@@ -349,8 +349,12 @@ class BattleState(BattleStateInterface):
                                           self.player.powers)
 
             # add cards to hand
-            if effect.add_cards_to_hand:
-                self.add_cards_to_hand(effect.add_cards_to_hand[0], effect.add_cards_to_hand[1])
+            if effect.spawn_cards_in_hand:
+                self.spawn_in_hand(effect.spawn_cards_in_hand[0], effect.spawn_cards_in_hand[1])
+            if effect.spawn_cards_in_draw:
+                self.spawn_in_draw(effect.spawn_cards_in_draw[0], effect.spawn_cards_in_draw[1])
+            if effect.spawn_cards_in_discard:
+                self.spawn_in_discard(effect.spawn_cards_in_discard[0], effect.spawn_cards_in_discard[1])
 
         # post card play relic checks
         if RelicId.VELVET_CHOKER in self.relics:
@@ -464,7 +468,7 @@ class BattleState(BattleStateInterface):
 
         if self.player.powers.get(PowerId.STUDY, 0):
             for i in range(self.player.powers.get(PowerId.STUDY, 0)):
-                self.draw_pile.append(get_card(CardId.INSIGHT))
+                self.spawn_in_draw(get_card(CardId.INSIGHT))
 
         # deal with the remaining cards in hand
         cards_to_keep: list[CardInterface] = []
@@ -610,14 +614,33 @@ class BattleState(BattleStateInterface):
             if len(self.draw_pile) > 0:
                 del self.draw_pile[0]
 
-    def add_cards_to_hand(self, card: CardInterface, amount: int):
+    def spawn_in_hand(self, card_to_spawn: CardInterface, amount: int = 1):
         amount_that_fits = min(amount, 10 - len(self.hand))
         amount_that_does_not_fit = amount - amount_that_fits
 
+        if self.player.powers.get(PowerId.MASTER_REALITY):
+            card_to_spawn.upgrade = 1
+
         for i in range(amount_that_fits):
-            self.hand.append(card)
+            self.hand.append(card_to_spawn)
         for i in range(amount_that_does_not_fit):
-            self.discard_pile.append(card)
+            self.discard_pile.append(card_to_spawn)
+
+    def spawn_in_draw(self, card_to_spawn: CardInterface, amount: int = 1):
+
+        if self.player.powers.get(PowerId.MASTER_REALITY):
+            card_to_spawn.upgrade = 1
+
+        for i in range(amount):
+            self.draw_pile.append(card_to_spawn)
+
+    def spawn_in_discard(self, card_to_spawn: CardInterface, amount: int = 1):
+
+        if self.player.powers.get(PowerId.MASTER_REALITY):
+            card_to_spawn.upgrade = 1
+
+        for i in range(amount):
+            self.discard_pile.append(card_to_spawn)
 
     def discard_card(self, card: CardInterface):
         self.hand.remove(card)

@@ -91,6 +91,7 @@ class CardId(Enum):
     DAZED = 'dazed'
     DEADLY_POISON = 'deadly poison'
     DECAY = 'decay'
+    DECEIVE_REALITY = 'deceivereality'
     DEEP_BREATH = 'deep breath'
     DEFEND_B = 'defend_b'
     DEFEND_G = 'defend_g'
@@ -124,6 +125,7 @@ class CardId(Enum):
     ESCAPE_PLAN = 'escape plan'
     ESTABLISHMENT = 'establishment'
     EVISCERATE = 'eviscerate'
+    EVALUATE = 'evaluate'
     EVOLVE = 'evolve'
     EXPERTISE = 'expertise'
     FEAR_NO_EVIL = 'fearnoevil'  # Weird id alert!
@@ -183,6 +185,7 @@ class CardId(Enum):
     MAGNETISM = 'magnetism'
     MALAISE = 'malaise'
     MASTER_OF_STRATEGY = 'master of strategy'
+    MASTER_REALITY = 'masterreality'
     MAYHEM = 'mayhem'
     MELTER = 'melter'
     MENTAL_FORTRESS = 'mentalfortress'
@@ -198,7 +201,9 @@ class CardId(Enum):
     OVERCLOCK = 'steam power'
     PAIN = 'pain'
     PANACEA = 'panacea'
-    PANACHE = 'panache'  # We currently have damage provided by triggering the Panache power hardcoded to 10. It's the first power we've run into that has multiple values associated with it.
+    PANACHE = 'panache'
+    # We currently have damage provided by triggering the Panache power hardcoded to 10.
+    # It's the first power we've run into that has multiple values associated with it.
     PARASITE = 'parasite'
     PERFECTED_STRIKE = 'perfected strike'
     PHANTASMAL_KILLER = 'phantasmal killer'
@@ -234,6 +239,7 @@ class CardId(Enum):
     SASH_WHIP = 'sash whip'
     SCRAPE = 'scrape'  # Ignores the fact that we throw away non-0 cards after draw
     SCRAWL = 'scrawl'
+    SAFETY = 'safety'
     SECOND_WIND = 'second wind'
     SEEING_RED = 'seeing red'
     SELF_REPAIR = 'self repair'
@@ -286,4 +292,5 @@ class CardId(Enum):
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
     WRAITH_FORM = 'wraith form v2'  # Weird id alert!
+    WREATH_OF_FLAME = 'wreathofflame'  # Weird id alert!
     ZAP = 'zap'

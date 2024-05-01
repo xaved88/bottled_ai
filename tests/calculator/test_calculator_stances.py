@@ -184,6 +184,19 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 9)
         self.see_player_discard_pile_count(play, 0)
         self.see_player_draw_pile_count(play, 1)
+        self.assertEqual(CardId.TANTRUM, play.state.draw_pile[0].id)
+        self.assertEqual(0, play.state.draw_pile[0].upgrade)
+        self.see_stance(play, StanceType.WRATH)
+
+    def test_tantrum_upgraded(self):
+        state = self.given_state(CardId.TANTRUM, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_draw_pile_count(play, 1)
+        self.assertEqual(CardId.TANTRUM, play.state.draw_pile[0].id)
+        self.assertEqual(1, play.state.draw_pile[0].upgrade)
         self.see_stance(play, StanceType.WRATH)
 
     def test_rushdown_power(self):

@@ -1178,3 +1178,16 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.assertEqual(2, len(play.state.draw_pile))
+
+    def test_master_reality_upgrades_created_cards_in_hand(self):
+        state = self.given_state(CardId.DECEIVE_REALITY, player_powers={PowerId.MASTER_REALITY: 1})
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(CardId.SAFETY, play.state.hand[0].id)
+        self.assertEqual(1, play.state.hand[0].upgrade)
+
+    def test_master_reality_upgrades_created_cards_in_draw(self):
+        state = self.given_state(CardId.DECEIVE_REALITY, player_powers={PowerId.MASTER_REALITY: 1, PowerId.STUDY: 1})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(CardId.INSIGHT, play.state.draw_pile[0].id)
+        self.assertEqual(1, play.state.draw_pile[0].upgrade)

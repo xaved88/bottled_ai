@@ -455,6 +455,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 12)
         self.see_player_discard_pile_count(play, 1)
+        self.assertEqual(play.state.draw_pile[0].id, CardId.WOUND)
         self.see_player_draw_pile_count(play, 1)
 
     def test_battle_trance(self):
@@ -493,6 +494,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 7)
         self.see_player_draw_pile_count(play, 1)
+        self.assertEqual(play.state.draw_pile[0].id, CardId.DAZED)
 
     def test_power_through(self):
         state = self.given_state(CardId.POWER_THROUGH)
@@ -2188,6 +2190,21 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 1)
         self.assertEqual(CardId.FLYING_SLEEVES, play.state.hand[0].id)
 
+    def test_safety(self):
+        state = self.given_state(CardId.SAFETY)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_has_block(play, 12)
+
+    def test_safety_stays_in_hand(self):
+        state = self.given_state(CardId.SAFETY)
+        state.player.energy = 0
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_hand_count(play, 1)
+        self.assertEqual(CardId.SAFETY, play.state.hand[0].id)
+
     def test_establishment(self):
         state = self.given_state(CardId.ESTABLISHMENT)
         play = self.when_playing_the_first_card(state)
@@ -2784,7 +2801,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.MANTRA, 3)
         self.see_player_draw_pile_count(play, 1)
-        self.assertEqual(play.state.draw_pile[0].id, CardId.INSIGHT)
+        self.assertEqual(CardId.INSIGHT, play.state.draw_pile[0].id)
 
     def test_worship(self):
         state = self.given_state(CardId.WORSHIP)
@@ -2812,3 +2829,32 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.RUSHDOWN, 2)
+
+    def test_wreath_of_flame(self):
+        state = self.given_state(CardId.WREATH_OF_FLAME)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_has_power(play, PowerId.VIGOR, 5)
+
+    def test_evaluate(self):
+        state = self.given_state(CardId.EVALUATE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 6)
+        self.see_player_draw_pile_count(play, 1)
+        self.assertEqual(CardId.INSIGHT, play.state.draw_pile[0].id)
+
+    def test_deceive_reality(self):
+        state = self.given_state(CardId.DECEIVE_REALITY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 4)
+        self.see_player_hand_count(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+        self.assertEqual(CardId.SAFETY, play.state.hand[0].id)
+
+    def test_master_reality(self):
+        state = self.given_state(CardId.MASTER_REALITY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.MASTER_REALITY, 1)

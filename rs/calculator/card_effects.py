@@ -31,7 +31,9 @@ class CardEffects(CardEffectsInterface):
             end_turn_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
-            add_cards_to_hand: [CardInterface, int] = None,
+            spawn_cards_in_hand: [CardInterface, int] = None,
+            spawn_cards_in_draw: [CardInterface, int] = None,
+            spawn_cards_in_discard: [CardInterface, int] = None,
             channel_orbs: List[OrbId] = None,
             retains: bool = False,
             sets_stance: StanceType = None,
@@ -55,7 +57,9 @@ class CardEffects(CardEffectsInterface):
             CardEffectCustomHook] = [] if end_turn_hooks is None else end_turn_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
-        self.add_cards_to_hand: [CardInterface, int] = add_cards_to_hand
+        self.spawn_cards_in_hand: [CardInterface, int] = spawn_cards_in_hand
+        self.spawn_cards_in_draw: [CardInterface, int] = spawn_cards_in_draw
+        self.spawn_cards_in_discard: [CardInterface, int] = spawn_cards_in_discard
         self.channel_orbs: List[OrbId] = [] if channel_orbs is None else channel_orbs
         self.retains: bool = retains
         self.sets_stance: StanceType = sets_stance
@@ -166,7 +170,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.IMMOLATE:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=21 if not card.upgrade else 28, hits=1,
-                            post_hooks=[immolate_post_hook])]
+                            spawn_cards_in_discard=(get_card(CardId.BURN), 1))]
     if card.id == CardId.BURN:
         hook = burn_end_turn_hook if not card.upgrade else burn_upgraded_end_turn_hook
         return [CardEffects(target=TargetType.NONE, end_turn_hooks=[hook])]
@@ -209,7 +213,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 2 if not card.upgrade else 4})]
     if card.id == CardId.WILD_STRIKE:
         return [CardEffects(target=TargetType.MONSTER, damage=12 if not card.upgrade else 18, hits=1,
-                            post_hooks=[wild_strike_post_hook])]
+                            spawn_cards_in_draw=(get_card(CardId.WOUND), 1))]
     if card.id == CardId.BATTLE_TRANCE:
         return [CardEffects(target=TargetType.SELF, draw=3 if not card.upgrade else 5),
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.NO_DRAW: 1})]
@@ -227,10 +231,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.METALLICIZE: 3 if not card.upgrade else 4})]
     if card.id == CardId.RECKLESS_CHARGE:
         return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
-                            post_hooks=[reckless_charge_post_hook])]
+                            spawn_cards_in_draw=(get_card(CardId.DAZED), 1))]
     if card.id == CardId.POWER_THROUGH:
         return [CardEffects(block=15 if not card.upgrade else 20, target=TargetType.SELF,
-                            post_hooks=[power_through_post_hook])]
+                            spawn_cards_in_hand=(get_card(CardId.WOUND), 2))]
     if card.id == CardId.SPOT_WEAKNESS:
         return [CardEffects(target=TargetType.MONSTER,
                             post_hooks=[
@@ -295,10 +299,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(damage=13 if not card.upgrade else 17, hits=1, target=TargetType.ALL_MONSTERS)]
     if card.id == CardId.BLADE_DANCE:
         amount = 3 if not card.upgrade else 4
-        return [CardEffects(target=TargetType.SELF, add_cards_to_hand=(get_card(CardId.SHIV), amount))]
+        return [CardEffects(target=TargetType.SELF, spawn_cards_in_hand=(get_card(CardId.SHIV), amount))]
     if card.id == CardId.CLOAK_AND_DAGGER:
         amount = 1 if not card.upgrade else 2
-        return [CardEffects(block=6, target=TargetType.SELF, add_cards_to_hand=(get_card(CardId.SHIV), amount))]
+        return [CardEffects(block=6, target=TargetType.SELF, spawn_cards_in_hand=(get_card(CardId.SHIV), amount))]
     if card.id == CardId.LEG_SWEEP:
         weak_amount = 2 if not card.upgrade else 3
         block_amount = 11 if not card.upgrade else 14
@@ -499,7 +503,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             post_hooks=[streamline_post_hook])]
     if card.id == CardId.TURBO:
         return [
-            CardEffects(target=TargetType.SELF, energy_gain=2 if not card.upgrade else 3, post_hooks=[turbo_post_hook])]
+            CardEffects(target=TargetType.SELF, energy_gain=2 if not card.upgrade else 3,
+                        spawn_cards_in_discard=(get_card(CardId.VOID), 1))]
     if card.id == CardId.AGGREGATE:
         return [CardEffects(target=TargetType.SELF,
                             post_hooks=[aggregate_post_hook] if not card.upgrade else [aggregate_upgraded_post_hook])]
@@ -509,7 +514,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.HEATSINK: 1 if not card.upgrade else 2})]
     if card.id == CardId.OVERCLOCK:
         return [
-            CardEffects(target=TargetType.SELF, draw=2 if not card.upgrade else 3, post_hooks=[overclock_post_hook])]
+            CardEffects(target=TargetType.SELF, draw=2 if not card.upgrade else 3,
+                        spawn_cards_in_discard=(get_card(CardId.BURN), 1))]
     if card.id == CardId.SELF_REPAIR:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.REPAIR: 7 if not card.upgrade else 10})]
     if card.id == CardId.MACHINE_LEARNING:
@@ -737,7 +743,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.PRAY:
         amount_of_mantra = 3 if not card.upgrade else 4
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA: amount_of_mantra},
-                            post_hooks=[pray_post_hook])]
+                            spawn_cards_in_draw=(get_card(CardId.INSIGHT), 1))]
     if card.id == CardId.EMPTY_BODY:
         return [
             CardEffects(block=7 if not card.upgrade else 10, target=TargetType.SELF, sets_stance=StanceType.NO_STANCE)]
@@ -747,6 +753,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.EMPTY_MIND:
         return [
             CardEffects(draw=2 if not card.upgrade else 3, target=TargetType.SELF, sets_stance=StanceType.NO_STANCE)]
+    if card.id == CardId.EVALUATE:
+        return [
+            CardEffects(block=6 if not card.upgrade else 10, target=TargetType.SELF,
+                        spawn_cards_in_draw=(get_card(CardId.INSIGHT), 1))]
     if card.id == CardId.MENTAL_FORTRESS:
         amount = 4 if not card.upgrade else 6
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MENTAL_FORTRESS: amount})]
@@ -764,4 +774,15 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             post_hooks=[fear_no_evil_post_hook])]
     if card.id == CardId.HALT:
         return [CardEffects(target=TargetType.SELF, block=3 if not card.upgrade else 4, post_hooks=[halt_post_hook])]
+    if card.id == CardId.WREATH_OF_FLAME:
+        amount = 5 if not card.upgrade else 8
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.VIGOR: amount})]
+    if card.id == CardId.SAFETY:
+        return [CardEffects(target=TargetType.SELF, block=12 if not card.upgrade else 16, retains=True)]
+    if card.id == CardId.DECEIVE_REALITY:
+        return [
+            CardEffects(block=4 if not card.upgrade else 7, target=TargetType.SELF,
+                        spawn_cards_in_hand=(get_card(CardId.SAFETY), 1))]
+    if card.id == CardId.MASTER_REALITY:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MASTER_REALITY: 1})]
     return [CardEffects()]

@@ -72,6 +72,7 @@ class PowerId(Enum):
     MANTRA = 'mantra'
     MAYHEM = 'mayhem'
     MENTAL_FORTRESS = 'mental fortress'
+    MASTER_REALITY = 'masterreality'
     METALLICIZE = 'metallicize'
     MINION = 'minion'
     MODE_SHIFT = 'mode shift'
