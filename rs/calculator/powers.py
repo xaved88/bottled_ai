@@ -10,6 +10,7 @@ DEBUFFS: List[PowerId] = [
     PowerId.CONSTRICTED,
     PowerId.DRAW_REDUCTION,
     PowerId.ENTANGLED,
+    PowerId.FASTING,
     PowerId.FRAIL,
     PowerId.LOCK_ON,
     PowerId.NO_DRAW,

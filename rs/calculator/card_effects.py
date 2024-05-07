@@ -813,4 +813,16 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, hits=1, pre_hooks=[windmill_strike_pre_hook], retains=True)]
     if card.id == CardId.DEVA_FORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEVA: 1})]
+    if card.id == CardId.WAVE_OF_THE_HAND:
+        amount = 1 if not card.upgrade else 2
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.WAVE_OF_THE_HAND: amount})]
+    if card.id == CardId.SANDS_OF_TIME:
+        return [
+            CardEffects(damage=20 if not card.upgrade else 26, hits=1, target=TargetType.MONSTER, retains=True)]
+    if card.id == CardId.FASTING:
+        amount = 3 if not card.upgrade else 4
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: amount, PowerId.DEXTERITY: amount, PowerId.FASTING: 1})]
+    if card.id == CardId.SWIVEL:
+        amount = 8 if not card.upgrade else 11
+        return [CardEffects(target=TargetType.SELF, block=amount, applies_powers={PowerId.FREE_ATTACK_POWER: 1})]
     return [CardEffects()]

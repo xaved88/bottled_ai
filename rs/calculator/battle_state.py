@@ -104,11 +104,15 @@ class BattleState(BattleStateInterface):
                     c.cost = 0
 
         # play the card
+        is_free_bc_power = (self.player.powers.get(PowerId.FREE_ATTACK_POWER) and card.type == CardType.ATTACK)
+
         if card.cost != Cost.x_cost:
-            self.player.energy -= card.cost
+            if not is_free_bc_power:
+                self.player.energy -= card.cost
         self.resolve_card_play(card, target_index)
         if card.cost == Cost.x_cost:
-            self.player.energy = 0
+            if not is_free_bc_power:
+                self.player.energy = 0
 
         # repeats
         if self.player.powers.get(PowerId.INTERNAL_ECHO_FORM_READY):
@@ -309,6 +313,9 @@ class BattleState(BattleStateInterface):
             for i in range(self.player.powers.get(PowerId.STORM)):
                 self.channel_orb(OrbId.LIGHTNING)
 
+        if self.player.powers.get(PowerId.FREE_ATTACK_POWER) and card.type == CardType.ATTACK:
+            self.player.powers[PowerId.FREE_ATTACK_POWER] -= 1
+
         # post card play MONSTER power checks
         for monster in self.monsters:
             if monster.powers.get(PowerId.TIME_WARP) is not None:
@@ -470,6 +477,10 @@ class BattleState(BattleStateInterface):
             for i in range(self.player.powers.get(PowerId.STUDY, 0)):
                 self.spawn_in_draw(get_card(CardId.INSIGHT))
 
+        # single-turn power removal
+        if self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0):
+            self.player.powers[PowerId.WAVE_OF_THE_HAND] = 0
+
         # deal with the remaining cards in hand
         cards_to_keep: list[CardInterface] = []
 
@@ -501,6 +512,10 @@ class BattleState(BattleStateInterface):
                     self.add_memory_by_card(c.id, c.uuid, 2 if not c.upgrade else 3)
                 if c.id is CardId.WINDMILL_STRIKE:
                     self.add_memory_by_card(c.id, c.uuid, 4 if not c.upgrade else 5)
+                if c.id is CardId.SANDS_OF_TIME:
+                    c.cost -= 1
+                    if c.cost <= 0:
+                        c.cost = 0
                 cards_to_keep.append(c)
             elif c is might_stay_pyramid:
                 cards_to_keep.append(c)
@@ -721,9 +736,15 @@ class BattleState(BattleStateInterface):
 
     def add_player_block(self, amount: int):
         self.player.block += amount
-        if amount > 0 and self.player.powers.get(PowerId.JUGGERNAUT, 0):
-            self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1,
-                                              affected_by_vulnerable=False, is_attack=False)
+        if amount > 0:
+            if self.player.powers.get(PowerId.JUGGERNAUT, 0):
+                self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1,
+                                                  affected_by_vulnerable=False, is_attack=False)
+            if self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0):
+                for monster in self.monsters:
+                    monster.add_powers({PowerId.WEAKENED: self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0)},
+                                       self.player.relics,
+                                       self.player.powers)
 
     def kill_monsters(self):
         # minion battles -> make sure a non-minion is alive, otherwise kill them all.
@@ -920,7 +941,8 @@ def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[Ca
     # special card-specific logic, like clash
     if card.id == CardId.CLASH and len([1 for c in hand if c.type != CardType.ATTACK]):
         return False
-    if card.id == CardId.SIGNATURE_MOVE and len([1 for c in hand if c.type is CardType.ATTACK and c.id != CardId.SIGNATURE_MOVE]):
+    if card.id == CardId.SIGNATURE_MOVE and len(
+            [1 for c in hand if c.type is CardType.ATTACK and c.id != CardId.SIGNATURE_MOVE]):
         return False
     if card.id == CardId.GRAND_FINALE and draw_pile_count != 0:
         return False

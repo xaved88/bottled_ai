@@ -130,6 +130,7 @@ class CardId(Enum):
     EVALUATE = 'evaluate'
     EVOLVE = 'evolve'
     EXPERTISE = 'expertise'
+    FASTING = 'fasting'
     FEAR_NO_EVIL = 'fearnoevil'  # Weird id alert!
     FEED = 'feed'
     FEEL_NO_PAIN = 'feel no pain'
@@ -240,6 +241,7 @@ class CardId(Enum):
     RUSHDOWN = 'adaptation'
     SADISTIC_NATURE = 'sadistic nature'
     SANCTITY = 'sanctity'
+    SANDS_OF_TIME = 'sandsoftime'
     SASH_WHIP = 'sashwhip'
     SCRAPE = 'scrape'  # Ignores the fact that we throw away non-0 cards after draw
     SCRAWL = 'scrawl'
@@ -277,6 +279,7 @@ class CardId(Enum):
     SURVIVOR = 'survivor'
     SWEEPING_BEAM = 'sweeping beam'
     SWIFT_STRIKE = 'swift strike'
+    SWIVEL = 'swivel'
     SWORD_BOOMERANG = 'sword boomerang'
     TACTICIAN = 'tactician'
     TANTRUM = 'tantrum'
@@ -295,6 +298,7 @@ class CardId(Enum):
     VIGILANCE = 'vigilance'
     VOID = 'void'
     WALLOP = 'wallop'
+    WAVE_OF_THE_HAND = 'waveofthehand'
     WHEEL_KICK = 'wheelkick'
     WHIRLWIND = 'whirlwind'
     WINDMILL_STRIKE = 'windmillstrike'

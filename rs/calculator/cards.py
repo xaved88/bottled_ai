@@ -642,6 +642,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.SPIRIT_SHIELD:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.WAVE_OF_THE_HAND:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.SIGNATURE_MOVE:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.WHEEL_KICK:
@@ -650,6 +652,12 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.WINDMILL_STRIKE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.SANDS_OF_TIME:
+        return Card(card_id, upgrade, 4 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.DEVA_FORM:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER,
                     ethereal=True if not upgrade else False)
+    if card_id == CardId.FASTING:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.SWIVEL:
+        return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)

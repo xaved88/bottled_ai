@@ -65,6 +65,7 @@ powers_we_like: List[PowerId] = [
     PowerId.FEEL_NO_PAIN,
     PowerId.FIRE_BREATHING,
     PowerId.FOCUS,
+    PowerId.FREE_ATTACK_POWER,
     PowerId.HEATSINK,
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE_PLAYER,

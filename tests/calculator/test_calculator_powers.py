@@ -1191,3 +1191,35 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.assertEqual(CardId.INSIGHT, play.state.draw_pile[0].id)
         self.assertEqual(1, play.state.draw_pile[0].upgrade)
+
+    def test_wave_of_the_hand(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.WAVE_OF_THE_HAND: 3}, targets=2)
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 5)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 3, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 3, enemy_index=1)
+        self.see_player_has_power(play, PowerId.WAVE_OF_THE_HAND, 0)
+
+    def test_wave_of_the_hand_does_not_trigger(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.WAVE_OF_THE_HAND: 3}, targets=2)
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 0, enemy_index=0)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 0, enemy_index=1)
+        self.see_player_has_power(play, PowerId.WAVE_OF_THE_HAND, 0)
+
+    def test_free_attack_power(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.FREE_ATTACK_POWER: 1})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_power(play, PowerId.FREE_ATTACK_POWER, 0)
+
+    def test_free_attack_power_with_whirlwind(self):
+        state = self.given_state(CardId.WHIRLWIND, player_powers={PowerId.FREE_ATTACK_POWER: 2})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 25)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_has_power(play, PowerId.FREE_ATTACK_POWER, 1)

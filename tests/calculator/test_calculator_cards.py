@@ -3006,3 +3006,44 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state.player.energy = 0
         play = self.when_playing_the_first_card(state)
         self.assertEqual(True, play.state.hand[0].ethereal)
+
+    def test_wave_of_the_hand(self):
+        state = self.given_state(CardId.WAVE_OF_THE_HAND)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.WAVE_OF_THE_HAND, 1)
+
+    def test_sands_of_time(self):
+        state = self.given_state(CardId.SANDS_OF_TIME)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 4)
+        self.see_enemy_lost_hp(play, 20)
+
+    def test_sands_of_time_retaining_reduces_cost(self):
+        state = self.given_state(CardId.SANDS_OF_TIME)
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(3, play.state.hand[0].cost)
+
+    def test_sands_of_time_retaining_reduces_cost_combo_with_establishment(self):
+        state = self.given_state(CardId.SANDS_OF_TIME, player_powers={PowerId.ESTABLISHMENT: 1})
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.assertEqual(2, play.state.hand[0].cost)
+
+    def test_fasting(self):
+        state = self.given_state(CardId.FASTING)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_power(play, PowerId.STRENGTH, 3)
+        self.see_player_has_power(play, PowerId.DEXTERITY, 3)
+        self.see_player_has_power(play, PowerId.FASTING, 1)
+
+    def test_swivel(self):
+        state = self.given_state(CardId.SWIVEL)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_block(play, 8)
+        self.see_player_has_power(play, PowerId.FREE_ATTACK_POWER, 1)
