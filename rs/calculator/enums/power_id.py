@@ -14,6 +14,7 @@ class PowerId(Enum):
     BATTLE_HYMN = 'battlehymn'
     BIAS = 'bias'
     BERSERK = 'berserk'
+    BLOCK_RETURN = 'blockreturn'
     BLUR = 'blur'
     BUFFER = 'buffer'
     BURST = 'burst'

@@ -219,6 +219,10 @@ class BattleState(BattleStateInterface):
                             min_hp_damage=player_min_attack_hp_damage)
                         effect.hp_damage = hp_damage
 
+                        if PowerId.BLOCK_RETURN in self.monsters[target_index].powers:
+                            for hits in range(effect.hits):
+                                self.add_player_block(self.monsters[target_index].powers[PowerId.BLOCK_RETURN])
+
                     elif effect.target == TargetType.ALL_MONSTERS:
                         effect.hp_damage = 0
                         for target in self.monsters:
@@ -226,6 +230,10 @@ class BattleState(BattleStateInterface):
                                                                 monster_vulnerable_modifier,
                                                                 min_hp_damage=player_min_attack_hp_damage)
                             effect.hp_damage += hp_damage
+
+                            if PowerId.BLOCK_RETURN in target.powers:
+                                for hits in range(effect.hits):
+                                    self.add_player_block(target.powers[PowerId.BLOCK_RETURN])
 
             # block (always applies to player right?)
             if effect.block:

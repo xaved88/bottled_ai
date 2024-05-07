@@ -654,6 +654,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.SANDS_OF_TIME:
         return Card(card_id, upgrade, 4 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.TALK_TO_THE_HAND:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.DEVA_FORM:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER,
                     ethereal=True if not upgrade else False)

@@ -5,6 +5,7 @@ from rs.calculator.interfaces.powers import Powers
 
 DEBUFFS: List[PowerId] = [
     PowerId.BIAS,
+    PowerId.BLOCK_RETURN,
     PowerId.CHOKED,
     PowerId.CONFUSED,
     PowerId.CONSTRICTED,

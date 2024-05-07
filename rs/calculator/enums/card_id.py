@@ -282,6 +282,7 @@ class CardId(Enum):
     SWIVEL = 'swivel'
     SWORD_BOOMERANG = 'sword boomerang'
     TACTICIAN = 'tactician'
+    TALK_TO_THE_HAND = 'talktothehand'
     TANTRUM = 'tantrum'
     TEMPEST = 'tempest'
     TERROR = 'terror'

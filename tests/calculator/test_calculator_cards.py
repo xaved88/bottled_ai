@@ -3047,3 +3047,11 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 2)
         self.see_player_has_block(play, 8)
         self.see_player_has_power(play, PowerId.FREE_ATTACK_POWER, 1)
+
+    def test_talk_to_the_hand(self):
+        state = self.given_state(CardId.TALK_TO_THE_HAND)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 5)
+        self.see_player_exhaust_count(play, 1)
+        self.see_enemy_has_power(play, PowerId.BLOCK_RETURN, 2)

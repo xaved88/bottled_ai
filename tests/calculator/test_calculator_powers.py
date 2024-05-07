@@ -1223,3 +1223,19 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 25)
         self.see_player_spent_energy(play, 0)
         self.see_player_has_power(play, PowerId.FREE_ATTACK_POWER, 1)
+
+    def test_block_return(self):
+        state = self.given_state(CardId.TWIN_STRIKE)
+        state.monsters[0].powers = {PowerId.BLOCK_RETURN: 2}
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 4)
+
+    def test_block_return_multi_target(self):
+        state = self.given_state(CardId.WHIRLWIND, targets=2)
+        state.monsters[0].powers = {PowerId.BLOCK_RETURN: 2}
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 25)
+        self.see_player_spent_energy(play, 5)
+        self.see_player_has_block(play, 10)

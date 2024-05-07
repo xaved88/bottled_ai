@@ -814,15 +814,21 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.DEVA_FORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEVA: 1})]
     if card.id == CardId.WAVE_OF_THE_HAND:
-        amount = 1 if not card.upgrade else 2
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.WAVE_OF_THE_HAND: amount})]
+        power_amount = 1 if not card.upgrade else 2
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.WAVE_OF_THE_HAND: power_amount})]
     if card.id == CardId.SANDS_OF_TIME:
         return [
             CardEffects(damage=20 if not card.upgrade else 26, hits=1, target=TargetType.MONSTER, retains=True)]
     if card.id == CardId.FASTING:
-        amount = 3 if not card.upgrade else 4
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: amount, PowerId.DEXTERITY: amount, PowerId.FASTING: 1})]
+        power_amount = 3 if not card.upgrade else 4
+        return [CardEffects(target=TargetType.SELF,
+                            applies_powers={PowerId.STRENGTH: power_amount, PowerId.DEXTERITY: power_amount,
+                                            PowerId.FASTING: 1})]
     if card.id == CardId.SWIVEL:
-        amount = 8 if not card.upgrade else 11
-        return [CardEffects(target=TargetType.SELF, block=amount, applies_powers={PowerId.FREE_ATTACK_POWER: 1})]
+        block_amount = 8 if not card.upgrade else 11
+        return [CardEffects(target=TargetType.SELF, block=block_amount, applies_powers={PowerId.FREE_ATTACK_POWER: 1})]
+    if card.id == CardId.TALK_TO_THE_HAND:
+        power_amount = 2 if not card.upgrade else 3
+        return [CardEffects(damage=5 if not card.upgrade else 7, hits=1, target=TargetType.MONSTER,
+                            applies_powers={PowerId.BLOCK_RETURN: power_amount})]
     return [CardEffects()]
