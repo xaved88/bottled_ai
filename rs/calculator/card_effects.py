@@ -806,4 +806,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
             CardEffects(damage=15 if not card.upgrade else 20, hits=1, target=TargetType.MONSTER, draw=2)]
     if card.id == CardId.SPIRIT_SHIELD:
         return [CardEffects(target=TargetType.SELF, post_hooks=[spirit_shield_post_hook])]
+    if card.id == CardId.WALLOP:
+        return [CardEffects(target=TargetType.MONSTER, damage=9 if not card.upgrade else 12, hits=1,
+                            post_hooks=[wallop_post_hook])]
+    if card.id == CardId.WINDMILL_STRIKE:
+        return [CardEffects(target=TargetType.MONSTER, hits=1, pre_hooks=[windmill_strike_pre_hook], retains=True)]
+    if card.id == CardId.DEVA_FORM:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEVA: 1})]
     return [CardEffects()]

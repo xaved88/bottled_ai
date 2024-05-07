@@ -499,6 +499,8 @@ class BattleState(BattleStateInterface):
                         c.cost = 0
                 if c.id is CardId.PERSEVERANCE:
                     self.add_memory_by_card(c.id, c.uuid, 2 if not c.upgrade else 3)
+                if c.id is CardId.WINDMILL_STRIKE:
+                    self.add_memory_by_card(c.id, c.uuid, 4 if not c.upgrade else 5)
                 cards_to_keep.append(c)
             elif c is might_stay_pyramid:
                 cards_to_keep.append(c)

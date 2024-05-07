@@ -646,3 +646,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
     if card_id == CardId.WHEEL_KICK:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.WALLOP:
+        return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.WINDMILL_STRIKE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.DEVA_FORM:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER,
+                    ethereal=True if not upgrade else False)

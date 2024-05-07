@@ -749,3 +749,15 @@ def spirit_shield_post_hook(state: BattleStateInterface, effect: CardEffectsInte
     multiplier = 3 if not card.upgrade else 4
     amount_of_block = len(state.hand) * multiplier
     state.add_player_block(amount_of_block)
+
+
+def wallop_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                     target_index: int = -1):
+    if hasattr(effect, 'hp_damage'):
+        state.add_player_block(effect.hp_damage)
+
+
+def windmill_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                             target_index: int = -1):
+    base_damage = 7 if not card.upgrade else 10
+    effect.damage = base_damage + state.get_memory_by_card(card.id, card.uuid)

@@ -140,7 +140,7 @@ class Target(TargetInterface):
             del self.powers[PowerId.SPLIT]
         if self.powers.get(PowerId.SHIFTING):
             self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics, source.powers)
-        return (health_damage_dealt)
+        return health_damage_dealt
 
     # returns a list of powerIds that were applied and not blocked by artifacts
     def add_powers(self, powers: Powers, relics: Relics, source_powers: Powers) -> List[PowerId]:

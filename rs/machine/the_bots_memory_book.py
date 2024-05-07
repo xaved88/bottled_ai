@@ -16,6 +16,7 @@ class TheBotsMemoryBook:
             CardId.RAMPAGE,
             CardId.RITUAL_DAGGER,
             CardId.STEAM_BARRIER,
+            CardId.WINDMILL_STRIKE,
         ]:
             self.initialize_memory_by_card(card_id)
 
@@ -56,6 +57,7 @@ class TheBotsMemoryBook:
             case CardId.RAMPAGE: reset_schedule = ResetSchedule.BATTLE
             case CardId.RITUAL_DAGGER: reset_schedule = ResetSchedule.GAME
             case CardId.STEAM_BARRIER: reset_schedule = ResetSchedule.BATTLE
+            case CardId.WINDMILL_STRIKE: reset_schedule = ResetSchedule.BATTLE
 
         self.memory_by_card[card_id] = {reset_schedule: {"": 0}}
 

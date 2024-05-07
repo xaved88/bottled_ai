@@ -56,6 +56,7 @@ powers_we_like: List[PowerId] = [
     PowerId.CORRUPTION,
     PowerId.DARK_EMBRACE,
     PowerId.DEMON_FORM,
+    PowerId.DEVA,
     PowerId.DEVOTION,
     PowerId.ELECTRO,
     PowerId.ENVENOM,

@@ -1,12 +1,9 @@
-from unittest import skip
-
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
-from rs.calculator.interfaces.memory_items import MemoryItem, StanceType
-from rs.game.card import CardType
+from rs.calculator.interfaces.memory_items import MemoryItem
 
 
 class CalculatorCardsTest(CalculatorTestFixture):
@@ -2957,3 +2954,55 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 12)
         self.see_player_spent_energy(play, 2)
         self.see_player_discard_pile_count(play, 1)
+
+    def test_wallop(self):
+        state = self.given_state(CardId.WALLOP)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_player_has_block(play, 9)
+
+    def test_wallop_less_block_when_less_hp_damage(self):
+        state = self.given_state(CardId.WALLOP)
+        state.monsters[0].block = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_player_has_block(play, 6)
+
+    def test_windmill_strike(self):
+        state = self.given_state(CardId.WINDMILL_STRIKE)
+        state.hand.append(get_card(CardId.WINDMILL_STRIKE))
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_hand_count(play, 1)
+
+    def test_windmill_strike_damages_more_when_powered_up(self):
+        state = self.given_state(CardId.WINDMILL_STRIKE, upgrade=1)
+        state.add_memory_by_card(CardId.WINDMILL_STRIKE, "default", 2)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(2, play.state.get_memory_by_card(CardId.WINDMILL_STRIKE, "default"))
+
+    def test_windmill_strike_powers_up_by_retaining(self):
+        state = self.given_state(CardId.WINDMILL_STRIKE, upgrade=1)
+        state.player.energy = 0
+        play = self.when_playing_the_whole_hand(state)
+        play.state.end_turn()
+        self.see_enemy_lost_hp(play, 0)
+        self.assertEqual(5, play.state.get_memory_by_card(CardId.WINDMILL_STRIKE, "default"))
+
+    def test_deva_form(self):
+        state = self.given_state(CardId.DEVA_FORM)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_has_power(play, PowerId.DEVA, 1)
+
+    def test_deva_form_ethereal(self):
+        state = self.given_state(CardId.DEVA_FORM)
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(True, play.state.hand[0].ethereal)
