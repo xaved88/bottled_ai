@@ -130,7 +130,7 @@ class CardId(Enum):
     EVALUATE = 'evaluate'
     EVOLVE = 'evolve'
     EXPERTISE = 'expertise'
-    FASTING = 'fasting'
+    FASTING = 'fasting2'
     FEAR_NO_EVIL = 'fearnoevil'  # Weird id alert!
     FEED = 'feed'
     FEEL_NO_PAIN = 'feel no pain'

@@ -11,6 +11,7 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'reach heaven': 1,
     'deva form': 1,
     'signature move': 1,
+    'talk to the hand': 1,
     'swivel': 1,
     'spirit shield': 1,
     'flying sleeves': 1,

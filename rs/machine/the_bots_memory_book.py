@@ -27,6 +27,7 @@ class TheBotsMemoryBook:
         self.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.FROST_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 0
+        self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
         self.memory_general[MemoryItem.STANCE] = StanceType.NO_STANCE
 
         # clear memory_by_card based on reset_schedule
@@ -45,7 +46,6 @@ class TheBotsMemoryBook:
         self.memory_general[MemoryItem.ORANGE_PELLETS_ATTACK] = 0
         self.memory_general[MemoryItem.ORANGE_PELLETS_SKILL] = 0
         self.memory_general[MemoryItem.ORANGE_PELLETS_POWER] = 0
-        self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
 
     def initialize_memory_by_card(self, card_id: CardId):
         reset_schedule = {}

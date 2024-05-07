@@ -20,6 +20,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'signature move',
             'spirit shield',
             'fasting',
+            'talk to the hand',
             'master reality',
             'sands of time',
             'wreath of flame',

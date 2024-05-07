@@ -68,10 +68,16 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE])
 
-    def test_memory_of_type_last_played_is_reset_when_entering_a_new_turn(self):
+    def test_memory_of_type_last_played_is_not_reset_when_entering_a_new_turn(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
         mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 4
         new_state = load_resource_state('battles/memory/basic_turn_2.json', memory_book=mb)
+        self.assertEqual(4, new_state.memory_general[MemoryItem.TYPE_LAST_PLAYED])
+
+    def test_memory_of_type_last_played_is_reset_when_leaving_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 4
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.TYPE_LAST_PLAYED])
 
     def test_orange_pellet_memory_is_reset_when_entering_a_new_turn(self):
