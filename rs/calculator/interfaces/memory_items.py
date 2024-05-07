@@ -7,6 +7,7 @@ class MemoryItem(Enum):
     CLAWS_THIS_BATTLE = auto()
     FROST_THIS_BATTLE = auto()
     LAST_KNOWN_TURN = auto()
+    MANTRA_THIS_BATTLE = auto()
     NECRONOMICON_READY = auto()
     LIGHTNING_THIS_BATTLE = auto()
     TYPE_LAST_PLAYED = auto()

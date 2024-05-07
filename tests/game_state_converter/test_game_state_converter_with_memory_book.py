@@ -101,3 +101,15 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         mb.memory_general[MemoryItem.STANCE] = StanceType.CALM
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(StanceType.NO_STANCE, new_state.memory_general[MemoryItem.STANCE])
+
+    def test_memory_of_mantra_gained_is_not_reset_across_turns(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.MANTRA_THIS_BATTLE] = 2
+        new_state = load_resource_state('battles/memory/basic_turn_2.json', memory_book=mb)
+        self.assertEqual(2, new_state.memory_general[MemoryItem.MANTRA_THIS_BATTLE])
+
+    def test_memory_of_mantra_gained_is_reset_when_leaving_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.MANTRA_THIS_BATTLE] = 3
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(0, new_state.memory_general[MemoryItem.MANTRA_THIS_BATTLE])

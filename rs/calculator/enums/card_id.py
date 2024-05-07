@@ -47,6 +47,7 @@ class CardId(Enum):
     BOOT_SEQUENCE = 'bootsequence'  # Weird id alert!
     BOUNCING_FLASK = 'bouncing flask'
     BOWLING_BASH = 'bowling bash'
+    BRILLIANCE = 'brilliance'
     BUFFER = 'buffer'
     BULLET_TIME = 'bullet time'
     BULLSEYE = 'lockon'
@@ -70,6 +71,7 @@ class CardId(Enum):
     CLUMSY = 'clumsy'
     COOLHEADED = 'coolheaded'
     COLD_SNAP = 'cold snap'
+    COLLECT = 'collect'
     COMPILE_DRIVER = 'compile driver'
     CONCENTRATE = 'concentrate'
     CONCLUDE = 'conclude'
@@ -218,6 +220,7 @@ class CardId(Enum):
     PRAY = 'pray'
     PREDATOR = 'predator'
     PREPARED = 'prepared'
+    PRESSURE_POINTS = 'pathtovictory'
     PROSTRATE = 'prostrate'
     PROTECT = 'protect'
     PUMMEL = 'pummel'

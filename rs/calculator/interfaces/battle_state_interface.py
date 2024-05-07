@@ -121,6 +121,16 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
+    def is_new_turn(self) -> bool:
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
+    def is_turn_forced_to_be_over(self) -> bool:
+        # must be implemented by children
+        pass
+
+    @abc.abstractmethod
     def end_turn(self):
         # must be implemented by children
         pass

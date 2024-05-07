@@ -288,3 +288,23 @@ class CalculatorStancesTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_has_block(play, 3)
+
+    def test_gaining_mantra_actively_increases_mantra_counter(self):
+        state = self.given_state(CardId.PRAY)
+        state.player.energy = 1
+        play = self.when_playing_the_whole_hand(state)
+        play.state.end_turn()
+        self.see_enemy_lost_hp(play, 0)
+        self.assertEqual(3, play.state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE))
+
+    def test_devotion_increases_mantra_counter(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.DEVOTION: 2})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.assertEqual(2, play.state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE))
+
+    def test_damaru_increases_mantra_counter(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.DAMARU: 1})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE))

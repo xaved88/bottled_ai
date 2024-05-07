@@ -14,6 +14,7 @@ DEBUFFS: List[PowerId] = [
     PowerId.FASTING,
     PowerId.FRAIL,
     PowerId.LOCK_ON,
+    PowerId.MARK,
     PowerId.NO_DRAW,
     PowerId.POISON,
     PowerId.VULNERABLE,

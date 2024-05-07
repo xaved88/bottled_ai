@@ -77,10 +77,16 @@ class BattleState(BattleStateInterface):
         self.__is_first_play = is_first_play
         self.__starting_energy = self.player.energy
 
+        if RelicId.DAMARU in self.relics and self.is_new_turn():
+            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 1)
+
         if RelicId.TEARDROP_LOCKET in self.relics and \
-                self.get_memory_value(MemoryItem.CARDS_THIS_TURN) == 0 and \
+                self.is_new_turn() and \
                 self.get_memory_value(MemoryItem.LAST_KNOWN_TURN) == 1:
             self.change_stance(StanceType.CALM)
+
+        if PowerId.DEVOTION in self.player.powers and self.is_new_turn():
+            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, self.player.powers.get(PowerId.DEVOTION, 0))
 
         (card_index, target_index) = play
         card = self.hand[card_index]
@@ -345,14 +351,6 @@ class BattleState(BattleStateInterface):
                         self.spawn_in_draw(get_card(CardId.DAZED))
 
         for effect in effects:
-            # custom post hooks
-            for hook in effect.post_hooks:
-                hook(self, effect, card, target_index)
-
-            # stance
-            if effect.sets_stance:
-                self.change_stance(effect.sets_stance)
-
             # apply any powers from the card
             if effect.applies_powers:
                 if effect.target == TargetType.SELF:
@@ -362,6 +360,19 @@ class BattleState(BattleStateInterface):
                     for target in targets:
                         target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics,
                                           self.player.powers)
+
+                if PowerId.MANTRA in effect.applies_powers:
+                    for power in effect.applies_powers:
+                        if power is PowerId.MANTRA:
+                            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, effect.applies_powers[power])
+
+            # custom post hooks
+            for hook in effect.post_hooks:
+                hook(self, effect, card, target_index)
+
+            # stance
+            if effect.sets_stance:
+                self.change_stance(effect.sets_stance)
 
             # add cards to hand
             if effect.spawn_cards_in_hand:
@@ -770,9 +781,9 @@ class BattleState(BattleStateInterface):
                 if RelicId.GREMLIN_HORN in self.relics:
                     self.player.energy += 1
                     self.draw_cards(1)
-                if m.powers.get(PowerId.CORPSE_EXPLOSION_POWER, 0):
+                if m.powers.get(PowerId.CORPSE_EXPLOSION, 0):
                     corpse_explosion_damage = m.max_hp
-                    corpse_explosion_hits = m.powers.get(PowerId.CORPSE_EXPLOSION_POWER)
+                    corpse_explosion_hits = m.powers.get(PowerId.CORPSE_EXPLOSION)
                     for monster in self.monsters:
                         if monster.current_hp > 0:
                             monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits,
@@ -922,6 +933,12 @@ class BattleState(BattleStateInterface):
 
         self.hand.extend(retrieval_list)
         self.discard_pile = irrelevant_list.copy()
+
+    def is_new_turn(self) -> bool:
+        if self.get_memory_value(MemoryItem.CARDS_THIS_TURN) == 0:
+            return True
+        else:
+            return False
 
     def is_turn_forced_to_be_over(self) -> bool:
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:

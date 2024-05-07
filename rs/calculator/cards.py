@@ -663,3 +663,9 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.SWIVEL:
         return Card(card_id, upgrade, 2 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.COLLECT:
+        return Card(card_id, upgrade, Cost.x_cost, False, CardType.SKILL)
+    if card_id == CardId.PRESSURE_POINTS:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
+    if card_id == CardId.BRILLIANCE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)

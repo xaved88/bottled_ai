@@ -53,6 +53,7 @@ powers_we_like: List[PowerId] = [
     PowerId.BATTLE_HYMN,
     PowerId.BERSERK,
     PowerId.BUFFER,
+    PowerId.COLLECT,
     PowerId.CORRUPTION,
     PowerId.DARK_EMBRACE,
     PowerId.DEMON_FORM,

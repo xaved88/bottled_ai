@@ -761,3 +761,18 @@ def windmill_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInt
                              target_index: int = -1):
     base_damage = 7 if not card.upgrade else 10
     effect.damage = base_damage + state.get_memory_by_card(card.id, card.uuid)
+
+
+def pressure_points_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                              target_index: int = -1):
+    for monster in state.monsters:
+        if PowerId.MARK in monster.powers:
+            monster.inflict_damage(monster, monster.powers.get(PowerId.MARK, 0), 1, blockable=False,
+                                   vulnerable_modifier=1,
+                                   is_attack=False)
+
+
+def brilliance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                        target_index: int = -1):
+    base_damage = 12 if not card.upgrade else 16
+    effect.damage = base_damage + state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE)

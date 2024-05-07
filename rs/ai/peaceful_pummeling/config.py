@@ -3,6 +3,9 @@ CARD_REMOVAL_PRIORITY_LIST = ['strike', 'strike+', 'defend', 'defend+']
 DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'tranquility': 3,
     'crescendo': 3,
+    'collect': 1,
+    'brilliance': 1,
+    'pressure points': 1,
     'like water': 2,
     'carve reality': 1,
     'wallop': 1,

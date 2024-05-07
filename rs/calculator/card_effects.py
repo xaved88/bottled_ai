@@ -439,7 +439,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
     if card.id == CardId.CORPSE_EXPLOSION:
         return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.POISON: 6 if not card.upgrade else 9,
-                                                                       PowerId.CORPSE_EXPLOSION_POWER: 1})]
+                                                                       PowerId.CORPSE_EXPLOSION: 1})]
     if card.id == CardId.GRAND_FINALE:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=50 if not card.upgrade else 60, hits=1)]
     if card.id == CardId.WRAITH_FORM:
@@ -811,6 +811,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             post_hooks=[wallop_post_hook])]
     if card.id == CardId.WINDMILL_STRIKE:
         return [CardEffects(target=TargetType.MONSTER, hits=1, pre_hooks=[windmill_strike_pre_hook], retains=True)]
+    if card.id == CardId.BRILLIANCE:
+        return [CardEffects(target=TargetType.MONSTER, hits=1, pre_hooks=[brilliance_pre_hook])]
     if card.id == CardId.DEVA_FORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEVA: 1})]
     if card.id == CardId.WAVE_OF_THE_HAND:
@@ -831,4 +833,11 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         power_amount = 2 if not card.upgrade else 3
         return [CardEffects(damage=5 if not card.upgrade else 7, hits=1, target=TargetType.MONSTER,
                             applies_powers={PowerId.BLOCK_RETURN: power_amount})]
+    if card.id == CardId.COLLECT:
+        x_amount = get_x_trigger_amount(player) + min(card.upgrade, 1)
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.COLLECT: x_amount})]
+    if card.id == CardId.PRESSURE_POINTS:
+        power_amount = 8 if not card.upgrade else 11
+        return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.MARK: power_amount},
+                            post_hooks=[pressure_points_post_hook])]
     return [CardEffects()]

@@ -668,7 +668,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
 
     def test_corpse_explosion_deals_max_hp_damage_when_killed_actively(self):
         state = self.given_state(CardId.STRIKE_R, targets=2)
-        state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER] = 1
+        state.monsters[0].powers[PowerId.CORPSE_EXPLOSION] = 1
         state.monsters[0].current_hp = 1
         state.monsters[0].max_hp = 10
         play = self.when_playing_the_first_card(state)
@@ -678,7 +678,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
     def test_corpse_explosion_deals_max_hp_damage_when_killed_passively(self):
         state = self.given_state(CardId.WOUND, targets=2)
         state.monsters[0].powers[PowerId.POISON] = 1
-        state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER] = 1
+        state.monsters[0].powers[PowerId.CORPSE_EXPLOSION] = 1
         state.monsters[0].current_hp = 1
         state.monsters[0].max_hp = 50
         play = self.when_playing_the_first_card(state)
@@ -689,14 +689,14 @@ class CalculatorPowersTest(CalculatorTestFixture):
     def test_corpse_explosion_stacked_deals_more_damage(self):
         state = self.given_state(CardId.WOUND, targets=2)
         state.monsters[0].powers[PowerId.POISON] = 1
-        state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER] = 2
+        state.monsters[0].powers[PowerId.CORPSE_EXPLOSION] = 2
         state.monsters[0].current_hp = 1
         state.monsters[0].max_hp = 50
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_enemy_hp_is(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play,
-                               state.monsters[0].max_hp * state.monsters[0].powers[PowerId.CORPSE_EXPLOSION_POWER],
+                               state.monsters[0].max_hp * state.monsters[0].powers[PowerId.CORPSE_EXPLOSION],
                                enemy_index=1)
 
     def test_wraith_form_power_decreases_dexterity_on_turn_end(self):

@@ -27,6 +27,7 @@ class TheBotsMemoryBook:
         self.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.FROST_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 0
+        self.memory_general[MemoryItem.MANTRA_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
         self.memory_general[MemoryItem.STANCE] = StanceType.NO_STANCE
 

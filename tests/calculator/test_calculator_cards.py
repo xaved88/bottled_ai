@@ -1220,7 +1220,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 2)
         self.see_enemy_has_power(play, PowerId.POISON, 6)
-        self.see_enemy_has_power(play, PowerId.CORPSE_EXPLOSION_POWER, 1)
+        self.see_enemy_has_power(play, PowerId.CORPSE_EXPLOSION, 1)
 
     def test_grand_finale_is_not_playable(self):
         state = self.given_state(CardId.GRAND_FINALE, targets=2)
@@ -3055,3 +3055,39 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 5)
         self.see_player_exhaust_count(play, 1)
         self.see_enemy_has_power(play, PowerId.BLOCK_RETURN, 2)
+
+    def test_collect(self):
+        state = self.given_state(CardId.COLLECT, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 5)
+        self.see_player_has_power(play, PowerId.COLLECT, 6)
+
+    def test_pressure_points(self):
+        state = self.given_state(CardId.PRESSURE_POINTS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_enemy_has_power(play, PowerId.MARK, 8)
+
+    def test_pressure_points_multi_target(self):
+        state = self.given_state(CardId.PRESSURE_POINTS, targets=2)
+        state.monsters[1].powers = {PowerId.MARK: 15}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8, enemy_index=0)
+        self.see_enemy_lost_hp(play, 15, enemy_index=1)
+
+    def test_brilliance(self):
+        state = self.given_state(CardId.BRILLIANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 12)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_brilliance_damages_more_when_powered_up(self):
+        state = self.given_state(CardId.BRILLIANCE, upgrade=1)
+        state.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 3)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 19)
+        self.see_player_spent_energy(play, 1)
+        
