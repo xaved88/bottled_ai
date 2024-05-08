@@ -27,8 +27,8 @@ class BossRelicHandler(CommonBossRelicHandler):
             "calling bell",
             "empty cage",
             "black star",
-            "runic dome",
             "sacred bark",
+            "runic dome",
         ])
 
     def adjust_preferences_based_on_game_state(self, prefs: List[str], state: GameState, has_energy_relic: bool):

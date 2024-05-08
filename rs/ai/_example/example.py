@@ -14,6 +14,7 @@ from rs.common.handlers.common_discard_handler import CommonDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
 from rs.common.handlers.common_neow_handler import CommonNeowHandler
 from rs.common.handlers.common_purge_handler import CommonPurgeHandler
+from rs.common.handlers.common_scry_handler import CommonScryHandler
 from rs.common.handlers.common_shop_entrance_handler import CommonShopEntranceHandler
 from rs.common.handlers.common_transform_handler import CommonTransformHandler
 from rs.machine.ai_strategy import AiStrategy
@@ -38,5 +39,6 @@ EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
         CommonDiscardHandler(),
+        CommonScryHandler(),
     ]
 )

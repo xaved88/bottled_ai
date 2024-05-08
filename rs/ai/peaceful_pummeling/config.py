@@ -4,7 +4,6 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'tranquility': 4,
     'crescendo': 4,
     'collect': 1,
-    'pressure points': 4,
     'like water': 2,
     'carve reality': 1,
     'wallop': 1,

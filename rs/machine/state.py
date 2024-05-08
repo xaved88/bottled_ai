@@ -120,7 +120,8 @@ class GameState:
         return 1 if not state else state["can_pick_zero"]
 
     def current_action(self):
-        if self.game_state()["screen_type"] == "HAND_SELECT":
+        if self.game_state()["screen_type"] == "HAND_SELECT" or \
+                (self.combat_state() is not None and self.game_state()["screen_type"] == "GRID"):
             return self.game_state()["current_action"]
 
     def get_cards_discarded_this_turn(self):
