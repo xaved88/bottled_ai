@@ -12,4 +12,4 @@ class CommonScryHandler(Handler):
     def handle(self, state: GameState) -> HandlerAction:
         if presentation_mode:
             return HandlerAction(commands=[p_delay, 'confirm'])
-        return HandlerAction(commands=[p_delay, 'confirm'])
+        return HandlerAction(commands=['confirm'])

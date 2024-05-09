@@ -81,7 +81,8 @@ def log_run_results(state: GameState, elites: List[str], bosses: List[str]):
     message += " Relics: "
     for r in state.get_relics():
         message += r["name"] + ","
-    message += " Killed with Lesson Learned: " + str(state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
+    if state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED] > 0:
+        message += " Killed with Lesson Learned: " + str(state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
     message += "\n"
     with open(ROOT_DIR + "/logs/run_history.log", 'a+') as f:
         f.write(message)

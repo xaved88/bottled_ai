@@ -6,6 +6,7 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'blasphemy': 1,
     'alpha': 1,
     'lesson learned': 1,
+    'simmering fury': 1,
     'just lucky': 1,
     'foresight': 1,
     'nirvana': 1,

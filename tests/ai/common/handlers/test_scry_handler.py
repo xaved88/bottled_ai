@@ -7,4 +7,4 @@ class TestScryHandler(CoTestHandlerFixture):
     handler = CommonScryHandler
 
     def test_just_dismissing_scry(self):
-        self.execute_handler_tests('/other/do_not_die_to_scrying.json', [p_delay, 'confirm'])
+        self.execute_handler_tests('/other/do_not_die_to_scrying.json', ['confirm'])
