@@ -669,3 +669,15 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.SKILL)
     if card_id == CardId.BRILLIANCE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.CUT_THROUGH_FATE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.WEAVE:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)
+    if card_id == CardId.JUST_LUCKY:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.SKILL)
+    if card_id == CardId.THIRD_EYE:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.FORESIGHT:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
+    if card_id == CardId.NIRVANA:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)

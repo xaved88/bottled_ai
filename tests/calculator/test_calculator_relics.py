@@ -1,5 +1,4 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
-from rs.calculator.card_effects import get_card_effects
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
@@ -762,3 +761,8 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.DEFEND_R))
         play = self.when_making_the_most_plays(state)
         self.see_player_has_power(play, PowerId.WEAKENED, 4)
+
+    def test_golden_eye(self):
+        state = self.given_state(CardId.CUT_THROUGH_FATE, relics={RelicId.GOLDEN_EYE: 1})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_scryed(play, 4)

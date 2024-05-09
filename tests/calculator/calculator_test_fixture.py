@@ -114,6 +114,10 @@ class CalculatorTestFixture(unittest.TestCase):
         actual = len([1 for c in play.state.hand if "draw " in c.id.value])
         self.assertEqual(amount, actual)
 
+    def see_player_scryed(self, play: PlayPath, amount: int):
+        actual = len([1 for c in play.state.hand if "draw " in c.id.value])
+        self.assertEqual(amount, play.state.amount_scryed)
+
     def see_player_does_not_have_power(self, play: PlayPath, power_id: PowerId):
         self.assertEqual(None, play.state.player.powers.get(power_id))
 

@@ -31,7 +31,7 @@ class BattleState(BattleStateInterface):
                  must_discard: bool = False, amount_to_discard: int = 0, cards_discarded_this_turn: int = 0,
                  total_random_damage_dealt: int = 0, total_random_poison_added: int = 0,
                  orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_general: dict = None,
-                 memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None):
+                 memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None, amount_scryed: int = 0):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -51,6 +51,7 @@ class BattleState(BattleStateInterface):
         self.memory_general: dict = {} if memory_general is None else memory_general
         self.memory_by_card: dict[
             CardId, dict[ResetSchedule, dict[str, int]]] = {} if memory_by_card is None else memory_by_card
+        self.amount_scryed: int = amount_scryed
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -87,6 +88,9 @@ class BattleState(BattleStateInterface):
 
         if PowerId.DEVOTION in self.player.powers and self.is_new_turn():
             self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, self.player.powers.get(PowerId.DEVOTION, 0))
+
+        if PowerId.FORESIGHT in self.player.powers and self.is_new_turn():
+            self.scry(self.player.powers.get(PowerId.FORESIGHT, 0))
 
         (card_index, target_index) = play
         card = self.hand[card_index]
@@ -160,7 +164,8 @@ class BattleState(BattleStateInterface):
         # pain
         pain_count = len([1 for c in self.hand if c.id == CardId.PAIN])
         if pain_count:
-            self.player.inflict_damage(self.player, pain_count, 1, False, vulnerable_modifier=1, is_attack=False)
+            self.player.inflict_damage(self.player, pain_count, 1, blockable=False, vulnerable_modifier=1,
+                                       is_attack=False)
 
         # damage bonuses:
         damage_additive_bonus = 0
@@ -262,6 +267,9 @@ class BattleState(BattleStateInterface):
             # discard
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
+
+            if effect.amount_to_scry:
+                self.scry(effect.amount_to_scry)
 
         # memory stuff
         last_played = MemoryItem.TYPE_LAST_PLAYED
@@ -725,6 +733,17 @@ class BattleState(BattleStateInterface):
                 self.player.energy += 2
             else:
                 self.player.energy += 3
+
+    def scry(self, amount: int):
+        if RelicId.GOLDEN_EYE in self.relics:
+            amount += 2
+        self.amount_scryed += amount
+
+        if PowerId.NIRVANA in self.player.powers:
+            self.add_player_block(self.player.powers.get(PowerId.NIRVANA, 0))
+
+        # after scrying is handled (though handling scrying besides skipping it isn't implemented yet)
+        self.retrieve_from_discard(CardId.WEAVE, just_one=False)
 
     def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True,
                                      affected_by_vulnerable: bool = True, is_attack: bool = True,

@@ -42,3 +42,4 @@ class CardEffectsInterface:
     channel_orbs: List[OrbId]
     retains: bool
     sets_stance: StanceType
+    amount_to_scry: int

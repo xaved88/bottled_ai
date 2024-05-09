@@ -9,6 +9,7 @@ from enum import Enum
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
 # 'meat on the bone'
+# 'melange' # there would suddenly be a bunch of 'shuffle the draw pile' actions to suddenly take into account
 # 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
@@ -70,6 +71,7 @@ class RelicId(Enum):
     GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
     GOLD_PLATED_CABLES = 'gold-plated cables'
+    GOLDEN_EYE = 'goldeneye'
     GOLDEN_IDOL = 'golden idol'                     # N/A
     GREMLIN_HORN = 'gremlin horn'
     GREMLIN_VISAGE = 'gremlin visage'               # N/A

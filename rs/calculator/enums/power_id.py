@@ -53,6 +53,7 @@ class PowerId(Enum):
     FLAME_BARRIER = 'flame barrier'
     FLIGHT = 'flight'
     FOCUS = 'focus'
+    FORESIGHT = 'foresight'
     FRAIL = 'frail'
     FREE_ATTACK_POWER = 'freeattackpower'
     HEATSINK = 'heatsink'
@@ -78,6 +79,7 @@ class PowerId(Enum):
     MINION = 'minion'
     MODE_SHIFT = 'mode shift'
     NEXT_TURN_BLOCK = 'next turn block'  # It affects a future turn though, so we mostly don't do anything with it.
+    NIRVANA = 'nirvana'
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
     PANACHE = 'panache'

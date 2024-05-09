@@ -37,6 +37,7 @@ class CardEffects(CardEffectsInterface):
             channel_orbs: List[OrbId] = None,
             retains: bool = False,
             sets_stance: StanceType = None,
+            amount_to_scry: int = 0
     ):
         self.damage: int = damage
         self.hits: int = hits
@@ -63,6 +64,7 @@ class CardEffects(CardEffectsInterface):
         self.channel_orbs: List[OrbId] = [] if channel_orbs is None else channel_orbs
         self.retains: bool = retains
         self.sets_stance: StanceType = sets_stance
+        self.amount_to_scry: int = amount_to_scry
 
 
 def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: List[CardInterface],
@@ -840,4 +842,20 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         power_amount = 8 if not card.upgrade else 11
         return [CardEffects(target=TargetType.MONSTER, applies_powers={PowerId.MARK: power_amount},
                             post_hooks=[pressure_points_post_hook])]
+    if card.id == CardId.CUT_THROUGH_FATE:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 9, hits=1,
+                            draw=1, amount_to_scry=2 if not card.upgrade else 3)]
+    if card.id == CardId.JUST_LUCKY:
+        return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 4, hits=1),
+                CardEffects(target=TargetType.SELF, block=2 if not card.upgrade else 3,
+                            amount_to_scry=1 if not card.upgrade else 2)]
+    if card.id == CardId.THIRD_EYE:
+        return [CardEffects(target=TargetType.SELF, block=7 if not card.upgrade else 9,
+                            amount_to_scry=3 if not card.upgrade else 5)]
+    if card.id == CardId.FORESIGHT:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.FORESIGHT: 3 if not card.upgrade else 4})]
+    if card.id == CardId.WEAVE:
+        return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
+    if card.id == CardId.NIRVANA:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NIRVANA: 3 if not card.upgrade else 4})]
     return [CardEffects()]

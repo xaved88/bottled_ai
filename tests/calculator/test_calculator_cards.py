@@ -3090,4 +3090,59 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 19)
         self.see_player_spent_energy(play, 1)
-        
+
+    def test_cut_through_fate(self):
+        state = self.given_state(CardId.CUT_THROUGH_FATE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_drew_cards(play, 1)
+        self.see_player_scryed(play, 2)
+
+    def test_just_lucky(self):
+        state = self.given_state(CardId.JUST_LUCKY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_scryed(play, 1)
+        self.see_player_has_block(play, 2)
+        self.see_enemy_lost_hp(play, 3)
+
+    def test_just_lucky_upgraded(self):
+        state = self.given_state(CardId.JUST_LUCKY, upgrade=1)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_scryed(play, 2)
+        self.see_player_has_block(play, 3)
+        self.see_enemy_lost_hp(play, 4)
+
+    def test_third_eye(self):
+        state = self.given_state(CardId.THIRD_EYE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_block(play, 7)
+        self.see_player_scryed(play, 3)
+
+    def test_foresight(self):
+        state = self.given_state(CardId.FORESIGHT)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.FORESIGHT, 3)
+
+    def test_nirvana(self):
+        state = self.given_state(CardId.NIRVANA)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.NIRVANA, 3)
+
+    def test_weave(self):
+        state = self.given_state(CardId.WEAVE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_enemy_lost_hp(play, 4)
+
+    def test_weave_returns_to_hand_on_scry(self):
+        state = self.given_state(CardId.THIRD_EYE)
+        state.discard_pile.append(get_card(CardId.WEAVE))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_scryed(play, 3)
+        self.see_hand_card_is(play, CardId.WEAVE)

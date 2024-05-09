@@ -1239,3 +1239,17 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 25)
         self.see_player_spent_energy(play, 5)
         self.see_player_has_block(play, 10)
+
+    def test_foresight_scrys_at_beginning_of_turn(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.FORESIGHT: 3})
+        state.is_new_turn()
+        play = self.when_playing_the_first_card(state)
+        self.see_player_scryed(play, 3)
+
+    def test_nirvana_blocks_on_scry(self):
+        state = self.given_state(CardId.CUT_THROUGH_FATE, player_powers={PowerId.NIRVANA: 5})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_scryed(play, 2)
+        self.see_player_has_block(play, 5)
+
+
