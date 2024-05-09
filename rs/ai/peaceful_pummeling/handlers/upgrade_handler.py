@@ -7,6 +7,7 @@ class UpgradeHandler(CommonUpgradeHandler):
         super().__init__(priorities=[
             'apotheosis',
             'vigilance',
+            'blasphemy',
             'eruption',
             'crescendo',
             'tranquility',

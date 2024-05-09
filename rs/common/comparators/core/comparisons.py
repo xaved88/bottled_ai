@@ -219,3 +219,8 @@ def stance_is_not_wrath(best: CA, challenger: CA) -> Optional[bool]:
 def stance_is_calm(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.stance_is_calm() == challenger.stance_is_calm() \
         else challenger.stance_is_calm() > best.stance_is_calm()
+
+
+def no_blasphemy_without_permission(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.played_blasphemy_without_permission() == challenger.played_blasphemy_without_permission() \
+        else challenger.played_blasphemy_without_permission() < best.played_blasphemy_without_permission()

@@ -38,7 +38,7 @@ class ComparatorAssessment:
         return self.__get_value('bw', lambda: not [True for m in self.state.monsters if m.current_hp > 0])
 
     def battle_lost(self) -> bool:
-        return self.__get_value('bl', lambda: self.state.player.next_turn_hp <= 0)
+        return self.__get_value('bl', lambda: self.state.player.current_hp <= 0)
 
     def incoming_damage(self) -> int:
         return self.__get_value('id', lambda: self.original.player.current_hp - self.state.player.current_hp)
@@ -216,3 +216,11 @@ class ComparatorAssessment:
         return self.__get_value('stance_is_not_wrath',
                                 lambda: 1 if self.state.memory_general[
                                                  MemoryItem.STANCE] == StanceType.WRATH and not exit_plan else 0)
+
+    def played_blasphemy_without_permission(self) -> int:
+        protection = self.state.player.powers.get(PowerId.BUFFER, 0) >= 1 or \
+                     self.state.player.powers.get(PowerId.INTANGIBLE_PLAYER, 0) >= 2 or \
+                     self.state.player.relics.get(RelicId.INCENSE_BURNER, 0) == 5
+        safe = protection and self.state.player.current_hp >= 1
+        return self.__get_value('we_played_blasphemy_without_permission',
+                                lambda: 1 if self.state.player.powers.get(PowerId.BLASPHEMER, 0) and not safe else 0)

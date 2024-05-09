@@ -291,5 +291,11 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_prefer_generating_card_over_not(self):
         self.execute_handler_tests('/battles/general/play_carve_reality.json', ['play 1 0'])
 
-    def test_we_know_blasphemy_gets_the_win_before_it_kills_us(self):
-        self.execute_handler_tests('/battles/stances/play_blasphemy_to_win.json', ['play 1 0'])
+    def test_we_do_not_play_blasphemy_usually(self):
+        self.execute_handler_tests('/battles/powers/blasphemy_just_helps_damage.json', ['play 2 0'])
+
+    def test_we_play_blasphemy_if_we_can_win_with_it(self):
+        self.execute_handler_tests('/battles/powers/play_blasphemy_to_win.json', ['play 1 0'])
+
+    def test_we_do_play_blasphemy_with_protection(self):
+        self.execute_handler_tests('/battles/powers/blasphemy_has_protection.json', ['play 1 0'])

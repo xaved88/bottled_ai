@@ -581,16 +581,6 @@ class BattleState(BattleStateInterface):
                 if monster.powers[PowerId.EXPLOSIVE] < 1:
                     self.player.inflict_damage(monster, 30, 1, vulnerable_modifier=1, is_attack=False)
 
-        # our next turn
-        self.player.next_turn_hp = self.player.current_hp
-
-        if self.player.powers.get(PowerId.INTANGIBLE_PLAYER, 0):
-            self.player.powers[PowerId.INTANGIBLE_PLAYER] -= 1
-
-        if self.player.powers.get(PowerId.BLASPHEMER, 0):
-            self.player.inflict_damage(self.player, 999, 1, vulnerable_modifier=1, is_attack=False)
-            self.player.powers[PowerId.BLASPHEMER] -= 1
-
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
         for m in self.monsters:
