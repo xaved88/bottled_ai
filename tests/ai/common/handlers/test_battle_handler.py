@@ -299,3 +299,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_we_do_play_blasphemy_with_protection(self):
         self.execute_handler_tests('/battles/powers/blasphemy_has_protection.json', ['play 1 0'])
+
+    def test_prefer_killing_with_lesson_learned(self):
+        self.execute_handler_tests('/battles/memory/kill_with_lesson_learned.json', ['play 1 0'])

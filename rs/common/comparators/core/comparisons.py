@@ -18,6 +18,9 @@ def most_optimal_winning_battle(best: CA, challenger: CA) -> Optional[bool]:
     if best.player_max_hp() != challenger.player_max_hp():
         return challenger.player_max_hp() > best.player_max_hp()
 
+    if best.most_kills_with_lesson_learned() != challenger.most_kills_with_lesson_learned():
+        return challenger.most_kills_with_lesson_learned() > best.most_kills_with_lesson_learned()
+
     if best.power_up_ritual_dagger() != challenger.power_up_ritual_dagger():
         return challenger.power_up_ritual_dagger() > best.power_up_ritual_dagger()
 
@@ -224,3 +227,8 @@ def stance_is_calm(best: CA, challenger: CA) -> Optional[bool]:
 def no_blasphemy_without_permission(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.played_blasphemy_without_permission() == challenger.played_blasphemy_without_permission() \
         else challenger.played_blasphemy_without_permission() < best.played_blasphemy_without_permission()
+
+
+def killed_with_lesson_learned(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.most_kills_with_lesson_learned() == challenger.most_kills_with_lesson_learned() \
+        else challenger.most_kills_with_lesson_learned() > best.most_kills_with_lesson_learned()

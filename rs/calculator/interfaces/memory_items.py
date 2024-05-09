@@ -9,12 +9,13 @@ class MemoryItem(Enum):
     LAST_KNOWN_TURN = auto()
     MANTRA_THIS_BATTLE = auto()
     NECRONOMICON_READY = auto()
+    KILLED_WITH_LESSON_LEARNED = auto()
     LIGHTNING_THIS_BATTLE = auto()
+    STANCE = auto()
     TYPE_LAST_PLAYED = auto()
     ORANGE_PELLETS_ATTACK = auto()
     ORANGE_PELLETS_SKILL = auto()
     ORANGE_PELLETS_POWER = auto()
-    STANCE = auto()
 
 
 class ResetSchedule(Enum):

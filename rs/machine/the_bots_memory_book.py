@@ -20,16 +20,20 @@ class TheBotsMemoryBook:
         ]:
             self.initialize_memory_by_card(card_id)
 
+        # Doesn't wipe during run so that we can log the result :D
+        self.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED] = 0
+
         self.set_new_battle_state()
         self.set_new_turn_state()
 
     def set_new_battle_state(self):
         self.memory_general[MemoryItem.CLAWS_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.FROST_THIS_BATTLE] = 0
+
         self.memory_general[MemoryItem.LIGHTNING_THIS_BATTLE] = 0
         self.memory_general[MemoryItem.MANTRA_THIS_BATTLE] = 0
-        self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
         self.memory_general[MemoryItem.STANCE] = StanceType.NO_STANCE
+        self.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 0
 
         # clear memory_by_card based on reset_schedule
         for card_id, schedule_dict in self.memory_by_card.items():

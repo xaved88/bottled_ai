@@ -12,6 +12,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'crescendo',
             'tranquility',
             'alpha',
+            'lesson learned',
             'carve reality',
             'wallop',
             'windmill strike',

@@ -189,6 +189,7 @@ class CardId(Enum):
     JUST_LUCKY = 'justlucky'
     LEAP = 'leap'
     LEG_SWEEP = 'leg sweep'
+    LESSON_LEARNED = 'lessonlearned'
     LIKE_WATER = 'likewater'
     LIMIT_BREAK = 'limit break'
     LOOP = 'loop'

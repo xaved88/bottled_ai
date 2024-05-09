@@ -224,3 +224,7 @@ class ComparatorAssessment:
         safe = protection and self.state.player.current_hp >= 1
         return self.__get_value('we_played_blasphemy_without_permission',
                                 lambda: 1 if self.state.player.powers.get(PowerId.BLASPHEMER, 0) and not safe else 0)
+
+    def most_kills_with_lesson_learned(self) -> int:
+        return self.__get_value('most_kills_with_lesson_learned',
+                                lambda: self.state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])

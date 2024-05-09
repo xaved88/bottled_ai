@@ -870,4 +870,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                             applies_powers={PowerId.FAKE_ALPHA_BETA: 1})]
     if card.id == CardId.OMEGA:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.OMEGA: 50 if not card.upgrade else 60})]
+    if card.id == CardId.LESSON_LEARNED:
+        return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 13, hits=1,
+                            post_hooks=[lesson_learned_post_hook])]
     return [CardEffects()]

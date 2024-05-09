@@ -776,3 +776,9 @@ def brilliance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterfac
                         target_index: int = -1):
     base_damage = 12 if not card.upgrade else 16
     effect.damage = base_damage + state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE)
+
+
+def lesson_learned_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                             target_index: int = -1):
+    if state.monsters[target_index].current_hp <= 0 and not state.monsters[target_index].powers.get(PowerId.MINION):
+        state.add_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED, 1)

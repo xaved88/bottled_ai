@@ -3169,3 +3169,19 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 3)
         self.see_player_exhaust_count(play, 0)
         self.see_player_has_power(play, PowerId.OMEGA, 50)
+
+    def test_lesson_learned(self):
+        state = self.given_state(CardId.LESSON_LEARNED)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
+
+    def test_lesson_learned_triggers(self):
+        state = self.given_state(CardId.LESSON_LEARNED)
+        state.monsters[0].current_hp = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
