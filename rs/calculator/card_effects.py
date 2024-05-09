@@ -873,4 +873,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.LESSON_LEARNED:
         return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 13, hits=1,
                             post_hooks=[lesson_learned_post_hook])]
+    if card.id == CardId.SIMMERING_FURY:
+        return [
+            CardEffects(target=TargetType.SELF, applies_powers={PowerId.SIMMERING_RAGE: 2 if not card.upgrade else 2})]
     return [CardEffects()]

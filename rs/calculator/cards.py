@@ -692,3 +692,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.LESSON_LEARNED:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.SIMMERING_FURY:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)

@@ -92,6 +92,7 @@ powers_we_like: List[PowerId] = [
     PowerId.REPAIR,
     PowerId.RUSHDOWN,
     PowerId.SADISTIC,
+    PowerId.SIMMERING_RAGE,
     PowerId.STUDY,
     PowerId.THORNS,
     PowerId.THOUSAND_CUTS,

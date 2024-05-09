@@ -3185,3 +3185,10 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
         self.assertEqual(1, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
+
+    def test_simmering_fury(self):
+        state = self.given_state(CardId.SIMMERING_FURY)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.SIMMERING_RAGE, 2)
+

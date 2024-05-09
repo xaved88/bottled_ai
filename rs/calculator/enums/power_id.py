@@ -101,6 +101,7 @@ class PowerId(Enum):
     SHACKLED = 'shackled'  # Enemy regains strength at end of turn, not currently relevant
     SHARP_HIDE = 'sharp hide'
     SHIFTING = 'shifting'
+    SIMMERING_RAGE = 'simmeringrage'
     SPLIT = 'split'
     STORM = 'storm'
     STRENGTH = 'strength'
