@@ -858,4 +858,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=4 if not card.upgrade else 6, hits=1)]
     if card.id == CardId.NIRVANA:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NIRVANA: 3 if not card.upgrade else 4})]
+    if card.id == CardId.BLASPHEMY:
+        return [CardEffects(target=TargetType.SELF, sets_stance=StanceType.DIVINITY, applies_powers={PowerId.BLASPHEMER: 1},
+                            retains=False if not card.upgrade else True)]
     return [CardEffects()]

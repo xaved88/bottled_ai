@@ -3146,3 +3146,4 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_scryed(play, 3)
         self.see_hand_card_is(play, CardId.WEAVE)
+

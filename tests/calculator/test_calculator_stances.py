@@ -308,3 +308,10 @@ class CalculatorStancesTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.STRIKE_R))
         play = self.when_playing_the_whole_hand(state)
         self.assertEqual(1, play.state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE))
+
+    def test_blasphemy(self):
+        state = self.given_state(CardId.BLASPHEMY)
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.DIVINITY)
+        self.see_player_spent_energy(play, -2)
+        self.see_player_has_power(play, PowerId.BLASPHEMER, 1)

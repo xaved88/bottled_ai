@@ -290,3 +290,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_prefer_generating_card_over_not(self):
         self.execute_handler_tests('/battles/general/play_carve_reality.json', ['play 1 0'])
+
+    def test_we_know_blasphemy_gets_the_win_before_it_kills_us(self):
+        self.execute_handler_tests('/battles/stances/play_blasphemy_to_win.json', ['play 1 0'])

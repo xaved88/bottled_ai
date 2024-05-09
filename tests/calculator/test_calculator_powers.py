@@ -1252,4 +1252,17 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_scryed(play, 2)
         self.see_player_has_block(play, 5)
 
+    def test_blasphemer_deals_you_a_bunch_of_damage_after_turn_end_sort_of(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.BLASPHEMER: 1})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 50)
+
+    def test_you_need_2_intangible_to_survive_blasphemer(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.BLASPHEMER: 1, PowerId.INTANGIBLE_PLAYER: 2})
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 1)
+        self.see_player_has_power(play, PowerId.INTANGIBLE_PLAYER, 1)
+
 

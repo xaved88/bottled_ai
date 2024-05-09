@@ -38,7 +38,7 @@ class ComparatorAssessment:
         return self.__get_value('bw', lambda: not [True for m in self.state.monsters if m.current_hp > 0])
 
     def battle_lost(self) -> bool:
-        return self.__get_value('bl', lambda: self.state.player.current_hp <= 0)
+        return self.__get_value('bl', lambda: self.state.player.next_turn_hp <= 0)
 
     def incoming_damage(self) -> int:
         return self.__get_value('id', lambda: self.original.player.current_hp - self.state.player.current_hp)

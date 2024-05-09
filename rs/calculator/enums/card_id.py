@@ -37,6 +37,7 @@ class CardId(Enum):
     BIASED_COGNITION = 'biased cognition'
     BITE = 'bite'
     BLADE_DANCE = 'blade dance'
+    BLASPHEMY = 'blasphemy'
     BLIND = 'blind'
     BLIZZARD = 'blizzard'
     BLOODLETTING = 'bloodletting'
