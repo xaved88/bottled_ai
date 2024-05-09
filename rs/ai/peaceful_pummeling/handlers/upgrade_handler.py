@@ -11,6 +11,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'eruption',
             'crescendo',
             'tranquility',
+            'alpha',
             'carve reality',
             'wallop',
             'windmill strike',

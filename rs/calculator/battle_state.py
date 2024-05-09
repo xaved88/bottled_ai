@@ -485,6 +485,12 @@ class BattleState(BattleStateInterface):
                 if monster.current_hp > 0:
                     monster.inflict_damage(self.player, 52, 1, vulnerable_modifier=1, is_attack=False)
 
+        if self.player.powers.get(PowerId.OMEGA, 0):
+            for monster in self.monsters:
+                if monster.current_hp > 0:
+                    monster.inflict_damage(self.player, self.player.powers.get(PowerId.OMEGA, 0), 1,
+                                           vulnerable_modifier=1, is_attack=False)
+
         self.add_player_block(self.player.powers.get(PowerId.PLATED_ARMOR, 0))
         self.add_player_block(self.player.powers.get(PowerId.METALLICIZE, 0))
 

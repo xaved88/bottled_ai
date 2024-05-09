@@ -859,6 +859,15 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.NIRVANA:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.NIRVANA: 3 if not card.upgrade else 4})]
     if card.id == CardId.BLASPHEMY:
-        return [CardEffects(target=TargetType.SELF, sets_stance=StanceType.DIVINITY, applies_powers={PowerId.BLASPHEMER: 1},
-                            retains=False if not card.upgrade else True)]
+        return [
+            CardEffects(target=TargetType.SELF, sets_stance=StanceType.DIVINITY, applies_powers={PowerId.BLASPHEMER: 1},
+                        retains=False if not card.upgrade else True)]
+    if card.id == CardId.ALPHA:
+        return [CardEffects(target=TargetType.SELF, spawn_cards_in_draw=(get_card(CardId.BETA), 1),
+                            applies_powers={PowerId.FAKE_ALPHA_BETA: 1})]
+    if card.id == CardId.BETA:
+        return [CardEffects(target=TargetType.SELF, spawn_cards_in_draw=(get_card(CardId.OMEGA), 1),
+                            applies_powers={PowerId.FAKE_ALPHA_BETA: 1})]
+    if card.id == CardId.OMEGA:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.OMEGA: 50 if not card.upgrade else 60})]
     return [CardEffects()]

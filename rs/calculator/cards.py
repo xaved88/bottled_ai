@@ -683,3 +683,10 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.BLASPHEMY:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.ALPHA:
+        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.BETA:
+        base_cost = 2 if not upgrade else 1
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.OMEGA:
+        return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)

@@ -1252,4 +1252,11 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_scryed(play, 2)
         self.see_player_has_block(play, 5)
 
+    def test_omega_deals_damage(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.OMEGA: 50}, targets=2)
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 50, enemy_index=0)
+        self.see_enemy_lost_hp(play, 50, enemy_index=1)
+
 

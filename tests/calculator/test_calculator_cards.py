@@ -3147,3 +3147,25 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_scryed(play, 3)
         self.see_hand_card_is(play, CardId.WEAVE)
 
+    def test_alpha(self):
+        state = self.given_state(CardId.ALPHA)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(CardId.BETA, play.state.draw_pile[0].id)
+        self.see_player_has_power(play, PowerId.FAKE_ALPHA_BETA, 1)
+
+    def test_beta(self):
+        state = self.given_state(CardId.BETA)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(CardId.OMEGA, play.state.draw_pile[0].id)
+        self.see_player_has_power(play, PowerId.FAKE_ALPHA_BETA, 1)
+
+    def test_omega(self):
+        state = self.given_state(CardId.OMEGA)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_exhaust_count(play, 0)
+        self.see_player_has_power(play, PowerId.OMEGA, 50)

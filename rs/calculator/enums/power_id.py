@@ -3,6 +3,7 @@ from enum import Enum
 
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
+    FAKE_ALPHA_BETA = 'fake_alpha_beta'  # hack for valuing playing these cards
 
     AMPLIFY = 'amplify'
     ANGER_NOB = 'anger'  # Non-standard naming to distinguish it from Angry
@@ -83,6 +84,7 @@ class PowerId(Enum):
     NIRVANA = 'nirvana'
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
+    OMEGA = 'omega'
     PANACHE = 'panache'
     # We currently have damage provided by triggering the Panache power hardcoded to 10.
     # It's the first power we've run into that has multiple values associated with it.

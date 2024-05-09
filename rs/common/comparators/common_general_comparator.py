@@ -64,6 +64,7 @@ powers_we_like: List[PowerId] = [
     PowerId.ENVENOM,
     PowerId.ESTABLISHMENT,
     PowerId.EVOLVE,
+    PowerId.FAKE_ALPHA_BETA,
     PowerId.FEEL_NO_PAIN,
     PowerId.FIRE_BREATHING,
     PowerId.FOCUS,
