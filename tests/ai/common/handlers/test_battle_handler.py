@@ -302,3 +302,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_prefer_killing_with_lesson_learned(self):
         self.execute_handler_tests('/battles/memory/kill_with_lesson_learned.json', ['play 1 0'])
+
+    def test_prefer_having_enemy_talking_to_hand(self):
+        self.execute_handler_tests('/battles/general/kill_not_with_talk_to_hand.json', ['play 2 0'])

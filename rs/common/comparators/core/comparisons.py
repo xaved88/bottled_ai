@@ -85,6 +85,11 @@ def most_enemy_weak(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.enemy_weak() > best.enemy_weak()
 
 
+def most_enemy_talking_to_hand(best: CA, challenger: CA) -> Optional[bool]:
+    return None if max(1, best.enemy_talking_to_hand()) == max(1, challenger.enemy_talking_to_hand()) \
+        else challenger.enemy_talking_to_hand() > best.enemy_talking_to_hand()
+
+
 def lowest_health_monster(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.lowest_health_monster() == challenger.lowest_health_monster() \
         else challenger.lowest_health_monster() < best.lowest_health_monster()

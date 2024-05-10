@@ -22,6 +22,7 @@ default_comparisons = [
     most_dead_monsters,
     most_enemy_vulnerable,
     most_enemy_weak,
+    most_enemy_talking_to_hand,
     least_awkward_shivs,
     lowest_health_monster,
     lowest_total_monster_health,

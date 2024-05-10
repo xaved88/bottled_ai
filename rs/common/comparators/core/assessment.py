@@ -101,6 +101,11 @@ class ComparatorAssessment:
         return self.__get_value('ew',
                                 lambda: min(max([m.powers.get(PowerId.WEAKENED, 0) for m in self.state.monsters]), 4))
 
+    def enemy_talking_to_hand(self) -> int:
+        return self.__get_value('eh',
+                                lambda: min(max([m.powers.get(PowerId.BLOCK_RETURN, 0) for m in self.state.monsters]),
+                                            10))
+
     def player_max_hp(self) -> int:
         return self.__get_value('pmhp', lambda: self.state.player.max_hp)
 

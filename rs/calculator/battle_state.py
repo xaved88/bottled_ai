@@ -820,6 +820,7 @@ class BattleState(BattleStateInterface):
                             monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits,
                                                    vulnerable_modifier=1,
                                                    is_attack=False)
+                m.powers = {}
 
     def trigger_orbs_passives(self):
         focus = self.player.powers.get(PowerId.FOCUS, 0)

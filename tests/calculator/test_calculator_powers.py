@@ -696,8 +696,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_hp_is(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play,
-                               state.monsters[0].max_hp * state.monsters[0].powers[PowerId.CORPSE_EXPLOSION],
-                               enemy_index=1)
+                               state.monsters[0].max_hp * 2, enemy_index=1)
 
     def test_wraith_form_power_decreases_dexterity_on_turn_end(self):
         state = self.given_state(CardId.WOUND, player_powers={PowerId.WRAITH_FORM_POWER: 1})
