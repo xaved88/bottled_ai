@@ -111,6 +111,7 @@ class PowerId(Enum):
     THORNS = 'thorns'
     THOUSAND_CUTS = 'thousand cuts'
     TIME_WARP = 'time warp'
+    UNAWAKENED = 'unawakened'
     VIGOR = 'vigor'
     VULNERABLE = 'vulnerable'
     WAVE_OF_THE_HAND = 'waveofthehand'
