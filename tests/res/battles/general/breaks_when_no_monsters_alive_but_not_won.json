@@ -301,7 +301,7 @@
           "second_last_move_id": 1,
           "move_id": 2,
           "name": "Awakened One",
-          "current_hp": 58,
+          "current_hp": 5,
           "block": 0,
           "id": "AwakenedOne",
           "powers": [
@@ -335,32 +335,6 @@
           "exhausts": true,
           "is_playable": true,
           "cost": 1,
-          "name": "Blasphemy+",
-          "id": "Blasphemy",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "df2ce411-9208-4cd6-9454-d788f5503d04",
-          "upgrades": 1,
-          "rarity": "RARE",
-          "has_target": false
-        },
-        {
-          "exhausts": true,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Safety",
-          "id": "Safety",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "3a1fd8ff-d907-4b60-91a9-2aacb633bd8e",
-          "upgrades": 0,
-          "rarity": "SPECIAL",
-          "has_target": false
-        },
-        {
-          "exhausts": true,
-          "is_playable": true,
-          "cost": 1,
           "name": "Smite",
           "id": "Smite",
           "type": "ATTACK",
@@ -368,32 +342,6 @@
           "uuid": "0463eb1d-9572-459f-8640-ea807d73a2fa",
           "upgrades": 0,
           "rarity": "SPECIAL",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_P",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "e5aa8cfc-0d41-433e-b025-a1150b33fc6c",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 0,
-          "name": "Flurry of Blows",
-          "id": "FlurryOfBlows",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "d864f0f1-d72f-41fb-aa82-505f5c3895ed",
-          "upgrades": 0,
-          "rarity": "COMMON",
           "has_target": true
         },
         {
@@ -408,32 +356,6 @@
           "upgrades": 1,
           "rarity": "BASIC",
           "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Cut Through Fate",
-          "id": "CutThroughFate",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "2e3bf814-1fd1-4c96-9365-c1b78974e44f",
-          "upgrades": 0,
-          "rarity": "COMMON",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 0,
-          "name": "Halt",
-          "id": "Halt",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "88f8828b-d74e-466e-b72b-acd09d9789ea",
-          "upgrades": 0,
-          "rarity": "COMMON",
-          "has_target": false
         }
       ],
       "player": {

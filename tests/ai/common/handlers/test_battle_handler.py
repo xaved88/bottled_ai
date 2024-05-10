@@ -310,4 +310,4 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/kill_not_with_talk_to_hand.json', ['play 2 0'])
 
     def test_do_not_break_when_no_monsters_alive_to_be_vulnerable(self):
-        self.execute_handler_tests('/battles/general/breaks_when_no_monsters_alive_but_not_won.json', ['play 8'])
+        self.execute_handler_tests('/battles/general/breaks_when_no_monsters_alive_but_not_won.json', ['play 2 2'])
