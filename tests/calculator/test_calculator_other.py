@@ -1,7 +1,10 @@
 from calculator.calculator_test_fixture import CalculatorTestFixture
 from rs.calculator.cards import get_card
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.power_id import PowerId
+from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.executor import get_best_battle_path
+from rs.calculator.interfaces.memory_items import MemoryItem, StanceType
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from test_helpers.resources import load_resource_state
 
@@ -128,3 +131,35 @@ class CalculatorOtherTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 4)
         self.see_hand_card_is(play, CardId.WOUND, 0)
         self.see_hand_card_is(play, CardId.CLEAVE, 9)
+
+    def test_inflict_random_damage_respects_vulnerable_modifiers(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, relics={RelicId.PAPER_PHROG: 1})
+        state.monsters[0].powers[PowerId.VULNERABLE] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 15)
+        self.see_random_damage_dealt(play, 0)
+
+    def test_inflict_random_damage_respects_pen_nib_single_target(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, relics={RelicId.PEN_NIB: 9})
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 18)
+        self.see_random_damage_dealt(play, 0)
+
+    def test_inflict_random_damage_respects_pen_nib_multi_target(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, relics={RelicId.PEN_NIB: 9}, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_random_damage_dealt(play, 18)
+
+    def test_inflict_random_damage_respects_wrath_single_target(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 18)
+        self.see_random_damage_dealt(play, 0)
+
+    def test_inflict_random_damage_respects_wrath(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, targets=2)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_random_damage_dealt(play, 18)

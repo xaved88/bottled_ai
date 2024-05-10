@@ -183,16 +183,12 @@ def catalyst_upgraded_post_hook(state: BattleStateInterface, effect: CardEffects
 
 def sword_boomerang_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                               target_index: int = -1):
-    __sword_boomerang_post_hook(state, 3)
+    state.inflict_card_random_target_damage(card, 3, 3)
 
 
 def sword_boomerang_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                                        target_index: int = -1):
-    __sword_boomerang_post_hook(state, 4)
-
-
-def __sword_boomerang_post_hook(state: BattleStateInterface, hits: int):
-    state.inflict_random_target_damage(3, hits)
+    state.inflict_card_random_target_damage(card, 3, 4)
 
 
 def bouncing_flask_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -238,16 +234,12 @@ def impatience_upgraded_post_hook(state: BattleStateInterface, effect: CardEffec
 
 def rip_and_tear_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                            target_index: int = -1):
-    __rip_and_tear_post_hook(state, 7)
+    state.inflict_card_random_target_damage(card, 7, 2)
 
 
 def rip_and_tear_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                                     target_index: int = -1):
-    __rip_and_tear_post_hook(state, 9)
-
-
-def __rip_and_tear_post_hook(state: BattleStateInterface, damage: int):
-    state.inflict_random_target_damage(damage, 2)
+    state.inflict_card_random_target_damage(card, 9, 2)
 
 
 def stack_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -505,16 +497,8 @@ def conclude_post_hook(state: BattleStateInterface, effect: CardEffectsInterface
 
 def ragnarok_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                        target_index: int = -1):
-    __ragnarok_post_hook(state, 5)
-
-
-def ragnarok_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                target_index: int = -1):
-    __ragnarok_post_hook(state, 6)
-
-
-def __ragnarok_post_hook(state: BattleStateInterface, damage_and_hits: int):
-    state.inflict_random_target_damage(damage_and_hits, damage_and_hits)
+    damage_and_hits = 5 if not card.upgrade else 6
+    state.inflict_card_random_target_damage(card, damage_and_hits, damage_and_hits)
 
 
 def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -662,7 +646,7 @@ def thunder_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInte
     cracked_core_relic = 0 if RelicId.CRACKED_CORE not in state.relics else 1
     hits = state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE) + cracked_core_relic
 
-    state.inflict_random_target_damage(damage, hits)
+    state.inflict_card_random_target_damage(card, damage, hits)
 
 
 def judgement_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

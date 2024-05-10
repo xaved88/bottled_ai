@@ -167,38 +167,7 @@ class BattleState(BattleStateInterface):
             self.player.inflict_damage(self.player, pain_count, 1, blockable=False, vulnerable_modifier=1,
                                        is_attack=False)
 
-        # damage bonuses:
-        damage_additive_bonus = 0
-        if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
-            damage_additive_bonus += 3
-        if self.player.powers.get(PowerId.VIGOR) and card.type == CardType.ATTACK:
-            damage_additive_bonus += self.player.powers.get(PowerId.VIGOR, 0)
-            del self.player.powers[PowerId.VIGOR]
-        if self.player.powers.get(PowerId.ACCURACY) and card.id == CardId.SHIV:
-            damage_additive_bonus += self.player.powers.get(PowerId.ACCURACY, 0)
-        if RelicId.WRIST_BLADE in self.relics and card.cost == 0 and card.type == CardType.ATTACK:
-            damage_additive_bonus += 4
-
-        if damage_additive_bonus:
-            for effect in effects:
-                effect.damage += damage_additive_bonus
-        if self.player.powers.get(PowerId.DOUBLE_DAMAGE, 0) and card.type == CardType.ATTACK:
-            for effect in effects:
-                effect.damage *= 2
-        if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
-            for effect in effects:
-                effect.damage *= 2
-        if self.get_memory_value(MemoryItem.STANCE) == StanceType.WRATH:
-            for effect in effects:
-                effect.damage *= 2
-        if self.get_memory_value(MemoryItem.STANCE) == StanceType.DIVINITY:
-            for effect in effects:
-                effect.damage *= 3
-        player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
-
-        player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
-        player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
-        monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
+        self.apply_damage_bonuses(card, effects)
 
         # pre play stuff
         if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
@@ -214,6 +183,11 @@ class BattleState(BattleStateInterface):
                 self.player.heal(effect.heal, True, self.relics)
 
             # deal damage to target
+            player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
+            player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
+            player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
+            monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
+
             if effect.hits:
                 if effect.target == TargetType.SELF:
                     self.player.inflict_damage(base_damage=effect.damage, source=self.player, hits=1,
@@ -715,7 +689,7 @@ class BattleState(BattleStateInterface):
             self.player.energy += 1
 
         if RelicId.TINGSHA in self.relics:
-            self.inflict_random_target_damage(3, 1, affected_by_vulnerable=False, is_attack=False)
+            self.inflict_non_card_random_target_damage(3, 1)
 
     def exhaust_card(self, card: CardInterface, handle_remove: bool = True):
         self.exhaust_pile.append(card)
@@ -751,22 +725,69 @@ class BattleState(BattleStateInterface):
         # after scrying is handled (though handling scrying besides skipping it isn't implemented yet)
         self.retrieve_from_discard(CardId.WEAVE, just_one=False)
 
-    def inflict_random_target_damage(self, base_damage: int, hits: int, blockable: bool = True,
-                                     affected_by_vulnerable: bool = True, is_attack: bool = True,
-                                     min_hp_damage: int = 1, is_orbs: bool = False):
-        alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+    def apply_damage_bonuses(self, card: CardInterface, effects):
+        damage_additive_bonus = 0
+        if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
+            damage_additive_bonus += 3
+        if self.player.powers.get(PowerId.VIGOR) and card.type == CardType.ATTACK:
+            damage_additive_bonus += self.player.powers.get(PowerId.VIGOR, 0)
+            del self.player.powers[PowerId.VIGOR]
+        if self.player.powers.get(PowerId.ACCURACY) and card.id == CardId.SHIV:
+            damage_additive_bonus += self.player.powers.get(PowerId.ACCURACY, 0)
+        if RelicId.WRIST_BLADE in self.relics and card.cost == 0 and card.type == CardType.ATTACK:
+            damage_additive_bonus += 4
 
-        vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
-        if not affected_by_vulnerable:
-            vulnerable_modifier = 1
+        if damage_additive_bonus:
+            for effect in effects:
+                effect.damage += damage_additive_bonus
+        if self.player.powers.get(PowerId.DOUBLE_DAMAGE, 0) and card.type == CardType.ATTACK:
+            for effect in effects:
+                effect.damage *= 2
+        if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
+            for effect in effects:
+                effect.damage *= 2
+        if self.get_memory_value(MemoryItem.STANCE) == StanceType.WRATH:
+            for effect in effects:
+                effect.damage *= 2
+        if self.get_memory_value(MemoryItem.STANCE) == StanceType.DIVINITY:
+            for effect in effects:
+                effect.damage *= 3
+
+    def inflict_card_random_target_damage(self, card: CardInterface, card_base_damage, hits: int):
+
+        effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
+        for effect in effects:
+            effect.damage = card_base_damage
+
+            self.apply_damage_bonuses(card, effects)
+
+            player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
+            player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
+            player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
+            monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
+
+            damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
+            alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+
+            if alive_monsters == 1:
+                for monster in self.monsters:
+                    if monster.current_hp > 0:
+                        monster.inflict_damage(self.player, damage, hits, vulnerable_modifier=monster_vulnerable_modifier,
+                                               is_attack=True, min_hp_damage=player_min_attack_hp_damage)
+
+            else:
+                self.total_random_damage_dealt += damage * hits
+
+    def inflict_non_card_random_target_damage(self, damage: int, hits: int, is_orbs: bool = False):
+        alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
 
         if alive_monsters == 1:
             for monster in self.monsters:
                 if monster.current_hp > 0:
-                    monster.inflict_damage(self.player, base_damage, hits, blockable, vulnerable_modifier, is_attack,
-                                           min_hp_damage, is_orbs)
+                    monster.inflict_damage(self.player, damage, hits, vulnerable_modifier=1, is_attack=False, is_orbs=True)
+
         else:
-            self.total_random_damage_dealt += base_damage * hits
+            self.total_random_damage_dealt += damage * hits
 
     def add_random_poison(self, poison_amount: int, hits: int):
         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
@@ -782,8 +803,7 @@ class BattleState(BattleStateInterface):
         self.player.block += amount
         if amount > 0:
             if self.player.powers.get(PowerId.JUGGERNAUT, 0):
-                self.inflict_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1,
-                                                  affected_by_vulnerable=False, is_attack=False)
+                self.inflict_non_card_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1)
             if self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0):
                 for monster in self.monsters:
                     monster.add_powers({PowerId.WEAKENED: self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0)},
@@ -825,8 +845,7 @@ class BattleState(BattleStateInterface):
                             m.inflict_damage(self.player, 3 + focus, 1, vulnerable_modifier=1, is_attack=False,
                                              is_orbs=True)
                     else:
-                        self.inflict_random_target_damage(base_damage=3 + focus, hits=1, affected_by_vulnerable=False,
-                                                          is_attack=False, is_orbs=True)
+                        self.inflict_non_card_random_target_damage(damage=3 + focus, hits=1, is_orbs=True)
                 elif orb == OrbId.FROST:
                     self.add_player_block(2 + focus)
                 elif orb == OrbId.DARK:
@@ -847,8 +866,7 @@ class BattleState(BattleStateInterface):
                             m.inflict_damage(self.player, 8 + focus, 1, vulnerable_modifier=1, is_attack=False,
                                              is_orbs=True)
                     else:
-                        self.inflict_random_target_damage(base_damage=8 + focus, hits=1, affected_by_vulnerable=False,
-                                                          is_attack=False, is_orbs=True)
+                        self.inflict_non_card_random_target_damage(damage=8 + focus, hits=1, is_orbs=True)
                 elif orb == OrbId.FROST:
                     self.add_player_block(5 + focus)
                 elif orb == OrbId.DARK:

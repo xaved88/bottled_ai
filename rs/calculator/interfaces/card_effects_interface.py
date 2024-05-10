@@ -16,6 +16,7 @@ class TargetType(Enum):
     SELF = 1
     MONSTER = 2
     ALL_MONSTERS = 3
+    RANDOM = 4
 
 
 class CardEffectsInterface:
