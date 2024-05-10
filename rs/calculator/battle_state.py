@@ -167,7 +167,32 @@ class BattleState(BattleStateInterface):
             self.player.inflict_damage(self.player, pain_count, 1, blockable=False, vulnerable_modifier=1,
                                        is_attack=False)
 
-        self.apply_damage_bonuses(card, effects)
+        damage_additive_bonus = 0
+        if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
+            damage_additive_bonus += 3
+        if self.player.powers.get(PowerId.VIGOR) and card.type == CardType.ATTACK:
+            damage_additive_bonus += self.player.powers.get(PowerId.VIGOR, 0)
+            del self.player.powers[PowerId.VIGOR]
+        if self.player.powers.get(PowerId.ACCURACY) and card.id == CardId.SHIV:
+            damage_additive_bonus += self.player.powers.get(PowerId.ACCURACY, 0)
+        if RelicId.WRIST_BLADE in self.relics and card.cost == 0 and card.type == CardType.ATTACK:
+            damage_additive_bonus += 4
+
+        if damage_additive_bonus:
+            for effect in effects:
+                effect.damage += damage_additive_bonus
+        if self.player.powers.get(PowerId.DOUBLE_DAMAGE, 0) and card.type == CardType.ATTACK:
+            for effect in effects:
+                effect.damage *= 2
+        if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
+            for effect in effects:
+                effect.damage *= 2
+        if self.get_memory_value(MemoryItem.STANCE) == StanceType.WRATH:
+            for effect in effects:
+                effect.damage *= 2
+        if self.get_memory_value(MemoryItem.STANCE) == StanceType.DIVINITY:
+            for effect in effects:
+                effect.damage *= 3
 
         # pre play stuff
         if self.player.powers.get(PowerId.RAGE) and card.type == CardType.ATTACK:
@@ -738,33 +763,6 @@ class BattleState(BattleStateInterface):
         # after scrying is handled (though handling scrying besides skipping it isn't implemented yet)
         self.retrieve_from_discard(CardId.WEAVE, just_one=False)
 
-    def apply_damage_bonuses(self, card: CardInterface, effects):
-        damage_additive_bonus = 0
-        if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
-            damage_additive_bonus += 3
-        if self.player.powers.get(PowerId.VIGOR) and card.type == CardType.ATTACK:
-            damage_additive_bonus += self.player.powers.get(PowerId.VIGOR, 0)
-            del self.player.powers[PowerId.VIGOR]
-        if self.player.powers.get(PowerId.ACCURACY) and card.id == CardId.SHIV:
-            damage_additive_bonus += self.player.powers.get(PowerId.ACCURACY, 0)
-        if RelicId.WRIST_BLADE in self.relics and card.cost == 0 and card.type == CardType.ATTACK:
-            damage_additive_bonus += 4
-
-        if damage_additive_bonus:
-            for effect in effects:
-                effect.damage += damage_additive_bonus
-        if self.player.powers.get(PowerId.DOUBLE_DAMAGE, 0) and card.type == CardType.ATTACK:
-            for effect in effects:
-                effect.damage *= 2
-        if self.relics.get(RelicId.PEN_NIB, 0) >= 9 and card.type == CardType.ATTACK:
-            for effect in effects:
-                effect.damage *= 2
-        if self.get_memory_value(MemoryItem.STANCE) == StanceType.WRATH:
-            for effect in effects:
-                effect.damage *= 2
-        if self.get_memory_value(MemoryItem.STANCE) == StanceType.DIVINITY:
-            for effect in effects:
-                effect.damage *= 3
 
     def inflict_non_card_random_target_damage(self, damage: int, hits: int, is_orbs: bool = False):
         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
