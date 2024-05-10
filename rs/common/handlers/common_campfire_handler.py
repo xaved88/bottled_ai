@@ -32,7 +32,7 @@ class CommonCampfireHandler(Handler):
 
         choice = "0"
 
-        if can_rest and (worth_healing and not pantograph_will_cover_it) or state.floor() == 49:
+        if can_rest and ((worth_healing and not pantograph_will_cover_it) or state.floor() == 49):
             choice = "rest"
         elif can_toke and state.deck.contains_curses():
             choice = "toke"
