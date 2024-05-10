@@ -13,10 +13,11 @@ class UpgradeHandler(CommonUpgradeHandler):
             'blasphemy',
             'vigilance',
             'talk to the hand',
-            'rushdown', # removed if snecko
+            'rushdown',  # removed if snecko
             'tantrum',
             'crescendo',  # removed if snecko
             'tranquility',  # removed if snecko
+            'cut_through_fate',
             'reach heaven',
             'mental fortress',
             'fear no evil',
