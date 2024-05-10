@@ -1,4 +1,7 @@
+from typing import List
+
 from rs.common.handlers.common_upgrade_handler import CommonUpgradeHandler
+from rs.machine.state import GameState
 
 
 class UpgradeHandler(CommonUpgradeHandler):
@@ -6,42 +9,40 @@ class UpgradeHandler(CommonUpgradeHandler):
     def __init__(self):
         super().__init__(priorities=[
             'apotheosis',
-            'vigilance',
-            'blasphemy',
             'eruption',
-            'crescendo',
-            'tranquility',
-            'alpha',
-            'lesson learned',
-            'carve reality',
-            'wallop',
-            'windmill strike',
-            'perseverance',
-            'wheel kick',
-            'swivel',
-            'reach heaven',
-            'signature move',
-            'spirit shield',
+            'blasphemy',
+            'vigilance',
             'talk to the hand',
-            'master reality',
-            'sands of time',
-            'evaluate',
-            'crush joints',
-            'sash whip',
-            'follow-up',
-            'flying sleeves',
-            'deceive reality',
-            'like water',
-            'wave of the hand',
-            'empty body',
-            'empty fist',
-            'empty mind',
-            'indignation',
-            'rushdown',
+            'rushdown', # removed if snecko
             'tantrum',
+            'crescendo',  # removed if snecko
+            'tranquility',  # removed if snecko
+            'reach heaven',
             'mental fortress',
             'fear no evil',
-            'halt',
+            'reach heaven',
+            'empty body',
+            'empty fist',
+            'inner peace',
             'flurry of blows',
-            'prostrate',
+            'lesson learned',
+            'halt',  # removed if snecko
+            'carve reality',
+            'wallop',
+            'battle hymn',
+            'spirit shield',
+            'sands of time',
+            'perseverance',
+            'wheel kick',
+            'like water',
+            'crush joints',
+            'deceive reality',
+            'follow-up',
         ])
+
+    def transform_priorities_based_on_game_state(self, priorities: List[str], state: GameState):
+        if state.has_relic("Snecko Eye"):
+            priorities.remove('crescendo')
+            priorities.remove('tranquility')
+            priorities.remove('halt')
+            priorities.remove('rushdown')

@@ -7,10 +7,10 @@ from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 standard_cards_to_purge: list[str] = [
-    'Strike',
     'Defend',
-    'Strike+',
+    'Strike',
     'Defend+',
+    'Strike+',
 ]
 
 
@@ -20,20 +20,20 @@ class ShopPurchaseHandler(Handler):
         self.relics = [
             'Bag of Marbles',
             'Pen Nib',
-            'Strike Dummy',
-            'Paper Phrog',
-            'Preserved Insect',
+            'Damaru',
+            'Shuriken',
             'Red Skull',
+            'Preserved Insect',
             'Meat on the Bone',
             'Eternal Feather',
             'Regal Pillow',
             'Lee’s Waffle',
             'Meal Ticket',
             'Strawberry',
+            'Strike Dummy',
             'Toy Ornithopter',
             'Pantograph',
             'Pear',
-            'Orichalcum',
             'Anchor',
             'Horn Cleat',
             'Self-Forming Clay',

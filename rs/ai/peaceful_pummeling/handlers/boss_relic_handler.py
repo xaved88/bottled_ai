@@ -15,16 +15,15 @@ class BossRelicHandler(CommonBossRelicHandler):
             "holy water"
             "cursed key",
             "fusion hammer",
-            "snecko eye",
-            "mark of pain",  # removed if already have another energy relic
+            "mark of pain",
             "busted crown",  # removed if already have another energy relic or it's act 1
             "coffee dripper",  # removed if already have another energy relic or it's act 1
             "slaver\u0027s collar",
-            "velvet choker",
-            "runic cube",
+            "snecko eye",
             "runic pyramid",
-            "black blood",
+            "runic cube",
             "calling bell",
+            "velvet choker",
             "empty cage",
             "black star",
             "sacred bark",
@@ -37,6 +36,3 @@ class BossRelicHandler(CommonBossRelicHandler):
         if act == 1 or has_energy_relic:
             prefs.remove('busted crown')
             prefs.remove('coffee dripper')
-
-        if has_energy_relic:
-            prefs.remove('mark of pain')
