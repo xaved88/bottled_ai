@@ -37,7 +37,7 @@ class ComparatorAssessment:
     def battle_won(self) -> bool:
         unawakened_present = False
         for mon in self.state.monsters:
-            if mon.powers.get(PowerId.UNAWAKENED):
+            if mon.powers.get(PowerId.UNAWAKENED, 0):
                 unawakened_present = True
         return self.__get_value('bw', lambda: (
                     not [True for m in self.state.monsters if m.current_hp > 0] and not unawakened_present))
@@ -54,7 +54,7 @@ class ComparatorAssessment:
     def monsters_vulnerable_hp(self) -> List[int]:
         return self.__get_value('mvhp',
                                 lambda: [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3) for
-                                         monster in self.state.monsters if monster.current_hp > 0])
+                                         monster in self.state.monsters if monster.current_hp > 0] or [0])
 
     def lowest_health_monster(self) -> int:
         return self.__get_value('lhm', lambda: 0 if self.battle_won() else min(self.monsters_vulnerable_hp()))
