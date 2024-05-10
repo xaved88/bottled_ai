@@ -616,7 +616,7 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 1)
         self.see_enemy_lost_hp(play, 6)
 
-    def test_cracked_orb_increases_lightning_strike_damage(self):
+    def test_cracked_orb_increases_thunder_strike_damage(self):
         state = self.given_state(CardId.THUNDER_STRIKE, targets=2, relics={RelicId.CRACKED_CORE: 1})
         state.add_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE, 0)
         play = self.when_playing_the_first_card(state)

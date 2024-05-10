@@ -181,27 +181,9 @@ def catalyst_upgraded_post_hook(state: BattleStateInterface, effect: CardEffects
                                                     state.player.powers)
 
 
-def sword_boomerang_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                              target_index: int = -1):
-    state.inflict_card_random_target_damage(card, 3, 3)
-
-
-def sword_boomerang_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                       target_index: int = -1):
-    state.inflict_card_random_target_damage(card, 3, 4)
-
-
 def bouncing_flask_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                              target_index: int = -1):
-    __bouncing_flask_post_hook(state, 3)
-
-
-def bouncing_flask_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                      target_index: int = -1):
-    __bouncing_flask_post_hook(state, 4)
-
-
-def __bouncing_flask_post_hook(state: BattleStateInterface, hits: int):
+    hits = 3 if not card.upgrade else 4
     state.add_random_poison(3, hits)
 
 
@@ -221,25 +203,9 @@ def enlightenment_post_hook(state: BattleStateInterface, effect: CardEffectsInte
 def impatience_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                          target_index: int = -1):
     attacks_in_hand = len([True for c in state.hand if c.type == CardType.ATTACK])
+    draw = 2 if not card.upgrade else 3
     if attacks_in_hand == 0:
-        state.draw_cards(2)
-
-
-def impatience_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                  target_index: int = -1):
-    attacks_in_hand = len([True for c in state.hand if c.type == CardType.ATTACK])
-    if attacks_in_hand == 0:
-        state.draw_cards(3)
-
-
-def rip_and_tear_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                           target_index: int = -1):
-    state.inflict_card_random_target_damage(card, 7, 2)
-
-
-def rip_and_tear_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                    target_index: int = -1):
-    state.inflict_card_random_target_damage(card, 9, 2)
+        state.draw_cards(draw)
 
 
 def stack_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -358,15 +324,8 @@ def fission_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsI
 
 def reboot_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                      target_index: int = -1):
-    __reboot_post_hook(state, 4)
+    amount_to_draw = 4 if not card.upgrade else 6
 
-
-def reboot_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                              target_index: int = -1):
-    __reboot_post_hook(state, 6)
-
-
-def __reboot_post_hook(state: BattleStateInterface, amount_to_draw: int):
     # Shuffling into the opposite pile as what the card says to use existing functionality around reshuffling the draw pile
     amount = len(state.hand)
     for _ in range(amount):
@@ -493,12 +452,6 @@ def bowling_bash_pre_hook(state: BattleStateInterface, effect: CardEffectsInterf
 def conclude_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                        target_index: int = -1):
     state.end_turn()
-
-
-def ragnarok_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                       target_index: int = -1):
-    damage_and_hits = 5 if not card.upgrade else 6
-    state.inflict_card_random_target_damage(card, damage_and_hits, damage_and_hits)
 
 
 def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -641,12 +594,8 @@ def blizzard_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface,
 
 def thunder_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                             target_index: int = -1):
-    damage = 7 if not card.upgrade else 9
-
     cracked_core_relic = 0 if RelicId.CRACKED_CORE not in state.relics else 1
-    hits = state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE) + cracked_core_relic
-
-    state.inflict_card_random_target_damage(card, damage, hits)
+    effect.hits = state.get_memory_value(MemoryItem.LIGHTNING_THIS_BATTLE) + cracked_core_relic
 
 
 def judgement_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

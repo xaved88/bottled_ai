@@ -195,6 +195,19 @@ class BattleState(BattleStateInterface):
                                                vulnerable_modifier=1, is_attack=False)
                 else:
                     damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
+                    if effect.target == TargetType.RANDOM:
+                        alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+
+                        if alive_monsters == 1:
+                            for monster in self.monsters:
+                                if monster.current_hp > 0:
+                                    monster.inflict_damage(self.player, damage, effect.hits,
+                                                           vulnerable_modifier=monster_vulnerable_modifier,
+                                                           min_hp_damage=player_min_attack_hp_damage)
+
+                        else:
+                            self.total_random_damage_dealt += damage * effect.hits
+
                     if effect.target == TargetType.MONSTER:
                         (hp_damage) = self.monsters[target_index].inflict_damage(
                             source=self.player, base_damage=damage,
@@ -752,31 +765,6 @@ class BattleState(BattleStateInterface):
         if self.get_memory_value(MemoryItem.STANCE) == StanceType.DIVINITY:
             for effect in effects:
                 effect.damage *= 3
-
-    def inflict_card_random_target_damage(self, card: CardInterface, card_base_damage, hits: int):
-
-        effects = get_card_effects(card, self.player, self.draw_pile, self.discard_pile, self.hand)
-        for effect in effects:
-            effect.damage = card_base_damage
-
-            self.apply_damage_bonuses(card, effects)
-
-            player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
-            player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
-            player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
-            monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
-
-            damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
-            alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
-
-            if alive_monsters == 1:
-                for monster in self.monsters:
-                    if monster.current_hp > 0:
-                        monster.inflict_damage(self.player, damage, hits, vulnerable_modifier=monster_vulnerable_modifier,
-                                               is_attack=True, min_hp_damage=player_min_attack_hp_damage)
-
-            else:
-                self.total_random_damage_dealt += damage * hits
 
     def inflict_non_card_random_target_damage(self, damage: int, hits: int, is_orbs: bool = False):
         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])

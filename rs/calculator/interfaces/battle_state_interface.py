@@ -55,11 +55,6 @@ class BattleStateInterface(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def inflict_card_random_target_damage(self, card: CardInterface, card_base_damage: int, hits: int):
-        # must be implemented by children
-        pass
-
-    @abc.abstractmethod
     def inflict_non_card_random_target_damage(self, base_damage: int, hits: int, is_orbs: bool = False):
         # must be implemented by children
         pass
