@@ -8,6 +8,7 @@ class CardRewardHandler(CommonCardRewardHandler):
         super().__init__(
             cards_desired_for_deck={
                 'talk to the hand': 3,
+                'blasphemy': 1,
                 'rushdown': 1,
                 'tantrum': 1,
                 'crescendo': 3,
@@ -17,22 +18,22 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'empty body': 3,
                 'empty fist': 1,
                 'inner peace': 1,
-                'blasphemy': 1,
                 'reach heaven': 1,
                 'flurry of blows': 2,
                 'cut through fate': 1,
                 'halt': 1,  # removed if snecko
+                'deceive reality': 1,
                 'carve reality': 1,
                 'wallop': 1,
                 'battle hymn': 1,
                 'spirit shield': 1,
                 'sands of time': 1,
+                'ragnarok': 1,
                 'perseverance': 1,
                 'wheel kick': 1,
                 'like water': 1,
                 'crush joints': 1,
                 'follow up': 1,
-                'deceive reality': 1,
             }, cards_desired_from_potions={
                 'apotheosis': 1,
                 'deva form': 1,

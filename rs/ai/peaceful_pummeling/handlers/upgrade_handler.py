@@ -18,6 +18,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'crescendo',  # removed if snecko
             'tranquility',  # removed if snecko
             'cut_through_fate',
+            'ragnarok',
             'reach heaven',
             'mental fortress',
             'fear no evil',
