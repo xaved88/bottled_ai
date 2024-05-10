@@ -11,8 +11,8 @@ class BossRelicHandler(CommonBossRelicHandler):
             "sozu",
             "philosopher\u0027s stone",
             "ectoplasm",
-            "violet lotus"
-            "holy water"
+            "violet lotus",
+            "holy water",
             "cursed key",
             "fusion hammer",
             "mark of pain",
