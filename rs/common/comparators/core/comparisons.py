@@ -229,9 +229,9 @@ def stance_is_calm(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.stance_is_calm() > best.stance_is_calm()
 
 
-def no_blasphemy_without_permission(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.played_blasphemy_without_permission() == challenger.played_blasphemy_without_permission() \
-        else challenger.played_blasphemy_without_permission() < best.played_blasphemy_without_permission()
+def no_blasphemy(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.played_blasphemy() == challenger.played_blasphemy() \
+        else challenger.played_blasphemy() < best.played_blasphemy()
 
 
 def killed_with_lesson_learned(best: CA, challenger: CA) -> Optional[bool]:

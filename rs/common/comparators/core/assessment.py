@@ -227,13 +227,9 @@ class ComparatorAssessment:
                                 lambda: 1 if self.state.memory_general[
                                                  MemoryItem.STANCE] == StanceType.WRATH and not exit_plan else 0)
 
-    def played_blasphemy_without_permission(self) -> int:
-        protection = self.state.player.powers.get(PowerId.BUFFER, 0) >= 1 or \
-                     self.state.player.powers.get(PowerId.INTANGIBLE_PLAYER, 0) >= 2 or \
-                     self.state.player.relics.get(RelicId.INCENSE_BURNER, 0) == 5
-        safe = protection and self.state.player.current_hp >= 1
+    def played_blasphemy(self) -> int:
         return self.__get_value('we_played_blasphemy_without_permission',
-                                lambda: 1 if self.state.player.powers.get(PowerId.BLASPHEMER, 0) and not safe else 0)
+                                lambda: 1 if self.state.player.powers.get(PowerId.BLASPHEMER, 0) else 0)
 
     def most_kills_with_lesson_learned(self) -> int:
         return self.__get_value('most_kills_with_lesson_learned',

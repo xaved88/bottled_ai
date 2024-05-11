@@ -14,7 +14,7 @@ default_comparisons = [
     battle_not_lost,
     battle_is_won,
     most_optimal_winning_battle,
-    no_blasphemy_without_permission,
+    no_blasphemy,
     most_free_early_draw,
     most_free_draw,
     most_lasting_intangible,

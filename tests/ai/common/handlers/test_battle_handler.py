@@ -297,9 +297,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_we_play_blasphemy_if_we_can_win_with_it(self):
         self.execute_handler_tests('/battles/powers/play_blasphemy_to_win.json', ['play 1 0'])
 
-    def test_we_do_play_blasphemy_with_protection(self):
-        self.execute_handler_tests('/battles/powers/blasphemy_has_protection.json', ['play 1 0'])
-
     def test_we_do_not_play_blasphemy_when_unawakened_present(self):
         self.execute_handler_tests('/battles/powers/do_not_blaspheme_unawakened_bird.json', ['play 2 0'])
 
