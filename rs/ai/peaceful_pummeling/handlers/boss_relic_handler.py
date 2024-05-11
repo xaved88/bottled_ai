@@ -19,14 +19,14 @@ class BossRelicHandler(CommonBossRelicHandler):
             "busted crown",  # removed if already have another energy relic or it's act 1
             "coffee dripper",  # removed if already have another energy relic or it's act 1
             "slaver\u0027s collar",
-            "snecko eye",
             "runic pyramid",
             "runic cube",
             "calling bell",
             "empty cage",
+            "snecko eye",
             "black star",
-            "sacred bark",
             "tiny house",
+            "sacred bark",
             "astrolabe",
             # pandora's box, # scary
             # "velvet choker", scary
