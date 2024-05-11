@@ -23,11 +23,14 @@ class BossRelicHandler(CommonBossRelicHandler):
             "runic pyramid",
             "runic cube",
             "calling bell",
-            "velvet choker",
             "empty cage",
             "black star",
             "sacred bark",
-            "runic dome",
+            "tiny house",
+            "astrolabe",
+            # pandora's box, # scary
+            # "velvet choker", scary
+            # "runic dome", scary
         ])
 
     def adjust_preferences_based_on_game_state(self, prefs: List[str], state: GameState, has_energy_relic: bool):
