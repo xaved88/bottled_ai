@@ -209,6 +209,7 @@ class CardId(Enum):
     MULTI_CAST = 'multicast'
     NEUTRALIZE = 'neutralize'
     NIRVANA = 'nirvana'
+    NORMALITY = 'normality'
     NOXIOUS_FUMES = 'noxious fumes'
     OFFERING = 'offering'
     OMEGA = 'omega'

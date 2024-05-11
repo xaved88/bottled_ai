@@ -763,14 +763,14 @@ class BattleState(BattleStateInterface):
         # after scrying is handled (though handling scrying besides skipping it isn't implemented yet)
         self.retrieve_from_discard(CardId.WEAVE, just_one=False)
 
-
     def inflict_non_card_random_target_damage(self, damage: int, hits: int, is_orbs: bool = False):
         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
 
         if alive_monsters == 1:
             for monster in self.monsters:
                 if monster.current_hp > 0:
-                    monster.inflict_damage(self.player, damage, hits, vulnerable_modifier=1, is_attack=False, is_orbs=True)
+                    monster.inflict_damage(self.player, damage, hits, vulnerable_modifier=1, is_attack=False,
+                                           is_orbs=True)
 
         else:
             self.total_random_damage_dealt += damage * hits
@@ -975,12 +975,19 @@ class BattleState(BattleStateInterface):
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:
             return True  # all monsters are dead
 
+        normality_full = False
+        for c in self.hand:
+            if c.id == CardId.NORMALITY and self.get_memory_value(MemoryItem.CARDS_THIS_TURN) >= 3:
+                normality_full = True
+
         # Prep time warp
         time_warp_full = False
         for idx, monster in enumerate(self.monsters):
             if monster.powers.get(PowerId.TIME_WARP, 0) >= 12:
                 time_warp_full = True
-        return self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 or time_warp_full or self.player.current_hp <= 0
+
+        return self.relics.get(RelicId.VELVET_CHOKER,
+                               0) >= 6 or time_warp_full or normality_full or self.player.current_hp <= 0
 
 
 def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],

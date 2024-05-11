@@ -3203,3 +3203,12 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
         self.see_player_exhaust_count(play, 1)
+
+    def test_normality(self):
+        state = self.given_state(CardId.NORMALITY)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.add_memory_value(MemoryItem.CARDS_THIS_TURN, 2)
+        play = self.when_playing_the_whole_hand(state)
+        # see that only 2 of the 2 strikes are played because normality stops it
+        self.see_enemy_lost_hp(play, 6)

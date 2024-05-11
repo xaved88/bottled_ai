@@ -12,7 +12,6 @@ class BossRelicHandler(CommonBossRelicHandler):
             "philosopher\u0027s stone",
             "ectoplasm",
             "violet lotus",
-            "holy water",
             "cursed key",
             "fusion hammer",
             "mark of pain",
@@ -20,14 +19,15 @@ class BossRelicHandler(CommonBossRelicHandler):
             "coffee dripper",  # removed if already have another energy relic or it's act 1
             "slaver\u0027s collar",
             "runic pyramid",
+            "holy water",
             "runic cube",
             "calling bell",
-            "empty cage",
             "snecko eye",
+            "astrolabe",
+            "empty cage",
             "black star",
             "tiny house",
             "sacred bark",
-            "astrolabe",
             # pandora's box, # scary
             # "velvet choker", scary
             # "runic dome", scary

@@ -196,7 +196,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.ASCENDERS_BANE:
         return [CardEffects(target=TargetType.NONE)]
-
+    if card.id == CardId.NORMALITY:
+        return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.IMPERVIOUS:
         return [CardEffects(target=TargetType.SELF, block=30 if not card.upgrade else 40)]
     if card.id == CardId.LIMIT_BREAK:
