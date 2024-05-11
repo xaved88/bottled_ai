@@ -3192,3 +3192,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.SIMMERING_RAGE, 2)
 
+    def test_wish(self):
+        state = self.given_state(CardId.WISH)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_has_power(play, PowerId.STRENGTH, 3)
+
+    def test_foreign_influence(self):
+        state = self.given_state(CardId.FOREIGN_INFLUENCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_exhaust_count(play, 1)

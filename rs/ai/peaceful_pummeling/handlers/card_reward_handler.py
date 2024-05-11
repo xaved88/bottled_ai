@@ -38,6 +38,7 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'apotheosis': 1,
                 'deva form': 1,
                 'mental fortress': 5,
+                'wish': 2,
                 'like water': 3,
                 'devotion': 2,
                 'rushdown': 3,
@@ -48,6 +49,7 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'lesson learned': 1,
                 'panache': 3,
                 'panacea': 3,
+                'deus ex machina': 1,
                 'bandage up': 3,
                 'dramatic entrance': 3,
             }

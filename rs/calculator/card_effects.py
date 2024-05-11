@@ -874,4 +874,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SIMMERING_FURY:
         return [
             CardEffects(target=TargetType.SELF, applies_powers={PowerId.SIMMERING_RAGE: 2 if not card.upgrade else 2})]
+    if card.id == CardId.WISH:
+        return [
+            CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 3 if not card.upgrade else 4})]
+    if card.id == CardId.FOREIGN_INFLUENCE:
+        return [
+            CardEffects(target=TargetType.SELF)]
     return [CardEffects()]

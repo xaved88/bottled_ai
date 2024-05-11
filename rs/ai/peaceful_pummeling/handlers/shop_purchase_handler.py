@@ -6,12 +6,8 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
-standard_cards_to_purge: list[str] = [
-    'Defend',
-    'Strike',
-    'Defend+',
-    'Strike+',
-]
+cards_to_purge: list[str] = ['Conjure blade', 'Conjure blade+', 'Vault', 'Vault+', 'Omniscience',
+                             'Omniscience+', 'Meditate', 'Meditate+', 'Defend', 'Strike', 'Wish', 'Wish+', 'Defend+', 'Strike+']
 
 
 class ShopPurchaseHandler(Handler):
@@ -78,7 +74,7 @@ class ShopPurchaseHandler(Handler):
                 return "membership card"
 
         # 3. Purge in general
-        if can_purge and state.deck.contains_cards(["Strike", "Strike+", "Defend", "Defend+"]):
+        if can_purge and state.deck.contains_cards(cards_to_purge):
             return "purge"
 
         # 4. Relics based on list
