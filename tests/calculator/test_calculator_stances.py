@@ -177,6 +177,21 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0)
         self.assertEqual(CardId.FLURRY_OF_BLOWS, play.state.hand[0].id)
 
+    def test_flurry_of_blows_cannot_be_retrieved_because_it_got_moved_to_draw(self):
+        state = self.given_state(CardId.CRESCENDO, player_powers={PowerId.RUSHDOWN: 1})
+        state.discard_pile.append(get_card(CardId.WOUND))
+        state.discard_pile.append(get_card(CardId.FLURRY_OF_BLOWS))
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.WRATH)
+        self.see_player_discard_pile_count(play, 0)
+        self.see_player_hand_count(play, 1)
+        self.see_enemy_lost_hp(play, 0)
+        self.assertEqual(CardId.CRESCENDO, play.state.exhaust_pile[0].id)
+        self.see_player_hand_count(play, 1)
+        self.assertEqual(CardId.DRAW_PAY_EARLY, play.state.hand[0].id)
+        self.assertEqual(CardId.FLURRY_OF_BLOWS, play.state.draw_pile[0].id)
+
     def test_tantrum(self):
         state = self.given_state(CardId.TANTRUM)
         play = self.when_playing_the_first_card(state)

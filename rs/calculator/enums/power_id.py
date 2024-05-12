@@ -48,7 +48,7 @@ class PowerId(Enum):
     EVOLVE = 'evolve'
     ESTABLISHMENT = 'establishmentpower'
     EXPLOSIVE = 'explosive'
-    FADING = 'fading'  # N/A
+    FADING = 'fading'
     FASTING = 'energydownpower'
     FEEL_NO_PAIN = 'feel no pain'
     FIRE_BREATHING = 'fire breathing'

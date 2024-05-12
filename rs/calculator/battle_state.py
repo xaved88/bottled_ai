@@ -676,8 +676,6 @@ class BattleState(BattleStateInterface):
                         self.relics[RelicId.SUNDIAL] -= 3
                         self.player.energy += 2
 
-            # note: we're still allowing draws even if draw pile is empty because that's how a bunch of tests are set up
-            # currently, and we're not complete functionality-wise for draws anyway
             if len(self.draw_pile) > 0:
                 del self.draw_pile[0]
 
