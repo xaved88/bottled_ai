@@ -308,3 +308,9 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_do_not_break_when_no_monsters_alive_to_be_vulnerable(self):
         self.execute_handler_tests('/battles/general/breaks_when_no_monsters_alive_but_not_won.json', ['play 2 2'])
+
+    def test_big_fight_do_not_pass_just_to_save_vigor(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.STANCE] = StanceType.CALM
+        self.execute_handler_tests('/battles/specific_comparator_cases/big_fight/big_fight_do_not_pass.json',
+                                   memory_book=mb, expected=['play 1 0'])

@@ -98,13 +98,13 @@ powers_we_like: List[PowerId] = [
     PowerId.THORNS,
     PowerId.THOUSAND_CUTS,
     PowerId.TOOLS_OF_THE_TRADE,
-    PowerId.VIGOR,
 ]
 
 powers_we_like_less: List[PowerId] = [
     PowerId.DEXTERITY,
     PowerId.STRENGTH,
     PowerId.ENERGIZED,
+    PowerId.VIGOR,
 ]
 
 cards_that_exit_wrath: List[CardId] = [
