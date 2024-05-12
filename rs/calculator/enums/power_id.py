@@ -46,7 +46,7 @@ class PowerId(Enum):
     EQUILIBRIUM = 'equilibrium'
     ENVENOM = 'envenom'
     EVOLVE = 'evolve'
-    ESTABLISHMENT = 'establishment'
+    ESTABLISHMENT = 'establishmentpower'
     EXPLOSIVE = 'explosive'
     FADING = 'fading'  # N/A
     FASTING = 'energydownpower'

@@ -24,7 +24,7 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'halt': 1,  # removed if snecko
                 'deceive reality': 1,
                 'carve reality': 1,
-                'wallop': 1,
+                'wallop': 2,
                 'battle hymn': 1,
                 'spirit shield': 1,
                 'sands of time': 1,

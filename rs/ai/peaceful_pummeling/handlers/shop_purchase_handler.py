@@ -73,15 +73,15 @@ class ShopPurchaseHandler(Handler):
             if relic['name'] == 'Membership Card' and gold >= relic['price']:
                 return "membership card"
 
-        # 3. Purge in general
-        if can_purge and state.deck.contains_cards(cards_to_purge):
-            return "purge"
-
-        # 4. Relics based on list
+        # 3. Relics based on list
         for p in self.relics:
             for relic in screen_state['relics']:
                 if relic['name'] == p and gold >= relic['price']:
                     return relic['name'].lower()
+
+        # 4. Purge in general
+        if can_purge and state.deck.contains_cards(cards_to_purge):
+            return "purge"
 
         # 5. Cards based on list
         deck_card_list = state.get_deck_card_list()
