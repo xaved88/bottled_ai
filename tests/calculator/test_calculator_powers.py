@@ -1258,4 +1258,19 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 50, enemy_index=0)
         self.see_enemy_lost_hp(play, 50, enemy_index=1)
 
+    def test_fading_kills_enemy(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.monsters[0].powers[PowerId.FADING] = 5
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 0)
+        self.see_enemy_has_power(play, PowerId.FADING, 4)
 
+    def test_fading_kills_enemy(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.monsters[0].powers[PowerId.FADING] = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 0)
+        self.see_enemy_lost_hp(play, 100)
+        self.see_enemy_has_power(play, PowerId.FADING, 0)

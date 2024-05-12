@@ -598,6 +598,10 @@ class BattleState(BattleStateInterface):
                 monster.powers[PowerId.EXPLOSIVE] -= 1
                 if monster.powers[PowerId.EXPLOSIVE] < 1:
                     self.player.inflict_damage(monster, 30, 1, vulnerable_modifier=1, is_attack=False)
+            if monster.powers.get(PowerId.FADING):
+                monster.powers[PowerId.FADING] -= 1
+                if monster.powers[PowerId.FADING] < 1:
+                    monster.inflict_damage(monster, 9999, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()

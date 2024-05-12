@@ -314,3 +314,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         mb.memory_general[MemoryItem.STANCE] = StanceType.CALM
         self.execute_handler_tests('/battles/specific_comparator_cases/big_fight/big_fight_do_not_pass.json',
                                    memory_book=mb, expected=['play 1 0'])
+
+    def test_do_not_bother_attacking_when_enemy_will_die_anyway_to_fading(self):
+        self.execute_handler_tests('/battles/powers/transient_dying_to_fading.json', ['end'])
