@@ -59,7 +59,7 @@ class Game:
     def run(self):
         log_to_run("Starting Run")
         while self.last_state.is_game_running():
-            await_controller()
+            await_controller(self.last_state)
             self.__handle_state_based_logging()
             handled = False
             # Handle Game Over
