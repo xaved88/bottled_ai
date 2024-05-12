@@ -141,12 +141,12 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_waiting_lagavulin_use_power(self):
         self.execute_handler_tests(
             '/battles/specific_comparator_cases/waiting_lagavulin/waiting_lagavulin_turn_1_with_powers_in_hand.json',
-            ['play 4'])
+            ['play 1'])
 
     def test_waiting_lagavulin_use_terror(self):
         self.execute_handler_tests(
             '/battles/specific_comparator_cases/waiting_lagavulin/waiting_lagavulin_turn_1_with_terror_in_hand.json',
-            ['play 3 0'])
+            ['play 1 0'])
 
     def test_waiting_lagavulin_no_powers(self):
         self.execute_handler_tests(
@@ -161,7 +161,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_waiting_lagavulin_event_lagavulin(self):
         self.execute_handler_tests(
             '/battles/specific_comparator_cases/waiting_lagavulin/waiting_lagavulin_event_lagavulin_with_powers.json',
-            ['play 3 0'])
+            ['play 2 0'])
 
     def test_waiting_lagavulin_no_powers_but_relic(self):
         self.execute_handler_tests(

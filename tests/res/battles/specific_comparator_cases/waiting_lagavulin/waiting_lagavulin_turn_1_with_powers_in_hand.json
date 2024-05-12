@@ -113,45 +113,6 @@
       "limbo": [],
       "hand": [
         {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_G",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "c2255eb4-7237-4240-9edb-392f840a7c42",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 0,
-          "name": "Neutralize+",
-          "id": "Neutralize",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "58c88be6-5d11-4ee3-875d-d8242f0476a0",
-          "upgrades": 1,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Strike",
-          "id": "Strike_G",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "9d357b19-3c43-4ce7-928f-810761a2084f",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
         "exhausts": false,
         "is_playable": true,
         "cost": 1,
@@ -163,71 +124,6 @@
         "upgrades": 0,
         "rarity": "UNCOMMON",
         "has_target": false
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Strike+",
-          "id": "Strike_G",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "9d357b19-3c43-4ce7-928f-810761a2084f",
-          "upgrades": 1,
-          "rarity": "BASIC",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_G",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "f5903e66-7c8f-4245-98a7-52ed3d386ab3",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_G",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "677ab6f1-e0b0-4748-8fe9-7f6e4832ae29",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Defend",
-          "id": "Defend_G",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "84946267-cc4e-4852-a518-49692b749330",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": false
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Defend+",
-          "id": "Defend_G",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "47c6b3ce-58f5-474a-906b-cde3b2a1950f",
-          "upgrades": 1,
-          "rarity": "BASIC",
-          "has_target": false
         }
       ],
       "player": {
