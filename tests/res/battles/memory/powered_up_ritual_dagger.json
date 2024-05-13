@@ -150,7 +150,7 @@
           "is_playable": true,
           "cost": 1,
           "name": "Ritual Dagger",
-          "id": "Ritual Dagger",
+          "id": "RitualDagger",
           "type": "ATTACK",
           "ethereal": false,
           "uuid": "test_uuid_powered_up_ritual_dagger",

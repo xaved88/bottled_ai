@@ -6,6 +6,8 @@ from rs.machine.state import GameState
 cards_to_pass_over = [
     'strike',
     'defend',
+    'strike+',
+    'defend+',
     'clumsy',
     'curse of the bell',
     'decay',

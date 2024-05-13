@@ -49,7 +49,7 @@ class CardId(Enum):
     BODY_SLAM = 'body slam'
     BOOT_SEQUENCE = 'bootsequence'  # Weird id alert!
     BOUNCING_FLASK = 'bouncing flask'
-    BOWLING_BASH = 'bowling bash'
+    BOWLING_BASH = 'bowlingbash'
     BRILLIANCE = 'brilliance'
     BUFFER = 'buffer'
     BULLET_TIME = 'bullet time'
@@ -251,7 +251,7 @@ class CardId(Enum):
     REPROGRAM = 'reprogram'
     RIDDLE_WITH_HOLES = 'riddle with holes'
     RIP_AND_TEAR = 'rip and tear'
-    RITUAL_DAGGER = 'ritual dagger'
+    RITUAL_DAGGER = 'ritualdagger'
     RUSHDOWN = 'adaptation'
     SADISTIC_NATURE = 'sadistic nature'
     SANCTITY = 'sanctity'

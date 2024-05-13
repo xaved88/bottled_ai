@@ -40,10 +40,7 @@ class ShopPurchaseHandler(Handler):
             'Centennial Puzzle',
         ]
 
-        self.cards = [
-            "Tranquility",
-            "Crescendo",
-        ]
+        self.cards = []
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.SHOP_SCREEN.value

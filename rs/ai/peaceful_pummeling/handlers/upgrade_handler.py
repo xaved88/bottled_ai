@@ -11,34 +11,34 @@ class UpgradeHandler(CommonUpgradeHandler):
             'apotheosis',
             'eruption',
             'blasphemy',
-            'vigilance',
+            'tantrum',
             'talk to the hand',
             'rushdown',  # removed if snecko
-            'tantrum',
-            'crescendo',  # removed if snecko
-            'tranquility',  # removed if snecko
+            'flurry of blows',
             'cut_through_fate',
-            'ragnarok',
-            'reach heaven',
+            'wallop',
             'mental fortress',
+            'reach heaven',
+            'carve reality',
+            'crush joints',
+            'vigilance',
+            'ragnarok',
             'fear no evil',
             'reach heaven',
-            'empty body',
-            'empty fist',
             'inner peace',
-            'flurry of blows',
             'lesson learned',
             'halt',  # removed if snecko
-            'carve reality',
-            'wallop',
+            'empty body',
+            'empty fist',
             'battle hymn',
             'spirit shield',
+            'deceive reality',
+            'crescendo',  # removed if snecko
+            'tranquility',  # removed if snecko
             'sands of time',
             'perseverance',
             'wheel kick',
             'like water',
-            'crush joints',
-            'deceive reality',
             'follow-up',
         ])
 
