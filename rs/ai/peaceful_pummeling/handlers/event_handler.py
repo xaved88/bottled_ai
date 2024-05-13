@@ -190,9 +190,9 @@ class EventHandler(Handler):
         # if event_name == "Pleading Vagrant":
         #    return ["choose 1", "choose 0"]  # Leave. Prefer the relic but money logic. Actually, needs testing.
 
-        if event_name == "Vampires(?)":  # Don't want bites
+        if event_name == "Vampires(?)":
             if state.has_relic("Blood Vial"):
-                return "choose 0"  # Nom the Spire
+                return "choose 1"  # Nom the Spire
             else:
                 return "choose 0"  # Let's give it a go with Watcher!
 
