@@ -71,7 +71,7 @@ class GameState:
 
     def has_relic(self, relic_name: str) -> bool:
         for relic in self.get_relics():
-            if relic['name'] == relic_name:
+            if relic['name'].lower() == relic_name.lower():
                 return True
         return False
 

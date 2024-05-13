@@ -23,3 +23,6 @@ class BossRelicHandlerTestCase(CoTestHandlerFixture):
     def test_calling_boss_relic_handler_multiple_games_in_a_row_does_not_break(self):
         self.execute_handler_tests('relics/boss_reward_double_run_bug_check.json', ['choose 2'])
         self.execute_handler_tests('relics/boss_reward_double_run_bug_check.json', ['choose 2'])
+
+    def test_do_not_take_runic_pyramid_because_we_have_snecko_eye(self):
+        self.execute_handler_tests('relics/boss_reward_skip_runic_pyramid_because_snecko_eye.json', ['choose 2'])

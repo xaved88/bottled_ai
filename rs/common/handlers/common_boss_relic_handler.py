@@ -57,6 +57,14 @@ class CommonBossRelicHandler(Handler):
         # can be implemented by the children
         pass
 
+    def avoid_combining_snecko_and_pyramid(self, prefs: List[str], state: GameState):
+        if state.has_relic('snecko eye'):
+            if 'runic pyramid' in prefs:
+                prefs.remove('runic pyramid')
+        if state.has_relic('runic pyramid'):
+            if 'snecko eye' in prefs:
+                prefs.remove('snecko eye')
+
     def handle(self, state: GameState) -> HandlerAction:
         # we have to copy this, otherwise it will modify the prefs list until the bot is rerun
         prefs = self.pref.copy()
@@ -65,6 +73,7 @@ class CommonBossRelicHandler(Handler):
             filter(lambda r: r['name'].lower() in self.energy_relics, state.get_relics()))))
 
         self.adjust_preferences_based_on_game_state(prefs, state, has_energy_relic)
+        self.avoid_combining_snecko_and_pyramid(prefs, state)
 
         for p in prefs:
             if p in state.get_choice_list():
