@@ -6,8 +6,9 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
-cards_to_purge: list[str] = ['Conjure blade', 'Conjure blade+', 'Vault', 'Vault+', 'Omniscience',
-                             'Omniscience+', 'Meditate', 'Meditate+', 'Defend', 'Strike', 'Wish', 'Wish+', 'Defend+', 'Strike+']
+cards_to_purge: list[str] = ['ConjureBlade', 'ConjureBlade+', 'Vault', 'Vault+', 'Omniscience',
+                             'Omniscience+', 'Meditate', 'Meditate+', 'Defend', 'Strike', 'Wish', 'Wish+', 'Defend+',
+                             'Strike+']
 
 
 class ShopPurchaseHandler(Handler):

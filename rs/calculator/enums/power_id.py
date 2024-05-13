@@ -102,7 +102,10 @@ class PowerId(Enum):
     SHARP_HIDE = 'sharp hide'
     SHIFTING = 'shifting'
     SIMMERING_RAGE = 'simmeringrage'
+    SLOW = 'slow'
     SPLIT = 'split'
+    SPORE_CLOUD = 'spore cloud'
+    STASIS = 'stasis'  # We do not know what card they have though.
     STORM = 'storm'
     STRENGTH = 'strength'
     STUDY = 'study'

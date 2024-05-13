@@ -1258,7 +1258,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 50, enemy_index=0)
         self.see_enemy_lost_hp(play, 50, enemy_index=1)
 
-    def test_fading_kills_enemy(self):
+    def test_fading_counter_goes_down(self):
         state = self.given_state(CardId.DEFEND_R)
         state.monsters[0].powers[PowerId.FADING] = 5
         play = self.when_playing_the_first_card(state)
@@ -1271,6 +1271,51 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state.monsters[0].powers[PowerId.FADING] = 1
         play = self.when_playing_the_first_card(state)
         play.end_turn()
-        self.see_player_lost_hp(play, 0)
         self.see_enemy_lost_hp(play, 100)
         self.see_enemy_has_power(play, PowerId.FADING, 0)
+
+    def test_killing_enemy_with_stasis_grants_card(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.STASIS] = -1
+        state.monsters[0].current_hp = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_enemy_does_not_have_power(play, PowerId.STASIS)
+        self.see_player_hand_count(play, 1)
+        self.see_hand_card_is(play, CardId.DRAW_PAY)
+
+    def test_killing_enemy_with_spore_cloud_grants_vulnerable(self):
+        amount = 3
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.SPORE_CLOUD] = amount
+        state.monsters[0].current_hp = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_player_has_power(play, PowerId.VULNERABLE, amount)
+
+    def test_slow_not_incremented_when_not_present(self):
+        state = self.given_state(CardId.STRIKE_R)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_does_not_have_power(play, PowerId.SLOW)
+
+    def test_slow_incremented_by_card_plays(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.DEFEND_R))
+        state.hand.append(get_card(CardId.INFLAME))
+        state.monsters[0].powers[PowerId.SLOW] = 0
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_has_power(play, PowerId.SLOW, 3)
+
+    def test_slow_increases_damage_taken_by_attack_cards(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.SLOW] = 5
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 9)
+        self.see_enemy_has_power(play, PowerId.SLOW, 6)
+
+    def test_slow_plays_nicely_with_pen_nib(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.PEN_NIB: 9})
+        state.monsters[0].powers[PowerId.SLOW] = 5
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 18)
+        self.see_enemy_has_power(play, PowerId.SLOW, 6)

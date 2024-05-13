@@ -181,6 +181,10 @@ class BattleState(BattleStateInterface):
         if damage_additive_bonus:
             for effect in effects:
                 effect.damage += damage_additive_bonus
+        if self.monsters[target_index].powers.get(PowerId.SLOW) and card.type == CardType.ATTACK:
+            for effect in effects:
+                slow_power = self.monsters[target_index].powers.get(PowerId.SLOW)
+                effect.damage *= (1 + (slow_power / 10))
         if self.player.powers.get(PowerId.DOUBLE_DAMAGE, 0) and card.type == CardType.ATTACK:
             for effect in effects:
                 effect.damage *= 2
@@ -354,6 +358,8 @@ class BattleState(BattleStateInterface):
         for monster in self.monsters:
             if monster.powers.get(PowerId.TIME_WARP) is not None:
                 monster.add_powers({PowerId.TIME_WARP: 1}, self.player.relics, self.player.powers)
+            if monster.powers.get(PowerId.SLOW) is not None:
+                monster.add_powers({PowerId.SLOW: 1}, self.player.relics, self.player.powers)
             if monster.powers.get(PowerId.CHOKED):
                 monster.inflict_damage(self.player, monster.powers.get(PowerId.CHOKED), 1, vulnerable_modifier=1,
                                        is_attack=False)
@@ -822,6 +828,11 @@ class BattleState(BattleStateInterface):
                             monster.inflict_damage(self.player, corpse_explosion_damage, corpse_explosion_hits,
                                                    vulnerable_modifier=1,
                                                    is_attack=False)
+                if m.powers.get(PowerId.STASIS, 0):
+                    self.spawn_in_hand(get_card(CardId.DRAW_PAY))
+                if m.powers.get(PowerId.SPORE_CLOUD, 0):
+                    self.player.add_powers({PowerId.VULNERABLE: m.powers.get(PowerId.SPORE_CLOUD, 0)}, self.relics,
+                                           m.powers)
                 if not m.powers.get(PowerId.UNAWAKENED, 0):
                     m.powers = {}
 
