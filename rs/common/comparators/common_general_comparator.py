@@ -79,7 +79,7 @@ powers_we_like: List[PowerId] = [
     PowerId.LIKE_WATER,
     PowerId.LOOP,
     PowerId.MACHINE_LEARNING,
-    PowerId.MANTRA,
+    PowerId.MANTRA_INTERNAL,
     PowerId.MASTER_REALITY,
     PowerId.MAYHEM,
     PowerId.MENTAL_FORTRESS,

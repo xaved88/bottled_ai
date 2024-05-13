@@ -79,6 +79,7 @@ class BattleState(BattleStateInterface):
         self.__starting_energy = self.player.energy
 
         if RelicId.DAMARU in self.relics and self.is_new_turn():
+            self.player.add_powers({PowerId.MANTRA_INTERNAL: 1}, self.player.relics, self.player.powers)
             self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 1)
 
         if RelicId.TEARDROP_LOCKET in self.relics and \
@@ -87,10 +88,18 @@ class BattleState(BattleStateInterface):
             self.change_stance(StanceType.CALM)
 
         if PowerId.DEVOTION in self.player.powers and self.is_new_turn():
+            self.player.add_powers({PowerId.MANTRA_INTERNAL: self.player.powers.get(PowerId.DEVOTION, 0)}, self.player.relics,
+                                   self.player.powers)
             self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, self.player.powers.get(PowerId.DEVOTION, 0))
 
         if PowerId.FORESIGHT in self.player.powers and self.is_new_turn():
             self.scry(self.player.powers.get(PowerId.FORESIGHT, 0))
+
+        # checking for passive mantra
+        if self.player.powers.get(PowerId.MANTRA_INTERNAL):
+            if self.player.powers[PowerId.MANTRA_INTERNAL] >= 10:
+                self.player.powers[PowerId.MANTRA_INTERNAL] -= 10
+                self.change_stance(StanceType.DIVINITY)
 
         (card_index, target_index) = play
         card = self.hand[card_index]
@@ -387,9 +396,9 @@ class BattleState(BattleStateInterface):
                         target.add_powers(pickle_deepcopy(effect.applies_powers), self.player.relics,
                                           self.player.powers)
 
-                if PowerId.MANTRA in effect.applies_powers:
+                if PowerId.MANTRA_INTERNAL in effect.applies_powers:
                     for power in effect.applies_powers:
-                        if power is PowerId.MANTRA:
+                        if power is PowerId.MANTRA_INTERNAL:
                             self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, effect.applies_powers[power])
 
             # custom post hooks
@@ -469,10 +478,10 @@ class BattleState(BattleStateInterface):
                 if power in DEBUFFS:
                     self.player.powers[power] = 0
 
-        # special late case for Mantra
-        if self.player.powers.get(PowerId.MANTRA):
-            if self.player.powers[PowerId.MANTRA] >= 10:
-                self.player.powers[PowerId.MANTRA] -= 10
+        # special late case for active Mantra
+        if self.player.powers.get(PowerId.MANTRA_INTERNAL):
+            if self.player.powers[PowerId.MANTRA_INTERNAL] >= 10:
+                self.player.powers[PowerId.MANTRA_INTERNAL] -= 10
                 self.change_stance(StanceType.DIVINITY)
 
         self.kill_monsters()

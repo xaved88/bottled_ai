@@ -112,14 +112,14 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 0)
         self.see_player_has_block(play, 4)
         self.see_player_discard_pile_count(play, 1)
-        self.see_player_has_power(play, PowerId.MANTRA, 2)
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 2)
 
     def test_enter_divinity(self):
-        state = self.given_state(CardId.PROSTRATE, player_powers={PowerId.MANTRA: 9})
+        state = self.given_state(CardId.PROSTRATE, player_powers={PowerId.MANTRA_INTERNAL: 9})
         play = self.when_playing_the_first_card(state)
         self.see_stance(play, StanceType.DIVINITY)
         self.see_player_has_energy(play, 8)
-        self.see_player_has_power(play, PowerId.MANTRA, 1)
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 1)
 
     def test_divinity_triples_damage_dealt(self):
         state = self.given_state(CardId.STRIKE_R)
@@ -128,12 +128,12 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 18)
 
     def test_enter_divinity_and_exit_calm(self):
-        state = self.given_state(CardId.PROSTRATE, player_powers={PowerId.MANTRA: 9})
+        state = self.given_state(CardId.PROSTRATE, player_powers={PowerId.MANTRA_INTERNAL: 9})
         state.add_memory_value(MemoryItem.STANCE, StanceType.CALM)
         play = self.when_playing_the_first_card(state)
         self.see_stance(play, StanceType.DIVINITY)
         self.see_player_has_energy(play, 10)
-        self.see_player_has_power(play, PowerId.MANTRA, 1)
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 1)
 
     def test_empty_body(self):
         state = self.given_state(CardId.EMPTY_BODY)
@@ -330,3 +330,10 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_stance(play, StanceType.DIVINITY)
         self.see_player_spent_energy(play, -2)
         self.see_player_has_power(play, PowerId.BLASPHEMER, 1)
+
+    def test_passive_mantra_can_put_us_into_divinity(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.DAMARU: 1}, player_powers={PowerId.MANTRA_INTERNAL: 9})
+        play = self.when_playing_the_whole_hand(state)
+        self.see_enemy_lost_hp(play, 18)
+        self.see_stance(play, StanceType.DIVINITY)
+

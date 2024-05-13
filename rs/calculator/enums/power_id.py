@@ -72,7 +72,8 @@ class PowerId(Enum):
     MACHINE_LEARNING = 'machine learning'
     MAGNETISM = 'magnetism'
     MALLEABLE = 'malleable'
-    MANTRA = 'mantra'
+    MANTRA = 'mantra'  # We count all Mantra manually with MANTRA_INTERNAL instead of using this
+    MANTRA_INTERNAL = 'internal_use_mantra'
     MARK = 'pathtovictorypower'
     MAYHEM = 'mayhem'
     MENTAL_FORTRESS = 'controlled'

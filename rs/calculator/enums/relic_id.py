@@ -53,7 +53,7 @@ class RelicId(Enum):
     CULTIST_HEADPIECE = 'cultist headpiece'         # N/A
     CRACKED_CORE = 'cracked core'
     CURSED_KEY = 'cursed key'                       # N/A
-    DAMARU = 'damaru'                               # N/A
+    DAMARU = 'damaru'
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DATA_DISK = 'data disk'                         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A

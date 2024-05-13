@@ -2796,7 +2796,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.PRAY)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_has_power(play, PowerId.MANTRA, 3)
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 3)
         self.see_player_draw_pile_count(play, 1)
         self.assertEqual(CardId.INSIGHT, play.state.draw_pile[0].id)
 
@@ -2804,7 +2804,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.WORSHIP)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_has_power(play, PowerId.MANTRA, 5)
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 5)
         self.see_player_discard_pile_count(play, 1)
 
     def test_worship_upgraded(self):

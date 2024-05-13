@@ -732,9 +732,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(damage=9, hits=1, target=TargetType.MONSTER, sets_stance=StanceType.WRATH)]
     if card.id == CardId.PROSTRATE:
         amount_of_mantra = 2 if not card.upgrade else 3
-        return [CardEffects(target=TargetType.SELF, block=4, applies_powers={PowerId.MANTRA: amount_of_mantra})]
+        return [CardEffects(target=TargetType.SELF, block=4, applies_powers={PowerId.MANTRA_INTERNAL: amount_of_mantra})]
     if card.id == CardId.WORSHIP:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA: 5},
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA_INTERNAL: 5},
                             retains=False if not card.upgrade else True)]
     if card.id == CardId.MIRACLE:
         return [CardEffects(target=TargetType.SELF, energy_gain=1 if not card.upgrade else 2, retains=True)]
@@ -743,7 +743,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.DEVOTION: amount})]
     if card.id == CardId.PRAY:
         amount_of_mantra = 3 if not card.upgrade else 4
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA: amount_of_mantra},
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA_INTERNAL: amount_of_mantra},
                             spawn_cards_in_draw=(get_card(CardId.INSIGHT), 1))]
     if card.id == CardId.EMPTY_BODY:
         return [
