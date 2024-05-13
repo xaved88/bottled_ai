@@ -1,4 +1,4 @@
-from config import presentation_mode, p_delay
+from presentation_config import presentation_mode, p_delay
 from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState

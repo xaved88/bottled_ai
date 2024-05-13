@@ -970,8 +970,6 @@ class BattleState(BattleStateInterface):
     def is_new_turn(self) -> bool:
         if self.get_memory_value(MemoryItem.CARDS_THIS_TURN) == 0:
             return True
-        else:
-            return False
 
     def is_turn_forced_to_be_over(self) -> bool:
         if len([True for m in self.monsters if m.current_hp > 0]) == 0:

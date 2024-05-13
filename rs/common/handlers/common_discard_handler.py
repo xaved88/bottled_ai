@@ -1,4 +1,4 @@
-from config import presentation_mode, p_delay
+from presentation_config import presentation_mode, p_delay
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler

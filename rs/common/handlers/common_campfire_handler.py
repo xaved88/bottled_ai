@@ -1,6 +1,6 @@
 from typing import List
 
-from config import presentation_mode, p_delay
+from presentation_config import presentation_mode, p_delay
 from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import standard_cards_to_purge
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command

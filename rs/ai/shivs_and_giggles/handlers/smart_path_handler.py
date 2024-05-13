@@ -1,6 +1,6 @@
 from typing import List
 
-from config import presentation_mode, p_delay, slow_pathing
+from presentation_config import presentation_mode, p_delay, slow_pathing
 from rs.game.map import Map
 from rs.game.path import PathHandlerConfig
 from rs.game.screen_type import ScreenType

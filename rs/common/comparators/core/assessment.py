@@ -40,7 +40,7 @@ class ComparatorAssessment:
             if mon.powers.get(PowerId.UNAWAKENED, 0):
                 unawakened_present = True
         return self.__get_value('bw', lambda: (
-                    not [True for m in self.state.monsters if m.current_hp > 0] and not unawakened_present))
+                not [True for m in self.state.monsters if m.current_hp > 0] and not unawakened_present))
 
     def battle_lost(self) -> bool:
         return self.__get_value('bl', lambda: self.state.player.current_hp <= 0)

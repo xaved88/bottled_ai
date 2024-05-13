@@ -1,6 +1,6 @@
 from typing import List, Tuple, Optional
 
-from config import presentation_mode, p_delay
+from presentation_config import presentation_mode, p_delay
 from rs.calculator.helper import pickle_deepcopy
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
