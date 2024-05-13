@@ -270,7 +270,7 @@ class CardId(Enum):
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
     SIGNATURE_MOVE = 'signaturemove'
-    SIMMERING_FURY = 'simmeringfury'
+    SIMMERING_FURY = 'vengeance'
     SKEWER = 'skewer'
     SKIM = 'skim'
     SLICE = 'slice'

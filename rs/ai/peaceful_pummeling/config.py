@@ -1,6 +1,6 @@
 CARD_REMOVAL_PRIORITY_LIST = [
-    'conjure blade',
-    'conjure blade+',
+    'conjureblade',
+    'conjureblade+',
     'vault',
     'vault+',
     'omniscience',
