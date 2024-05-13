@@ -69,14 +69,8 @@ class ComparatorAssessment:
         0 if self.battle_won() else min(self.monsters_vulnerable_hp()[0], self.monsters_vulnerable_hp()[-1]))
 
     def total_monster_health(self) -> int:
-        vulnerable_present = 0
-        for m in self.state.monsters:
-            if PowerId.VULNERABLE in m.powers:
-                vulnerable_present = 1
-                continue
         return self.__get_value('tmh', lambda:
-        0 if self.battle_won() else sum(self.monsters_vulnerable_hp()) - self.state.total_random_damage_dealt -
-                                    vulnerable_present - self.state.total_random_poison_added)
+        0 if self.battle_won() else sum(self.monsters_vulnerable_hp()) - self.state.total_random_damage_dealt - self.state.total_random_poison_added)
 
     def total_monster_health_percent(self) -> float:
         return self.__get_value('total_monster_health_percent', lambda: 0 if self.battle_won()
