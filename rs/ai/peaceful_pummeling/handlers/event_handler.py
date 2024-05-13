@@ -83,7 +83,9 @@ class EventHandler(Handler):
         # ACT 1, 2
 
         if event_name == "Face Trader":
-            return "choose 2"  # Leave. Would prefer to take it if health >=70%
+            if hp_per >= 80:
+                return "choose 0"
+            return "choose 2"  # Leave.
 
         # ACT 1, 2, 3
 
@@ -115,7 +117,7 @@ class EventHandler(Handler):
             return "choose 0"  # Purge
 
         if event_name == "Transmogrifier":
-            return "choose 1"  # Avoid transforms, many cards are just kind of a curse for us.
+            return "choose 0"  # Take the transform, we know most Watcher cards now and will purge the ones we don't.
 
         if event_name == "Upgrade Shrine":
             return "choose 0"  # Free upgrade
@@ -141,7 +143,7 @@ class EventHandler(Handler):
             if state.has_relic("Snecko Eye"):
                 return "choose 1"  # No ghosts if we're already Snecko
             else:
-                return "choose 1"  # Become a spooky ghost!
+                return "choose 0"  # Become a spooky ghost!
 
         if event_name == "Cursed Tome":
             return "choose 1"  # Leave, we don't currently make good use of the possible relics.
@@ -159,7 +161,7 @@ class EventHandler(Handler):
         #    return ["choose 1", "choose 0"]  # Take the curse then.
 
         if event_name == "The Joust":
-            return "choose 1"  # Slightly more expected value. ^^
+            return "choose 0"  # Be conservative
 
         if event_name == "Knowing Skull":
             return "choose 3"  # Leave
@@ -168,19 +170,19 @@ class EventHandler(Handler):
             return "choose 1"  # Heal, but also because I don't know if we handle selection here.
 
         if event_name == "Masked Bandits":
-            if hp_per >= 60:
+            if hp_per >= 50:
                 return "choose 1"  # Fuck 'em up!
             else:
                 return "choose 0"  # Give up all money and leave.
 
         if event_name == "The Mausoleum":
-            return "choose 1"  # Leave, we don't like curses and aren't good with relics.
+            return "choose 1"  # Leave, we don't like curses.
 
         if event_name == "The Nest":
             return "choose 0"  # Take money over Dagger, I guess.
 
         if event_name == "N'loth":
-            return "choose 2"  # Leave, wouldn't do well with the rare cards anyway.
+            return "choose 2"  # Leave, hard to statically make a good choice here.
 
         if event_name == "Old Beggar":
             return "choose 0"  # Cheap purge.
@@ -190,9 +192,9 @@ class EventHandler(Handler):
 
         if event_name == "Vampires(?)":  # Don't want bites
             if state.has_relic("Blood Vial"):
-                return "choose 2"
+                return "choose 0"  # Nom the Spire
             else:
-                return "choose 1"
+                return "choose 0"  # Let's give it a go with Watcher!
 
         # Act 2, 3
 
