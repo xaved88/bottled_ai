@@ -517,6 +517,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_spot_weakness_against_idle_enemy(self):
         state = self.given_state(CardId.SPOT_WEAKNESS)
+        state.monsters[0].damage = -1
+        state.monsters[0].hits = 1
         play = self.when_playing_the_first_card(state)
         self.see_player_does_not_have_power(play, PowerId.STRENGTH)
 
@@ -2043,6 +2045,8 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_go_for_the_eyes_does_not_trigger(self):
         state = self.given_state(CardId.GO_FOR_THE_EYES)
+        state.monsters[0].damage = -1
+        state.monsters[0].hits = 0
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
         self.see_enemy_lost_hp(play, 3)

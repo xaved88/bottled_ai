@@ -273,11 +273,21 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 8)
         self.see_stance(play, StanceType.CALM)
 
-    def test_fear_no_evil_does_not_triggers(self):
+    def test_fear_no_evil_does_not_trigger_on_no_hits(self):
         state = self.given_state(CardId.FEAR_NO_EVIL)
         state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
         state.monsters[0].hits = 0
-        state.monsters[0].damage = 0
+        state.monsters[0].damage = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_stance(play, StanceType.NO_STANCE)
+
+    def test_fear_no_evil_does_not_trigger_on_not_real_damage(self):
+        state = self.given_state(CardId.FEAR_NO_EVIL)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        state.monsters[0].hits = 1
+        state.monsters[0].damage = -1
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_enemy_lost_hp(play, 8)

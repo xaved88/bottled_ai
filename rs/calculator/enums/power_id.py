@@ -89,7 +89,7 @@ class PowerId(Enum):
     PANACHE = 'panache'
     # We currently have damage provided by triggering the Panache power hardcoded to 10.
     # It's the first power we've run into that has multiple values associated with it.
-    PEN_NIB_POWER = 'pen nib'  # Covered by Pen Nib relic counting
+    PEN_NIB_POWER_IRRELEVANT = 'pen nib'  # Covered by Pen Nib relic counting
     PHANTASMAL = 'phantasmal'
     POISON = 'poison'
     PLATED_ARMOR = 'plated armor'

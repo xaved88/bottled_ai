@@ -62,16 +62,8 @@ def limit_break_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
 
 def spot_weakness_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                             target_index: int = -1):
-    __spot_weakness_post_hook(state, target_index, 3)
-
-
-def spot_weakness_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                     target_index: int = -1):
-    __spot_weakness_post_hook(state, target_index, 4)
-
-
-def __spot_weakness_post_hook(state: BattleStateInterface, target_index: int, amount: int):
-    if state.monsters[target_index].hits:
+    amount = 3 if not card.upgrade else 4
+    if state.monsters[target_index].hits and state.monsters[target_index].damage != -1:
         state.player.add_powers({PowerId.STRENGTH: amount}, state.player.relics, state.player.powers)
 
 
@@ -372,17 +364,9 @@ def compile_driver_post_hook(state: BattleStateInterface, effect: CardEffectsInt
 
 def go_for_the_eyes_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                               target_index: int = -1):
-    __go_for_the_eyes_post_hook(state, target_index, 1)
-
-
-def go_for_the_eyes_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                       target_index: int = -1):
-    __go_for_the_eyes_post_hook(state, target_index, 2)
-
-
-def __go_for_the_eyes_post_hook(state: BattleStateInterface, target_index: int, weak_counts: int):
-    if state.monsters[target_index].hits:
-        state.monsters[target_index].add_powers({PowerId.WEAKENED: weak_counts}, state.player.relics,
+    amount = 1 if not card.upgrade else 2
+    if state.monsters[target_index].hits and state.monsters[target_index].damage != -1:
+        state.monsters[target_index].add_powers({PowerId.WEAKENED: amount}, state.player.relics,
                                                 state.player.powers)
 
 
@@ -660,7 +644,7 @@ def indignation_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
 
 def fear_no_evil_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                            target_index: int = -1):
-    if state.monsters[target_index].hits:
+    if state.monsters[target_index].hits and state.monsters[target_index].damage != -1:
         state.change_stance(StanceType.CALM)
 
 

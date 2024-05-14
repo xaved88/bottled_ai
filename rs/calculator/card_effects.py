@@ -239,9 +239,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(block=15 if not card.upgrade else 20, target=TargetType.SELF,
                             spawn_cards_in_hand=(get_card(CardId.WOUND), 2))]
     if card.id == CardId.SPOT_WEAKNESS:
-        return [CardEffects(target=TargetType.MONSTER,
-                            post_hooks=[
-                                spot_weakness_post_hook if not card.upgrade else spot_weakness_upgraded_post_hook])]
+        return [CardEffects(target=TargetType.MONSTER, post_hooks=[spot_weakness_post_hook])]
     if card.id == CardId.REAPER:
         return [CardEffects(target=TargetType.ALL_MONSTERS, damage=4 if not card.upgrade else 5, hits=1,
                             post_hooks=[reaper_post_hook])]
@@ -624,8 +622,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.ECHO_FORM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ECHO_FORM: 1})]
     if card.id == CardId.GO_FOR_THE_EYES:
-        hook = go_for_the_eyes_post_hook if not card.upgrade else go_for_the_eyes_upgraded_post_hook
-        return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 4, hits=1, post_hooks=[hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=3 if not card.upgrade else 4, hits=1,
+                            post_hooks=[go_for_the_eyes_post_hook])]
     if card.id == CardId.AMPLIFY:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.AMPLIFY: 1 if not card.upgrade else 2})]
     if card.id == CardId.BURST:
@@ -732,7 +730,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(damage=9, hits=1, target=TargetType.MONSTER, sets_stance=StanceType.WRATH)]
     if card.id == CardId.PROSTRATE:
         amount_of_mantra = 2 if not card.upgrade else 3
-        return [CardEffects(target=TargetType.SELF, block=4, applies_powers={PowerId.MANTRA_INTERNAL: amount_of_mantra})]
+        return [
+            CardEffects(target=TargetType.SELF, block=4, applies_powers={PowerId.MANTRA_INTERNAL: amount_of_mantra})]
     if card.id == CardId.WORSHIP:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MANTRA_INTERNAL: 5},
                             retains=False if not card.upgrade else True)]
