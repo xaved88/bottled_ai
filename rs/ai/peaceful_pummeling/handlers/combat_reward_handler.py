@@ -13,11 +13,9 @@ class CombatRewardHandler(CommonCombatRewardHandler):
             'cultist potion',
             'power potion',
             'duplication potion',
-            'distilled chaos',
             'blessing of the forge',
             'attack potion',
             'dexterity potion',
-            'ambrosia',
             'fear potion',
             'essence of steel',
             'strength potion',
@@ -44,5 +42,7 @@ class CombatRewardHandler(CommonCombatRewardHandler):
             'elixir potion',
             'liquid memories',
             'snecko oil',
+            'distilled chaos',  # Might play Blasphemy
+            'ambrosia',  # We don't know that we go into Divinity
             'stance potion',  # We might not know how to use it yet
         ])

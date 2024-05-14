@@ -19,10 +19,8 @@ class ShopPurchaseHandler(Handler):
             'Pen Nib',
             'Shuriken',
             'Red Skull',
-            'Preserved Insect',
             'Meat on the Bone',
             'Eternal Feather',
-            # 'Damaru',
             'Regal Pillow',
             'Lee’s Waffle',
             'Meal Ticket',
@@ -38,7 +36,9 @@ class ShopPurchaseHandler(Handler):
             'Happy Flower',
             'Bag of Preparation',
             'Centennial Puzzle',
+            'Preserved Insect',
             'Thread and Needle',
+            'Damaru',
         ]
 
         self.cards = []

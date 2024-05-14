@@ -33,7 +33,9 @@ class EventHandler(Handler):
         # ACT 1
 
         if event_name == "Big Fish":
-            return "choose 2"  # Get relic and curse
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 2"  # Relic!
+            return "choose 1"  # Get max health up
 
         if event_name == "The Cleric":
             if hp_per <= 65 and 'heal' in state.get_choice_list():
@@ -111,6 +113,10 @@ class EventHandler(Handler):
             return "choose 0"  # Just keep clicking
 
         if event_name == "Ominous Forge":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 1"  # Warped tongs!
+            if state.floor() >= 30:
+                return "choose 0"  # Might not be able to get rid of the curse anymore
             return "choose 1"  # I love the Warped Tongs relic.
 
         if event_name == "Purifier":

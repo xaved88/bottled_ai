@@ -13,7 +13,10 @@ dont_play_potions = [
     'Elixir Potion',
     'Liquid Memories',
     'Snecko Oil',
-    'Stance Potion'
+    'Stance Potion',
+    'Ambrosia',
+    'Chaos Potion',
+    'Distilled Chaos',
 ]
 
 
