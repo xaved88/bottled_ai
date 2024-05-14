@@ -190,6 +190,12 @@ class BattleState(BattleStateInterface):
         if damage_additive_bonus:
             for effect in effects:
                 effect.damage += damage_additive_bonus
+        if self.player.powers.get(PowerId.STRENGTH, 0):
+            for effect in effects:
+                if effect.target != TargetType.SELF:
+                    effect.damage += self.player.powers.get(PowerId.STRENGTH, 0)
+
+        # multiplicative bonuses
         if self.monsters[target_index].powers.get(PowerId.SLOW) and card.type == CardType.ATTACK:
             for effect in effects:
                 slow_power = self.monsters[target_index].powers.get(PowerId.SLOW)
@@ -223,7 +229,6 @@ class BattleState(BattleStateInterface):
             # deal damage to target
             player_min_attack_hp_damage = 1 if not self.relics.get(RelicId.THE_BOOT) else 5
             player_weak_modifier = 1 if not self.player.powers.get(PowerId.WEAKENED) else 0.75
-            player_strength_modifier = self.player.powers.get(PowerId.STRENGTH, 0)
             monster_vulnerable_modifier = 1.5 if not self.relics.get(RelicId.PAPER_PHROG) else 1.75
 
             if effect.hits:
@@ -232,7 +237,7 @@ class BattleState(BattleStateInterface):
                                                blockable=effect.blockable,
                                                vulnerable_modifier=1, is_attack=False)
                 else:
-                    damage = math.floor((effect.damage + player_strength_modifier) * player_weak_modifier)
+                    damage = math.floor(effect.damage * player_weak_modifier)
                     if effect.target == TargetType.RANDOM:
                         alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
 
@@ -246,7 +251,7 @@ class BattleState(BattleStateInterface):
                         else:
                             self.total_random_damage_dealt += damage * effect.hits
 
-                    if effect.target == TargetType.MONSTER:
+                    elif effect.target == TargetType.MONSTER:
                         (hp_damage) = self.monsters[target_index].inflict_damage(
                             source=self.player, base_damage=damage,
                             hits=effect.hits,

@@ -1319,3 +1319,8 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_making_the_most_plays(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_enemy_has_power(play, PowerId.SLOW, 6)
+
+    def test_strength_applies_before_other_bonuses_like_pen_nib(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.PEN_NIB: 9}, player_powers={PowerId.STRENGTH: 1})
+        play = self.when_making_the_most_plays(state)
+        self.see_enemy_lost_hp(play, 14)
