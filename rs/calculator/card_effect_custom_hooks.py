@@ -446,7 +446,7 @@ def regret_end_turn_hook(state: BattleStateInterface, effect: CardEffectsInterfa
 
 def bowling_bash_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                           target_index: int = -1):
-    effect.hits = len(state.monsters)
+    effect.hits = len([True for m in state.monsters if m.current_hp > 0])
 
 
 def conclude_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

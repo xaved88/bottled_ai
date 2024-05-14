@@ -2259,6 +2259,14 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
         self.see_player_spent_energy(play, 1)
 
+    def test_bowling_bash_poly_some_dead(self):
+        state = self.given_state(CardId.BOWLING_BASH, targets=3)
+        state.monsters[2].current_hp = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 14, enemy_index=0)
+        self.see_enemy_lost_hp(play, 0, enemy_index=1)
+        self.see_player_spent_energy(play, 1)
+
     def test_consecrate(self):
         state = self.given_state(CardId.CONSECRATE, targets=2)
         play = self.when_playing_the_first_card(state)
