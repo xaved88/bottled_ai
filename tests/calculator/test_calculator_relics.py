@@ -480,6 +480,7 @@ class CalculatorRelicsTest(CalculatorTestFixture):
     def test_hand_drill_provides_no_vulnerable_when_block_bypassed(self):
         state = self.given_state(CardId.DEADLY_POISON, relics={RelicId.HAND_DRILL: 1})
         state.monsters[0].block = 8
+        state.monsters[0].powers = {PowerId.BARRICADE: 1}
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_enemy_block_is(play, 8)

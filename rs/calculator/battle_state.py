@@ -591,7 +591,11 @@ class BattleState(BattleStateInterface):
 
         # this is getting into the enemy's turn now
         # enemy powers
+
         for monster in self.monsters:
+            if not monster.powers.get(PowerId.BARRICADE, 0):
+                monster.block = 0
+
             poison = monster.powers.get(PowerId.POISON, 0)
             if poison > 0:
                 monster.powers[PowerId.POISON] -= 1

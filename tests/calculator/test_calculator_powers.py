@@ -303,6 +303,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state = self.given_state(CardId.FLAME_BARRIER)
         state.monsters[0].damage = 1
         state.monsters[0].hits = 4
+        state.monsters[0].powers = {PowerId.BARRICADE: 1}
         state.monsters[0].block = 10
         play = self.when_playing_the_first_card(state)
         play.end_turn()
@@ -441,10 +442,10 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state.monsters[0].hits = 2
         state.monsters[0].powers = {PowerId.MODE_SHIFT: 1}
         play = self.when_playing_the_first_card(state)
+        self.see_enemy_block_is(play, 20)
         play.end_turn()
         self.see_enemy_does_not_have_power(play, PowerId.MODE_SHIFT)
         self.see_player_lost_hp(play, 0)
-        self.see_enemy_block_is(play, 20)
 
     def test_mode_does_nothing_when_not_broken(self):
         state = self.given_state(CardId.STRIKE_R)
@@ -464,10 +465,10 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state.monsters[0].hits = 2
         state.monsters[0].powers = {PowerId.MODE_SHIFT: 5}
         play = self.when_playing_the_first_card(state)
+        self.see_enemy_block_is(play, 15)
         play.end_turn()
         self.see_enemy_does_not_have_power(play, PowerId.MODE_SHIFT)
         self.see_enemy_lost_hp(play, 5)
-        self.see_enemy_block_is(play, 15)
 
     def test_a_thousand_cuts_damage(self):
         state = self.given_state(CardId.DEFEND_G, player_powers={PowerId.THOUSAND_CUTS: 1})

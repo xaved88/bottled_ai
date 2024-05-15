@@ -163,3 +163,28 @@ class CalculatorOtherTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_random_damage_dealt(play, 18)
+
+    def test_monster_block_disappears_on_their_turn(self):
+        state = self.given_state(CardId.WOUND)
+        state.monsters[0].block = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_block_is(play, 0)
+
+    def test_monster_block_disappears_on_their_turn_unless_barricaded(self):
+        state = self.given_state(CardId.WOUND)
+        state.monsters[0].block = 3
+        state.monsters[0].powers = {PowerId.BARRICADE: 1}
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_block_is(play, 3)
+
+    def test_monster_block_does_not_prevent_them_taking_thorns_damage_because_it_is_gone(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.THORNS: 3})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 1
+        state.monsters[0].block = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_lost_hp(play, 3)
+
