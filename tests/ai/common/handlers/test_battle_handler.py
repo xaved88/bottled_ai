@@ -323,3 +323,11 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_use_tranquility_to_trigger_letter_opener(self):
         self.execute_handler_tests('/battles/general/use_tranquility.json', ['play 1'])
+
+    def test_transient_do_not_bother_attacking_since_no_damage(self):
+        self.execute_handler_tests('/battles/specific_comparator_cases/transient/do_not_bother_attacking_anymore.json',
+                                   ['end'])
+
+    def test_transient_still_attack_to_reduce_damage(self):
+        self.execute_handler_tests('/battles/specific_comparator_cases/transient/still_attack_to_reduce_damage.json',
+                                   ['play 1 0'])

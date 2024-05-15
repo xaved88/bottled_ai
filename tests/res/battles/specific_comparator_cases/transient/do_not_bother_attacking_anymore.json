@@ -221,7 +221,7 @@
           "id": "Transient",
           "powers": [
             {
-              "amount": 1,
+              "amount": 3,
               "name": "Fading",
               "id": "Fading"
             },
@@ -237,29 +237,16 @@
       "limbo": [],
       "hand": [
         {
-          "exhausts": true,
+          "exhausts": false,
           "is_playable": true,
           "cost": 1,
-          "name": "Smite",
-          "id": "Smite",
+          "name": "Strike+",
+          "id": "strike_p",
           "type": "ATTACK",
           "ethereal": false,
-          "uuid": "0acd1d3c-c5b3-4c07-b94f-2ba14f08a3c0",
-          "upgrades": 0,
-          "rarity": "SPECIAL",
-          "has_target": true
-        },
-        {
-          "exhausts": true,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Defend",
-          "id": "defend_g",
-          "type": "SKILL",
-          "ethereal": false,
-          "uuid": "0acd1d3c-c5b3-4c07-b94f-2ba14f08a3c0",
-          "upgrades": 0,
-          "rarity": "SPECIAL",
+          "uuid": "8c08cfee-934b-42fa-9a49-a76ac1986f41",
+          "upgrades": 1,
+          "rarity": "BASIC",
           "has_target": true
         }
       ],
@@ -278,11 +265,6 @@
             "amount": 1,
             "name": "Battle Hymn",
             "id": "BattleHymn"
-          },
-          {
-            "amount": 1,
-            "name": "Establishment",
-            "id": "EstablishmentPower"
           }
         ],
         "energy": 2
@@ -541,56 +523,6 @@
       {
         "name": "Pure Water",
         "id": "PureWater",
-        "counter": -1
-      },
-      {
-        "name": "Dream Catcher",
-        "id": "Dream Catcher",
-        "counter": -1
-      },
-      {
-        "name": "Bronze Scales",
-        "id": "Bronze Scales",
-        "counter": -1
-      },
-      {
-        "name": "Bag of Marbles",
-        "id": "Bag of Marbles",
-        "counter": -1
-      },
-      {
-        "name": "Sozu",
-        "id": "Sozu",
-        "counter": -1
-      },
-      {
-        "name": "Red Mask",
-        "id": "Red Mask",
-        "counter": -1
-      },
-      {
-        "name": "Membership Card",
-        "id": "Membership Card",
-        "counter": -1
-      },
-      {
-        "name": "Toy Ornithopter",
-        "id": "Toy Ornithopter",
-        "counter": -1
-      },
-      {
-        "name": "Frozen Egg",
-        "id": "Frozen Egg 2",
-        "counter": -1
-      },
-      {
-        "name": "Lantern",
-        "id": "Lantern",
-        "counter": -1
-      },
-      {
-        "name": "Astrolabe",
-        "id": "Astrolabe",
         "counter": -1
       }
     ],

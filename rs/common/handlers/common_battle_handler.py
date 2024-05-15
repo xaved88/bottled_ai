@@ -6,6 +6,7 @@ from rs.common.comparators.big_fight_comparator import BigFightComparator
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from rs.common.comparators.gremlin_nob_comparator import GremlinNobComparator
 from rs.common.comparators.three_sentry_comparator import ThreeSentriesComparator
+from rs.common.comparators.transient_comparator import TransientComparator
 from rs.common.comparators.waiting_lagavulin_comparator import WaitingLagavulinComparator
 from rs.game.card import CardType
 from rs.machine.command import Command
@@ -20,6 +21,7 @@ class BattleHandlerConfig:
     big_fight_comparator: ComparatorInterface = BigFightComparator
     gremlin_nob_comparator: ComparatorInterface = GremlinNobComparator
     three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
+    transient_comparator: ComparatorInterface = TransientComparator
     waiting_lagavulin_comparator: ComparatorInterface = WaitingLagavulinComparator
     general_comparator: ComparatorInterface = CommonGeneralComparator
 
@@ -34,12 +36,14 @@ class CommonBattleHandler(Handler):
         return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
 
     def select_comparator(self, state: GameState) -> ComparatorInterface:
+        alive_monsters = len(list(filter(lambda m: not m["is_gone"], state.get_monsters())))
+
         big_fight = state.floor() in self.config.big_fight_floors
 
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
 
         three_sentries_are_alive = state.has_monster("Sentry") \
-                                   and len(list(filter(lambda m: not m['is_gone'], state.get_monsters()))) == 3
+                                   and alive_monsters == 3
 
         lagavulin_is_sleeping = state.has_monster("Lagavulin") \
                                 and state.combat_state()['turn'] <= 2 \
@@ -50,6 +54,8 @@ class CommonBattleHandler(Handler):
                                       or state.has_relic("Warped Tongs") \
                                       or state.has_relic("Ice Cream")
 
+        transient_is_present = state.has_monster("Transient") and alive_monsters == 1
+
         if big_fight:
             return self.config.big_fight_comparator()
         elif gremlin_nob_is_present:
@@ -58,6 +64,8 @@ class CommonBattleHandler(Handler):
             return self.config.three_sentries_comparator()
         elif lagavulin_is_sleeping and lagavulin_is_worth_delaying:
             return self.config.waiting_lagavulin_comparator()
+        elif transient_is_present:
+            return self.config.transient_comparator()
         return self.config.general_comparator()
 
     def handle(self, state: GameState) -> HandlerAction:
