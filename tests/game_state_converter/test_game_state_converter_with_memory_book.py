@@ -19,6 +19,7 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         mb.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME] = {"test": 4}
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(True, "test" in new_state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME])
+        self.assertEqual(4, new_state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME]["test"])
 
     def test_memory_of_glass_knife_is_reset_outside_of_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)

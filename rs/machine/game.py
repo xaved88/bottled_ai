@@ -77,6 +77,7 @@ class Game:
                         continue
                     if action.memory_book is not None:
                         self.the_bots_memory_book = action.memory_book
+                        log_to_run("Memory of next action: " + str(vars(self.the_bots_memory_book)))
                     for command in action.commands:
                         self.__send_command(command)
                     handled = True
