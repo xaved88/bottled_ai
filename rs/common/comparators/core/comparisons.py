@@ -242,3 +242,8 @@ def killed_with_lesson_learned(best: CA, challenger: CA) -> Optional[bool]:
 def most_tranquility(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.count_tranquility() == challenger.count_tranquility() \
         else challenger.count_tranquility() > best.count_tranquility()
+
+
+def most_block_saved_for_next_turn(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.block_for_next_turn() == challenger.block_for_next_turn() \
+        else challenger.block_for_next_turn() > best.block_for_next_turn()

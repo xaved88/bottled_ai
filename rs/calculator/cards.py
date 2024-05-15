@@ -700,3 +700,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.FOREIGN_INFLUENCE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
+    if card_id == CardId.BARRICADE:
+        base_cost = 3 if not upgrade else 2
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.POWER)

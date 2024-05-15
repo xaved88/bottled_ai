@@ -235,5 +235,8 @@ class ComparatorAssessment:
                                 lambda: self.state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
 
     def count_tranquility(self) -> int:
-        return self.__get_value('tc_in_h',
+        return self.__get_value('tcinh',
                                 lambda: len([True for c in self.state.hand if (c.id == CardId.TRANQUILITY)]))
+
+    def block_for_next_turn(self) -> int:
+        return self.__get_value('bfnt', lambda: self.state.saved_block_for_next_turn)

@@ -760,3 +760,19 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         state = self.given_state(CardId.CUT_THROUGH_FATE, relics={RelicId.GOLDEN_EYE: 1})
         play = self.when_playing_the_whole_hand(state)
         self.see_player_scryed(play, 4)
+
+    def test_calipers_saves_minus_15_block_for_next_turn(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.CALIPERS: 1})
+        state.player.block = 20
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 20)
+        self.assertEqual(5, play.state.saved_block_for_next_turn)
+
+    def test_calipers_does_not_save_less_than_15_block_for_next_turn(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.CALIPERS: 1})
+        state.player.block = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 3)
+        self.assertEqual(0, play.state.saved_block_for_next_turn)

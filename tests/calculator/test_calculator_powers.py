@@ -1325,3 +1325,35 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state = self.given_state(CardId.STRIKE_R, relics={RelicId.PEN_NIB: 9}, player_powers={PowerId.STRENGTH: 1})
         play = self.when_making_the_most_plays(state)
         self.see_enemy_lost_hp(play, 14)
+
+    def test_barricade_prevents_monster_block_from_disappearing(self):
+        state = self.given_state(CardId.WOUND)
+        state.monsters[0].block = 3
+        state.monsters[0].powers = {PowerId.BARRICADE: 1}
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_block_is(play, 3)
+
+    def test_barricade_prevents_player_block_from_disappearing(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.BARRICADE: 1})
+        state.player.block = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 3)
+        self.assertEqual(3, play.state.saved_block_for_next_turn)
+
+    def test_barricade_saves_block_even_though_calipers_wants_to_take_some(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.BARRICADE: 1}, relics={RelicId.CALIPERS: 1})
+        state.player.block = 20
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 20)
+        self.assertEqual(20, play.state.saved_block_for_next_turn)
+
+    def test_blur_prevents_player_block_from_disappearing(self):
+        state = self.given_state(CardId.WOUND, player_powers={PowerId.BLUR: 1})
+        state.player.block = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 3)
+        self.assertEqual(3, play.state.saved_block_for_next_turn)

@@ -3224,3 +3224,9 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         # see that only 2 of the 2 strikes are played because normality stops it
         self.see_enemy_lost_hp(play, 6)
+
+    def test_barricade(self):
+        state = self.given_state(CardId.BARRICADE)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_has_power(play, PowerId.BARRICADE, 1)

@@ -31,7 +31,8 @@ class BattleState(BattleStateInterface):
                  must_discard: bool = False, amount_to_discard: int = 0, cards_discarded_this_turn: int = 0,
                  total_random_damage_dealt: int = 0, total_random_poison_added: int = 0,
                  orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_general: dict = None,
-                 memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None, amount_scryed: int = 0):
+                 memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None, amount_scryed: int = 0,
+                 saved_block_for_next_turn: int = 0):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -52,6 +53,7 @@ class BattleState(BattleStateInterface):
         self.memory_by_card: dict[
             CardId, dict[ResetSchedule, dict[str, int]]] = {} if memory_by_card is None else memory_by_card
         self.amount_scryed: int = amount_scryed
+        self.saved_block_for_next_turn: int = saved_block_for_next_turn
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -88,7 +90,8 @@ class BattleState(BattleStateInterface):
             self.change_stance(StanceType.CALM)
 
         if PowerId.DEVOTION in self.player.powers and self.is_new_turn():
-            self.player.add_powers({PowerId.MANTRA_INTERNAL: self.player.powers.get(PowerId.DEVOTION, 0)}, self.player.relics,
+            self.player.add_powers({PowerId.MANTRA_INTERNAL: self.player.powers.get(PowerId.DEVOTION, 0)},
+                                   self.player.relics,
                                    self.player.powers)
             self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, self.player.powers.get(PowerId.DEVOTION, 0))
 
@@ -626,6 +629,15 @@ class BattleState(BattleStateInterface):
                 monster.powers[PowerId.FADING] -= 1
                 if monster.powers[PowerId.FADING] < 1:
                     monster.inflict_damage(monster, 9999, 1, blockable=False, vulnerable_modifier=1, is_attack=False)
+
+        # potentially save some block for next turn
+        if self.player.block > 0:
+            if self.player.powers.get(PowerId.BARRICADE, 0):
+                self.saved_block_for_next_turn = self.player.block
+            elif self.player.powers.get(PowerId.BLUR, 0):
+                self.saved_block_for_next_turn = self.player.block
+            elif RelicId.CALIPERS in self.relics:
+                self.saved_block_for_next_turn = max(self.player.block - 15, 0)
 
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()

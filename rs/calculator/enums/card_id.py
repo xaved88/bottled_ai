@@ -31,6 +31,7 @@ class CardId(Enum):
     BANE = 'bane'
     BASH = 'bash'
     BARRAGE = 'barrage'
+    BARRICADE = 'barricade'
     BATTLE_HYMN = 'battlehymn'
     BATTLE_TRANCE = 'battle trance'
     BEAM_CELL = 'beam cell'

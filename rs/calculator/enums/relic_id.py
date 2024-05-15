@@ -4,7 +4,6 @@ from enum import Enum
 # NOT IMPLEMENTED
 # 'blue candle' # we seem to play this correctly without it being implemented because game adjusts the state correctly.
 # we should adjust the comparisons a bit to make sure we're more aggressively exhausting curses when this is available.
-# 'calipers'
 # 'centennial puzzle'
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
@@ -39,6 +38,7 @@ class RelicId(Enum):
     BRONZE_SCALES = 'bronze scales'                 # Covered by Thorns
     BURNING_BLOOD = 'burning blood'                 # N/A
     BUSTED_CROWN = 'busted crown'                   # N/A
+    CALIPERS = 'calipers'
     CALLING_BELL = 'calling bell'                   # N/A
     CAPTAINS_WHEEL = 'captain\u0027s wheel'         # We know current block
     CAULDRON = 'cauldron'                           # N/A

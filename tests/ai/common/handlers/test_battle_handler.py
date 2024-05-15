@@ -331,3 +331,12 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_transient_still_attack_to_reduce_damage(self):
         self.execute_handler_tests('/battles/specific_comparator_cases/transient/still_attack_to_reduce_damage.json',
                                    ['play 1 0'])
+
+    def test_play_more_block_because_barricade(self):
+        self.execute_handler_tests('/battles/powers/play_more_block_because_barricade.json',
+                                   ['play 1'])
+
+    def test_play_more_block_because_calipers(self):
+        self.execute_handler_tests('/battles/powers/play_more_block_because_calipers.json',
+                                   ['play 1'])
+

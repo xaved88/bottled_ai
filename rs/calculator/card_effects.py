@@ -875,9 +875,10 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [
             CardEffects(target=TargetType.SELF, applies_powers={PowerId.SIMMERING_RAGE: 2 if not card.upgrade else 2})]
     if card.id == CardId.WISH:
-        return [
-            CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: 3 if not card.upgrade else 4})]
+        strength_amount = 3 if not card.upgrade else 4
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.STRENGTH: strength_amount})]
     if card.id == CardId.FOREIGN_INFLUENCE:
-        return [
-            CardEffects(target=TargetType.SELF)]
+        return [CardEffects(target=TargetType.SELF)]
+    if card.id == CardId.BARRICADE:
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BARRICADE: 1})]
     return [CardEffects()]

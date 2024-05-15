@@ -47,6 +47,7 @@ default_comparisons = [
     stance_is_not_wrath,
     stance_is_calm,
     least_powered_down_steam_barrier,
+    most_block_saved_for_next_turn,
     most_energy,
 ]
 
