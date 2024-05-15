@@ -7,14 +7,14 @@ class CardRewardHandler(CommonCardRewardHandler):
     def __init__(self):
         super().__init__(
             cards_desired_for_deck={
-                'talk to the hand': 3,
                 'blasphemy': 1,
+                'talk to the hand': 3,
                 'rushdown': 1,
-                'tantrum': 1,
+                'tantrum': 2,
                 'battle hymn': 1,
+                'mental fortress': 2,
                 'crescendo': 2,
                 'tranquility': 2,
-                'mental fortress': 2,
                 'wallop': 2,
                 'flurry of blows': 2,
                 'empty body': 2,
