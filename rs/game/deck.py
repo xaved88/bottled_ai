@@ -20,8 +20,9 @@ class Deck:
         return False
 
     def contains_cards(self, names: List[str]) -> bool:
+        names = [element.lower() for element in names]
         for card in self.cards:
-            if card.name in names:
+            if card.name.lower() in names:
                 return True
         return False
 

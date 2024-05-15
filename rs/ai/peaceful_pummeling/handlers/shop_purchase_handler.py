@@ -1,14 +1,9 @@
-from typing import List
-
 from presentation_config import presentation_mode, p_delay, p_delay_s
+from rs.ai.peaceful_pummeling.config import CARD_REMOVAL_PRIORITY_LIST
 from rs.game.screen_type import ScreenType
 from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
-
-cards_to_purge: list[str] = ['ConjureBlade', 'ConjureBlade+', 'Vault', 'Vault+', 'Omniscience',
-                             'Omniscience+', 'Meditate', 'Meditate+', 'Defend', 'Strike', 'Wish', 'Wish+', 'Defend+',
-                             'Strike+']
 
 
 class ShopPurchaseHandler(Handler):
@@ -79,7 +74,7 @@ class ShopPurchaseHandler(Handler):
                     return relic['name'].lower()
 
         # 4. Purge in general
-        if can_purge and state.deck.contains_cards(cards_to_purge):
+        if can_purge and state.deck.contains_cards(CARD_REMOVAL_PRIORITY_LIST):
             return "purge"
 
         # 5. Cards based on list

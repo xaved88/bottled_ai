@@ -1,17 +1,9 @@
-from typing import List
-
 from presentation_config import presentation_mode, p_delay, p_delay_s
+from rs.ai._example.config import CARD_REMOVAL_PRIORITY_LIST
 from rs.game.screen_type import ScreenType
 from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
-
-standard_cards_to_purge: list[str] = [
-    'Strike',
-    'Defend',
-    'Strike+',
-    'Defend+',
-]
 
 
 # TODO -> find a nice way to configure this and extract it to commons
@@ -112,8 +104,7 @@ class ShopPurchaseHandler(Handler):
                     return relic['name'].lower()
 
         # 8. Purge in general
-        # Would be nicer to not essentially duplicate the list from purge_handler.py here but oh well. Note: NAMES here, not IDs.
-        if can_purge and state.deck.contains_cards(standard_cards_to_purge):
+        if can_purge and state.deck.contains_cards(CARD_REMOVAL_PRIORITY_LIST):
             return "purge"
 
         # Nothing we want / can afford, leave.

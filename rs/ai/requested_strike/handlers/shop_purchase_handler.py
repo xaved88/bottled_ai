@@ -1,6 +1,7 @@
 from typing import List
 
 from presentation_config import presentation_mode, p_delay, p_delay_s
+from rs.ai.requested_strike.config import CARD_REMOVAL_PRIORITY_LIST
 from rs.game.card import CardType
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
@@ -79,7 +80,7 @@ class ShopPurchaseHandler(Handler):
                 return "membership card"
 
         # 4. Purge in general
-        if can_purge and state.deck.contains_cards(["Strike", "Strike+", "Defend", "Defend+"]):
+        if can_purge and state.deck.contains_cards(CARD_REMOVAL_PRIORITY_LIST):
             return "purge"
 
         # 5. Relics based on list
