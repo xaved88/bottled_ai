@@ -20,6 +20,7 @@ default_comparisons = [
     most_lasting_intangible,
     least_incoming_damage_over_1,
     most_dead_monsters,
+    most_tranquility,
     most_enemy_vulnerable,
     most_enemy_weak,
     most_enemy_talking_to_hand,

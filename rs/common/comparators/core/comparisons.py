@@ -237,3 +237,8 @@ def no_blasphemy(best: CA, challenger: CA) -> Optional[bool]:
 def killed_with_lesson_learned(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.most_kills_with_lesson_learned() == challenger.most_kills_with_lesson_learned() \
         else challenger.most_kills_with_lesson_learned() > best.most_kills_with_lesson_learned()
+
+
+def most_tranquility(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.count_tranquility() == challenger.count_tranquility() \
+        else challenger.count_tranquility() > best.count_tranquility()

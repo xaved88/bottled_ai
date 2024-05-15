@@ -233,3 +233,7 @@ class ComparatorAssessment:
     def most_kills_with_lesson_learned(self) -> int:
         return self.__get_value('most_kills_with_lesson_learned',
                                 lambda: self.state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
+
+    def count_tranquility(self) -> int:
+        return self.__get_value('tc_in_h',
+                                lambda: len([True for c in self.state.hand if (c.id == CardId.TRANQUILITY)]))

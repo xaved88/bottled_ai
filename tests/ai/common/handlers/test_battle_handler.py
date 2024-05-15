@@ -317,3 +317,9 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_do_not_bother_attacking_when_enemy_will_die_anyway_to_fading(self):
         self.execute_handler_tests('/battles/powers/transient_dying_to_fading.json', ['end'])
+
+    def test_better_to_save_tranquility_than_trigger_letter_opener(self):
+        self.execute_handler_tests('/battles/general/save_tranquility.json', ['end'])
+
+    def test_use_tranquility_to_trigger_letter_opener(self):
+        self.execute_handler_tests('/battles/general/use_tranquility.json', ['play 1'])
