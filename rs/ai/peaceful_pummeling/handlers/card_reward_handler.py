@@ -25,7 +25,7 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'inner peace': 1,
                 'cut through fate': 1,
                 'crescendo': 1,
-                'halt': 1,  # removed if snecko
+                'halt': 1,
                 'deceive reality': 1,
                 'carve reality': 1,
                 'spirit shield': 1,
@@ -65,5 +65,29 @@ class CardRewardHandler(CommonCardRewardHandler):
         )
 
     def transform_desired_cards_map_from_state(self, cards: dict[str, int], state: GameState):
+        remove_if_snecko = [
+            'consecrate',
+            'halt',
+            'just lucky',
+            'scrawl',
+        ]
+        safe_remove_if_snecko = []
+
         if state.has_relic("Snecko Eye"):
-            del cards['halt']
+            for c in remove_if_snecko:
+                if c in cards:
+                    safe_remove_if_snecko.append(c)
+            for d in safe_remove_if_snecko:
+                del cards[d]
+
+        remove_if_pyramid = [
+            'battle hymn',
+        ]
+        safe_remove_if_pyramid = []
+
+        if state.has_relic("Runic Pyramid"):
+            for c in remove_if_pyramid:
+                if c in cards:
+                    safe_remove_if_pyramid.append(c)
+            for d in safe_remove_if_pyramid:
+                del cards[d]

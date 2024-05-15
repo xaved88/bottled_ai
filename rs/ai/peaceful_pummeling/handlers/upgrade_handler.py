@@ -13,7 +13,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'blasphemy',
             'tantrum',
             'talk to the hand',
-            'rushdown',  # removed if snecko
+            'rushdown',
             'flurry of blows',
             'cut_through_fate',
             'wallop',
@@ -27,15 +27,15 @@ class UpgradeHandler(CommonUpgradeHandler):
             'reach heaven',
             'inner peace',
             'lesson learned',
-            'halt',  # removed if snecko
+            'halt',
             'indignation',
             'empty body',
             'empty fist',
             'battle hymn',
             'spirit shield',
             'deceive reality',
-            'crescendo',  # removed if snecko
-            'tranquility',  # removed if snecko
+            'crescendo',
+            'tranquility',
             'sands of time',
             'perseverance',
             'wheel kick',
@@ -44,8 +44,34 @@ class UpgradeHandler(CommonUpgradeHandler):
         ])
 
     def transform_priorities_based_on_game_state(self, priorities: List[str], state: GameState):
+        remove_if_snecko = [
+            'consecrate',
+            'crescendo',
+            'halt',
+            'just lucky',
+            'master reality',
+            'rushdown',
+            'scrawl',
+            'tranquility',
+        ]
+        safe_remove_if_snecko = []
+
         if state.has_relic("Snecko Eye"):
-            priorities.remove('crescendo')
-            priorities.remove('tranquility')
-            priorities.remove('halt')
-            priorities.remove('rushdown')
+            for c in remove_if_snecko:
+                if c in priorities:
+                    safe_remove_if_snecko.append(c)
+            for d in safe_remove_if_snecko:
+                priorities.remove(d)
+
+        remove_if_pyramid = [
+            'blasphemy',
+            'worship',
+        ]
+        safe_remove_if_pyramid = []
+
+        if state.has_relic("Runic Pyramid"):
+            for c in remove_if_pyramid:
+                if c in priorities:
+                    safe_remove_if_pyramid.append(c)
+            for d in safe_remove_if_pyramid:
+                priorities.remove(d)
