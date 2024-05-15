@@ -22,7 +22,7 @@ cards_to_pass_over = [
     'shame',
     'writhe',
     'burn',
-    'burn+'
+    'burn+',
     'wound',
     'slimed',
 ]

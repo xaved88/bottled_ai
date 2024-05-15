@@ -28,6 +28,7 @@ class ShopPurchaseHandler(Handler):
             'Pear',
             'Vajra',
             'Strike Dummy',
+            'Kunai',
             'Pantograph',
             'Anchor',
             'Horn Cleat',

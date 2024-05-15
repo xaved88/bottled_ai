@@ -28,6 +28,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'inner peace',
             'lesson learned',
             'halt',  # removed if snecko
+            'indignation',
             'empty body',
             'empty fist',
             'battle hymn',
