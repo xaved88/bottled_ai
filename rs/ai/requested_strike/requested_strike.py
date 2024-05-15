@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.ai.requested_strike.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK
+from rs.ai.requested_strike.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK, HIGH_PRIORITY_UPGRADES
 from rs.ai.requested_strike.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.requested_strike.handlers.event_handler import EventHandler
 from rs.ai.requested_strike.handlers.neow_handler import NeowHandler
@@ -48,7 +48,7 @@ REQUESTED_STRIKE: AiStrategy = AiStrategy(
         EventHandler(),
         CommonChestHandler(),
         CommonMapHandler(),
-        CommonCampfireHandler(),
+        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
         CommonDiscardHandler(),

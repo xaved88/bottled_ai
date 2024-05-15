@@ -1,6 +1,6 @@
 from typing import List
 
-from rs.ai.pwnder_my_orbs.config import CARD_REMOVAL_PRIORITY_LIST
+from rs.ai.pwnder_my_orbs.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES
 from rs.ai.pwnder_my_orbs.handlers.battle_handler import get_pmo_battle_handler
 from rs.ai.pwnder_my_orbs.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.pwnder_my_orbs.handlers.card_reward_handler import CardRewardHandler
@@ -45,7 +45,7 @@ PWNDER_MY_ORBS: AiStrategy = AiStrategy(
         EventHandler(),
         CommonChestHandler(),
         CommonMapHandler(),
-        CommonCampfireHandler(),
+        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
         CommonDiscardHandler(),

@@ -5,3 +5,7 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'twin strike': 5,
     'wild strike': 2,
 }
+
+HIGH_PRIORITY_UPGRADES = [
+    'Apotheosis',
+]

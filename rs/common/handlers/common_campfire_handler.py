@@ -1,7 +1,6 @@
 from typing import List
 
 from presentation_config import presentation_mode, p_delay
-from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import standard_cards_to_purge
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -11,8 +10,9 @@ from rs.machine.state import GameState
 
 class CommonCampfireHandler(Handler):
 
-    def __init__(self, high_priority_upgrades: List[str] = None):
+    def __init__(self, high_priority_upgrades: List[str] = None, card_removal_priorities: List[str] = None):
         self.high_priority_upgrades: List[str] = [] if high_priority_upgrades is None else high_priority_upgrades
+        self.card_removal_priorities: List[str] = [] if card_removal_priorities is None else card_removal_priorities
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) and state.screen_type() == ScreenType.REST.value
@@ -42,7 +42,7 @@ class CommonCampfireHandler(Handler):
             choice = "dig"
         elif can_smith:
             choice = 'smith'
-        elif can_toke and state.deck.contains_cards(standard_cards_to_purge):
+        elif can_toke and state.deck.contains_cards(self.card_removal_priorities):
             choice = "toke"
 
         if presentation_mode:

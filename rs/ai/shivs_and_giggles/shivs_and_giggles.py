@@ -51,7 +51,7 @@ SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
         EventHandler(),
         CommonChestHandler(),
         CommonMapHandler(),
-        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES),
+        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
         CommonDiscardHandler(),

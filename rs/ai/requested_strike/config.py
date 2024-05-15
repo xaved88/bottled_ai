@@ -30,3 +30,8 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'dramatic entrance': 1,
     'finesse': 1,
 }
+
+HIGH_PRIORITY_UPGRADES = [
+    'Apotheosis',
+    'Perfected Strike',
+]
