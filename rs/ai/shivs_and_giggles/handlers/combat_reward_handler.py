@@ -7,7 +7,7 @@ class CombatRewardHandler(CommonCombatRewardHandler):
         super().__init__(undesired_relics=[
             'Dead Branch',
             'Bottled Flame',
-        ], desired_potions= [
+        ], desired_potions=[
             'fruit juice',
             'fairy in a bottle',
             'focus potion',

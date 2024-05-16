@@ -18,16 +18,23 @@ class CombatRewardHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/combat_reward/combat_reward_potion.json', ['choose potion'])
 
     def test_discards_least_desired_potion_when_full(self):
-        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_least_desired_in_hand.json', ['wait 30', 'potion discard 1'])
+        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_least_desired_in_hand.json',
+                                   ['wait 30', 'potion discard 1'])
 
     def test_skips_least_desired_potion_when_full(self):
-        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_least_desired_not_in_hand.json', ['proceed'])
+        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_least_desired_not_in_hand.json',
+                                   ['proceed'])
 
     def test_take_relic(self):
         self.execute_handler_tests('/combat_reward/combat_reward_relic.json', ['choose relic'])
 
     def test_check_card(self):
         self.execute_handler_tests('/combat_reward/combat_reward_card.json', ['choose card'])
-    
+
     def test_check_card_even_though_potions_full(self):
-        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_done_with_potions_do_not_skip_checking_card.json', ['choose card'])
+        self.execute_handler_tests(
+            '/combat_reward/combat_reward_full_potions_done_with_potions_do_not_skip_checking_card.json',
+            ['choose card'])
+
+    def test_do_not_die_from_relic_not_being_first(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_several_rewards.json', ['choose gold'])

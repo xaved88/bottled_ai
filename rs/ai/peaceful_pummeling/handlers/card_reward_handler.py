@@ -34,7 +34,6 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'perseverance': 2,
                 'wheel kick': 1,
                 'like water': 1,
-                'follow up': 1,
             }, cards_desired_from_potions={
                 'apotheosis': 1,
                 'mental fortress': 5,
