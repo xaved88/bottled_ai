@@ -57,7 +57,8 @@ def most_free_early_draw(best: CA, challenger: CA) -> Optional[bool]:
 
 
 def most_free_draw(best: CA, challenger: CA) -> Optional[bool]:
-    return None if best.draw_free() == challenger.draw_free() else challenger.draw_free() > best.draw_free()
+    return None if best.draw_free() == challenger.draw_free() \
+        else challenger.draw_free() > best.draw_free()
 
 
 def most_lasting_intangible(best: CA, challenger: CA) -> Optional[bool]:
