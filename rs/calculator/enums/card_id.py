@@ -208,6 +208,7 @@ class CardId(Enum):
     MIND_BLAST = 'mind blast'
     MIRACLE = 'miracle'
     MULTI_CAST = 'multicast'
+    NECRONOMICURSE = 'necronomicurse'
     NEUTRALIZE = 'neutralize'
     NIRVANA = 'nirvana'
     NORMALITY = 'normality'

@@ -18,7 +18,7 @@ class CommonChestHandler(Handler):
     def handle(self, state: GameState) -> HandlerAction:
         if state.has_relic("Cursed Key") and state.get_relic_counter("Omamori") >= 1:
             return HandlerAction(commands=["choose 0", "wait 30"])
-        if state.has_relic("Cursed Key") and state.deck.contains_curses():
+        if state.has_relic("Cursed Key") and state.deck.contains_curses_of_any_kind():
             return HandlerAction(commands=["proceed"])
         if presentation_mode:
             return HandlerAction(commands=[p_delay_s, "choose 0", "wait 30"])

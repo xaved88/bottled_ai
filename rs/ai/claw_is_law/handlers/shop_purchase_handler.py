@@ -60,7 +60,7 @@ class ShopPurchaseHandler(Handler):
                 return "shuriken"
 
         # 1. Purge curses
-        if can_purge and state.deck.contains_curses():
+        if can_purge and state.deck.contains_curses_we_can_remove():
             return "purge"
 
         # 2. Membership Card

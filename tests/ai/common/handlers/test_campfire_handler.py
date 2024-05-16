@@ -47,6 +47,9 @@ class CampfireHandlerTestCase(CoTestHandlerFixture):
     def test_toke(self):
         self.execute_handler_tests('/campfire/campfire_toke.json', ['choose toke'])
 
+    def test_toke_do_not_toke_because_curse_cannot_be_removed(self):
+        self.execute_handler_tests('/campfire/campfire_do_not_toke.json', ['choose dig'])
+
     def test_dig_because_cannot_smith(self):
         self.execute_handler_tests('/campfire/campfire_cannot_smith_so_dig.json', ['choose dig'])
 

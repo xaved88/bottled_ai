@@ -34,7 +34,7 @@ class CommonCampfireHandler(Handler):
 
         if can_rest and ((worth_healing and not pantograph_will_cover_it) or state.floor() == 49):
             choice = "rest"
-        elif can_toke and state.deck.contains_curses():
+        elif can_toke and state.deck.contains_curses_we_can_remove():
             choice = "toke"
         elif can_lift and not important_upgrade_available and state.get_relic_counter("Girya") < 2:
             choice = "lift"

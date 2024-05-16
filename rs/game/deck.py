@@ -1,5 +1,6 @@
 from typing import List
 
+from rs.calculator.enums.card_id import CardId
 from rs.game.card import Card, CardType
 
 
@@ -13,9 +14,17 @@ class Deck:
                 return True
         return False
 
-    def contains_curses(self) -> bool:
+    def contains_curses_of_any_kind(self) -> bool:
         for card in self.cards:
             if card.type == CardType.CURSE:
+                return True
+        return False
+
+    def contains_curses_we_can_remove(self) -> bool:
+        for card in self.cards:
+            if card.type == CardType.CURSE and not \
+                    card.id == "curseofthebell" and not \
+                    card.id == "necronomicurse":
                 return True
         return False
 

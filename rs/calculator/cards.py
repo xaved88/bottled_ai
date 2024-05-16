@@ -227,6 +227,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.NORMALITY:
         return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
+    if card_id == CardId.NECRONOMICURSE:
+        return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE)
     if card_id == CardId.ASCENDERS_BANE:
         return Card(card_id, 0, Cost.unplayable, False, CardType.CURSE, ethereal=True)
     if card_id == CardId.CLUMSY:

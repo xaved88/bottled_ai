@@ -188,6 +188,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.NONE, end_turn_hooks=[doubt_end_turn_hook])]
     if card.id == CardId.CURSE_OF_THE_BELL:
         return [CardEffects(target=TargetType.NONE)]
+    if card.id == CardId.NECRONOMICURSE:
+        return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.PARASITE:
         return [CardEffects(target=TargetType.NONE)]
     if card.id == CardId.INJURY:
