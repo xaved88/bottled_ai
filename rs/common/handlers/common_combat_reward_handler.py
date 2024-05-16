@@ -78,14 +78,14 @@ class CommonCombatRewardHandler(Handler):
         # Do pickups
         choice = 'did not choose'
 
-        if 'gold' in state.get_choice_list():
+        if 'gold' in state.get_choice_list() and choice == 'did not choose':
             choice = 'gold'
 
-        elif 'stolen_gold' in state.get_choice_list():
+        if 'stolen_gold' in state.get_choice_list() and choice == 'did not choose':
             choice = 'stolen_gold'
 
-        elif 'relic' in state.get_choice_list() and state.game_state()["screen_state"]["rewards"][0]["relic"][
-            "name"] not in self.undesired_relics:
+        if 'relic' in state.get_choice_list() and state.game_state()["screen_state"]["rewards"][0]["relic"][
+            "name"] not in self.undesired_relics and choice == 'did not choose':
             choice = 'relic'
 
         # potentially too fragile check for if the second relic might be desirable even though the first one isn't that I'll leave disabled for safety
@@ -93,7 +93,7 @@ class CommonCombatRewardHandler(Handler):
         #         state.game_state()["screen_state"]["rewards"][1]["relic"]["id"] not in undesired_relics:
         #     choice = '1'
 
-        elif 'potion' in state.get_choice_list():
+        if 'potion' in state.get_choice_list() and choice == 'did not choose':
             if state.are_potions_full():
                 all_potions = state.get_held_potion_names() + state.get_reward_potion_names()
                 for least_desired_potion in self.desired_potions:
@@ -112,7 +112,7 @@ class CommonCombatRewardHandler(Handler):
             else:
                 choice = 'potion'
 
-        elif 'card' in state.get_choice_list():
+        if 'card' in state.get_choice_list() and choice == 'did not choose':
             choice = 'card'
 
         if choice != 'did not choose':

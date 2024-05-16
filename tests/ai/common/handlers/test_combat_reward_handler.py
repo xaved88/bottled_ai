@@ -28,3 +28,6 @@ class CombatRewardHandlerTestCase(CoTestHandlerFixture):
 
     def test_check_card(self):
         self.execute_handler_tests('/combat_reward/combat_reward_card.json', ['choose card'])
+    
+    def test_check_card_even_though_potions_full(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_full_potions_done_with_potions_do_not_skip_checking_card.json', ['choose card'])
