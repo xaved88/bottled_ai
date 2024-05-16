@@ -39,7 +39,7 @@ default_desired_potions = [
     'flex potion',
     'swift potion',
     'bottled miracle',
-    'essence of darkness'
+    'essence of darkness',
     'fire potion',
     'explosive potion',
     'speed potion',
@@ -58,8 +58,8 @@ default_desired_potions = [
 class CommonCombatRewardHandler(Handler):
 
     def __init__(self, undesired_relics: List[str] = None, desired_potions: List[str] = None):
-        self.undesired_relics: List[str] = [] if undesired_relics is None else undesired_relics
-        self.desired_potions: List[str] = default_desired_potions if desired_potions is None else desired_potions
+        self.undesired_relics: List[str] = [] if undesired_relics is None else undesired_relics.copy()
+        self.desired_potions: List[str] = default_desired_potions.copy() if desired_potions is None else desired_potions.copy()
         self.desired_potions.reverse()
 
     def can_handle(self, state: GameState) -> bool:
