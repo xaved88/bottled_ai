@@ -14,7 +14,7 @@ class CardRewardHandler(CommonCardRewardHandler):
                 'battle hymn': 1,
                 'mental fortress': 2,
                 'tranquility': 2,
-                'wallop': 2,
+                'wallop': 1,
                 'flurry of blows': 2,
                 'empty body': 2,
                 'indignation': 1,

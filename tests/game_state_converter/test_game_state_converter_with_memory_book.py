@@ -2,6 +2,7 @@ import unittest
 
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule, StanceType
+from rs.game.card import CardType
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
 from test_helpers.resources import load_resource_state
 
@@ -71,9 +72,9 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
 
     def test_memory_of_type_last_played_is_not_reset_when_entering_a_new_turn(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)
-        mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = 4
+        mb.memory_general[MemoryItem.TYPE_LAST_PLAYED] = CardType.POWER
         new_state = load_resource_state('battles/memory/basic_turn_2.json', memory_book=mb)
-        self.assertEqual(4, new_state.memory_general[MemoryItem.TYPE_LAST_PLAYED])
+        self.assertEqual(CardType.POWER, new_state.memory_general[MemoryItem.TYPE_LAST_PLAYED])
 
     def test_memory_of_type_last_played_is_reset_when_leaving_battle(self):
         mb = TheBotsMemoryBook.new_default(last_known_turn=1)

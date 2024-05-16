@@ -75,7 +75,6 @@ powers_we_like: List[PowerId] = [
     PowerId.FIRE_BREATHING,
     PowerId.FOCUS,
     PowerId.FORESIGHT,
-    PowerId.FREE_ATTACK_POWER,
     PowerId.HEATSINK,
     PowerId.INFINITE_BLADES,
     PowerId.INTANGIBLE_PLAYER,
@@ -106,8 +105,9 @@ powers_we_like: List[PowerId] = [
 
 powers_we_like_less: List[PowerId] = [
     PowerId.DEXTERITY,
-    PowerId.STRENGTH,
     PowerId.ENERGIZED,
+    PowerId.FREE_ATTACK_POWER,
+    PowerId.STRENGTH,
     PowerId.VIGOR,
 ]
 

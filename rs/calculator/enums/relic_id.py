@@ -8,7 +8,7 @@ from enum import Enum
 # 'dead branch'
 # 'ectoplasm'  could take it into account when we do clever finishers for not caring about hand of gold
 # 'meat on the bone'
-# 'melange' # there would suddenly be a bunch of 'shuffle the draw pile' actions to suddenly take into account
+# 'melange' # there would suddenly be a bunch of 'shuffle the draw pile' actions from e.g. cards to suddenly take into account
 # 'mummified hand'
 # 'runic cube'
 # 'sacred bark'
