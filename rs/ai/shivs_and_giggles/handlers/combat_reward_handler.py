@@ -38,7 +38,7 @@ class CombatRewardHandler(CommonCombatRewardHandler):
             'flex potion',
             'swift potion',
             'bottled miracle',
-            'essence of darkness'
+            'essence of darkness',
             'fire potion',
             'explosive potion',
             'speed potion',

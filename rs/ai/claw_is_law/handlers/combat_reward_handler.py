@@ -37,7 +37,7 @@ class CombatRewardHandler(CommonCombatRewardHandler):
             'flex potion',
             'swift potion',
             'bottled miracle',
-            'essence of darkness'
+            'essence of darkness',
             'fire potion',
             'explosive potion',
             'focus potion',  # down-prioritized this since we intentionally lose a lot of Focus with this strategy
