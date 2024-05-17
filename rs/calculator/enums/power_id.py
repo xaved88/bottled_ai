@@ -85,7 +85,7 @@ class PowerId(Enum):
     NIRVANA = 'nirvana'
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
-    OMEGA = 'omega'
+    OMEGA = 'omegapower'
     PANACHE = 'panache'
     # We currently have damage provided by triggering the Panache power hardcoded to 10.
     # It's the first power we've run into that has multiple values associated with it.

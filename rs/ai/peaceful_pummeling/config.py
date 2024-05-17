@@ -71,9 +71,11 @@ CARD_REMOVAL_PRIORITY_LIST = [
     'Wish',
     'Wish+',
     'defend+',
-    'strike+']
+    'strike+',
+    'bite']
 
 HIGH_PRIORITY_UPGRADES = [
     'Apotheosis',
     'Blasphemy',
+    'Eruption',
 ]

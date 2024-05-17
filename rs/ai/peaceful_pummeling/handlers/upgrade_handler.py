@@ -40,6 +40,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'perseverance',
             'wheel kick',
             'like water',
+            'bite',
             'follow-up',
         ])
 
