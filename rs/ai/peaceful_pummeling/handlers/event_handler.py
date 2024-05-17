@@ -1,6 +1,7 @@
 from typing import List
 
 from presentation_config import presentation_mode, p_delay, p_delay_s, slow_events
+from rs.ai.peaceful_pummeling.config import DESIRED_CARDS_FOR_DECK, CARD_REMOVAL_PRIORITY_LIST
 from rs.game.screen_type import ScreenType
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
@@ -214,10 +215,29 @@ class EventHandler(Handler):
         # Act 3
 
         if event_name == "Falling":
-            if len(state.get_choice_list()) == 3:
-                return "choose 2"  # Lose the attack
-            else:
-                return "choose 0"  # OK our deck is weird - whatever, just lose something
+            options = state.get_falling_event_options()
+
+            # check for stuff we want to purge
+            for least_desired in CARD_REMOVAL_PRIORITY_LIST:
+                if least_desired in options:
+                    for idx, card in enumerate(options):
+                        if card == least_desired:
+                            return "choose " + str(idx)
+
+            # check for cards not in the pickup list
+            for idx, option in enumerate(options):
+                if option not in DESIRED_CARDS_FOR_DECK:
+                    return "choose " + str(idx)
+
+            # check for lowest card on the pickup list
+            pickup_prios = list(DESIRED_CARDS_FOR_DECK.keys())
+            pickup_prios.reverse()
+
+            for least_desired in pickup_prios:
+                if least_desired in options:
+                    for idx, card in enumerate(options):
+                        if card == least_desired:
+                            return "choose " + str(idx)
 
         if event_name == "Mind Bloom":
             return "choose 0"  # Fight an Act 1 boss for a relic.
