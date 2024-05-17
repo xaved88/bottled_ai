@@ -13,7 +13,7 @@ from rs.helper.logger import log, init_log, log_new_run_sequence
 take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything.
 # If there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
-    'LGZ12EEMFGUK',
+    #'LGZ12EEMFGUK',
 ]
 run_amount = 1
 strategy = PEACEFUL_PUMMELING

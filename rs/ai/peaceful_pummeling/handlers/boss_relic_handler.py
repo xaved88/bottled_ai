@@ -8,21 +8,19 @@ class BossRelicHandler(CommonBossRelicHandler):
 
     def __init__(self):
         super().__init__(preferred_relic_list=[
-            "sozu",
             "philosopher\u0027s stone",
+            "sozu",
             "ectoplasm",
             "violet lotus",
             "cursed key",
+            "snecko eye",
             "fusion hammer",
-            "mark of pain",
             "busted crown",  # removed if already have another energy relic or it's act 1
             "coffee dripper",  # removed if already have another energy relic or it's act 1
             "slaver\u0027s collar",
             "runic pyramid",
             "holy water",
-            "runic cube",
             "calling bell",
-            "snecko eye",
             "astrolabe",
             "empty cage",
             "black star",
