@@ -17,3 +17,9 @@ class ShopPurchaseHandlerTestCase(CoTestHandlerFixture):
     def test_buy_upgraded_cards(self):
         self.execute_handler_tests('/shop/shop_buy_perfected_strike+.json', ['choose 1', 'wait 30'])
 
+    def test_do_not_purge_because_no_removable_curses(self):
+        self.execute_handler_tests('/shop/shop_do_not_purge_because_no_removable_curses.json', ['choose 9', 'wait 30'])
+
+    def test_purge_even_though_first_curse_is_not_removable(self):
+        self.execute_handler_tests('/shop/shop_purge_because_one_removable_curse_among_not_removable.json',
+                                   ['choose 0', 'wait 30'])

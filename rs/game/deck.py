@@ -23,8 +23,9 @@ class Deck:
     def contains_curses_we_can_remove(self) -> bool:
         for card in self.cards:
             if card.type == CardType.CURSE and not \
-                    card.id == "curseofthebell" and not \
-                    card.id == "necronomicurse":
+                    card.id.lower() == "curseofthebell" and not \
+                    card.id.lower() == "necronomicurse" and not \
+                    card.id.lower() == "ascender\u0027sbane":
                 return True
         return False
 

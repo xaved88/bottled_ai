@@ -46,13 +46,11 @@ class GameStateConverterTest(unittest.TestCase):
 
     def test_curse_of_the_bell_stripped_by_curse_check_that_strips_it(self):
         state = load_resource_state("campfire/campfire_do_not_toke.json")
-        deck_list = state.deck.contains_curses_we_can_remove()
-        self.assertEqual(False, deck_list)
+        self.assertEqual(False, state.deck.contains_curses_we_can_remove())
 
     def test_curse_of_the_bell_not_stripped_by_inclusive_curse_check(self):
         state = load_resource_state("campfire/campfire_do_not_toke.json")
-        deck_list = state.deck.contains_curses_of_any_kind()
-        self.assertEqual(True, deck_list)
+        self.assertEqual(True, state.deck.contains_curses_of_any_kind())
 
     def test_get_correct_amount_of_card_in_deck(self):
         state = load_resource_state("other/some_strikes_in_deck.json")

@@ -22,7 +22,7 @@ class CardId(Enum):
     ANGER = 'anger'
     APOTHEOSIS = 'apotheosis'
     APPARITION = 'ghostly'
-    ASCENDERS_BANE = 'ascender\u0027s bane'
+    ASCENDERS_BANE = 'ascender\u0027sbane'
     AUTO_SHIELDS = 'auto shields'
     BACKFLIP = 'backflip'
     BACKSTAB = 'backstab'
