@@ -41,7 +41,7 @@ PEACEFUL_PUMMELING: AiStrategy = AiStrategy(
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CombatRewardHandler(),
         CardRewardHandler(),
-        CommonNeowHandler(),
+        NeowHandler(),
         EventHandler(),
         CommonChestHandler(),
         CommonMapHandler(),

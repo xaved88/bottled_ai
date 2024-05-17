@@ -25,7 +25,6 @@ class UpgradeHandler(CommonUpgradeHandler):
             'ragnarok',
             'fear no evil',
             'reach heaven',
-            'inner peace',
             'lesson learned',
             'halt',
             'indignation',
@@ -38,9 +37,11 @@ class UpgradeHandler(CommonUpgradeHandler):
             'tranquility',
             'sands of time',
             'perseverance',
+            'inner peace',
             'wheel kick',
             'like water',
             'bite',
+            'ritual dagger',
             'follow-up',
         ])
 

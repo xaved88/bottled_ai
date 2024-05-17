@@ -20,6 +20,7 @@ DESIRED_CARDS_FOR_DECK = {
     'eruption': 1,
     'crescendo': 1,
     'halt': 1,
+    'ritual dagger': 1,
     'deceive reality': 1,
     'carve reality': 1,
     'spirit shield': 1,

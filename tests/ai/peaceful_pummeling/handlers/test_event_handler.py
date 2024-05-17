@@ -6,10 +6,10 @@ class TestEventHandler(PpTestHandlerFixture):
     handler = EventHandler
 
     def test_council_of_ghosts(self):
-        self.execute_handler_tests('/event/council_of_ghosts.json', ['choose accept', 'wait 30'])
+        self.execute_handler_tests('/event/event_council_of_ghosts.json', ['choose accept', 'wait 30'])
 
     def test_council_of_ghosts_skip_because_we_have_bites(self):
-        self.execute_handler_tests('/event/council_of_ghosts_with_bite.json', ['choose refuse', 'wait 30'])
+        self.execute_handler_tests('/event/event_council_of_ghosts_with_bite.json', ['choose refuse', 'wait 30'])
 
     def test_vampires(self):
         self.execute_handler_tests('/event/vampires.json', ['choose accept', 'wait 30'])

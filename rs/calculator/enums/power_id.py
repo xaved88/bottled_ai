@@ -97,6 +97,7 @@ class PowerId(Enum):
     REGENERATE_ENEMY = 'regenerate'
     REGENERATION_PLAYER = 'regeneration'
     REPAIR = 'repair'
+    RITUAL = 'ritual'  # We don't do anything with it
     RUSHDOWN = 'adaptation'
     SADISTIC = 'sadistic'
     SHACKLED = 'shackled'  # Enemy regains strength at end of turn, not currently relevant
