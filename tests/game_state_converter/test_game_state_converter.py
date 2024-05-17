@@ -58,3 +58,7 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("other/some_strikes_in_deck.json")
         self.assertEqual(3, state.deck.contains_card_amount("strike"))
 
+    def test_get_falling_event_options(self):
+        state = load_resource_state("event/event_falling.json")
+        self.assertEqual(['tranquility', 'strike', 'halt'], state.get_falling_event_options())
+

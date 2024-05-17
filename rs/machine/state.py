@@ -179,9 +179,17 @@ class GameState:
             return 0
         return len(orbs)
 
+    def get_falling_event_options(self) -> list:
+        options = []
 
-def get_stacks_of_power(powers: List[dict], power_id: str):
-    for power in powers:
-        if power['id'] == power_id:
-            return power['amount']
-    return 0
+        def extract_card_from_text(text):
+            keyword = "Lose"
+            if keyword in text:
+                return text.split(keyword, 1)[1].strip()
+
+        for option in self.screen_state()["options"]:
+            text = option["text"]
+            options.append(extract_card_from_text(text).lower())
+        for idx, choice in enumerate(options):
+            options[idx] = choice.replace("+", "")
+        return options
