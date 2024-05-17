@@ -280,6 +280,14 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.state.end_turn()
         self.see_player_lost_hp(play, 0)
 
+    def test_intangible_also_applies_to_block_damage(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.INTANGIBLE_PLAYER: 1})
+        state.monsters[0].damage = 1
+        state.monsters[0].hits = 6
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 1)
+
     def test_intangible_player_blocks_self_damage(self):
         state = self.given_state(CardId.BLOODLETTING, targets=2, player_powers={PowerId.INTANGIBLE_PLAYER: 1})
         play = self.when_playing_the_first_card(state)

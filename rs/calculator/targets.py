@@ -52,6 +52,12 @@ class Target(TargetInterface):
                     is_attack=False,
                 )
 
+            # pre-block checks
+            if self.powers.get(PowerId.INTANGIBLE_PLAYER):
+                hit_damage = 1
+            if self.powers.get(PowerId.INTANGIBLE_ENEMY):
+                hit_damage = 1
+
             if self.powers.get(PowerId.FLIGHT):
                 hit_damage = math.floor(hit_damage * .5)  # this may not be entirely accurate, pay attention
 
@@ -65,12 +71,9 @@ class Target(TargetInterface):
                     if source.relics.get(RelicId.HAND_DRILL):
                         self.add_powers({PowerId.VULNERABLE: 2}, source.relics, source.powers)
 
+            # post-block checks
             if hit_damage > 0:
                 if self.relics.get(RelicId.TORII) and hit_damage < 6:
-                    hit_damage = 1
-                if self.powers.get(PowerId.INTANGIBLE_PLAYER):
-                    hit_damage = 1
-                if self.powers.get(PowerId.INTANGIBLE_ENEMY):
                     hit_damage = 1
                 if self.relics.get(RelicId.TUNGSTEN_ROD):
                     hit_damage -= 1

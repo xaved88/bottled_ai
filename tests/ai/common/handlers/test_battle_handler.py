@@ -343,3 +343,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_do_not_use_perseverance_to_block_2_damage(self):
         self.execute_handler_tests('/battles/general/do_not_use_perseverance_to_prevent_2_damage.json', ['end'])
 
+    def test_intangible_but_should_still_block(self):
+        self.execute_handler_tests('/battles/powers/intangible_but_should_still_block.json', ['play 1'])
+
