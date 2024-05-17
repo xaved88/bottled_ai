@@ -54,7 +54,6 @@ default_comparisons = [
 powers_we_like: List[PowerId] = [
     PowerId.ACCURACY,
     PowerId.AFTER_IMAGE,
-    PowerId.ARTIFACT,
     PowerId.BATTLE_HYMN,
     PowerId.BARRICADE,
     PowerId.BERSERK,
@@ -104,6 +103,7 @@ powers_we_like: List[PowerId] = [
 ]
 
 powers_we_like_less: List[PowerId] = [
+    PowerId.ARTIFACT,
     PowerId.DEXTERITY,
     PowerId.ENERGIZED,
     PowerId.FREE_ATTACK_POWER,

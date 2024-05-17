@@ -346,3 +346,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_intangible_but_should_still_block(self):
         self.execute_handler_tests('/battles/powers/intangible_but_should_still_block.json', ['play 1'])
 
+    def test_play_core_surge_first_to_block_bias(self):
+        self.execute_handler_tests('/battles/powers/play_core_surge_first_to_block_bias.json', ['play 3 0'])
+
