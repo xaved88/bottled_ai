@@ -188,8 +188,9 @@ class GameState:
                 return text.split(keyword, 1)[1].strip()
 
         for option in self.screen_state()["options"]:
-            text = option["text"]
-            options.append(extract_card_from_text(text).lower())
+            if not option["disabled"]:
+                text = option["text"]
+                options.append(extract_card_from_text(text).lower())
         for idx, choice in enumerate(options):
             options[idx] = choice.replace("+", "")
         return options

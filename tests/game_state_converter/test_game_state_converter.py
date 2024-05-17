@@ -60,3 +60,7 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("event/event_falling.json")
         self.assertEqual(['tranquility', 'strike', 'halt'], state.get_falling_event_options())
 
+    def test_get_falling_event_2_options(self):
+        state = load_resource_state("event/event_falling_2_options.json")
+        self.assertEqual(['tranquility', 'crush joints'], state.get_falling_event_options())
+

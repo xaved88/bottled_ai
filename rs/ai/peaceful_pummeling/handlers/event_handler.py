@@ -197,7 +197,9 @@ class EventHandler(Handler):
             return "choose 1"  # Leave, we don't like curses.
 
         if event_name == "The Nest":
-            return "choose 1"  # Try out Dagger!
+            if hp_per >= 40:
+                return "choose 1"  # Try out Dagger!
+            return "choose 0"  # Free money
 
         if event_name == "N'loth":
             return "choose 2"  # Leave, hard to statically make a good choice here.

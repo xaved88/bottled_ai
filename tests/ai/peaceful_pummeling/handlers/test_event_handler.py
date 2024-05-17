@@ -34,3 +34,6 @@ class TestEventHandler(PpTestHandlerFixture):
 
     def test_falling_card_in_pickup_list(self):
         self.execute_handler_tests('/event/event_falling_card_in_pickup_list.json', ['choose 1', 'wait 30'])
+
+    def test_falling_with_disabled_option(self):
+        self.execute_handler_tests('/event/event_falling_2_options.json', ['choose 1', 'wait 30'])

@@ -5,6 +5,7 @@ from rs.ai.peaceful_pummeling.handlers.boss_relic_handler import BossRelicHandle
 from rs.ai.peaceful_pummeling.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.peaceful_pummeling.handlers.combat_reward_handler import CombatRewardHandler
 from rs.ai.peaceful_pummeling.handlers.event_handler import EventHandler
+from rs.ai.peaceful_pummeling.handlers.neow_handler import NeowHandler
 from rs.ai.peaceful_pummeling.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
 from rs.ai.peaceful_pummeling.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai.peaceful_pummeling.handlers.upgrade_handler import UpgradeHandler
@@ -14,7 +15,6 @@ from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_discard_handler import CommonDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
-from rs.common.handlers.common_neow_handler import CommonNeowHandler
 from rs.common.handlers.common_purge_handler import CommonPurgeHandler
 from rs.common.handlers.common_scry_handler import CommonScryHandler
 from rs.common.handlers.common_shop_entrance_handler import CommonShopEntranceHandler

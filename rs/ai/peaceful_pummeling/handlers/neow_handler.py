@@ -18,3 +18,4 @@ class NeowHandler(CommonNeowHandler):
             'obtain a random rare card',
             'choose a colorless card to obtain',
         ])
+
