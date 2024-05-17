@@ -34,9 +34,11 @@ class EventHandler(Handler):
         # ACT 1
 
         if event_name == "Big Fish":
+            if hp_per <= 30:
+                return "choose 0"  # heal
             if state.get_relic_counter("Omamori") >= 1:
-                return "choose 2"  # Relic!
-            return "choose 1"  # Get max health up
+                return "choose 2"  # relic and curse
+            return "choose 1"  # max health up
 
         if event_name == "The Cleric":
             if hp_per <= 65 and 'heal' in state.get_choice_list():
@@ -52,9 +54,13 @@ class EventHandler(Handler):
 
         if event_name == "Golden Idol":
             if len(state.get_choice_list()) == 2:
-                return "choose 0"  # Go for it
+                return "choose 0"  # Take it!
             if len(state.get_choice_list()) == 3:
-                return "choose 2"  # Take max hp loss
+                if state.get_relic_counter("Omamori") >= 1:
+                    return "choose 0"  # curse
+                if hp_per >= 90:
+                    return "choose 1"  # 25% (35%) damage
+                return "choose 2"  # max hp loss
 
         if event_name == "Hypnotizing Colored Mushrooms":
             return "choose 0"  # Fuck 'em up
@@ -68,25 +74,27 @@ class EventHandler(Handler):
         if event_name == "Shining Light":
             if hp_per >= 70:
                 return "choose 0"  # Take the 2 random upgrades.
-            else:
-                return "choose 1"  # Leave.
+            return "choose 1"  # Leave.
 
         if event_name == "The Ssssserpent":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 0"  # Money in exchange for a curse
             return "choose 1"  # Leave
 
         if event_name == "World of Goop":
             if hp_per >= 80:
                 return "choose 0"  # Take the money and lose a little HP.
-            else:
-                return "choose 1"  # Leave
+            return "choose 1"  # Leave
 
         if event_name == "Wing Statue":
-            return "choose 0"  # Purge at cost of 7 HP
+            if hp_per >= 60:
+                return "choose 0"  # Purge at cost of 7 HP
+            return "choose 1"  # Money or leave
 
         # ACT 1, 2
 
         if event_name == "Face Trader":
-            if hp_per >= 80:
+            if hp_per >= 75:
                 return "choose 0"
             return "choose 2"  # Leave.
 
@@ -105,6 +113,8 @@ class EventHandler(Handler):
             return "choose 1"  # Needs some duplication logic, would be better, but for now leave.
 
         if event_name == "Golden Shrine":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 1"  # More free money!
             return "choose 0"  # Free money
 
         if event_name == "Lab":
@@ -117,7 +127,7 @@ class EventHandler(Handler):
             if state.get_relic_counter("Omamori") >= 1:
                 return "choose 1"  # Warped tongs!
             if state.floor() >= 30:
-                return "choose 0"  # Might not be able to get rid of the curse anymore
+                return "choose 0"  # Might not be able to reasonably get rid of the curse anymore
             return "choose 1"  # I love the Warped Tongs relic.
 
         if event_name == "Purifier":
@@ -138,7 +148,9 @@ class EventHandler(Handler):
         # ACT 2
 
         if event_name == "Ancient Writing":
-            return "choose 1"  # Upgrade all strikes and defends
+            if state.deck.contains_card_amount("strike") >= 3:
+                return "choose 1"  # Upgrade all strikes (defends already gone)
+            return "choose 0"  # Card removal
 
         if event_name == "Augmenter":
             return "choose 2"  # Take the Mutagenic Strength relic.
@@ -149,8 +161,7 @@ class EventHandler(Handler):
         if event_name == "Council of Ghosts":
             if state.has_relic("Snecko Eye") or state.deck.contains_cards(["Bite"]):  # Not amazing combos:
                 return "choose refuse"
-            else:
-                return "choose accept"  # Become a spooky ghost!
+            return "choose accept"  # Become a spooky ghost!
 
         if event_name == "Cursed Tome":
             return "choose 1"  # Leave, we don't currently make good use of the possible relics.
@@ -246,7 +257,7 @@ class EventHandler(Handler):
             return "choose 1"  # Get a bunch of money or leave
 
         if event_name == "Mysterious Sphere":
-            if hp_per >= 60:
+            if hp_per >= 70:
                 return "choose 0"  # Fuck 'em up!
             else:
                 return "choose 1"  # Leave
