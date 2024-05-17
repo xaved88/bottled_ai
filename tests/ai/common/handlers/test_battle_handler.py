@@ -340,3 +340,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/powers/play_more_block_because_calipers.json',
                                    ['play 1'])
 
+    def test_do_not_use_perseverance_to_block_2_damage(self):
+        self.execute_handler_tests('/battles/general/do_not_use_perseverance_to_prevent_2_damage.json', ['end'])
+

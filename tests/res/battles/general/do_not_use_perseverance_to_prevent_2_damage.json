@@ -208,29 +208,18 @@
         {
           "is_gone": false,
           "move_hits": 1,
-          "move_base_damage": 20,
+          "move_base_damage": 2,
           "last_move_id": 1,
           "half_dead": false,
           "move_adjusted_damage": 0,
           "max_hp": 999,
           "intent": "ATTACK",
           "move_id": 1,
-          "name": "Transient",
+          "name": "Bird",
           "current_hp": 969,
           "block": 0,
-          "id": "Transient",
-          "powers": [
-            {
-              "amount": 3,
-              "name": "Fading",
-              "id": "Fading"
-            },
-            {
-              "amount": -1,
-              "name": "Shifting",
-              "id": "Shifting"
-            }
-          ]
+          "id": "Bird",
+          "powers": []
         }
       ],
       "turn": 2,
@@ -240,20 +229,20 @@
           "exhausts": false,
           "is_playable": true,
           "cost": 1,
-          "name": "Strike",
-          "id": "strike_r",
-          "type": "ATTACK",
+          "name": "Perseverance",
+          "id": "perseverance",
+          "type": "SKILL",
           "ethereal": false,
           "uuid": "0acd1d3c-c5b3-4c07-b94f-2ba14f08a3c0",
           "upgrades": 0,
           "rarity": "SPECIAL",
-          "has_target": true
+          "has_target": false
         }
       ],
       "player": {
         "orbs": [],
         "current_hp": 63,
-        "block": 18,
+        "block": 0,
         "max_hp": 77,
         "powers": [
           {
