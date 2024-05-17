@@ -495,11 +495,9 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.BOOT_SEQUENCE:
         return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
     if card.id == CardId.STACK:
-        return [CardEffects(target=TargetType.SELF,
-                            pre_hooks=[stack_pre_hook] if not card.upgrade else [stack_upgraded_pre_hook])]
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[stack_pre_hook])]
     if card.id == CardId.AUTO_SHIELDS:
-        hook = auto_shields_post_hook if not card.upgrade else auto_shields_upgraded_post_hook
-        return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[auto_shields_pre_hook])]
     if card.id == CardId.STREAMLINE:
         return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1,
                             post_hooks=[streamline_post_hook])]
@@ -681,8 +679,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(damage=16 if not card.upgrade else 22, hits=1, target=TargetType.MONSTER,
                             post_hooks=[sever_soul_post_hook])]
     if card.id == CardId.SECOND_WIND:
-        hook = second_wind_post_hook if not card.upgrade else second_wind_upgraded_post_hook
-        return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
+        return [CardEffects(target=TargetType.SELF, post_hooks=[second_wind_post_hook])]
     if card.id == CardId.RITUAL_DAGGER:
         return [CardEffects(hits=1, target=TargetType.MONSTER, pre_hooks=[ritual_dagger_pre_hook],
                             post_hooks=[ritual_dagger_post_hook])]
@@ -775,7 +772,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=8 if not card.upgrade else 11, hits=1,
                             post_hooks=[fear_no_evil_post_hook])]
     if card.id == CardId.HALT:
-        return [CardEffects(target=TargetType.SELF, block=3 if not card.upgrade else 4, post_hooks=[halt_post_hook])]
+        return [CardEffects(target=TargetType.SELF, block=3 if not card.upgrade else 4, pre_hooks=[halt_pre_hook])]
     if card.id == CardId.WREATH_OF_FLAME:
         amount = 5 if not card.upgrade else 8
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.VIGOR: amount})]
@@ -807,7 +804,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [
             CardEffects(damage=15 if not card.upgrade else 20, hits=1, target=TargetType.MONSTER, draw=2)]
     if card.id == CardId.SPIRIT_SHIELD:
-        return [CardEffects(target=TargetType.SELF, post_hooks=[spirit_shield_post_hook])]
+        return [CardEffects(target=TargetType.SELF, pre_hooks=[spirit_shield_pre_hook])]
     if card.id == CardId.WALLOP:
         return [CardEffects(target=TargetType.MONSTER, damage=9 if not card.upgrade else 12, hits=1,
                             post_hooks=[wallop_post_hook])]

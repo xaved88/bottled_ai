@@ -1487,12 +1487,12 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 1)
 
     def test_stack(self):
-        state = self.given_state(CardId.STACK)
+        state = self.given_state(CardId.STACK, player_powers={PowerId.DEXTERITY: 1})
         state.discard_pile.append(get_card(CardId.WOUND))
         state.discard_pile.append(get_card(CardId.WOUND))
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
-        self.see_player_has_block(play, 2)
+        self.see_player_has_block(play, 3)
 
     def test_auto_shields_without_block(self):
         state = self.given_state(CardId.AUTO_SHIELDS)
@@ -1501,10 +1501,11 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 11)
 
     def test_auto_shields_with_block(self):
-        state = self.given_state(CardId.AUTO_SHIELDS, player_powers={PowerId.AFTER_IMAGE: 1})
-        play = self.when_playing_the_first_card(state)
-        self.see_player_spent_energy(play, 1)
-        self.see_player_has_block(play, 1)
+        state = self.given_state(CardId.AUTO_SHIELDS)
+        state.hand.append(get_card(CardId.DEFEND_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_has_block(play, 5)
 
     def test_streamline(self):
         state = self.given_state(CardId.STREAMLINE)
@@ -2385,7 +2386,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_hand_count(play, 1)
 
     def test_second_wind(self):
-        state = self.given_state(CardId.SECOND_WIND, player_powers={PowerId.JUGGERNAUT: 5})
+        state = self.given_state(CardId.SECOND_WIND, player_powers={PowerId.JUGGERNAUT: 5, PowerId.DEXTERITY: 1})
         state.hand.append(get_card(CardId.BLUDGEON))
         state.hand.append(get_card(CardId.DEFEND_R))
         state.hand.append(get_card(CardId.WOUND))
@@ -2394,7 +2395,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 1)
         self.see_player_exhaust_count(play, 2)
         self.see_player_hand_count(play, 1)
-        self.see_player_has_block(play, 10)
+        self.see_player_has_block(play, 12)
         self.see_enemy_lost_hp(play, 10)
 
     def test_ritual_dagger(self):

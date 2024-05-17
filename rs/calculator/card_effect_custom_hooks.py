@@ -202,14 +202,9 @@ def impatience_post_hook(state: BattleStateInterface, effect: CardEffectsInterfa
 
 def stack_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                    target_index: int = -1):
-    block = len(state.discard_pile)
-    state.add_player_block(block)
-
-
-def stack_upgraded_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                            target_index: int = -1):
-    block = len(state.discard_pile) + 3
-    state.add_player_block(block)
+    basic_block = 0 if not card.upgrade else 3
+    block = len(state.discard_pile) + basic_block
+    effect.block = block
 
 
 def mind_blast_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -217,19 +212,11 @@ def mind_blast_pre_hook(state: BattleStateInterface, effect: CardEffectsInterfac
     effect.damage = len(state.draw_pile)
 
 
-def auto_shields_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                           target_index: int = -1):
-    __auto_shields_post_hook(state, 11)
-
-
-def auto_shields_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                    target_index: int = -1):
-    __auto_shields_post_hook(state, 15)
-
-
-def __auto_shields_post_hook(state: BattleStateInterface, block: int):
+def auto_shields_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                          target_index: int = -1):
+    block = 11 if not card.upgrade else 15
     if state.player.block == 0:
-        state.add_player_block(block)
+        effect.block = block
 
 
 def aggregate_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -457,17 +444,9 @@ def sever_soul_post_hook(state: BattleStateInterface, effect: CardEffectsInterfa
 
 def second_wind_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                           target_index: int = -1):
-    __second_wind_post_hook(state, 5)
-
-
-def second_wind_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                                   target_index: int = -1):
-    __second_wind_post_hook(state, 7)
-
-
-def __second_wind_post_hook(state: BattleStateInterface, block: int):
     cards_to_exhaust = []
     cards_to_keep = []
+    block = 5 if not card.upgrade else 7
 
     for c in state.hand:
         if c.type != CardType.ATTACK:
@@ -480,10 +459,9 @@ def __second_wind_post_hook(state: BattleStateInterface, block: int):
     for c in cards_to_exhaust:
         state.exhaust_card(c, handle_remove=False)
     for i in range(times_to_gain_block):
-        state.add_player_block(block)
+        state.add_player_block(block + state.player.powers.get(PowerId.DEXTERITY, 0))
 
     state.hand = cards_to_keep.copy()
-
 
 def ritual_dagger_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                            target_index: int = -1):
@@ -648,11 +626,11 @@ def fear_no_evil_post_hook(state: BattleStateInterface, effect: CardEffectsInter
         state.change_stance(StanceType.CALM)
 
 
-def halt_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                   target_index: int = -1):
+def halt_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                  target_index: int = -1):
     if state.get_stance() is StanceType.WRATH:
         amount = 9 if not card.upgrade else 14
-        state.add_player_block(amount)
+        effect.block += amount
 
 
 def perseverance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
@@ -661,11 +639,11 @@ def perseverance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterf
     effect.block = base_block + state.get_memory_by_card(card.id, card.uuid)
 
 
-def spirit_shield_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                            target_index: int = -1):
+def spirit_shield_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                           target_index: int = -1):
     multiplier = 3 if not card.upgrade else 4
-    amount_of_block = len(state.hand) * multiplier
-    state.add_player_block(amount_of_block)
+    amount_of_block = (len(state.hand) - 1) * multiplier  # -1 because spirit shield is currently still in hand
+    effect.block = amount_of_block
 
 
 def wallop_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
