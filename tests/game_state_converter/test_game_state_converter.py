@@ -53,3 +53,8 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("campfire/campfire_do_not_toke.json")
         deck_list = state.deck.contains_curses_of_any_kind()
         self.assertEqual(True, deck_list)
+
+    def test_get_correct_amount_of_card_in_deck(self):
+        state = load_resource_state("other/some_strikes_in_deck.json")
+        self.assertEqual(3, state.deck.contains_card_amount("strike"))
+

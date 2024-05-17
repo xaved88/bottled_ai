@@ -146,10 +146,10 @@ class EventHandler(Handler):
         #    return ["choose 2", "choose 0"] # This event is weird, I'll just let the current logic handle this.
 
         if event_name == "Council of Ghosts":
-            if state.has_relic("Snecko Eye"):
-                return "choose 1"  # No ghosts if we're already Snecko
+            if state.has_relic("Snecko Eye") or state.deck.contains_cards(["Bite"]):  # Not amazing combos:
+                return "choose refuse"
             else:
-                return "choose 0"  # Become a spooky ghost!
+                return "choose accept"  # Become a spooky ghost!
 
         if event_name == "Cursed Tome":
             return "choose 1"  # Leave, we don't currently make good use of the possible relics.
@@ -185,7 +185,7 @@ class EventHandler(Handler):
             return "choose 1"  # Leave, we don't like curses.
 
         if event_name == "The Nest":
-            return "choose 0"  # Take money over Dagger, I guess.
+            return "choose 1"  # Try out Dagger!
 
         if event_name == "N'loth":
             return "choose 2"  # Leave, hard to statically make a good choice here.
@@ -197,10 +197,14 @@ class EventHandler(Handler):
         #    return ["choose 1", "choose 0"]  # Leave. Prefer the relic but money logic. Actually, needs testing.
 
         if event_name == "Vampires(?)":
-            if state.has_relic("Blood Vial"):
-                return "choose 1"  # Nom the Spire
-            else:
-                return "choose 0"  # Let's give it a go with Watcher!
+            if state.deck.contains_cards(["Apparition"]):
+                return "choose refuse"
+            if state.deck.contains_card_amount("strike") >= 3:  # note: these are specifically un-upgraded strikes
+                if state.has_relic("Blood Vial"):
+                    return "choose 1"  # Nom the Spire
+                else:
+                    return "choose accept"
+            return "choose refuse"
 
         # Act 2, 3
 

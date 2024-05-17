@@ -35,6 +35,14 @@ class Deck:
                 return True
         return False
 
+    def contains_card_amount(self, card_name) -> int:
+        # note that upgrades include "+" at the end of the name!
+        amount = 0
+        for c in self.cards:
+            if c.name.lower() == card_name:
+                amount += 1
+        return amount
+
     def get_card_index(self, id: str) -> int:
         for i in range(len(self.cards)):
             if self.cards[i].id == id:
