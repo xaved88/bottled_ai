@@ -3,6 +3,7 @@ from typing import List
 from presentation_config import presentation_mode, p_delay, p_delay_s, slow_events
 from rs.ai.peaceful_pummeling.config import DESIRED_CARDS_FOR_DECK, CARD_REMOVAL_PRIORITY_LIST
 from rs.game.screen_type import ScreenType
+from rs.helper.logger import log_missing_event
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
@@ -62,7 +63,7 @@ class EventHandler(Handler):
                     return "choose 1"  # 25% (35%) damage
                 return "choose 2"  # max hp loss
 
-        if event_name == "Hypnotizing Colored Mushrooms":
+        if event_name == "Mushrooms":
             if hp_per >= 30:
                 return "choose 0"  # Fuck 'em up
             return "choose 1"
@@ -281,4 +282,5 @@ class EventHandler(Handler):
         if event_name == "Winding Halls":
             return "choose 2"  # Lose Max HP to avoid dealing with complexity.
 
+        log_missing_event(event_name)
         return "choose 0"

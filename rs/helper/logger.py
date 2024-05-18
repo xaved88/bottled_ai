@@ -14,6 +14,7 @@ current_run_log_count: int = 0
 current_run_calculator_missing_relics: set[str] = set()
 current_run_calculator_missing_powers: set[str] = set()
 current_run_calculator_missing_cards: set[str] = set()
+current_run_missing_events: set[str] = set()
 
 
 def init_run_logging(seed: str):
@@ -23,6 +24,7 @@ def init_run_logging(seed: str):
     global current_run_calculator_missing_relics
     global current_run_calculator_missing_powers
     global current_run_calculator_missing_cards
+    global current_run_missing_events
     current_run_log_count = 0
     current_run_log_file = "runs/" + dt + "--" + seed
     with open(ROOT_DIR + "/logs/" + current_run_log_file + ".log", 'x') as file:
@@ -31,6 +33,7 @@ def init_run_logging(seed: str):
     current_run_calculator_missing_relics = set()
     current_run_calculator_missing_powers = set()
     current_run_calculator_missing_cards = set()
+    current_run_missing_events = set()
 
 
 def log_to_run(message: str):
@@ -60,13 +63,20 @@ def log_calculator_missing_power(power_id: str):
     current_run_calculator_missing_powers.add(power_id)
 
 
+def log_missing_event(event_name: str):
+    global current_run_missing_events
+    current_run_missing_events.add(event_name)
+
+
 def log_missing_calculator_enums_to_run():
     global current_run_calculator_missing_relics
     global current_run_calculator_missing_powers
     global current_run_calculator_missing_cards
+    global current_run_missing_events
     log(f"Missing relic ids:{','.join(current_run_calculator_missing_relics)}", "calculator_missing_enums")
     log(f"Missing power ids:{','.join(current_run_calculator_missing_powers)}", "calculator_missing_enums")
     log(f"Missing card ids:{','.join(current_run_calculator_missing_cards)}", "calculator_missing_enums")
+    log(f"Missing event names:{','.join(current_run_missing_events)}", "calculator_missing_enums")
 
 
 def log_run_results(state: GameState, elites: List[str], bosses: List[str]):

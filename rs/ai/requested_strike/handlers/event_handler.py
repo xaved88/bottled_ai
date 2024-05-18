@@ -2,6 +2,7 @@ from typing import List
 
 from presentation_config import presentation_mode, p_delay, p_delay_s, slow_events
 from rs.game.screen_type import ScreenType
+from rs.helper.logger import log_missing_event
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
@@ -224,4 +225,5 @@ class EventHandler(Handler):
         if event_name == "Winding Halls":
             return "choose 2"  # Lose Max HP to avoid dealing with complexity.
 
+        log_missing_event(event_name)
         return "choose 0"
