@@ -63,7 +63,9 @@ class EventHandler(Handler):
                 return "choose 2"  # max hp loss
 
         if event_name == "Hypnotizing Colored Mushrooms":
-            return "choose 0"  # Fuck 'em up
+            if hp_per >= 30:
+                return "choose 0"  # Fuck 'em up
+            return "choose 1"
 
         if event_name == "Living Wall":
             return "choose 2"  # Upgrade
