@@ -43,7 +43,7 @@ class ComparatorAssessment:
                 not [True for m in self.state.monsters if m.current_hp > 0] and not unawakened_present))
 
     def battle_lost(self) -> bool:
-        return self.__get_value('bl', lambda: self.state.player.current_hp <= 0)
+        return self.__get_value('bl', lambda: self.state.player.current_hp <= 0 )  # and not (self.state.relics(RelicId.LIZARD_TAIL)))
 
     def incoming_damage(self) -> int:
         return self.__get_value('id', lambda: self.original.player.current_hp - self.state.player.current_hp)
@@ -235,8 +235,12 @@ class ComparatorAssessment:
                                 lambda: self.state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
 
     def count_tranquility(self) -> int:
-        return self.__get_value('tcinh',
+        return self.__get_value('tinh',
                                 lambda: len([True for c in self.state.hand if (c.id == CardId.TRANQUILITY)]))
+
+    def count_crescendo(self) -> int:
+        return self.__get_value('cinh',
+                                lambda: len([True for c in self.state.hand if (c.id == CardId.CRESCENDO)]))
 
     def block_for_next_turn(self) -> int:
         return self.__get_value('bfnt', lambda: self.state.saved_block_for_next_turn)

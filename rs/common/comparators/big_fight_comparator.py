@@ -11,6 +11,7 @@ move_in_comparison_list(comparisons, comparison_to_move=most_powered_up_ritual_d
                         after=most_powered_up_genetic_algorithm)
 move_in_comparison_list(comparisons, comparison_to_move=killed_with_lesson_learned,
                         after=most_powered_up_genetic_algorithm)
+add_to_comparison_list(comparisons, comparison_to_add=most_crescendo, after=most_tranquility)
 
 
 class BigFightComparator(CommonGeneralComparator):

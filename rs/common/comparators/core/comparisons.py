@@ -245,6 +245,11 @@ def most_tranquility(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.count_tranquility() > best.count_tranquility()
 
 
+def most_crescendo(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.count_crescendo() == challenger.count_crescendo() \
+        else challenger.count_crescendo() > best.count_crescendo()
+
+
 def most_block_saved_for_next_turn(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.block_for_next_turn() == challenger.block_for_next_turn() \
         else challenger.block_for_next_turn() > best.block_for_next_turn()

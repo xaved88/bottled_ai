@@ -321,6 +321,13 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_better_to_save_tranquility_than_trigger_letter_opener(self):
         self.execute_handler_tests('/battles/general/save_tranquility.json', ['end'])
 
+    def test_better_to_save_crescendo_than_hurt_monster_some_more(self):
+        self.execute_handler_tests('/battles/specific_comparator_cases/big_fight/big_fight_save_crescendo.json',
+                                   ['play 2 0'])
+
+    def test_do_not_save_crescendo_outside_big_fight(self):
+        self.execute_handler_tests('/battles/general/do_not_save_crescendo.json', ['play 1'])
+
     def test_use_tranquility_to_trigger_letter_opener(self):
         self.execute_handler_tests('/battles/general/use_tranquility.json', ['play 1'])
 
