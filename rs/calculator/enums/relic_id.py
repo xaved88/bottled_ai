@@ -123,7 +123,6 @@ class RelicId(Enum):
     PEN_NIB = 'pen nib'
     PHILOSOPHERS_STONE = 'philosopher\u0027s stone' # N/A
     POTION_BELT = 'potion belt'                     # N/A
-    PRAYER_WHEEL = 'prayer wheel'                   # N/A
     PRESERVED_INSECT = 'preserved insect'           # N/A
     PRISMATIC_SHARD = 'prismatic shard'             # N/A
     PURE_WATER = 'pure water'                       # N/A

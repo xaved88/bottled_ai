@@ -24,9 +24,8 @@ from rs.machine.character import Character
 from rs.machine.handlers.handler import Handler
 
 peaceful_pummeling_potion_handlers: List[Handler] = [
-    # Potions Handlers First
     PotionsBossHandler(),
-    PotionsEventFightHandler(),
+    # PotionsEventFightHandler(),  # Watcher doesn't really need this one - better to save our potions for the boss.
     PotionsEliteHandler(),
 ]
 
