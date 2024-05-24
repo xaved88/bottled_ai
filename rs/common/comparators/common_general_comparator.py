@@ -27,6 +27,7 @@ default_comparisons = [
     least_awkward_shivs,
     killed_with_lesson_learned,
     most_powered_up_ritual_dagger,
+    kept_expensive_decreasing_cost_retain_cards,
     lowest_health_monster,
     lowest_total_monster_health,
     lowest_barricaded_block,

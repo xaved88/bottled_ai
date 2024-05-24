@@ -253,3 +253,8 @@ def most_crescendo(best: CA, challenger: CA) -> Optional[bool]:
 def most_block_saved_for_next_turn(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.block_for_next_turn() == challenger.block_for_next_turn() \
         else challenger.block_for_next_turn() > best.block_for_next_turn()
+
+
+def kept_expensive_decreasing_cost_retain_cards(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.count_expensive_cheapening_retain_cards() == challenger.count_expensive_cheapening_retain_cards() \
+        else challenger.count_expensive_cheapening_retain_cards() > best.count_expensive_cheapening_retain_cards()

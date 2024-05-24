@@ -43,7 +43,7 @@ class ComparatorAssessment:
                 not [True for m in self.state.monsters if m.current_hp > 0] and not unawakened_present))
 
     def battle_lost(self) -> bool:
-        return self.__get_value('bl', lambda: self.state.player.current_hp <= 0 )  # and not (self.state.relics(RelicId.LIZARD_TAIL)))
+        return self.__get_value('bl', lambda: self.state.player.current_hp <= 0)
 
     def incoming_damage(self) -> int:
         return self.__get_value('id', lambda: self.original.player.current_hp - self.state.player.current_hp)
@@ -70,7 +70,8 @@ class ComparatorAssessment:
 
     def total_monster_health(self) -> int:
         return self.__get_value('tmh', lambda:
-        0 if self.battle_won() else sum(self.monsters_vulnerable_hp()) - self.state.total_random_damage_dealt - self.state.total_random_poison_added)
+        0 if self.battle_won() else sum(
+            self.monsters_vulnerable_hp()) - self.state.total_random_damage_dealt - self.state.total_random_poison_added)
 
     def total_monster_health_percent(self) -> float:
         return self.__get_value('total_monster_health_percent', lambda: 0 if self.battle_won()
@@ -244,3 +245,9 @@ class ComparatorAssessment:
 
     def block_for_next_turn(self) -> int:
         return self.__get_value('bfnt', lambda: self.state.saved_block_for_next_turn)
+
+    def count_expensive_cheapening_retain_cards(self) -> int:
+        return self.__get_value('cdst',
+                                lambda: len(
+                                    [True for c in self.state.hand if (c.id == CardId.SANDS_OF_TIME and c.cost > 0)]))
+        # this will behave like >1 since we know it'll reduce by 1 when retaining

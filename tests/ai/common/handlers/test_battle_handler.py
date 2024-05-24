@@ -356,3 +356,9 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_play_core_surge_first_to_block_bias(self):
         self.execute_handler_tests('/battles/powers/play_core_surge_first_to_block_bias.json', ['play 3 0'])
 
+    def test_save_expensive_sands_of_time(self):
+        self.execute_handler_tests('battles/general/save_expensive_sands_of_time.json', ['end'])
+
+    def test_use_expensive_sands_of_time(self):
+        self.execute_handler_tests('battles/general/play_expensive_sands_of_time_to_get_kill.json', ['play 1 0'])
+
