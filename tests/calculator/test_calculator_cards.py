@@ -329,6 +329,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.assertEqual(13, play.state.player.max_hp)
         self.assertEqual(13, play.state.player.current_hp)
 
+    def test_feed_no_trigger_on_minion(self):
+        state = self.given_state(CardId.FEED)
+        state.player.current_hp = 10
+        state.player.max_hp = 10
+        state.monsters[0].current_hp = 9
+        state.monsters[0].powers = {PowerId.MINION: 1}
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.assertEqual(10, play.state.player.max_hp)
+        self.assertEqual(10, play.state.player.current_hp)
+
     def test_fiend_fire(self):
         state = self.given_state(CardId.FIEND_FIRE, player_powers={PowerId.FEEL_NO_PAIN: 1})
         state.hand.append(get_card(CardId.WOUND))
@@ -2443,6 +2454,23 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 1)
         self.assertEqual(0, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
 
+    def test_ritual_dagger_power_up_on_life_link_one_alive(self):
+        state = self.given_state(CardId.RITUAL_DAGGER)
+        state.monsters[0].current_hp = 5
+        state.monsters[0].powers[PowerId.LIFE_LINK] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.assertEqual(3, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+
+    def test_ritual_dagger_no_power_up_on_life_link_one_alive(self):
+        state = self.given_state(CardId.RITUAL_DAGGER, targets=2)
+        state.monsters[0].current_hp = 5
+        state.monsters[0].powers[PowerId.LIFE_LINK] = 1
+        state.monsters[1].current_hp = 5
+        state.monsters[1].powers[PowerId.LIFE_LINK] = 1
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(0, play.state.get_memory_by_card(CardId.RITUAL_DAGGER, "default"))
+
     def test_ritual_dagger_extra_damage_applies_per_uuid(self):
         state = self.given_state(CardId.RITUAL_DAGGER)
         state.hand[0].uuid = "different_uuid"
@@ -3199,6 +3227,33 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 2)
         self.see_player_exhaust_count(play, 1)
         self.assertEqual(1, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
+
+    def test_lesson_learned_no_power_up_on_minion(self):
+        state = self.given_state(CardId.RITUAL_DAGGER)
+        state.monsters[0].current_hp = 5
+        state.monsters[0].powers[PowerId.MINION] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
+
+    def test_lesson_learned_power_up_on_life_link_one_alive(self):
+        state = self.given_state(CardId.LESSON_LEARNED)
+        state.monsters[0].current_hp = 5
+        state.monsters[0].powers[PowerId.LIFE_LINK] = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_hp_is(play, 0)
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
+
+    def test_lesson_learned_no_power_up_on_life_link_one_alive(self):
+        state = self.given_state(CardId.RITUAL_DAGGER, targets=2)
+        state.monsters[0].current_hp = 5
+        state.monsters[0].powers[PowerId.LIFE_LINK] = 1
+        state.monsters[1].current_hp = 5
+        state.monsters[1].powers[PowerId.LIFE_LINK] = 1
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(0, play.state.get_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED))
 
     def test_simmering_fury(self):
         state = self.given_state(CardId.SIMMERING_FURY)

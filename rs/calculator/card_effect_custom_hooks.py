@@ -38,7 +38,12 @@ def feed_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInte
 
 
 def __feed_post_hook(state: BattleStateInterface, target_index: int, amount: int):
-    if state.monsters[target_index].current_hp <= 0:
+    alive_monsters = len([True for m in state.monsters if m.current_hp > 0])
+    life_link_more_alive = state.monsters[target_index].powers.get(PowerId.LIFE_LINK) and alive_monsters > 0
+
+    if state.monsters[target_index].current_hp <= 0 and not \
+            state.monsters[target_index].powers.get(PowerId.MINION) and not \
+            life_link_more_alive:
         state.player.max_hp += amount
         state.player.current_hp += amount
 
@@ -463,6 +468,7 @@ def second_wind_post_hook(state: BattleStateInterface, effect: CardEffectsInterf
 
     state.hand = cards_to_keep.copy()
 
+
 def ritual_dagger_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                            target_index: int = -1):
     effect.damage = 15 + state.get_memory_by_card(card.id, card.uuid)
@@ -470,7 +476,12 @@ def ritual_dagger_pre_hook(state: BattleStateInterface, effect: CardEffectsInter
 
 def ritual_dagger_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                             target_index: int = -1):
-    if state.monsters[target_index].current_hp <= 0 and not state.monsters[target_index].powers.get(PowerId.MINION):
+    alive_monsters = len([True for m in state.monsters if m.current_hp > 0])
+    life_link_more_alive = state.monsters[target_index].powers.get(PowerId.LIFE_LINK) and alive_monsters > 0
+
+    if state.monsters[target_index].current_hp <= 0 and not \
+            state.monsters[target_index].powers.get(PowerId.MINION) and not \
+            life_link_more_alive:
         extra_damage = 3 if not card.upgrade else 5
         state.add_memory_by_card(card.id, card.uuid, extra_damage)
 
@@ -675,5 +686,10 @@ def brilliance_pre_hook(state: BattleStateInterface, effect: CardEffectsInterfac
 
 def lesson_learned_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                              target_index: int = -1):
-    if state.monsters[target_index].current_hp <= 0 and not state.monsters[target_index].powers.get(PowerId.MINION):
+    alive_monsters = len([True for m in state.monsters if m.current_hp > 0])
+    life_link_more_alive = state.monsters[target_index].powers.get(PowerId.LIFE_LINK) and alive_monsters > 0
+
+    if state.monsters[target_index].current_hp <= 0 and not \
+            state.monsters[target_index].powers.get(PowerId.MINION) and not \
+            life_link_more_alive:
         state.add_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED, 1)

@@ -87,7 +87,7 @@ def most_enemy_weak(best: CA, challenger: CA) -> Optional[bool]:
 
 
 def most_enemy_talking_to_hand(best: CA, challenger: CA) -> Optional[bool]:
-    return None if max(1, best.enemy_talking_to_hand()) == max(1, challenger.enemy_talking_to_hand()) \
+    return None if best.enemy_talking_to_hand() == challenger.enemy_talking_to_hand() \
         else challenger.enemy_talking_to_hand() > best.enemy_talking_to_hand()
 
 
