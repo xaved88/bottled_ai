@@ -15,6 +15,7 @@ from rs.calculator.interfaces.card_interface import CardInterface
 from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule, StanceType
 from rs.calculator.interfaces.monster_interface import MonsterInterface, find_lowest_hp_monster
 from rs.calculator.interfaces.player import PlayerInterface
+from rs.calculator.interfaces.potions import Potions
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.powers import DEBUFFS
 from rs.game.card import CardType
@@ -32,7 +33,7 @@ class BattleState(BattleStateInterface):
                  total_random_damage_dealt: int = 0, total_random_poison_added: int = 0,
                  orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_general: dict = None,
                  memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None, amount_scryed: int = 0,
-                 saved_block_for_next_turn: int = 0):
+                 saved_block_for_next_turn: int = 0, potions: Potions = None):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -40,6 +41,7 @@ class BattleState(BattleStateInterface):
         self.draw_pile: List[CardInterface] = [] if draw_pile is None else draw_pile
         self.monsters: List[MonsterInterface] = [] if monsters is None else monsters
         self.relics: Relics = {} if relics is None else relics
+        self.potions: Potions = {} if potions is None else potions
         self.must_discard: bool = must_discard
         self.amount_to_discard: int = amount_to_discard
         self.cards_discarded_this_turn: int = cards_discarded_this_turn

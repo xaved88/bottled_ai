@@ -12,6 +12,7 @@ from rs.machine.state import GameState
 current_run_log_file: str = ''
 current_run_log_count: int = 0
 current_run_calculator_missing_relics: set[str] = set()
+current_run_calculator_missing_potions: set[str] = set()
 current_run_calculator_missing_powers: set[str] = set()
 current_run_calculator_missing_cards: set[str] = set()
 current_run_missing_events: set[str] = set()
@@ -24,6 +25,7 @@ def init_run_logging(seed: str):
     global current_run_calculator_missing_relics
     global current_run_calculator_missing_powers
     global current_run_calculator_missing_cards
+    global current_run_calculator_missing_potions
     global current_run_missing_events
     current_run_log_count = 0
     current_run_log_file = "runs/" + dt + "--" + seed
@@ -33,6 +35,7 @@ def init_run_logging(seed: str):
     current_run_calculator_missing_relics = set()
     current_run_calculator_missing_powers = set()
     current_run_calculator_missing_cards = set()
+    current_run_calculator_missing_potions = set()
     current_run_missing_events = set()
 
 
@@ -61,6 +64,11 @@ def log_calculator_missing_card(card_id: str):
 def log_calculator_missing_power(power_id: str):
     global current_run_calculator_missing_powers
     current_run_calculator_missing_powers.add(power_id)
+
+
+def log_calculator_missing_potion(potion_id: str):
+    global current_run_calculator_missing_potions
+    current_run_calculator_missing_potions.add(potion_id)
 
 
 def log_missing_event(event_name: str):

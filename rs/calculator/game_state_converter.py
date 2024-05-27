@@ -5,15 +5,18 @@ from rs.calculator.card_cost import Cost
 from rs.calculator.cards import Card
 from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
+from rs.calculator.enums.potion_id import PotionId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.interfaces.card_interface import CardInterface
+from rs.calculator.interfaces.potions import Potions
 from rs.calculator.interfaces.powers import Powers
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.monster import Monster
 from rs.calculator.player import Player
 from rs.game.card import CardType, Card as GameCard
-from rs.helper.logger import log_calculator_missing_relic, log_calculator_missing_power, log_calculator_missing_card
+from rs.helper.logger import log_calculator_missing_relic, log_calculator_missing_power, log_calculator_missing_card, \
+    log_calculator_missing_potion
 from rs.machine.state import GameState
 
 possible_card_ids = set(item.value for item in CardId)
@@ -57,6 +60,16 @@ def make_power_id(power_id: str) -> PowerId:
     return PowerId(power_id)
 
 
+possible_potion_ids = set(item.value for item in PotionId)
+
+
+def make_potion_id(potion_id: str) -> PotionId:
+    if potion_id not in possible_potion_ids:
+        log_calculator_missing_potion(potion_id)
+        return PotionId.FAKE
+    return PotionId(potion_id)
+
+
 def make_powers(powers: List[dict]) -> Powers:
     out = {make_power_id(power['id'].lower()): (power['amount']) for power in powers}
 
@@ -79,6 +92,11 @@ def create_battle_state(game_state: GameState) -> BattleState:
     relics: Relics = {
         make_relic_id(relic['name'].lower()): (relic['counter'])
         for relic in game_state.game_state()['relics']
+    }
+    # get potions
+    potions: Potions = {
+        make_potion_id(potion['name'].lower()): 0
+        for potion in game_state.game_state()['potions']
     }
 
     # get player status
@@ -128,4 +146,4 @@ def create_battle_state(game_state: GameState) -> BattleState:
 
     return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, must_discard,
                        amount_to_discard, cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots,
-                       memory_general=memory_general, memory_by_card=memory_by_card)
+                       memory_general=memory_general, memory_by_card=memory_by_card, potions=potions)

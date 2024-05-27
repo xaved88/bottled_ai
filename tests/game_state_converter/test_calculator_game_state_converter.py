@@ -1,6 +1,7 @@
 import unittest
 
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.potion_id import PotionId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.game_state_converter import create_battle_state
@@ -73,3 +74,10 @@ class GameStateConverterTest(unittest.TestCase):
         self.assertIsNotNone(battle_state)
         self.assertEqual(0, state.memory_general[MemoryItem.ATTACKS_THIS_TURN])
         self.assertEqual(0, battle_state.memory_general[MemoryItem.ATTACKS_THIS_TURN])
+
+    def test_battle_state_with_potions_loaded(self):
+        state = load_resource_state("battles/general/battle_state_potions.json")
+        battle_state = create_battle_state(state)
+        self.assertIsNotNone(battle_state)
+        self.assertEqual(3, len(battle_state.potions))
+        self.assertIn(PotionId.FAIRY_IN_A_BOTTLE, battle_state.potions)
