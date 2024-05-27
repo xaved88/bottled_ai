@@ -776,3 +776,11 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_has_block(play, 3)
         self.assertEqual(0, play.state.saved_block_for_next_turn)
+
+    def test_duality(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.DUALITY: 1})
+        state.hand.append(get_card(CardId.TERROR))
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_cards_played(play, 2)
+        self.see_player_has_power(play, PowerId.FAKE_DEXTERITY_TEMP, 1)

@@ -4,6 +4,7 @@ from enum import Enum
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers
     FAKE_ALPHA_BETA = 'fake_alpha_beta'  # hack for valuing playing these cards
+    FAKE_DEXTERITY_TEMP = 'dexterity_temp'  # Fake power to avoid breaking a comparator.
 
     AMPLIFY = 'amplify'
     ANGER_NOB = 'anger'  # Non-standard naming to distinguish it from Angry

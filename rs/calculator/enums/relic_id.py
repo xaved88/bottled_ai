@@ -57,6 +57,7 @@ class RelicId(Enum):
     DARKSTONE_PERIAPT = 'darkstone periapt'         # N/A
     DATA_DISK = 'data disk'                         # N/A
     DREAM_CATCHER = 'dream catcher'                 # N/A
+    DUALITY = 'duality'
     DU_VU_DOLL = 'du-vu doll'                       # Covered by Strength
     ENCHIRIDION = 'enchiridion'                     # N/A
     EMPTY_CAGE = 'empty cage'                       # N/A
@@ -71,7 +72,7 @@ class RelicId(Enum):
     GINGER = 'ginger'                               # N/A
     GIRYA = 'girya'                                 # Covered by Strength
     GOLD_PLATED_CABLES = 'gold-plated cables'
-    GOLDEN_EYE = 'goldeneye'
+    GOLDEN_EYE = 'golden eye'
     GOLDEN_IDOL = 'golden idol'                     # N/A
     GREMLIN_HORN = 'gremlin horn'
     GREMLIN_VISAGE = 'gremlin visage'               # N/A

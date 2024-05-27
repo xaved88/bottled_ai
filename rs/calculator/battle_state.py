@@ -281,7 +281,8 @@ class BattleState(BattleStateInterface):
 
             # block (always applies to player right?)
             if effect.block:
-                block = max(effect.block + self.player.powers.get(PowerId.DEXTERITY, 0), 0)
+                block = max(effect.block + self.player.powers.get(PowerId.DEXTERITY, 0) + self.player.powers.get(
+                    PowerId.FAKE_DEXTERITY_TEMP, 0), 0)
                 frail_mod = 0.75 if self.player.powers.get(PowerId.FRAIL, 0) else 1
                 self.add_player_block(math.floor(block * frail_mod) * max(1, effect.block_times))
 
@@ -463,6 +464,9 @@ class BattleState(BattleStateInterface):
             if self.relics[RelicId.ORNAMENTAL_FAN] >= 3:
                 self.relics[RelicId.ORNAMENTAL_FAN] -= 3
                 self.add_player_block(4)
+
+        if RelicId.DUALITY in self.relics and card.type == CardType.ATTACK:
+            self.player.add_powers({PowerId.FAKE_DEXTERITY_TEMP: 1}, self.player.relics, self.player.powers)
 
         if RelicId.LETTER_OPENER in self.relics and card.type == CardType.SKILL:
             self.relics[RelicId.LETTER_OPENER] += 1

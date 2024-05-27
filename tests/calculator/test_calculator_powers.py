@@ -1365,3 +1365,8 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_player_has_block(play, 3)
         self.assertEqual(3, play.state.saved_block_for_next_turn)
+
+    def test_fake_dexterity_temp_adds_to_block(self):
+        state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.FAKE_DEXTERITY_TEMP: 3})
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 8)
