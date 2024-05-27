@@ -27,7 +27,7 @@ class CalculatorTestFixture(unittest.TestCase):
             memory_book = TheBotsMemoryBook.new_default()
 
         return BattleState(
-            player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics),
+            player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics, potions),
             hand=[get_card(card_id, None, upgrade)],
             monsters=[Monster(False, 100, 100, 0, {}) for i in range(targets)],
             relics=relics,
@@ -147,3 +147,9 @@ class CalculatorTestFixture(unittest.TestCase):
 
     def see_stance(self, play: PlayPath, expected_stance: StanceType):
         self.assertEqual(expected_stance, play.state.get_memory_value(MemoryItem.STANCE))
+
+    def see_potion_count(self, play: PlayPath, amount: int):
+        self.assertEqual(amount, len(play.state.potions))
+
+    def see_potions(self, play: PlayPath, potion_ids: dict):
+        self.assertEqual(potion_ids, play.state.potions)

@@ -365,3 +365,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_we_know_we_do_not_die_if_we_have_lizard_tail(self):
         self.execute_handler_tests('battles/relics/keep_trying_we_have_lizard_tail.json', ['play 1'])
 
+    def test_we_know_we_do_not_die_if_we_have_fairy_in_a_bottle(self):
+        self.execute_handler_tests('battles/potions/keep_trying_we_have_fairy_in_a_bottle.json', ['play 1'])
+

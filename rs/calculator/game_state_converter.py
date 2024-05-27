@@ -94,10 +94,10 @@ def create_battle_state(game_state: GameState) -> BattleState:
         for relic in game_state.game_state()['relics']
     }
     # get potions
-    potions: Potions = {
-        make_potion_id(potion['name'].lower()): 0
+    potions: Potions = [
+        make_potion_id(potion['name'].lower())
         for potion in game_state.game_state()['potions']
-    }
+    ]
 
     # get player status
     player = Player(
@@ -108,6 +108,7 @@ def create_battle_state(game_state: GameState) -> BattleState:
         block=cs['player']['block'],
         energy=cs['player']['energy'],
         relics=relics,
+        potions=potions,
     )
 
     # get enemies

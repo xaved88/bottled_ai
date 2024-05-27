@@ -1,8 +1,10 @@
 import math
 from typing import List
 
+from rs.calculator.enums.potion_id import PotionId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.potions import Potions
 from rs.calculator.interfaces.powers import Powers
 from rs.calculator.interfaces.relics import Relics
 from rs.calculator.interfaces.target_interface import InflictDamageSummary, TargetInterface
@@ -10,15 +12,19 @@ from rs.calculator.powers import DEBUFFS, DEBUFFS_WHEN_NEGATIVE
 
 
 class Target(TargetInterface):
-    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None):
+    def __init__(self, is_player: bool, current_hp: int, max_hp: int, block: int, powers: Powers, relics=None,
+                 potions=None):
         if relics is None:
             relics = {}
+        if potions is None:
+            potions = []
         self.is_player: bool = is_player
         self.current_hp: int = current_hp
         self.max_hp: int = max_hp
         self.block: int = block
         self.powers: Powers = powers
         self.relics: Relics = relics
+        self.potions: Potions = potions
 
     def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool = True,
                        vulnerable_modifier: float = 1.5,
@@ -113,6 +119,11 @@ class Target(TargetInterface):
                             if self.relics[RelicId.LIZARD_TAIL] != -2:
                                 self.heal(math.floor(self.max_hp * .5), True, self.relics)
                                 self.relics[RelicId.LIZARD_TAIL] = -2
+                            continue
+
+                        if PotionId.FAIRY_IN_A_BOTTLE in self.potions:
+                            self.heal(math.floor(self.max_hp * .3), True, self.relics)
+                            self.potions.remove(PotionId.FAIRY_IN_A_BOTTLE)
                             continue
                         break  # target is dead, stop attacking
 
