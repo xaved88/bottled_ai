@@ -80,10 +80,12 @@ def log_missing_calculator_enums_to_run():
     global current_run_calculator_missing_relics
     global current_run_calculator_missing_powers
     global current_run_calculator_missing_cards
+    global current_run_calculator_missing_potions
     global current_run_missing_events
-    log(f"Missing relic ids:{','.join(current_run_calculator_missing_relics)}", "calculator_missing_enums")
+    log(f"Missing relic names:{','.join(current_run_calculator_missing_relics)}", "calculator_missing_enums")
     log(f"Missing power ids:{','.join(current_run_calculator_missing_powers)}", "calculator_missing_enums")
     log(f"Missing card ids:{','.join(current_run_calculator_missing_cards)}", "calculator_missing_enums")
+    # log(f"Missing potion names:{','.join(current_run_calculator_missing_potions)}", "calculator_missing_enums")
     log(f"Missing event names:{','.join(current_run_missing_events)}", "calculator_missing_enums")
 
 
