@@ -85,7 +85,7 @@ class CommonCombatRewardHandler(Handler):
             choice = 'stolen_gold'
 
         if 'relic' in state.get_choice_list() and choice == 'did not choose':
-            if state.game_state()["screen_state"]["rewards"][0]["relic"]["name"] not in self.undesired_relics :
+            if state.game_state()["screen_state"]["rewards"][0]["relic"]["name"] not in self.undesired_relics:
                 choice = 'relic'
 
         # potentially too fragile check for if the second relic might be desirable even though the first one isn't that I'll leave disabled for safety

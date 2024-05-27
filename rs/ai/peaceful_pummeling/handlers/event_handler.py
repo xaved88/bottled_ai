@@ -217,6 +217,8 @@ class EventHandler(Handler):
         if event_name == "Vampires(?)":
             if state.deck.contains_cards(["Apparition"]):
                 return "choose refuse"
+            if state.has_relic("Strike Dummy"):
+                return "choose refuse"
             if state.deck.contains_card_amount("strike") >= 3:  # note: these are specifically un-upgraded strikes
                 if state.has_relic("Blood Vial"):
                     return "choose 1"  # Nom the Spire

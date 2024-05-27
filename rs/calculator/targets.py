@@ -109,6 +109,11 @@ class Target(TargetInterface):
                     if self.current_hp < 0:
                         health_damage_dealt += self.current_hp
                         self.current_hp = 0
+                        if self.relics.get(RelicId.LIZARD_TAIL):
+                            if self.relics[RelicId.LIZARD_TAIL] != -2:
+                                self.heal(math.floor(self.max_hp*.5), True, self.relics)
+                                self.relics[RelicId.LIZARD_TAIL] = -2
+                            continue
                         break  # target is dead, stop attacking
 
             if source.current_hp <= 0:

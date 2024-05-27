@@ -90,6 +90,7 @@ class RelicId(Enum):
     LANTERN = 'lantern'                             # N/A
     LEES_WAFFLE = 'lee\u0027s waffle'               # N/A
     LETTER_OPENER = 'letter opener'
+    LIZARD_TAIL = 'lizard tail'
     MAGIC_FLOWER = 'magic flower'
     MANGO = 'mango'                                 # N/A
     MARK_OF_PAIN = 'mark of pain'                   # N/A

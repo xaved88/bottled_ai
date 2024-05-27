@@ -784,3 +784,25 @@ class CalculatorRelicsTest(CalculatorTestFixture):
         play.end_turn()
         self.see_cards_played(play, 2)
         self.see_player_has_power(play, PowerId.FAKE_DEXTERITY_TEMP, 1)
+
+    def test_lizard_tail_heals(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.LIZARD_TAIL: -1})
+        state.monsters[0].hits = 1
+        state.monsters[0].damage = 6
+        state.player.current_hp = 5
+        state.player.max_hp = 100
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 0)
+        self.see_relic_value(play, RelicId.LIZARD_TAIL, -2)
+
+    def test_lizard_tail_heals_prevents_overspill_damage(self):
+        state = self.given_state(CardId.WOUND, relics={RelicId.LIZARD_TAIL: -1})
+        state.monsters[0].hits = 2
+        state.monsters[0].damage = 10
+        state.player.current_hp = 5
+        state.player.max_hp = 100
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 10)
+        self.see_relic_value(play, RelicId.LIZARD_TAIL, -2)
