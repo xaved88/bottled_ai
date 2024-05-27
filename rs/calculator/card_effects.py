@@ -162,7 +162,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.MONSTER, damage=32 if not card.upgrade else 42, hits=1)]
     if card.id == CardId.FEED:
         return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 12, hits=1,
-                            post_hooks=[feed_post_hook if not card.upgrade else feed_upgraded_post_hook])]
+                            post_hooks=[feed_post_hook])]
     if card.id == CardId.FIEND_FIRE:
         return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1,
                             pre_hooks=[fiend_fire_pre_hook], post_hooks=[fiend_fire_post_hook])]

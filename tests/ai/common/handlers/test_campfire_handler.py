@@ -59,3 +59,12 @@ class CampfireHandlerTestCase(CoTestHandlerFixture):
     # we had it hard-coded to _always_ try to rest on floor 49...
     def test_cannot_rest_floor_49_because_coffee_dripper(self):
         self.execute_handler_tests('/campfire/campfire_cannot_rest_because_coffee.json', ['choose smith'])
+
+    def test_rest_floor_49(self):
+        self.execute_handler_tests('/campfire/campfire_rest_floor_49.json', ['choose rest'])
+
+    def test_no_rest_floor_49(self):
+        self.execute_handler_tests('/campfire/campfire_do_not_rest_floor_49.json', ['choose smith'])
+
+    def test_pantograph_no_rest_floor_49(self):
+        self.execute_handler_tests('/campfire/campfire_do_not_rest_pantograph_floor_49.json', ['choose smith'])

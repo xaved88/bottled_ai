@@ -24,15 +24,21 @@ class CommonCampfireHandler(Handler):
         can_dig = 'dig' in state.get_choice_list()
         can_smith = 'smith' in state.get_choice_list()
 
-        worth_healing = state.get_player_health_percentage() <= 0.6
-        pantograph_will_cover_it = state.has_relic("Pantograph") \
-                                   and (state.floor() == 15 or state.floor() == 32) \
+        # pantograph
+        pantograph_trigger_floors = [15, 32, 49]
+        pantograph_will_cover_it = state.has_relic("Pantograph") and state.floor() in pantograph_trigger_floors \
                                    and state.get_player_health_percentage() >= 0.4
+        pantograph_will_cover_floor_49 = state.has_relic("Pantograph") and state.get_player_health_percentage() >= 0.60
+
+        # other
+        worth_healing = state.get_player_health_percentage() <= 0.6 and not pantograph_will_cover_it
+        worth_healing_floor_49 = state.floor() == 49 and state.get_player_health_percentage() <= 0.85 \
+                                 and not pantograph_will_cover_floor_49
         important_upgrade_available = state.deck.contains_cards(self.high_priority_upgrades) and can_smith
 
         choice = "0"
 
-        if can_rest and ((worth_healing and not pantograph_will_cover_it) or state.floor() == 49):
+        if can_rest and (worth_healing or worth_healing_floor_49):
             choice = "rest"
         elif can_toke and state.deck.contains_curses_we_can_remove():
             choice = "toke"

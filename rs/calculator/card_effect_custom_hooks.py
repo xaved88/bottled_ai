@@ -29,15 +29,7 @@ def entrench_post_hook(state: BattleStateInterface, effect: CardEffectsInterface
 
 def feed_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                    target_index: int = -1):
-    __feed_post_hook(state, target_index, 3)
-
-
-def feed_upgraded_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                            target_index: int = -1):
-    __feed_post_hook(state, target_index, 4)
-
-
-def __feed_post_hook(state: BattleStateInterface, target_index: int, amount: int):
+    amount = 3 if not card.upgrade else 4
     alive_monsters = len([True for m in state.monsters if m.current_hp > 0])
     life_link_more_alive = state.monsters[target_index].powers.get(PowerId.LIFE_LINK) and alive_monsters > 0
 
