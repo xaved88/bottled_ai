@@ -188,20 +188,21 @@ class EventHandler(Handler):
             return "choose 3"  # Leave
 
         if event_name == "The Library":
-            return "choose 1"  # Heal, but also because I don't know if we handle selection here.
+            if hp_per > 60:
+                return "choose read"
+            return "choose sleep"
 
         if event_name == "Masked Bandits":
             if hp_per >= 50:
                 return "choose 1"  # Fuck 'em up!
-            else:
-                return "choose 0"  # Give up all money and leave.
+            return "choose 0"  # Give up all money and leave.
 
         if event_name == "The Mausoleum":
             return "choose 1"  # Leave, we don't like curses.
 
         if event_name == "The Nest":
             if hp_per >= 40:
-                return "choose 1"  # Try out Dagger!
+                return "choose 1"  # Dagger!
             return "choose 0"  # Free money
 
         if event_name == "N'loth":

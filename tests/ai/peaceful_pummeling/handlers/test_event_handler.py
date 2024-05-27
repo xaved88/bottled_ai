@@ -37,3 +37,9 @@ class TestEventHandler(PpTestHandlerFixture):
 
     def test_falling_with_disabled_option(self):
         self.execute_handler_tests('/event/event_falling_2_options.json', ['choose 1', 'wait 30'])
+
+    def test_library_heal(self):
+        self.execute_handler_tests('/event/event_library_heal.json', ['choose sleep', 'wait 30'])
+
+    def test_library_grab_card(self):
+        self.execute_handler_tests('/event/event_library_read.json', ['choose read', 'wait 30'])

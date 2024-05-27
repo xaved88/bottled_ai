@@ -43,6 +43,7 @@ class UpgradeHandler(CommonUpgradeHandler):
             'bite',
             'ritual dagger',
             'follow-up',
+            'master reality',
         ])
 
     def transform_priorities_based_on_game_state(self, priorities: List[str], state: GameState):
