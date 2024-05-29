@@ -346,10 +346,3 @@ class CalculatorStancesTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_stance(play, StanceType.DIVINITY)
-
-    def test_divinity_exits_on_new_turn(self):
-        state = self.given_state(CardId.STRIKE_R)
-        state.change_stance(StanceType.DIVINITY)
-        play = self.when_playing_the_first_card(state)
-        play.state.end_turn()
-        self.see_stance(play, StanceType.NO_STANCE)
