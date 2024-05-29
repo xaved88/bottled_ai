@@ -82,14 +82,17 @@ class BattleState(BattleStateInterface):
         self.__is_first_play = is_first_play
         self.__starting_energy = self.player.energy
 
-        if RelicId.DAMARU in self.relics and self.is_new_turn():
-            self.player.add_powers({PowerId.MANTRA_INTERNAL: 1}, self.player.relics, self.player.powers)
-            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 1)
-
         if RelicId.TEARDROP_LOCKET in self.relics and \
                 self.is_new_turn() and \
                 self.get_memory_value(MemoryItem.LAST_KNOWN_TURN) == 1:
             self.change_stance(StanceType.CALM)
+
+        if self.get_stance() == StanceType.DIVINITY and self.is_new_turn():
+            self.change_stance(StanceType.NO_STANCE)
+
+        if RelicId.DAMARU in self.relics and self.is_new_turn():
+            self.player.add_powers({PowerId.MANTRA_INTERNAL: 1}, self.player.relics, self.player.powers)
+            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 1)
 
         if PowerId.DEVOTION in self.player.powers and self.is_new_turn():
             self.player.add_powers({PowerId.MANTRA_INTERNAL: self.player.powers.get(PowerId.DEVOTION, 0)},

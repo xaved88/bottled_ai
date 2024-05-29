@@ -67,12 +67,12 @@ CARD_REMOVAL_PRIORITY_LIST = [
     'omniscience+',
     'meditate',
     'meditate+',
+    'pray',
     'defend',
-    'strike',
-    'Wish',
-    'Wish+',
     'defend+',
+    'strike',
     'strike+',
+    'pray+',
     'bite']
 
 HIGH_PRIORITY_UPGRADES = [

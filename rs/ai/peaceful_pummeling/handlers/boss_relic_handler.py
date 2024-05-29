@@ -8,10 +8,10 @@ class BossRelicHandler(CommonBossRelicHandler):
 
     def __init__(self):
         super().__init__(preferred_relic_list=[
+            "violet lotus",
             "philosopher\u0027s stone",
             "sozu",
             "ectoplasm",
-            "violet lotus",
             "cursed key",
             "snecko eye",
             "fusion hammer",
@@ -25,8 +25,8 @@ class BossRelicHandler(CommonBossRelicHandler):
             "empty cage",
             "black star",
             "tiny house",
+            "pandora\u0027s box",
             "sacred bark",
-            # pandora's box, # scary
             # "velvet choker", scary
             # "runic dome", scary
         ])

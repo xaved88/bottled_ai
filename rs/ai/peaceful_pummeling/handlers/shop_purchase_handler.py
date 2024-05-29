@@ -15,7 +15,6 @@ class ShopPurchaseHandler(Handler):
             'Shuriken',
             'Meat on the Bone',
             'Vajra',
-            'Strike Dummy',
             'Bag of Preparation',
             'Kunai',
             'Eternal Feather',
