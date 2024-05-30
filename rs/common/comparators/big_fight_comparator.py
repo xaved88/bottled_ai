@@ -6,6 +6,7 @@ comparisons = default_comparisons.copy()
 move_in_comparison_list(comparisons, comparison_to_move=most_good_player_powers, after=most_dead_monsters)
 move_in_comparison_list(comparisons, comparison_to_move=least_enemy_artifacts, after=most_enemy_vulnerable)
 move_in_comparison_list(comparisons, comparison_to_move=least_bad_player_powers, after=most_less_good_player_powers)
+add_to_comparison_list(comparisons, comparison_to_add=avoid_inconvenient_time_warp, after=least_incoming_damage_over_1)
 move_in_comparison_list(comparisons, comparison_to_move=most_bad_cards_exhausted, after=least_incoming_damage)
 move_in_comparison_list(comparisons, comparison_to_move=most_powered_up_ritual_dagger,
                         after=most_powered_up_genetic_algorithm)

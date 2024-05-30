@@ -513,6 +513,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state.monsters[0].powers[PowerId.TIME_WARP] = 10
         play = self.when_playing_the_whole_hand(state)
         # see that only 2 of the 3 cleaves are played because time warp stops it
+        self.see_cards_played(play, 2)
         self.see_enemy_lost_hp(play, 16)
         self.see_enemy_has_power(play, PowerId.TIME_WARP, 12)
 

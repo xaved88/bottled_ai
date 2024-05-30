@@ -251,6 +251,16 @@ class ComparatorAssessment:
                                     [True for c in self.state.hand if (c.id == CardId.SANDS_OF_TIME and c.cost > 0)]))
         # this will behave like >1 since we know it'll reduce by 1 when retaining
 
+    def inconvenient_time_warp_count(self) -> int:
+        bad_time_warp = False
+        for m in self.state.monsters:
+            if PowerId.TIME_WARP in m.powers:
+                if m.powers[PowerId.TIME_WARP] == 10 or \
+                        m.powers[PowerId.TIME_WARP] == 11:
+                    bad_time_warp = True
+
+        return self.__get_value('nitwc', lambda: bad_time_warp)
+
     def revive_option_count(self) -> int:
         fairy_count = 0
         lizard_count = 0

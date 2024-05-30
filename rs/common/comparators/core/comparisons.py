@@ -260,6 +260,11 @@ def kept_expensive_decreasing_cost_retain_cards(best: CA, challenger: CA) -> Opt
         else challenger.count_expensive_cheapening_retain_cards() > best.count_expensive_cheapening_retain_cards()
 
 
+def avoid_inconvenient_time_warp(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.inconvenient_time_warp_count() == challenger.inconvenient_time_warp_count() \
+        else challenger.inconvenient_time_warp_count() < best.inconvenient_time_warp_count()
+
+
 def preserve_revive_options(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.revive_option_count() == challenger.revive_option_count() \
         else challenger.revive_option_count() > best.revive_option_count()

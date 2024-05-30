@@ -378,3 +378,13 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_we_like_paid_draw_via_rushdown(self):
         self.execute_handler_tests('battles/draw/play_rushdown_early_to_benefit_from_the_draw.json', ['play 2'])
+
+    def test_play_more_to_avoid_awkward_time_warp(self):
+        self.execute_handler_tests(
+            'battles/specific_comparator_cases/big_fight/time_eater_play_more_to_avoid_inconvenient_time_warp.json',
+            ['play 1 0'])
+
+    def test_play_less_to_avoid_awkward_time_warp(self):
+        self.execute_handler_tests(
+            'battles/specific_comparator_cases/big_fight/time_eater_play_less_to_avoid_inconvenient_time_warp.json',
+            ['end'])

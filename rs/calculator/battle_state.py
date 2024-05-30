@@ -60,6 +60,7 @@ class BattleState(BattleStateInterface):
         self.draw_free: int = 0
         self.draw_pay_early: int = 0
         self.draw_pay: int = 0
+        self.time_warp_full: bool = False
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -1036,14 +1037,16 @@ class BattleState(BattleStateInterface):
             if c.id == CardId.NORMALITY and self.get_memory_value(MemoryItem.CARDS_THIS_TURN) >= 3:
                 normality_full = True
 
-        # Prep time warp
-        time_warp_full = False
         for idx, monster in enumerate(self.monsters):
-            if monster.powers.get(PowerId.TIME_WARP, 0) >= 12:
-                time_warp_full = True
+            if monster.powers.get(PowerId.TIME_WARP, 0) >= 12 and not self.time_warp_full:
+                self.time_warp_full = True
 
-        return self.relics.get(RelicId.VELVET_CHOKER,
-                               0) >= 6 or time_warp_full or normality_full or self.player.current_hp <= 0
+        return True if \
+            self.relics.get(RelicId.VELVET_CHOKER, 0) >= 6 \
+            or self.time_warp_full \
+            or normality_full \
+            or self.player.current_hp <= 0 \
+            else False
 
 
 def is_card_playable(card: CardInterface, player: PlayerInterface, hand: List[CardInterface],
