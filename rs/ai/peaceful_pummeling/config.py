@@ -60,8 +60,8 @@ DESIRED_CARDS_FROM_POTIONS = {
 }
 
 CARD_REMOVAL_PRIORITY_LIST = [
-    'conjureblade',
-    'conjureblade+',
+    'conjure blade',
+    'conjure blade+',
     'vault',
     'vault+',
     'omniscience',

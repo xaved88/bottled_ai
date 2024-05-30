@@ -1056,9 +1056,8 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.EXPLOSIVE, 0)
 
     def test_hex(self):
-        state = self.given_state(CardId.DEFEND_G)
+        state = self.given_state(CardId.DEFEND_G, player_powers={PowerId.HEX: 1})
         state.hand.append(get_card(CardId.DEFEND_G))
-        state.monsters[0].powers[PowerId.HEX] = 1
         play = self.when_playing_the_whole_hand(state)
         self.see_player_draw_pile_count(play, 2)
 

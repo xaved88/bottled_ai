@@ -378,6 +378,10 @@ class BattleState(BattleStateInterface):
         if self.player.powers.get(PowerId.FREE_ATTACK_POWER) and card.type == CardType.ATTACK:
             self.player.powers[PowerId.FREE_ATTACK_POWER] -= 1
 
+        if self.player.powers.get(PowerId.HEX) and card.type != CardType.ATTACK:
+            for i in range(self.player.powers.get(PowerId.HEX)):
+                self.spawn_in_draw(get_card(CardId.DAZED))
+
         # post card play MONSTER power checks
         for monster in self.monsters:
             if monster.powers.get(PowerId.TIME_WARP) is not None:
@@ -395,10 +399,6 @@ class BattleState(BattleStateInterface):
                 if card.type == CardType.POWER:
                     monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics,
                                        self.player.powers)
-            if monster.powers.get(PowerId.HEX):
-                if card.type != CardType.ATTACK:
-                    for i in range(monster.powers.get(PowerId.HEX)):
-                        self.spawn_in_draw(get_card(CardId.DAZED))
 
         for effect in effects:
             # apply any powers from the card
