@@ -54,6 +54,8 @@ class EventHandler(Handler):
             return "choose 1"  # Escape. Could do: Add logic for sometimes taking the fight.
 
         if event_name == "Golden Idol":
+            if state.has_relic("Ectoplasm"):
+                return "choose 1"  # Leave!
             if len(state.get_choice_list()) == 2:
                 return "choose 0"  # Take it!
             if len(state.get_choice_list()) == 3:
@@ -80,7 +82,7 @@ class EventHandler(Handler):
             return "choose 1"  # Leave.
 
         if event_name == "The Ssssserpent":
-            if state.get_relic_counter("Omamori") >= 1:
+            if state.get_relic_counter("Omamori") >= 1 and not state.has_relic("Ectoplasm"):
                 return "choose 0"  # Money in exchange for a curse
             return "choose 1"  # Leave
 
@@ -116,7 +118,7 @@ class EventHandler(Handler):
             return "choose 1"  # Needs some duplication logic, would be better, but for now leave.
 
         if event_name == "Golden Shrine":
-            if state.get_relic_counter("Omamori") >= 1:
+            if state.get_relic_counter("Omamori") >= 1 and not state.has_relic("Ectoplasm"):
                 return "choose 1"  # More free money!
             return "choose 0"  # Free money
 
@@ -283,7 +285,11 @@ class EventHandler(Handler):
                 return "choose 1"  # Leave
 
         if event_name == "Winding Halls":
-            return "choose 2"  # Lose Max HP to avoid dealing with complexity.
+            if state.get_relic_counter("Omamori") >= 1 and hp_per < 75:
+                return "choose 1"  # Take the curse and heal
+            if hp_per <= 10:
+                return "choose 1"  # Take the curse and heal
+            return "choose 2"  # Lose Max HP
 
         log_missing_event(event_name)
         return "choose 0"

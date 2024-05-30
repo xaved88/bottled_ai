@@ -120,7 +120,7 @@ class PowerId(Enum):
     THIEVERY = 'thievery'  # N/A
     THORNS = 'thorns'
     THOUSAND_CUTS = 'thousand cuts'
-    TIME_WARP = 'time warp'
+    TIME_WARP = 'time warp'  # We don't include the Strength-up from Time Warp because that might trigger too-conservative battle decisions.
     UNAWAKENED = 'unawakened'
     VIGOR = 'vigor'
     VULNERABLE = 'vulnerable'
