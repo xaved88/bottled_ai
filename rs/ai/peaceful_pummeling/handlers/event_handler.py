@@ -153,8 +153,8 @@ class EventHandler(Handler):
         # ACT 2
 
         if event_name == "Ancient Writing":
-            if state.deck.contains_card_amount("strike") >= 3:
-                return "choose 1"  # Upgrade all strikes (defends already gone)
+            if state.deck.contains_card_amount("strike") >= 4:
+                return "choose 1"  # Upgrade all strikes and defends
             return "choose 0"  # Card removal
 
         if event_name == "Augmenter":
@@ -200,6 +200,8 @@ class EventHandler(Handler):
             return "choose 0"  # Give up all money and leave.
 
         if event_name == "The Mausoleum":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 0"
             return "choose 1"  # Leave, we don't like curses.
 
         if event_name == "The Nest":
@@ -213,8 +215,13 @@ class EventHandler(Handler):
         if event_name == "Old Beggar":
             return "choose 0"  # Cheap purge.
 
-        # if event_name == "Pleading Vagrant":
-        #    return ["choose 1", "choose 0"]  # Leave. Prefer the relic but money logic. Actually, needs testing.
+        if event_name == "Pleading Vagrant":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose rob"  # Get curse and relic
+            elif "offer gold" in state.get_choice_list():
+                return "choose offer gold"  # 85 gold for random relic
+            else:
+                return "choose leave"
 
         if event_name == "Vampires(?)":
             if state.deck.contains_cards(["Apparition"]):
