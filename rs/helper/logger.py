@@ -5,7 +5,8 @@ from datetime import datetime
 from typing import List
 
 from definitions import ROOT_DIR
-from rs.calculator.interfaces.memory_items import MemoryItem
+from rs.calculator.enums.card_id import CardId
+from rs.calculator.interfaces.memory_items import MemoryItem, ResetSchedule
 from rs.helper.seed import get_seed_string
 from rs.machine.state import GameState
 
@@ -103,6 +104,8 @@ def log_run_results(state: GameState, elites: List[str], bosses: List[str]):
         message += r["name"] + ","
     if state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED] > 0:
         message += " Killed with Lesson Learned: " + str(state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
+    if sum(state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME].values()) > 10:
+        message += " Extraordinary amount of Ritual Dagger power: " + str(sum(state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME].values()))
     message += "\n"
     with open(ROOT_DIR + "/logs/run_history.log", 'a+') as f:
         f.write(message)
