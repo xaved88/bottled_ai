@@ -116,6 +116,18 @@ class CalculatorOtherTest(CalculatorTestFixture):
         self.assertEqual(0, play.state.draw_free)
         self.assertEqual(2, play.state.draw_pay)
 
+    def test_type_of_drawn_card_comparator_values_restricted_by_hand(self):
+        state = self.given_state(CardId.INSIGHT)
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_drew_cards(play, 1)
+        self.assertEqual(1, play.state.draw_free_early)
+        self.assertEqual(0, play.state.draw_pay_early)
+        self.assertEqual(0, play.state.draw_free)
+        self.assertEqual(0, play.state.draw_pay)
+
     def test_cards_that_should_exhaust_do_actually_exhaust(self):
         state = self.given_state(CardId.STRIKE_R)
         state.hand[0].exhausts = True

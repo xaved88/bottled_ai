@@ -809,6 +809,14 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_has_power(play, PowerId.STRENGTH, 2)
         self.see_player_drew_cards(play, 2)
 
+    def test_heatsink_hand_limit(self):
+        state = self.given_state(CardId.INFLAME, player_powers={PowerId.HEATSINK: 2})
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
+        self.see_player_drew_cards(play, 1)
+
     def test_electrodynamics(self):
         state = self.given_state(CardId.ELECTRODYNAMICS, orb_slots=3, targets=2)
         play = self.when_playing_the_first_card(state)

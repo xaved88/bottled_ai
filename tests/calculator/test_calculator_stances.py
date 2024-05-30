@@ -221,6 +221,15 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_stance(play, StanceType.WRATH)
         self.see_player_drew_cards(play, 4)
 
+    def test_rushdown_power_constrained_by_hand_size(self):
+        state = self.given_state(CardId.CRESCENDO, player_powers={PowerId.RUSHDOWN: 4})
+        for i in range(9):
+            state.hand.append(get_card(CardId.WOUND))
+        state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)
+        play = self.when_playing_the_first_card(state)
+        self.see_stance(play, StanceType.WRATH)
+        self.see_player_drew_cards(play, 1)
+
     def test_inner_peace_goes_calm_if_not_calm(self):
         state = self.given_state(CardId.INNER_PEACE)
         state.add_memory_value(MemoryItem.STANCE, StanceType.NO_STANCE)

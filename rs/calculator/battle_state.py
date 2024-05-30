@@ -302,7 +302,7 @@ class BattleState(BattleStateInterface):
 
             # card draw
             if effect.draw:
-                self.draw_cards(effect.draw)
+                self.draw_cards(effect.draw, card_not_gone_yet=True)
 
             # discard
             if effect.amount_to_discard:
@@ -691,14 +691,17 @@ class BattleState(BattleStateInterface):
 
         return state_string
 
-    def draw_cards(self, amount: int):
+    def draw_cards(self, amount: int, card_not_gone_yet: bool = False):
         if PowerId.NO_DRAW in self.player.powers:
             return
+
+        # hand size is 11 when drawing cards from card effect
+        amount = min(amount, (10 + card_not_gone_yet) - len(self.hand))
 
         early = self.__is_first_play
         free = self.__starting_energy <= self.player.energy
 
-        # determine which type of card to draw with based on energy
+        # determine what type of draw we're doing
         if free and early:
             self.draw_free_early += amount
         elif free and not early:
@@ -708,8 +711,6 @@ class BattleState(BattleStateInterface):
         else:
             self.draw_pay += amount
 
-        # can't draw more than 10 cards, will discard the played card tho
-        amount = min(amount, 11 - len(self.hand))
         self.hand += [get_card(CardId.CARD_FROM_DRAW) for _ in range(amount)]
 
         # mainly just making some numbers work here, not looking into the piles yet for real
