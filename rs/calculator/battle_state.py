@@ -56,6 +56,10 @@ class BattleState(BattleStateInterface):
             CardId, dict[ResetSchedule, dict[str, int]]] = {} if memory_by_card is None else memory_by_card
         self.amount_scryed: int = amount_scryed
         self.saved_block_for_next_turn: int = saved_block_for_next_turn
+        self.draw_free_early: int = 0
+        self.draw_free: int = 0
+        self.draw_pay_early: int = 0
+        self.draw_pay: int = 0
 
     def get_plays(self) -> List[Play]:
         plays: List[Play] = []
@@ -695,14 +699,18 @@ class BattleState(BattleStateInterface):
         free = self.__starting_energy <= self.player.energy
 
         # determine which type of card to draw with based on energy
-        card_type = CardId.DRAW_FREE_EARLY if free and early \
-            else CardId.DRAW_FREE if free and not early \
-            else CardId.DRAW_PAY_EARLY if not free and early \
-            else CardId.DRAW_PAY
+        if free and early:
+            self.draw_free_early += amount
+        elif free and not early:
+            self.draw_free += amount
+        elif not free and early:
+            self.draw_pay_early += amount
+        else:
+            self.draw_pay += amount
 
         # can't draw more than 10 cards, will discard the played card tho
         amount = min(amount, 11 - len(self.hand))
-        self.hand += [get_card(card_type) for _ in range(amount)]
+        self.hand += [get_card(CardId.CARD_FROM_DRAW) for _ in range(amount)]
 
         # mainly just making some numbers work here, not looking into the piles yet for real
         for i in range(amount):
@@ -865,7 +873,7 @@ class BattleState(BattleStateInterface):
                                                    vulnerable_modifier=1,
                                                    is_attack=False)
                 if m.powers.get(PowerId.STASIS, 0):
-                    self.spawn_in_hand(get_card(CardId.DRAW_PAY))
+                    self.draw_pay += 1
                 if m.powers.get(PowerId.SPORE_CLOUD, 0):
                     self.player.add_powers({PowerId.VULNERABLE: m.powers.get(PowerId.SPORE_CLOUD, 0)}, self.relics,
                                            m.powers)

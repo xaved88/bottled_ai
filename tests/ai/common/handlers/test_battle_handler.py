@@ -368,3 +368,8 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_we_know_we_do_not_die_if_we_have_fairy_in_a_bottle(self):
         self.execute_handler_tests('battles/potions/keep_trying_we_have_fairy_in_a_bottle.json', ['play 1'])
 
+    def test_we_play_free_early_draw(self):
+        self.execute_handler_tests('battles/draw/free_early_draw.json', ['play 1'])
+
+    def test_we_like_paid_draw_via_rushdown(self):
+        self.execute_handler_tests('battles/draw/play_rushdown_early_to_benefit_from_the_draw.json', ['play 2'])

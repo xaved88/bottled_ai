@@ -471,7 +471,7 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_discard_pile_count(play, 1)
         self.see_player_drew_cards(play, 3)
-        self.see_hand_card_is(play, CardId.DRAW_FREE_EARLY)
+        self.see_hand_card_is(play, CardId.CARD_FROM_DRAW)
 
     def test_rage(self):
         state = self.given_state(CardId.RAGE)

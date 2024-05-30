@@ -1290,8 +1290,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_hp_is(play, 0)
         self.see_enemy_does_not_have_power(play, PowerId.STASIS)
-        self.see_player_hand_count(play, 1)
-        self.see_hand_card_is(play, CardId.DRAW_PAY)
+        self.assertEqual(1, play.state.draw_pay)
 
     def test_killing_enemy_with_spore_cloud_grants_vulnerable(self):
         amount = 3

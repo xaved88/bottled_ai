@@ -4,10 +4,7 @@ from enum import Enum
 class CardId(Enum):
     # PLACEHOLDER/LOGIC CARDS
     FAKE = 'fake'  # temp fake card for all the ones we don't know yet in game. Basically, treat like a wound.
-    DRAW_FREE_EARLY = 'draw free early'
-    DRAW_FREE = 'draw free'
-    DRAW_PAY_EARLY = 'draw pay early'
-    DRAW_PAY = 'draw pay'
+    CARD_FROM_DRAW = 'card from draw'
 
     # REAL CARDS
     A_THOUSAND_CUTS = 'a thousand cuts'

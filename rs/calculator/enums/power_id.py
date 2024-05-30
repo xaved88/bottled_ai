@@ -1,5 +1,8 @@
 from enum import Enum
 
+# Todos:
+# Stasis is only semi-implemented
+
 
 class PowerId(Enum):
     FAKE = 'fake'  # for unknown powers

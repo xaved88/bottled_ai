@@ -29,6 +29,7 @@ DESIRED_CARDS_FOR_DECK = {
     'perseverance': 2,
     'wheel kick': 1,
     'like water': 1,
+    'ghostly': 1
 }  # some get removed if snecko eye or runic pyramid is present
 
 DESIRED_CARDS_FROM_POTIONS = {
@@ -67,12 +68,10 @@ CARD_REMOVAL_PRIORITY_LIST = [
     'omniscience+',
     'meditate',
     'meditate+',
-    'pray',
     'defend',
     'defend+',
     'strike',
     'strike+',
-    'pray+',
     'bite']
 
 HIGH_PRIORITY_UPGRADES = [

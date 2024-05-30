@@ -113,7 +113,7 @@ class CalculatorTestFixture(unittest.TestCase):
         self.assertEqual(amount, len(play.state.hand))
 
     def see_player_drew_cards(self, play: PlayPath, amount: int):
-        actual = len([1 for c in play.state.hand if "draw " in c.id.value])
+        actual = len([1 for c in play.state.hand if " draw" in c.id.value])
         self.assertEqual(amount, actual)
 
     def see_player_scryed(self, play: PlayPath, amount: int):

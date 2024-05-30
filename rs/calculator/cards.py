@@ -124,13 +124,7 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.JAX:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL)
-    if card_id == CardId.DRAW_FREE_EARLY:
-        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
-    if card_id == CardId.DRAW_FREE:
-        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
-    if card_id == CardId.DRAW_PAY_EARLY:
-        return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
-    if card_id == CardId.DRAW_PAY:
+    if card_id == CardId.CARD_FROM_DRAW:
         return Card(card_id, 0, Cost.unplayable, False, CardType.FAKE)
     if card_id == CardId.BODY_SLAM:
         base_cost = 1 if not upgrade else 0

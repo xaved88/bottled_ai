@@ -63,6 +63,59 @@ class CalculatorOtherTest(CalculatorTestFixture):
         self.see_player_draw_pile_count(play, 4)
         self.see_player_discard_pile_count(play, 1)
 
+    def test_type_of_drawn_card_free_early(self):
+        state = self.given_state(CardId.OFFERING)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, -2)
+        self.see_player_drew_cards(play, 3)
+        self.assertEqual(3, play.state.draw_free_early)
+        self.assertEqual(0, play.state.draw_pay_early)
+        self.assertEqual(0, play.state.draw_free)
+        self.assertEqual(0, play.state.draw_pay)
+
+    def test_type_of_drawn_card_pay_early(self):
+        state = self.given_state(CardId.ACROBATICS)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 3)
+        self.assertEqual(0, play.state.draw_free_early)
+        self.assertEqual(3, play.state.draw_pay_early)
+        self.assertEqual(0, play.state.draw_free)
+        self.assertEqual(0, play.state.draw_pay)
+
+    def test_type_of_drawn_card_free(self):
+        state = self.given_state(CardId.BATTLE_TRANCE)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_drew_cards(play, 3)
+        self.assertEqual(0, play.state.draw_free_early)
+        self.assertEqual(0, play.state.draw_pay_early)
+        self.assertEqual(3, play.state.draw_free)
+        self.assertEqual(0, play.state.draw_pay)
+
+    def test_type_of_drawn_card_pay(self):
+        state = self.given_state(CardId.SHRUG_IT_OFF)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 2)
+        self.see_player_drew_cards(play, 1)
+        self.assertEqual(0, play.state.draw_free_early)
+        self.assertEqual(0, play.state.draw_pay_early)
+        self.assertEqual(0, play.state.draw_free)
+        self.assertEqual(1, play.state.draw_pay)
+
+    def test_type_of_drawn_card_rushdown(self):
+        state = self.given_state(CardId.ERUPTION, player_powers={PowerId.RUSHDOWN: 2})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 3)
+        self.see_player_drew_cards(play, 2)
+        self.assertEqual(0, play.state.draw_free_early)
+        self.assertEqual(0, play.state.draw_pay_early)
+        self.assertEqual(0, play.state.draw_free)
+        self.assertEqual(2, play.state.draw_pay)
+
     def test_cards_that_should_exhaust_do_actually_exhaust(self):
         state = self.given_state(CardId.STRIKE_R)
         state.hand[0].exhausts = True

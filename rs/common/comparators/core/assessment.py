@@ -79,18 +79,16 @@ class ComparatorAssessment:
             sum([m.max_hp for m in self.state.monsters])))
 
     def draw_free_early(self) -> int:
-        return self.__get_value('dfe', lambda: len([True for c in self.state.hand if c.id == CardId.DRAW_FREE_EARLY]))
+        return self.__get_value('dfe', lambda: self.state.draw_free_early)
 
     def draw_free(self) -> int:
-        return self.__get_value('df', lambda: len(
-            [True for c in self.state.hand if c.id == CardId.DRAW_FREE or c.id == CardId.DRAW_FREE_EARLY]))
+        return self.__get_value('df', lambda: self.state.draw_free + self.state.draw_free_early)
 
     def draw_pay_early(self) -> int:
-        return self.__get_value('dpe', lambda: len([True for c in self.state.hand if c.id == CardId.DRAW_PAY_EARLY]))
+        return self.__get_value('dpe', lambda: self.state.draw_pay_early)
 
     def draw_pay(self) -> int:
-        return self.__get_value('dp', lambda: len(
-            [True for c in self.state.hand if c.id == CardId.DRAW_PAY or c.id == CardId.DRAW_PAY_EARLY]))
+        return self.__get_value('dp', lambda: self.state.draw_pay + self.state.draw_pay_early)
 
     def energy(self) -> int:
         return self.__get_value('e', lambda: self.state.player.energy)

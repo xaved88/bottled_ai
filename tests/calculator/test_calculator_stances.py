@@ -189,7 +189,7 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0)
         self.assertEqual(CardId.CRESCENDO, play.state.exhaust_pile[0].id)
         self.see_player_hand_count(play, 1)
-        self.assertEqual(CardId.DRAW_PAY_EARLY, play.state.hand[0].id)
+        self.assertEqual(CardId.CARD_FROM_DRAW, play.state.hand[0].id)
         self.assertEqual(CardId.FLURRY_OF_BLOWS, play.state.draw_pile[0].id)
 
     def test_tantrum(self):
