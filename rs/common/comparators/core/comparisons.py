@@ -258,3 +258,8 @@ def most_block_saved_for_next_turn(best: CA, challenger: CA) -> Optional[bool]:
 def kept_expensive_decreasing_cost_retain_cards(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.count_expensive_cheapening_retain_cards() == challenger.count_expensive_cheapening_retain_cards() \
         else challenger.count_expensive_cheapening_retain_cards() > best.count_expensive_cheapening_retain_cards()
+
+
+def preserve_revive_options(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.revive_option_count() == challenger.revive_option_count() \
+        else challenger.revive_option_count() > best.revive_option_count()

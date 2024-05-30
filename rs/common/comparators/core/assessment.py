@@ -2,6 +2,7 @@ from typing import Callable, TypeVar, List
 
 from rs.calculator.battle_state import BattleState
 from rs.calculator.enums.card_id import CardId
+from rs.calculator.enums.potion_id import PotionId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
 from rs.calculator.interfaces.memory_items import ResetSchedule, MemoryItem, StanceType
@@ -249,3 +250,17 @@ class ComparatorAssessment:
                                 lambda: len(
                                     [True for c in self.state.hand if (c.id == CardId.SANDS_OF_TIME and c.cost > 0)]))
         # this will behave like >1 since we know it'll reduce by 1 when retaining
+
+    def revive_option_count(self) -> int:
+        fairy_count = 0
+        lizard_count = 0
+
+        if PotionId.FAIRY_IN_A_BOTTLE in self.state.potions:
+            for p in self.state.potions:
+                if p == PotionId.FAIRY_IN_A_BOTTLE:
+                    fairy_count += 1
+        if self.state.relics.get(RelicId.LIZARD_TAIL):
+            if self.state.relics[RelicId.LIZARD_TAIL] != -2:
+                lizard_count += 1
+
+        return self.__get_value('roc', lambda: fairy_count + lizard_count)

@@ -363,10 +363,15 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('battles/general/play_expensive_sands_of_time_to_get_kill.json', ['play 1 0'])
 
     def test_we_know_we_do_not_die_if_we_have_lizard_tail(self):
-        self.execute_handler_tests('battles/relics/keep_trying_we_have_lizard_tail.json', ['play 1'])
+        self.execute_handler_tests('battles/reviving/keep_trying_we_have_lizard_tail.json', ['play 1'])
 
     def test_we_know_we_do_not_die_if_we_have_fairy_in_a_bottle(self):
-        self.execute_handler_tests('battles/potions/keep_trying_we_have_fairy_in_a_bottle.json', ['play 1'])
+        self.execute_handler_tests('battles/reviving/keep_trying_we_have_fairy_in_a_bottle.json', ['play 1'])
+
+    def test_do_not_die_even_though_it_would_give_you_health(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.STANCE] = StanceType.NO_STANCE
+        self.execute_handler_tests('battles/reviving/do_not_die_just_because_it_will_heal.json', ['end'], mb)
 
     def test_we_play_free_early_draw(self):
         self.execute_handler_tests('battles/draw/free_early_draw.json', ['play 1'])
