@@ -9,7 +9,7 @@ priorities = [
         ('defragment', 5),
         ('biased cognition', 5),
         ('capacitor', 2),
-        ('seek', 2),
+        # ('seek', 2),
         ('loop', 2),
         ('core surge', 2),
         ('fission', 1),
