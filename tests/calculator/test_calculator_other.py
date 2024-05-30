@@ -245,3 +245,7 @@ class CalculatorOtherTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_lost_hp(play, 3)
 
+    def test_random_damage_affected_by_damage_bonuses(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, relics={RelicId.PEN_NIB: 9}, targets=2)
+        play = self.when_playing_the_first_card(state)
+        self.see_random_damage_dealt(play, 18)

@@ -85,7 +85,7 @@ class EventHandler(Handler):
             return "choose 1"  # Leave
 
         if event_name == "World of Goop":
-            if hp_per >= 80:
+            if hp_per >= 80 and not state.has_relic("Ectoplasm"):
                 return "choose 0"  # Take the money and lose a little HP.
             return "choose 1"  # Leave
 
@@ -97,7 +97,7 @@ class EventHandler(Handler):
         # ACT 1, 2
 
         if event_name == "Face Trader":
-            if hp_per >= 75:
+            if hp_per >= 75 and not state.has_relic("Ectoplasm"):
                 return "choose 0"
             return "choose 2"  # Leave.
 
