@@ -106,13 +106,13 @@
           "move_base_damage": 11,
           "half_dead": false,
           "move_adjusted_damage": 11,
-          "max_hp": 41,
+          "max_hp": 100,
           "intent": "ATTACK",
           "move_id": 1,
           "name": "Jaw Worm",
-          "current_hp": 18,
+          "current_hp": 20,
           "block": 0,
-          "id": "JawWorm",
+          "id": "BirdIDunno",
           "powers": [            {
               "amount": 1,
               "just_applied": false,
@@ -128,31 +128,35 @@
           "exhausts": true,
           "is_playable": true,
           "cost": 1,
-          "name": "Blasphemy",
-          "id": "Blasphemy",
-          "type": "SKILL",
+          "name": "Biased Cognition",
+          "id": "Biased Cognition",
+          "type": "POWER",
           "ethereal": false,
           "uuid": "13f7ec1e-0565-4dc8-97f1-ae44207767d4",
           "upgrades": 0,
           "rarity": "BASIC",
           "has_target": false
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Strike",
-          "id": "strike_r",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "13f7ec1e-0565-4dc8-97f1-ae44207767d4",
-          "upgrades": 0,
-          "rarity": "BASIC",
-          "has_target": true
         }
       ],
       "player": {
-        "orbs": [],
+        "orbs": [
+          {
+            "passive_amount": 3,
+            "name": "Lightning",
+            "id": "Lightning",
+            "evoke_amount": 8
+          },
+          {
+            "passive_amount": 0,
+            "name": "Orb Slot",
+            "evoke_amount": 0
+          },
+          {
+            "passive_amount": 0,
+            "name": "Orb Slot",
+            "evoke_amount": 0
+          }
+        ],
         "current_hp": 80,
         "block": 50,
         "max_hp": 80,
@@ -331,7 +335,7 @@
       }
     ],
     "current_hp": 80,
-    "floor": 1,
+    "floor": 50,
     "ascension_level": 0,
     "class": "IRONCLAD",
     "map": [
