@@ -117,12 +117,12 @@ class Target(TargetInterface):
                         self.current_hp = 0
                         if self.relics.get(RelicId.LIZARD_TAIL):
                             if self.relics[RelicId.LIZARD_TAIL] != -2:
-                                self.heal(math.floor(self.max_hp * .5), True, self.relics)
+                                self.heal(math.floor(self.max_hp * .5), True, self.relics, is_revive=True)
                                 self.relics[RelicId.LIZARD_TAIL] = -2
                             continue
 
                         if PotionId.FAIRY_IN_A_BOTTLE in self.potions:
-                            self.heal(math.floor(self.max_hp * .3), True, self.relics)
+                            self.heal(math.floor(self.max_hp * .3), True, self.relics, is_revive=True)
                             self.potions.remove(PotionId.FAIRY_IN_A_BOTTLE)
                             continue
                         break  # target is dead, stop attacking
@@ -201,8 +201,10 @@ class Target(TargetInterface):
             state += k + str(self.powers[PowerId(k)]) + ","
         return state
 
-    def heal(self, amount: int, is_player: bool, relics: Relics):
+    def heal(self, amount: int, is_player: bool, relics: Relics, is_revive: bool = False):
         if is_player and relics.get(RelicId.MARK_OF_THE_BLOOM):
+            return
+        if self.current_hp <= 0 and not is_revive:
             return
         else:
             if is_player and relics.get(RelicId.MAGIC_FLOWER):

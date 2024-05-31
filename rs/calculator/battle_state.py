@@ -548,7 +548,7 @@ class BattleState(BattleStateInterface):
             self.player.inflict_damage(self.player, self.player.powers.get(PowerId.CONSTRICTED, 0), 1,
                                        vulnerable_modifier=1, is_attack=False)
 
-        if self.player.powers.get(PowerId.REGENERATION_PLAYER, 0) and self.player.current_hp > 0:
+        if self.player.powers.get(PowerId.REGENERATION_PLAYER, 0):
             self.player.heal(self.player.powers.get(PowerId.REGENERATION_PLAYER, 0), True, self.relics)
             self.player.powers[PowerId.REGENERATION_PLAYER] -= 1
 

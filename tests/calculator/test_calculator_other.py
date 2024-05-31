@@ -249,3 +249,18 @@ class CalculatorOtherTest(CalculatorTestFixture):
         state = self.given_state(CardId.SWORD_BOOMERANG, relics={RelicId.PEN_NIB: 9}, targets=2)
         play = self.when_playing_the_first_card(state)
         self.see_random_damage_dealt(play, 18)
+
+    def test_do_not_revive_from_normal_heal_regen(self):
+        state = self.given_state(CardId.SWORD_BOOMERANG, player_powers={PowerId.REGENERATION_PLAYER: 3})
+        state.player.current_hp = 0
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 50)
+
+    def test_do_not_revive_from_dying_to_thorns_if_bite(self):
+        state = self.given_state(CardId.BITE)
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        state.player.current_hp = 1
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_lost_hp(play, 50)

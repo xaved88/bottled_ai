@@ -592,48 +592,8 @@
     ],
     "relics": [
       {
-        "name": "Pure Water",
-        "id": "PureWater",
-        "counter": -1
-      },
-      {
-        "name": "Gambling Chip",
-        "id": "Gambling Chip",
-        "counter": -1
-      },
-      {
-        "name": "Toxic Egg",
-        "id": "Toxic Egg 2",
-        "counter": -1
-      },
-      {
-        "name": "Whetstone",
-        "id": "Whetstone",
-        "counter": -1
-      },
-      {
-        "name": "Violet Lotus",
-        "id": "VioletLotus",
-        "counter": -1
-      },
-      {
-        "name": "Gremlin Horn",
-        "id": "Gremlin Horn",
-        "counter": -1
-      },
-      {
         "name": "Lizard Tail",
         "id": "Lizard Tail",
-        "counter": -1
-      },
-      {
-        "name": "Eternal Feather",
-        "id": "Eternal Feather",
-        "counter": -1
-      },
-      {
-        "name": "Snecko Eye",
-        "id": "Snecko Eye",
         "counter": -1
       }
     ],
