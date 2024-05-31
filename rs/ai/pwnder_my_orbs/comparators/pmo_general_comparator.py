@@ -34,7 +34,6 @@ default_comparisons = [
     most_less_good_player_powers,
     least_enemy_artifacts,
     most_bad_cards_exhausted,
-    most_powered_up_ritual_dagger,
     most_powered_up_genetic_algorithm,
     most_cards_left_in_hand,
     least_incoming_damage,
