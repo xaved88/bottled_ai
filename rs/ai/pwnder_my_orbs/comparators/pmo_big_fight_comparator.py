@@ -6,11 +6,18 @@ from rs.common.comparators.core.comparisons import *
 
 def hate_bias(best: CA, challenger: CA) -> Optional[bool]:
     unawakened_present = False
+    awakened_one = False
+
     for mon in challenger.state.monsters:
         if mon.powers.get(PowerId.UNAWAKENED, 0):
             unawakened_present = True
-    if challenger.total_monster_health_percent() < 0.60 and (not unawakened_present or challenger.total_monster_health_percent() < 0.20):
-        return None  # when they've lost more than 60% we don't hate bias anymore
+        if mon.name == 'Awakened One':
+            awakened_one = True
+
+    if not unawakened_present:
+        if challenger.total_monster_health_percent() < 0.60 or awakened_one:
+            return None  # when they've lost more than 60% we don't hate bias anymore
+
     return None if best.player_bias() == challenger.player_bias() \
         else challenger.player_bias() < best.player_bias()
 

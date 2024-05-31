@@ -109,16 +109,11 @@
           "max_hp": 100,
           "intent": "ATTACK",
           "move_id": 1,
-          "name": "Jaw Worm",
-          "current_hp": 20,
+          "name": "Awakened One",
+          "current_hp": 100,
           "block": 0,
-          "id": "BirdIDunno",
-          "powers": [            {
-              "amount": 1,
-              "just_applied": false,
-              "name": "Unawakened",
-              "id": "unawakened"
-            }]
+          "id": "Awakened One",
+          "powers": []
         }
       ],
       "turn": 1,

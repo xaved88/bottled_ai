@@ -122,6 +122,7 @@ def create_battle_state(game_state: GameState) -> BattleState:
             damage=monster['move_base_damage'] if 'move_base_damage' in monster else 0,
             hits=monster['move_hits'] if 'move_hits' in monster else 0,
             is_gone=False if not monster['is_gone'] else True,
+            name=monster['name']
         )
         for monster in cs['monsters']
     ]

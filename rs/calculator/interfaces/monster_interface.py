@@ -7,6 +7,7 @@ class MonsterInterface(TargetInterface):
     damage: int
     hits: int
     is_gone: bool
+    name: str
 
 
 def find_lowest_hp_monster(monsters: List[MonsterInterface]) -> Optional[MonsterInterface]:

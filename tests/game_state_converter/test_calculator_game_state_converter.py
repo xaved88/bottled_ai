@@ -81,3 +81,8 @@ class GameStateConverterTest(unittest.TestCase):
         self.assertIsNotNone(battle_state)
         self.assertEqual(3, len(battle_state.potions))
         self.assertIn(PotionId.FAIRY_IN_A_BOTTLE, battle_state.potions)
+
+    def test_get_monster_name(self):
+        state = load_resource_state("battles/general/attack.json")
+        battle_state = create_battle_state(state)
+        self.assertEqual('Cultist', battle_state.monsters[0].name)
