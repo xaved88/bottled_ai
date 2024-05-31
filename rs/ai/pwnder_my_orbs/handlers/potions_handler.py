@@ -6,13 +6,14 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
-# see also combat_reward_handler.py for discarding potions
+# see also common_combat_reward_handler.py for discarding potions
 # these potions might still sneak into our slots with entropric brew
 dont_play_potions = [
     'Smoke Bomb',
     'Elixir Potion',
     'Liquid Memories',
     'Snecko Oil',
+    'Distilled Chaos',
 ]
 
 

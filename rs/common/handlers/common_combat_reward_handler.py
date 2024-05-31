@@ -7,6 +7,11 @@ from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
+default_undesired_relics = [
+    'Dead Branch',
+    'Bottled Flame',
+]
+
 # most important on top
 default_desired_potions = [
     'fruit juice',

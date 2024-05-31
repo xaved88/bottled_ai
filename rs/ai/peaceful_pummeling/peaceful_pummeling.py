@@ -1,9 +1,8 @@
 from typing import List
 
-from rs.ai.peaceful_pummeling.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES
+from rs.ai.peaceful_pummeling.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS
 from rs.ai.peaceful_pummeling.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.peaceful_pummeling.handlers.card_reward_handler import CardRewardHandler
-from rs.ai.peaceful_pummeling.handlers.combat_reward_handler import CombatRewardHandler
 from rs.ai.peaceful_pummeling.handlers.event_handler import EventHandler
 from rs.ai.peaceful_pummeling.handlers.neow_handler import NeowHandler
 from rs.ai.peaceful_pummeling.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
@@ -13,6 +12,7 @@ from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
 from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
+from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
 from rs.common.handlers.common_discard_handler import CommonDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
 from rs.common.handlers.common_purge_handler import CommonPurgeHandler
@@ -38,7 +38,7 @@ PEACEFUL_PUMMELING: AiStrategy = AiStrategy(
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
-        CombatRewardHandler(),
+        CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CardRewardHandler(),
         NeowHandler(),
         EventHandler(),

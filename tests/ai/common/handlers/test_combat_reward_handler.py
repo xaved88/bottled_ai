@@ -38,3 +38,13 @@ class CombatRewardHandlerTestCase(CoTestHandlerFixture):
 
     def test_do_not_die_from_relic_not_being_first(self):
         self.execute_handler_tests('/combat_reward/combat_reward_several_rewards.json', ['choose gold'])
+
+    def test_skip_relic(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_relic_skip.json', ['proceed'])
+
+    def test_skip_relic_multiple_relics_take_first(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_relics_2_take_first.json', ['choose relic'])
+
+    # leaving this disabled for now since the check I'm doing is potentially too fragile
+    # def test_skip_relic_multiple_relics_take_second(self):
+    #     self.execute_handler_tests('/combat_reward/combat_reward_relics_2_take_second.json', ['proceed'])

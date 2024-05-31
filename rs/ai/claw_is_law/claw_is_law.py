@@ -1,9 +1,8 @@
 from typing import List
 
 from rs.ai.claw_is_law.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK, HIGH_PRIORITY_UPGRADES, \
-    DESIRED_CARDS_FROM_POTIONS
+    DESIRED_CARDS_FROM_POTIONS, DESIRED_POTIONS
 from rs.ai.claw_is_law.handlers.boss_relic_handler import BossRelicHandler
-from rs.ai.claw_is_law.handlers.combat_reward_handler import CombatRewardHandler
 from rs.ai.claw_is_law.handlers.event_handler import EventHandler
 from rs.ai.claw_is_law.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
 from rs.ai.claw_is_law.handlers.shop_purchase_handler import ShopPurchaseHandler
@@ -41,7 +40,7 @@ CLAW_IS_LAW: AiStrategy = AiStrategy(
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
-        CombatRewardHandler(),
+        CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK, DESIRED_CARDS_FROM_POTIONS),
         CommonNeowHandler(),
         EventHandler(),
