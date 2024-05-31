@@ -254,37 +254,35 @@ class BattleState(BattleStateInterface):
                         if alive_monsters == 1:
                             for monster in self.monsters:
                                 if monster.current_hp > 0:
-                                    monster.inflict_damage(self.player, damage, effect.hits,
+                                    health_damage_dealt, times_block_triggered = monster.inflict_damage(self.player, damage, effect.hits,
                                                            vulnerable_modifier=monster_vulnerable_modifier,
                                                            min_hp_damage=player_min_attack_hp_damage)
+                                    if times_block_triggered:
+                                        self.trigger_block_effects(times_block_triggered)
 
                         else:
                             self.total_random_damage_dealt += damage * effect.hits
 
                     elif effect.target == TargetType.MONSTER:
-                        (hp_damage) = self.monsters[target_index].inflict_damage(
+                        health_damage_dealt, times_block_triggered = self.monsters[target_index].inflict_damage(
                             source=self.player, base_damage=damage,
                             hits=effect.hits,
                             blockable=effect.blockable,
                             vulnerable_modifier=monster_vulnerable_modifier,
                             min_hp_damage=player_min_attack_hp_damage)
-                        effect.hp_damage = hp_damage
-
-                        if PowerId.BLOCK_RETURN in self.monsters[target_index].powers:
-                            for hits in range(effect.hits):
-                                self.add_player_block(self.monsters[target_index].powers[PowerId.BLOCK_RETURN])
+                        effect.hp_damage = health_damage_dealt
+                        if times_block_triggered:
+                            self.trigger_block_effects(times_block_triggered)
 
                     elif effect.target == TargetType.ALL_MONSTERS:
                         effect.hp_damage = 0
                         for target in self.monsters:
-                            (hp_damage) = target.inflict_damage(self.player, damage, effect.hits, effect.blockable,
+                            health_damage_dealt, times_block_triggered = target.inflict_damage(self.player, damage, effect.hits, effect.blockable,
                                                                 monster_vulnerable_modifier,
                                                                 min_hp_damage=player_min_attack_hp_damage)
-                            effect.hp_damage += hp_damage
-
-                            if PowerId.BLOCK_RETURN in target.powers:
-                                for hits in range(effect.hits):
-                                    self.add_player_block(target.powers[PowerId.BLOCK_RETURN])
+                            effect.hp_damage += health_damage_dealt
+                            if times_block_triggered:
+                                self.trigger_block_effects(times_block_triggered)
 
             # block (always applies to player right?)
             if effect.block:
@@ -840,8 +838,12 @@ class BattleState(BattleStateInterface):
             self.total_random_poison_added += poison_amount * hits
 
     def add_player_block(self, amount: int):
-        self.player.block += amount
-        if amount > 0:
+        if amount:
+            self.player.block += amount
+            self.trigger_block_effects()
+
+    def trigger_block_effects(self, times: int = 1):
+        for i in range(times):
             if self.player.powers.get(PowerId.JUGGERNAUT, 0):
                 self.inflict_non_card_random_target_damage(self.player.powers.get(PowerId.JUGGERNAUT, 0), 1)
             if self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0):

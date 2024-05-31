@@ -1,4 +1,5 @@
 import abc
+from collections import namedtuple
 from typing import List
 
 from rs.calculator.interfaces.powers import Powers
@@ -6,7 +7,7 @@ from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
 
 # hp_damage_dealt
-InflictDamageSummary = int
+InflictDamageSummary = namedtuple('InflictDamageSummary', ['health_damage_dealt', 'trigger_malleable_block'])
 
 
 class TargetInterface(metaclass=abc.ABCMeta):

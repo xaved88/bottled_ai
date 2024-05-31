@@ -36,6 +36,7 @@ class Target(TargetInterface):
             damage = math.floor(damage * 1.5)
 
         health_damage_dealt = 0
+        times_block_triggered = 0
         trigger_malleable_block = 0
 
         # inflict self damage from sharp_hide
@@ -49,6 +50,10 @@ class Target(TargetInterface):
             )
 
         for hit_damage in [damage for i in range(hits)]:
+            if is_attack and self.powers.get(PowerId.BLOCK_RETURN):
+                source.block += self.powers.get(PowerId.BLOCK_RETURN)
+                times_block_triggered += 1
+
             if is_attack and (self.powers.get(PowerId.FLAME_BARRIER) or self.powers.get(PowerId.THORNS)):
                 source.inflict_damage(
                     source=self,
@@ -159,7 +164,7 @@ class Target(TargetInterface):
             del self.powers[PowerId.SPLIT]
         if self.powers.get(PowerId.SHIFTING):
             self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics, source.powers)
-        return health_damage_dealt
+        return health_damage_dealt, times_block_triggered
 
     # returns a list of powerIds that were applied and not blocked by artifacts
     def add_powers(self, powers: Powers, relics: Relics, source_powers: Powers) -> List[PowerId]:
@@ -213,3 +218,4 @@ class Target(TargetInterface):
                 self.current_hp += amount
             if self.current_hp > self.max_hp:
                 self.current_hp = self.max_hp
+

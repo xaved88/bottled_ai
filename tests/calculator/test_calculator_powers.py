@@ -359,6 +359,29 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_lost_hp(play, 4)
 
+    def test_self_block_effects_block_return_happen_before_thorns(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        state.monsters[0].powers[PowerId.BLOCK_RETURN] = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 2)
+        self.see_player_lost_hp(play, 0)
+
+    def test_self_block_effects_block_return_happen_before_sharp_hide(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        state.monsters[0].powers[PowerId.BLOCK_RETURN] = 4
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 1)
+        self.see_player_lost_hp(play, 0)
+
+    def test_self_block_effects_rage_happen_before_thorns(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.RAGE: 5})
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 2)
+        self.see_player_lost_hp(play, 0)
+
     def test_attacking_angry_gives_strength(self):
         state = self.given_state(CardId.TWIN_STRIKE)
         state.monsters[0].powers[PowerId.ANGRY] = 3
@@ -752,6 +775,12 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0, enemy_index=0)
         self.see_enemy_lost_hp(play, 0, enemy_index=1)
         self.see_random_damage_dealt(play, 7)
+
+    def test_juggernaut_block_from_block_return(self):
+        state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.JUGGERNAUT: 5})
+        state.monsters[0].powers[PowerId.BLOCK_RETURN] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 11)
 
     def test_juggernaut_does_not_damage_when_0_block_gained(self):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.JUGGERNAUT: 5, PowerId.DEXTERITY: -5})
@@ -1226,6 +1255,13 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_has_power(play, PowerId.WEAKENED, 0, enemy_index=1)
         self.see_player_has_power(play, PowerId.WAVE_OF_THE_HAND, 0)
 
+    def test_wave_of_the_hand_weak_from_block_return(self):
+        state = self.given_state(CardId.TWIN_STRIKE, player_powers={PowerId.WAVE_OF_THE_HAND: 1})
+        state.monsters[0].powers[PowerId.BLOCK_RETURN] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_enemy_has_power(play, PowerId.WEAKENED, 2)
+
     def test_free_attack_power(self):
         state = self.given_state(CardId.STRIKE_R, player_powers={PowerId.FREE_ATTACK_POWER: 1})
         play = self.when_playing_the_first_card(state)
@@ -1377,3 +1413,4 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state = self.given_state(CardId.DEFEND_R, player_powers={PowerId.FAKE_DEXTERITY_TEMP: 3})
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 8)
+
