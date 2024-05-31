@@ -52,6 +52,6 @@ DESIRED_POTIONS = [
     'elixir potion',
     'distilled chaos',  # We don't want to accidentally play Biased Cog way too early
     'liquid memories',
-    'snecko oil'
+    'snecko oil',
     'stance potion',
 ]

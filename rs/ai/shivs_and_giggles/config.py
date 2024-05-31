@@ -53,6 +53,6 @@ DESIRED_POTIONS = [
     'smoke bomb',
     'elixir potion',
     'liquid memories',
-    'snecko oil'
+    'snecko oil',
     'stance potion',
 ]
