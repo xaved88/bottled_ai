@@ -243,8 +243,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SPOT_WEAKNESS:
         return [CardEffects(target=TargetType.MONSTER, post_hooks=[spot_weakness_post_hook])]
     if card.id == CardId.REAPER:
-        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=4 if not card.upgrade else 5, hits=1,
-                            post_hooks=[reaper_post_hook])]
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=4 if not card.upgrade else 5, hits=1)]
     if card.id == CardId.BANDAGE_UP:
         return [CardEffects(target=TargetType.SELF, heal=4 if not card.upgrade else 6)]
     if card.id == CardId.BITE:
@@ -806,8 +805,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.SPIRIT_SHIELD:
         return [CardEffects(target=TargetType.SELF, pre_hooks=[spirit_shield_pre_hook])]
     if card.id == CardId.WALLOP:
-        return [CardEffects(target=TargetType.MONSTER, damage=9 if not card.upgrade else 12, hits=1,
-                            post_hooks=[wallop_post_hook])]
+        return [CardEffects(target=TargetType.MONSTER, damage=9 if not card.upgrade else 12, hits=1)]
     if card.id == CardId.WINDMILL_STRIKE:
         return [CardEffects(target=TargetType.MONSTER, hits=1, pre_hooks=[windmill_strike_pre_hook], retains=True)]
     if card.id == CardId.BRILLIANCE:

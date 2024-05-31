@@ -382,6 +382,34 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_player_has_block(play, 2)
         self.see_player_lost_hp(play, 0)
 
+    def test_self_block_effects_wallop_happen_before_thorns(self):
+        state = self.given_state(CardId.WALLOP)
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 6)
+        self.see_player_lost_hp(play, 0)
+
+    def test_reaper_before_thorns(self):
+        state = self.given_state(CardId.REAPER)
+        state.player.current_hp = 2
+        state.monsters[0].powers[PowerId.THORNS] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_player_lost_hp(play, 47)
+
+    def test_self_block_effects_wallop_happen_before_sharp_hide(self):
+        state = self.given_state(CardId.WALLOP)
+        state.monsters[0].powers[PowerId.SHARP_HIDE] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 6)
+        self.see_player_lost_hp(play, 0)
+
+    def test_reaper_before_sharp_hide(self):
+        state = self.given_state(CardId.REAPER)
+        state.player.current_hp = 2
+        state.monsters[0].powers[PowerId.SHARP_HIDE] = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_player_lost_hp(play, 47)
+
     def test_attacking_angry_gives_strength(self):
         state = self.given_state(CardId.TWIN_STRIKE)
         state.monsters[0].powers[PowerId.ANGRY] = 3

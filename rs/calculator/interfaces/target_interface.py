@@ -2,12 +2,13 @@ import abc
 from collections import namedtuple
 from typing import List
 
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.interfaces.powers import Powers
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.interfaces.relics import Relics
 
 # hp_damage_dealt
-InflictDamageSummary = namedtuple('InflictDamageSummary', ['health_damage_dealt', 'trigger_malleable_block'])
+InflictDamageSummary = int
 
 
 class TargetInterface(metaclass=abc.ABCMeta):
@@ -20,7 +21,7 @@ class TargetInterface(metaclass=abc.ABCMeta):
 
     def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool = True,
                        vulnerable_modifier: float = 1.5, is_attack: bool = True,
-                       min_hp_damage: int = 1, is_orbs: bool = False) -> InflictDamageSummary:
+                       min_hp_damage: int = 1, is_orbs: bool = False, card_id: CardId = None) -> InflictDamageSummary:
         # must be implemented by children
         pass
 

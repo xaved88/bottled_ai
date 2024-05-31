@@ -64,12 +64,6 @@ def spot_weakness_post_hook(state: BattleStateInterface, effect: CardEffectsInte
         state.player.add_powers({PowerId.STRENGTH: amount}, state.player.relics, state.player.powers)
 
 
-def reaper_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                     target_index: int = -1):
-    if hasattr(effect, 'hp_damage'):
-        state.player.heal(effect.hp_damage, True, state.relics)
-
-
 def apotheosis_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                          target_index: int = -1):
     for i in range(len(state.draw_pile)):
@@ -647,12 +641,6 @@ def spirit_shield_pre_hook(state: BattleStateInterface, effect: CardEffectsInter
     multiplier = 3 if not card.upgrade else 4
     amount_of_block = (len(state.hand) - 1) * multiplier  # -1 because spirit shield is currently still in hand
     effect.block = amount_of_block
-
-
-def wallop_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
-                     target_index: int = -1):
-    if hasattr(effect, 'hp_damage'):
-        state.add_player_block(effect.hp_damage)
 
 
 def windmill_strike_pre_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

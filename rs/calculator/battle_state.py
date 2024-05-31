@@ -243,9 +243,13 @@ class BattleState(BattleStateInterface):
 
             if effect.hits:
                 if effect.target == TargetType.SELF:
-                    self.player.inflict_damage(base_damage=effect.damage, source=self.player, hits=1,
-                                               blockable=effect.blockable,
-                                               vulnerable_modifier=1, is_attack=False)
+                    self.player.inflict_damage(
+                        source=self.player,
+                        base_damage=effect.damage,
+                        hits=1,
+                        blockable=effect.blockable,
+                        vulnerable_modifier=1,
+                        is_attack=False)
                 else:
                     damage = math.floor(effect.damage * player_weak_modifier)
                     if effect.target == TargetType.RANDOM:
@@ -254,9 +258,13 @@ class BattleState(BattleStateInterface):
                         if alive_monsters == 1:
                             for monster in self.monsters:
                                 if monster.current_hp > 0:
-                                    health_damage_dealt, times_block_triggered = monster.inflict_damage(self.player, damage, effect.hits,
-                                                           vulnerable_modifier=monster_vulnerable_modifier,
-                                                           min_hp_damage=player_min_attack_hp_damage)
+                                    times_block_triggered = monster.inflict_damage(
+                                        source=self.player,
+                                        base_damage=damage,
+                                        hits=effect.hits,
+                                        vulnerable_modifier=monster_vulnerable_modifier,
+                                        min_hp_damage=player_min_attack_hp_damage,
+                                        card_id=card.id)
                                     if times_block_triggered:
                                         self.trigger_block_effects(times_block_triggered)
 
@@ -264,23 +272,28 @@ class BattleState(BattleStateInterface):
                             self.total_random_damage_dealt += damage * effect.hits
 
                     elif effect.target == TargetType.MONSTER:
-                        health_damage_dealt, times_block_triggered = self.monsters[target_index].inflict_damage(
-                            source=self.player, base_damage=damage,
+                        times_block_triggered = self.monsters[target_index].inflict_damage(
+                            source=self.player,
+                            base_damage=damage,
                             hits=effect.hits,
                             blockable=effect.blockable,
                             vulnerable_modifier=monster_vulnerable_modifier,
-                            min_hp_damage=player_min_attack_hp_damage)
-                        effect.hp_damage = health_damage_dealt
+                            min_hp_damage=player_min_attack_hp_damage,
+                            card_id=card.id)
                         if times_block_triggered:
                             self.trigger_block_effects(times_block_triggered)
 
                     elif effect.target == TargetType.ALL_MONSTERS:
                         effect.hp_damage = 0
                         for target in self.monsters:
-                            health_damage_dealt, times_block_triggered = target.inflict_damage(self.player, damage, effect.hits, effect.blockable,
-                                                                monster_vulnerable_modifier,
-                                                                min_hp_damage=player_min_attack_hp_damage)
-                            effect.hp_damage += health_damage_dealt
+                            times_block_triggered = target.inflict_damage(
+                                source=self.player,
+                                base_damage=damage,
+                                hits=effect.hits,
+                                blockable=effect.blockable,
+                                vulnerable_modifier=monster_vulnerable_modifier,
+                                min_hp_damage=player_min_attack_hp_damage,
+                                card_id=card.id)
                             if times_block_triggered:
                                 self.trigger_block_effects(times_block_triggered)
 

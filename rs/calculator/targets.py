@@ -1,6 +1,7 @@
 import math
 from typing import List
 
+from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.potion_id import PotionId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
@@ -28,7 +29,8 @@ class Target(TargetInterface):
 
     def inflict_damage(self, source, base_damage: int, hits: int, blockable: bool = True,
                        vulnerable_modifier: float = 1.5,
-                       is_attack: bool = True, min_hp_damage: int = 1, is_orbs: bool = False) -> InflictDamageSummary:
+                       is_attack: bool = True, min_hp_damage: int = 1, is_orbs: bool = False,
+                       card_id: CardId = None) -> InflictDamageSummary:
         damage = base_damage
         if self.powers.get(PowerId.VULNERABLE):
             damage = math.floor(damage * vulnerable_modifier)
@@ -37,31 +39,13 @@ class Target(TargetInterface):
 
         health_damage_dealt = 0
         times_block_triggered = 0
+        sharp_hide_done = False
         trigger_malleable_block = 0
-
-        # inflict self damage from sharp_hide
-        if is_attack and (self.powers.get(PowerId.SHARP_HIDE)):
-            source.inflict_damage(
-                source=self,
-                base_damage=self.powers.get(PowerId.SHARP_HIDE),
-                hits=1,
-                vulnerable_modifier=1,
-                is_attack=False,
-            )
 
         for hit_damage in [damage for i in range(hits)]:
             if is_attack and self.powers.get(PowerId.BLOCK_RETURN):
                 source.block += self.powers.get(PowerId.BLOCK_RETURN)
                 times_block_triggered += 1
-
-            if is_attack and (self.powers.get(PowerId.FLAME_BARRIER) or self.powers.get(PowerId.THORNS)):
-                source.inflict_damage(
-                    source=self,
-                    base_damage=self.powers.get(PowerId.FLAME_BARRIER, 0) + self.powers.get(PowerId.THORNS, 0),
-                    hits=1,
-                    vulnerable_modifier=1,
-                    is_attack=False,
-                )
 
             # pre-block checks
             if self.powers.get(PowerId.INTANGIBLE_PLAYER):
@@ -132,10 +116,6 @@ class Target(TargetInterface):
                             continue
                         break  # target is dead, stop attacking
 
-            if source.current_hp <= 0:
-                source.current_hp = 0
-                break  # source is dead, stop attacking
-
             plated_armor = self.powers.get(PowerId.PLATED_ARMOR, None)
             if plated_armor is not None and plated_armor < 1:
                 del self.powers[PowerId.PLATED_ARMOR]
@@ -152,6 +132,36 @@ class Target(TargetInterface):
                 self.block = 20
                 del self.powers[PowerId.MODE_SHIFT]
 
+            if card_id:
+                if card_id == CardId.WALLOP:
+                    source.block += health_damage_dealt
+
+                if card_id == CardId.REAPER:
+                    source.heal(health_damage_dealt, True, self.relics)
+
+            if is_attack and (self.powers.get(PowerId.FLAME_BARRIER) or self.powers.get(PowerId.THORNS)):
+                source.inflict_damage(
+                    source=self,
+                    base_damage=self.powers.get(PowerId.FLAME_BARRIER, 0) + self.powers.get(PowerId.THORNS, 0),
+                    hits=1,
+                    vulnerable_modifier=1,
+                    is_attack=False,
+                )
+
+            if is_attack and (self.powers.get(PowerId.SHARP_HIDE)) and not sharp_hide_done:
+                source.inflict_damage(
+                    source=self,
+                    base_damage=self.powers.get(PowerId.SHARP_HIDE),
+                    hits=1,
+                    vulnerable_modifier=1,
+                    is_attack=False,
+                )
+                sharp_hide_done = True
+
+            if source.current_hp <= 0:
+                source.current_hp = 0
+                break  # source is dead, stop attacking
+
         if trigger_malleable_block:
             block_to_add = self.powers.get(PowerId.MALLEABLE)
             for i in range(trigger_malleable_block):
@@ -164,7 +174,7 @@ class Target(TargetInterface):
             del self.powers[PowerId.SPLIT]
         if self.powers.get(PowerId.SHIFTING):
             self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics, source.powers)
-        return health_damage_dealt, times_block_triggered
+        return times_block_triggered
 
     # returns a list of powerIds that were applied and not blocked by artifacts
     def add_powers(self, powers: Powers, relics: Relics, source_powers: Powers) -> List[PowerId]:
