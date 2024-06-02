@@ -27,7 +27,7 @@ class CalculatorTestFixture(unittest.TestCase):
             memory_book = TheBotsMemoryBook.new_default()
 
         return BattleState(
-            player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, 5, relics, potions),
+            player=Player(True, 50, 100, 0, {} if player_powers is None else player_powers, energy=5, relics=relics, potions=potions),
             hand=[get_card(card_id, None, upgrade)],
             monsters=[Monster(False, 100, 100, 0, {}) for i in range(targets)],
             relics=relics,

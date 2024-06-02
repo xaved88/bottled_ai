@@ -82,6 +82,15 @@ class CardsXCostTest(CalculatorTestFixture):
         self.see_player_has_energy(play, 0)
         self.see_player_discard_pile_count(play, 1)
 
+    def test_upgraded_multicast_no_energy(self):
+        state = self.given_state(CardId.MULTI_CAST, upgrade=1, orbs=[(OrbId.LIGHTNING, 1)], orb_slots=3)
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_orb_count(play, 0)
+        self.see_enemy_lost_hp(play, 8)
+        self.see_player_has_energy(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+
     def test_tempest(self):
         state = self.given_state(CardId.TEMPEST, orbs=[], orb_slots=3)
         state.player.energy = 2
@@ -107,11 +116,19 @@ class CardsXCostTest(CalculatorTestFixture):
         self.see_player_has_energy(play, 0)
         self.see_player_exhaust_count(play, 1)
 
-    def test_reinforced_body(self):
+    def test_reinforced_body_2_energy(self):
         state = self.given_state(CardId.REINFORCED_BODY)
         state.player.energy = 2
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 14)
+        self.see_player_has_energy(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+
+    def test_reinforced_body_no_energy(self):
+        state = self.given_state(CardId.REINFORCED_BODY)
+        state.player.energy = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_player_has_block(play, 0)
         self.see_player_has_energy(play, 0)
         self.see_player_discard_pile_count(play, 1)
 

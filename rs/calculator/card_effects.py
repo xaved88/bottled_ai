@@ -19,7 +19,7 @@ class CardEffects(CardEffectsInterface):
             hits: int = 0,
             blockable: bool = True,
             block: int = 0,
-            block_times: int = 0,
+            block_times: int = 1,
             target: TargetType = TargetType.SELF,
             applies_powers=None,
             energy_gain: int = 0,
