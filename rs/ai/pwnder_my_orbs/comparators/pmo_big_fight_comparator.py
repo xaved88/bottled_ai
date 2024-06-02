@@ -30,8 +30,7 @@ move_in_comparison_list(comparisons, comparison_to_move=least_bad_player_powers,
 move_in_comparison_list(comparisons, comparison_to_move=most_bad_cards_exhausted, after=least_incoming_damage)
 add_to_comparison_list(comparisons, comparison_to_add=hate_bias, after=most_optimal_winning_battle)
 add_to_comparison_list(comparisons, comparison_to_add=avoid_inconvenient_time_warp, after=least_incoming_damage_over_1)
-move_in_comparison_list(comparisons, comparison_to_move=most_powered_up_ritual_dagger,
-                        after=most_powered_up_genetic_algorithm)
+comparisons.remove(most_powered_up_ritual_dagger)
 
 
 class PmoBigFightComparator(PmoGeneralComparator):

@@ -47,7 +47,7 @@ priorities = [
         #('hologram', 2),
         ('autoshields', 1),
         ('equilibrium', 1),
-        ('genetic algorithm', 2),
+        #('genetic algorithm', 2),
         ('reinforced body', 2),
         ('glacier', 2),
     ], 5),
