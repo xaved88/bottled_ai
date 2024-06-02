@@ -50,6 +50,7 @@ class UpgradeHandler(CommonUpgradeHandler):
         remove_if_snecko = [
             'consecrate',
             'crescendo',
+            'flurry of blows',
             'halt',
             'just lucky',
             'master reality',

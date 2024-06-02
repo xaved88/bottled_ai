@@ -94,7 +94,6 @@ DESIRED_POTIONS = [
     'essence of steel',
     'strength potion',
     'regen potion',
-    'blood potion',
     'entropic brew',
     'liquid bronze',
     'energy potion',

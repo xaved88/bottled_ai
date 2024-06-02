@@ -16,7 +16,7 @@ def hate_bias(best: CA, challenger: CA) -> Optional[bool]:
 
     if not unawakened_present:
         if challenger.total_monster_health_percent() < 0.60 or awakened_one:
-            return None  # when they've lost more than 60% we don't hate bias anymore
+            return None  # when they've lost more than 40% we don't hate bias anymore
 
     return None if best.player_bias() == challenger.player_bias() \
         else challenger.player_bias() < best.player_bias()

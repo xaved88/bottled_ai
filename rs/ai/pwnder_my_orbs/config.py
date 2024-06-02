@@ -8,6 +8,9 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
 
 HIGH_PRIORITY_UPGRADES = [
     'Apotheosis',
+    'Fission',
+    'Defragment',
+    'Biased Cognition',
 ]
 
 DESIRED_POTIONS = [
@@ -15,43 +18,37 @@ DESIRED_POTIONS = [
     'fairy in a bottle',
     'focus potion',
     'cultist potion',
-    'power potion',
+    # 'power potion',  # we don't currently pick cards from potions with pwnder
     'potion of capacity',
-    'heart of iron',
     'duplication potion',
     'blessing of the forge',
-    'attack potion',
+    # 'attack potion',  # we don't currently pick cards from potions with pwnder
     'dexterity potion',
     'ambrosia',
     'fear potion',
     'essence of steel',
     'strength potion',
     'regen potion',
-    'blood potion',
     'entropic brew',
     'liquid bronze',
     'energy potion',
-    'skill potion',
+    # 'skill potion',  # we don't currently pick cards from potions with pwnder
     'ancient potion',
     'weak potion',
     'gambler\u0027s brew',
     'poison potion',
-    'colorless potion',
+    # 'colorless potion',   # we don't currently pick cards from potions with pwnder
     'flex potion',
     'swift potion',
-    'bottled miracle',
     'essence of darkness',
     'fire potion',
     'explosive potion',
     'speed potion',
     'block potion',
     'cunning potion',
-    'ghost in a jar',
-    'stance potion',
     'smoke bomb',
     'elixir potion',
     'distilled chaos',  # We don't want to accidentally play Biased Cog way too early
     'liquid memories',
     'snecko oil',
-    'stance potion',
 ]
