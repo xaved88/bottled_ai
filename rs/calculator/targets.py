@@ -101,21 +101,6 @@ class Target(TargetInterface):
                     if is_attack and source.powers.get(PowerId.ENVENOM):
                         self.add_powers({PowerId.POISON: 1}, source.relics, source.powers)
 
-                    if self.current_hp < 0:
-                        health_damage_dealt += self.current_hp
-                        self.current_hp = 0
-                        if self.relics.get(RelicId.LIZARD_TAIL):
-                            if self.relics[RelicId.LIZARD_TAIL] != -2:
-                                self.heal(math.floor(self.max_hp * .5), True, self.relics, is_revive=True)
-                                self.relics[RelicId.LIZARD_TAIL] = -2
-                            continue
-
-                        if PotionId.FAIRY_IN_A_BOTTLE in self.potions:
-                            self.heal(math.floor(self.max_hp * .3), True, self.relics, is_revive=True)
-                            self.potions.remove(PotionId.FAIRY_IN_A_BOTTLE)
-                            continue
-                        break  # target is dead, stop attacking
-
             plated_armor = self.powers.get(PowerId.PLATED_ARMOR, None)
             if plated_armor is not None and plated_armor < 1:
                 del self.powers[PowerId.PLATED_ARMOR]
@@ -157,6 +142,21 @@ class Target(TargetInterface):
                     is_attack=False,
                 )
                 sharp_hide_done = True
+
+            if self.current_hp < 0:
+                health_damage_dealt += self.current_hp
+                self.current_hp = 0
+                if self.relics.get(RelicId.LIZARD_TAIL):
+                    if self.relics[RelicId.LIZARD_TAIL] != -2:
+                        self.heal(math.floor(self.max_hp * .5), True, self.relics, is_revive=True)
+                        self.relics[RelicId.LIZARD_TAIL] = -2
+                    continue
+
+                if PotionId.FAIRY_IN_A_BOTTLE in self.potions:
+                    self.heal(math.floor(self.max_hp * .3), True, self.relics, is_revive=True)
+                    self.potions.remove(PotionId.FAIRY_IN_A_BOTTLE)
+                    continue
+                break  # target is dead, stop attacking
 
             if source.current_hp <= 0:
                 source.current_hp = 0
