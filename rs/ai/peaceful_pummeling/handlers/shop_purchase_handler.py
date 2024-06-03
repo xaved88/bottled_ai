@@ -26,12 +26,8 @@ class ShopPurchaseHandler(Handler):
             'Pantograph',
             'Anchor',
             'Horn Cleat',
-            'Self-Forming Clay',
             'Lantern',
-            'Happy Flower',
             'Centennial Puzzle',
-            'Preserved Insect',
-            'Thread and Needle',
             'Damaru',
         ]
 

@@ -76,6 +76,11 @@ def most_dead_monsters(best: CA, challenger: CA) -> Optional[bool]:
         else challenger.dead_monsters() > best.dead_monsters()
 
 
+def most_dead_edge_monsters(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.dead_edge_monsters() == challenger.dead_edge_monsters() \
+        else challenger.dead_edge_monsters() > best.dead_edge_monsters()
+
+
 def most_enemy_vulnerable(best: CA, challenger: CA) -> Optional[bool]:
     return None if max(1, best.enemy_vulnerable()) == max(1, challenger.enemy_vulnerable()) \
         else challenger.enemy_vulnerable() > best.enemy_vulnerable()

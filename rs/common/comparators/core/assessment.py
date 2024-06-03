@@ -52,6 +52,10 @@ class ComparatorAssessment:
     def dead_monsters(self) -> int:
         return self.__get_value('dm', lambda: len([True for monster in self.state.monsters if monster.current_hp <= 0]))
 
+    def dead_edge_monsters(self) -> int:
+        return self.__get_value('dem', lambda:
+        0 if self.battle_won() else self.state.monsters[0].current_hp <= 0 or self.state.monsters[2].current_hp <= 0)
+
     def monsters_vulnerable_hp(self) -> List[int]:
         return self.__get_value('mvhp',
                                 lambda: [monster.current_hp - min(monster.powers.get(PowerId.VULNERABLE, 0) * 5, 3) for

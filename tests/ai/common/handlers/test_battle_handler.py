@@ -130,6 +130,14 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_three_sentries_use_normal_comparator_priorities_when_one_dead(self):
         self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_one_dead.json', ['play 6'])
 
+    def test_three_sentries_turn_1_can_kill(self):
+        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_turn_1_can_kill.json', ['play 1 1'])
+
+    def test_three_sentries_kill_edge_over_middle(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.STANCE] = StanceType.WRATH
+        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_kill_edge_over_middle.json', ['play 1 0'], memory_book=mb)
+
     def test_do_not_attack_escaped_mugger(self):
         self.execute_handler_tests('/battles/general/escaped_mugger.json', ['play 2 1'])
 

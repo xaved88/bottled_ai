@@ -6,6 +6,7 @@ from rs.common.comparators.big_fight_comparator import BigFightComparator
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from rs.common.comparators.gremlin_nob_comparator import GremlinNobComparator
 from rs.common.comparators.three_sentry_comparator import ThreeSentriesComparator
+from rs.common.comparators.three_sentry_turn_1_comparator import ThreeSentriesTurn1Comparator
 from rs.common.comparators.transient_comparator import TransientComparator
 from rs.common.comparators.waiting_lagavulin_comparator import WaitingLagavulinComparator
 from rs.game.card import CardType
@@ -21,6 +22,7 @@ class BattleHandlerConfig:
     big_fight_comparator: ComparatorInterface = BigFightComparator
     gremlin_nob_comparator: ComparatorInterface = GremlinNobComparator
     three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
+    three_sentries_turn_1_comparator: ComparatorInterface = ThreeSentriesTurn1Comparator
     transient_comparator: ComparatorInterface = TransientComparator
     waiting_lagavulin_comparator: ComparatorInterface = WaitingLagavulinComparator
     general_comparator: ComparatorInterface = CommonGeneralComparator
@@ -42,8 +44,12 @@ class CommonBattleHandler(Handler):
 
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
 
+        three_sentries_are_alive_turn_1 = state.has_monster("Sentry") \
+                                   and alive_monsters == 3 \
+                                   and state.combat_state()['turn'] == 1
+
         three_sentries_are_alive = state.has_monster("Sentry") \
-                                   and alive_monsters == 3
+                                          and alive_monsters == 3
 
         lagavulin_is_sleeping = state.has_monster("Lagavulin") \
                                 and state.combat_state()['turn'] <= 2 \
@@ -60,6 +66,8 @@ class CommonBattleHandler(Handler):
             return self.config.big_fight_comparator()
         elif gremlin_nob_is_present:
             return self.config.gremlin_nob_comparator()
+        elif three_sentries_are_alive_turn_1:
+            return self.config.three_sentries_turn_1_comparator()
         elif three_sentries_are_alive:
             return self.config.three_sentries_comparator()
         elif lagavulin_is_sleeping and lagavulin_is_worth_delaying:
