@@ -2,4 +2,6 @@ Pillow == 9.2.0
 pyautogui == 0.9.53
 coverage == 6.5.0
 prettytable == 3.4.1
-PySimpleGUI == 4.60.4
+PySimpleGUI == 5.0.5
+
+Note on PySimpleGUI: we were using 4.60.4 but that was yanked - 5.0 is theoretically backwards compatible, and we haven't actually been using it anyway, so I'm blindly upgrading for now.
