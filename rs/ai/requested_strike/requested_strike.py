@@ -33,6 +33,7 @@ requested_strike_custom_battle_handlers: List[Handler] = [
 ]
 
 REQUESTED_STRIKE: AiStrategy = AiStrategy(
+    name='REQUESTED_STRIKE',
     character=Character.IRONCLAD,
     handlers=requested_strike_custom_battle_handlers + [
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),

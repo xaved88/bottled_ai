@@ -31,6 +31,7 @@ orb_pondering_battle_potion_handlers: List[Handler] = [
 ]
 
 PWNDER_MY_ORBS: AiStrategy = AiStrategy(
+    name='PWNDER_MY_ORBS',
     character=Character.DEFECT,
     handlers=orb_pondering_battle_potion_handlers + [
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),

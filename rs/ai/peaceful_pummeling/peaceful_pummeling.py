@@ -30,6 +30,7 @@ peaceful_pummeling_potion_handlers: List[Handler] = [
 ]
 
 PEACEFUL_PUMMELING: AiStrategy = AiStrategy(
+    name='PEACEFUL_PUMMELING',
     character=Character.WATCHER,
     handlers=peaceful_pummeling_potion_handlers + [
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),

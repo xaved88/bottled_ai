@@ -32,6 +32,7 @@ shivs_and_giggles_battle_potion_handlers: List[Handler] = [
 ]
 
 SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
+    name='SHIVS_AND_GIGGLES',
     character=Character.SILENT,
     handlers=shivs_and_giggles_battle_potion_handlers + [
         # Some edge cases

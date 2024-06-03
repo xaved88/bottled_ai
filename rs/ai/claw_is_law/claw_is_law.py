@@ -32,6 +32,7 @@ claw_is_law_battle_potion_handlers: List[Handler] = [
 ]
 
 CLAW_IS_LAW: AiStrategy = AiStrategy(
+    name='CLAW_IS_LAW',
     character=Character.DEFECT,
     handlers=claw_is_law_battle_potion_handlers + [
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),

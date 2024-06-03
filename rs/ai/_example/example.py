@@ -21,6 +21,7 @@ from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
 
 EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
+    name='EXAMPLE_STRATEGY',
     character=Character.IRONCLAD,
     handlers=[
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),

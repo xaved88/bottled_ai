@@ -64,7 +64,7 @@ class Game:
             handled = False
             # Handle Game Over
             if self.game_over_handler.can_handle(self.last_state):
-                commands = self.game_over_handler.handle(self.last_state, self.run_elites, self.run_bosses)
+                commands = self.game_over_handler.handle(self.last_state, self.run_elites, self.run_bosses, self.strategy.name)
                 for command in commands:
                     self.__send_command(command)
                 break

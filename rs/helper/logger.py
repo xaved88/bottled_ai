@@ -90,10 +90,11 @@ def log_missing_calculator_enums_to_run():
     log(f"Missing event names:{','.join(current_run_missing_events)}", "calculator_missing_enums")
 
 
-def log_run_results(state: GameState, elites: List[str], bosses: List[str]):
+def log_run_results(state: GameState, elites: List[str], bosses: List[str], strategy_name: str):
     message = "Seed:" + get_seed_string(state.game_state()['seed'])
     message += ", Floor:" + str(state.floor())
     message += ", Score:" + str(state.game_state()['screen_state']['score'])
+    message += ", Strat: " + strategy_name
     message += ", DiedTo: "
     for m in state.get_monsters():
         message += m["name"] + ","

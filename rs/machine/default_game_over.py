@@ -12,7 +12,7 @@ class DefaultGameOverHandler():
         return state.screen_type() == ScreenType.GAME_OVER.value \
                and (state.has_command(Command.CONFIRM) or state.has_command(Command.PROCEED))
 
-    def handle(self, state: GameState, elites: List[str], bosses: List[str]) -> List[str]:
+    def handle(self, state: GameState, elites: List[str], bosses: List[str], strategy_name: str) -> List[str]:
         log_missing_calculator_enums_to_run()
-        log_run_results(state, elites, bosses)
+        log_run_results(state, elites, bosses, strategy_name)
         return ["proceed"]
