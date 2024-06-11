@@ -42,9 +42,11 @@ class CommonCampfireHandler(Handler):
             choice = "rest"
         elif can_toke and state.deck.contains_curses_we_can_remove():
             choice = "toke"
-        elif can_lift and not important_upgrade_available and state.get_relic_counter("Girya") < 2:
+        elif can_smith and important_upgrade_available:
+            choice = "smith"
+        elif can_lift and state.get_relic_counter("Girya") < 2:
             choice = "lift"
-        elif can_dig and not important_upgrade_available:
+        elif can_dig:
             choice = "dig"
         elif can_smith:
             choice = 'smith'
