@@ -10,6 +10,7 @@ from rs.machine.state import GameState
 default_undesired_relics = [
     'Dead Branch',
     'Bottled Flame',
+    'Cloak Clasp',  # Problematic in Act 3 boss fights, especially Donu Deca, since NOT playing cards suddenly is very attractive.
 ]
 
 # most important on top
