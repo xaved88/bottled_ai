@@ -176,6 +176,16 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
             '/battles/specific_comparator_cases/waiting_lagavulin/waiting_lagavulin_turn_1_without_powers_but_relic.json',
             ['end'])
 
+    def test_waiting_lagavulin_wait_for_talk_to_the_hand(self):
+        self.execute_handler_tests(
+            '/battles/specific_comparator_cases/waiting_lagavulin/waiting_lagavulin_turn_1_with_talk_to_the_hand_in_deck.json',
+            ['end'])
+
+    def test_waiting_lagavulin_use_talk_to_the_hand(self):
+        self.execute_handler_tests(
+            '/battles/specific_comparator_cases/waiting_lagavulin/waiting_lagavulin_turn_1_with_talk_to_the_hand_in_hand.json',
+            ['play 1 0'])
+
     def test_playing_random_damage_is_desirable(self):
         self.execute_handler_tests('/battles/general/play_random_damage_card.json', ['play 1'])
 

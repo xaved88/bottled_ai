@@ -57,6 +57,7 @@ class CommonBattleHandler(Handler):
 
         lagavulin_is_worth_delaying = state.deck.contains_type(CardType.POWER) \
                                       or state.deck.contains_cards(["Terror", "Terror+"]) \
+                                      or state.deck.contains_cards(["Talk To The Hand", "Talk To The Hand+"]) \
                                       or state.has_relic("Warped Tongs") \
                                       or state.has_relic("Ice Cream")
 
