@@ -54,6 +54,10 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests(
             '/battles/general/manual_kill_when_enemy_not_attacking_into_thorns.json', ['play 1 0'])
 
+    def test_attack_to_kill_even_though_thorns_kills(self):
+        self.execute_handler_tests(
+            '/battles/powers/play_around_us_dying_if_we_kill_with_thorns_here.json', ['play 1 0'])
+
     def test_do_not_block_against_non_attack_even_though_enemy_is_strong(self):
         self.execute_handler_tests('/battles/general/monster_not_attacking_but_has_strength_up.json', ['play 2 1'])
 

@@ -343,7 +343,7 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play.end_turn()
         self.see_enemy_lost_hp(play, 6)
 
-    def test_thorns_will_not_prevent_damage(self):
+    def test_thorns_will_not_prevent_damage_defensively(self):
         state = self.given_state(CardId.WOUND, player_powers={PowerId.THORNS: 3})
         state.monsters[0].current_hp = 3
         state.monsters[0].damage = 5
