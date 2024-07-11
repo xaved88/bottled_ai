@@ -81,6 +81,15 @@ class CalculatorStancesTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 12)
 
+    def test_wrath_increases_ritual_dagger_damage(self):
+        state = self.given_state(CardId.RITUAL_DAGGER)
+        state.add_memory_by_card(CardId.RITUAL_DAGGER, "default", 3)
+        state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 36)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
     def test_wrath_doubles_damage_taken(self):
         state = self.given_state(CardId.WOUND)
         state.add_memory_value(MemoryItem.STANCE, StanceType.WRATH)

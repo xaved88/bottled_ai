@@ -264,3 +264,13 @@ class CalculatorOtherTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_player_lost_hp(play, 50)
+
+    def test_damage_bonuses_apply_to_damage_granted_by_pre_hooks(self):
+        state = self.given_state(CardId.MIND_BLAST)
+        for i in range(5):
+            state.draw_pile.append(get_card(CardId.WOUND))
+        state.relics[RelicId.PEN_NIB] = 9
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 10)
+        self.see_player_spent_energy(play, 2)
+        self.see_relic_value(play, RelicId.PEN_NIB, 0)

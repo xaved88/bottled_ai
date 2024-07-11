@@ -186,6 +186,11 @@ class BattleState(BattleStateInterface):
             self.player.inflict_damage(self.player, pain_count, 1, blockable=False, vulnerable_modifier=1,
                                        is_attack=False)
 
+        for effect in effects:
+            # custom pre hooks
+            for hook in effect.pre_hooks:
+                hook(self, effect, card, target_index)
+
         damage_additive_bonus = 0
         if RelicId.STRIKE_DUMMY in self.relics and "strike" in card.id.value:
             damage_additive_bonus += 3
@@ -228,10 +233,6 @@ class BattleState(BattleStateInterface):
             self.add_player_block(self.player.powers[PowerId.RAGE])
 
         for effect in effects:
-            # custom pre hooks
-            for hook in effect.pre_hooks:
-                hook(self, effect, card, target_index)
-
             # heal
             if effect.heal:
                 self.player.heal(effect.heal, True, self.relics)
