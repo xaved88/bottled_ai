@@ -662,6 +662,10 @@ class BattleState(BattleStateInterface):
             elif RelicId.CALIPERS in self.relics:
                 self.saved_block_for_next_turn = max(self.player.block - 15, 0)
 
+        # leaving divinity happens at start of turn but this way avoids issues since we don't have a clean 'turn start'
+        if self.get_stance() == StanceType.DIVINITY:
+            self.change_stance(StanceType.NO_STANCE)
+
     def get_state_hash(self) -> str:  # designed to get the meaningful state and hash it.
         state_string = self.player.get_state_string()
         for m in self.monsters:

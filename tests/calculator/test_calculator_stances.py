@@ -144,6 +144,13 @@ class CalculatorStancesTest(CalculatorTestFixture):
         self.see_player_has_energy(play, 10)
         self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 1)
 
+    def test_divinity_exits_on_turn_end(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.change_stance(StanceType.DIVINITY)
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_stance(play, StanceType.NO_STANCE)
+
     def test_empty_body(self):
         state = self.given_state(CardId.EMPTY_BODY)
         play = self.when_playing_the_first_card(state)

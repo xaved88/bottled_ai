@@ -206,7 +206,7 @@ class EventHandler(Handler):
 
         if event_name == "The Nest":
             if hp_per >= 40:
-                return "choose 1"  # Dagger!
+                return "choose 1"  # Ritual Dagger!
             return "choose 0"  # Free money
 
         if event_name == "N'loth":
