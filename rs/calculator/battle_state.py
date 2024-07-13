@@ -87,23 +87,30 @@ class BattleState(BattleStateInterface):
         self.__is_first_play = is_first_play
         self.__starting_energy = self.player.energy
 
-        if RelicId.TEARDROP_LOCKET in self.relics and \
-                self.is_new_turn() and \
-                self.get_memory_value(MemoryItem.LAST_KNOWN_TURN) == 1:
-            self.change_stance(StanceType.CALM)
+        # stuff to handle on a new turn
+        # potentially should be in game_state_converter.py now that I think about it
+        if self.is_new_turn():
+            if self.get_memory_value(MemoryItem.SAVE_INTERNAL_MANTRA):
+                self.player.add_powers(
+                    {PowerId.MANTRA_INTERNAL: self.get_memory_value(MemoryItem.SAVE_INTERNAL_MANTRA)}, self.relics,
+                    self.player.powers)
 
-        if RelicId.DAMARU in self.relics and self.is_new_turn():
-            self.player.add_powers({PowerId.MANTRA_INTERNAL: 1}, self.player.relics, self.player.powers)
-            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 1)
+            if RelicId.TEARDROP_LOCKET in self.relics and \
+                    self.get_memory_value(MemoryItem.LAST_KNOWN_TURN) == 1:
+                self.change_stance(StanceType.CALM)
 
-        if PowerId.DEVOTION in self.player.powers and self.is_new_turn():
-            self.player.add_powers({PowerId.MANTRA_INTERNAL: self.player.powers.get(PowerId.DEVOTION, 0)},
-                                   self.player.relics,
-                                   self.player.powers)
-            self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, self.player.powers.get(PowerId.DEVOTION, 0))
+            if RelicId.DAMARU in self.relics:
+                self.player.add_powers({PowerId.MANTRA_INTERNAL: 1}, self.player.relics, self.player.powers)
+                self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, 1)
 
-        if PowerId.FORESIGHT in self.player.powers and self.is_new_turn():
-            self.scry(self.player.powers.get(PowerId.FORESIGHT, 0))
+            if PowerId.DEVOTION in self.player.powers:
+                self.player.add_powers({PowerId.MANTRA_INTERNAL: self.player.powers.get(PowerId.DEVOTION, 0)},
+                                       self.player.relics,
+                                       self.player.powers)
+                self.add_memory_value(MemoryItem.MANTRA_THIS_BATTLE, self.player.powers.get(PowerId.DEVOTION, 0))
+
+            if PowerId.FORESIGHT in self.player.powers:
+                self.scry(self.player.powers.get(PowerId.FORESIGHT, 0))
 
         # checking for passive mantra
         if self.player.powers.get(PowerId.MANTRA_INTERNAL):
@@ -572,6 +579,9 @@ class BattleState(BattleStateInterface):
         if self.player.powers.get(PowerId.WAVE_OF_THE_HAND, 0):
             self.player.powers[PowerId.WAVE_OF_THE_HAND] = 0
 
+        # save internal mantra power for next turn because it's not going to get created by game state
+        self.add_memory_value(MemoryItem.SAVE_INTERNAL_MANTRA, self.player.powers.get(PowerId.MANTRA_INTERNAL, 0))
+
         # deal with the remaining cards in hand
         cards_to_keep: list[CardInterface] = []
 
@@ -986,7 +996,8 @@ class BattleState(BattleStateInterface):
             self.memory_general[item] = 0
 
         if item is MemoryItem.TYPE_LAST_PLAYED or \
-                item is MemoryItem.STANCE:
+                item is MemoryItem.STANCE or \
+                item is MemoryItem.SAVE_INTERNAL_MANTRA:
             self.memory_general[item] = value
         else:
             self.memory_general[item] += value

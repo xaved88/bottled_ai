@@ -11,6 +11,7 @@ class MemoryItem(Enum):
     NECRONOMICON_READY = auto()
     KILLED_WITH_LESSON_LEARNED = auto()
     LIGHTNING_THIS_BATTLE = auto()
+    SAVE_INTERNAL_MANTRA = auto()
     STANCE = auto()
     TYPE_LAST_PLAYED = auto()
     ORANGE_PELLETS_ATTACK = auto()

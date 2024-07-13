@@ -358,6 +358,15 @@ class CalculatorStancesTest(CalculatorTestFixture):
         state.hand.append(get_card(CardId.STRIKE_R))
         play = self.when_playing_the_whole_hand(state)
         self.assertEqual(1, play.state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE))
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 1)
+
+    def test_damaru_pushes_into_divinity(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.DAMARU: 1}, player_powers={PowerId.MANTRA_INTERNAL: 9})
+        state.hand.append(get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.MANTRA_THIS_BATTLE))
+        self.see_stance(play, StanceType.DIVINITY)
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 0)
 
     def test_blasphemy(self):
         state = self.given_state(CardId.BLASPHEMY)
@@ -371,3 +380,17 @@ class CalculatorStancesTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_enemy_lost_hp(play, 18)
         self.see_stance(play, StanceType.DIVINITY)
+
+    def test_internal_mantra_saved_into_memory_book(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.DAMARU: 1}, player_powers={PowerId.MANTRA_INTERNAL: 5})
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.assertEqual(6, play.state.get_memory_value(MemoryItem.SAVE_INTERNAL_MANTRA))
+
+    def test_internal_mantra_retrieved_from_memory_book(self):
+        state = self.given_state(CardId.STRIKE_R, relics={RelicId.DAMARU: 1})
+        state.add_memory_value(MemoryItem.SAVE_INTERNAL_MANTRA, 3)
+        play = self.when_playing_the_whole_hand(state)
+        play.end_turn()
+        self.see_player_has_power(play, PowerId.MANTRA_INTERNAL, 4)
+        self.assertEqual(4, play.state.get_memory_value(MemoryItem.SAVE_INTERNAL_MANTRA))
