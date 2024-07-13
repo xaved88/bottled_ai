@@ -66,7 +66,7 @@ class CommonGroupedCardRewardHandler(Handler):
 
     def handle(self, state: GameState) -> HandlerAction:
         choice_list = state.get_choice_list_upgrade_stripped_from_choice()
-        deck_card_list = state.get_deck_card_list_upgrade_stripped_from_name()
+        deck_card_list = state.get_deck_card_list_by_name_with_upgrade_stripped()
 
         priorities = self.in_battle_priorities \
             if state.game_state()["room_phase"] == "COMBAT" else self.card_reward_priorities

@@ -134,17 +134,17 @@ class GameState:
     def player_entangled(self):
         return bool(next((p for p in self.get_player_combat()["powers"] if p["id"] == "Entangled"), None))
 
-    def get_deck_card_list(self) -> dict[str, int]:
+    def get_deck_card_list_by_id(self) -> dict[str, int]:
         cards = {}
         for card in self.deck.cards:
-            name = card.name.lower()
-            if name in cards:
-                cards[name] += 1
+            card_id = card.id.lower()
+            if card_id in cards:
+                cards[card_id] += 1
             else:
-                cards[name] = 1
+                cards[card_id] = 1
         return cards
 
-    def get_deck_card_list_upgrade_stripped_from_name(self) -> dict[str, int]:
+    def get_deck_card_list_by_name_with_upgrade_stripped(self) -> dict[str, int]:
         cards = {}
         for card in self.deck.cards:
             name = card.name.replace("+", "")

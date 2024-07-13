@@ -129,7 +129,7 @@ class Path:
             # CAMPFIRES
             elif room.type == RoomType.CAMPFIRE:
                 if state.has_relic("Eternal Feather"):
-                    self.hp += math.floor(len(state.get_deck_card_list()) / 5) * 3
+                    self.hp += math.floor(len(state.get_deck_card_list_by_id()) / 5) * 3
                 fusion_hammer = state.has_relic("Fusion Hammer")
                 coffee_dripper = state.has_relic("Coffee Dripper")
                 if not fusion_hammer and (coffee_dripper or self.hp / max_hp >= 0.6):

@@ -30,14 +30,14 @@ class GameStateConverterTest(unittest.TestCase):
         choices = state.get_choice_list_upgrade_stripped_from_choice()
         self.assertEqual(['pommel strike', 'heel hook', 'twin strike'], choices)
 
-    def test_get_deck_card_list(self):
+    def test_get_deck_card_list_by_id(self):
         state = load_resource_state("card_reward/card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
-        deck_list = state.get_deck_card_list()
-        self.assertEqual({'bash+': 1, 'defend': 4, 'strike': 3, 'twin strike': 1, 'twin strike+': 1}, deck_list)
+        deck_list = state.get_deck_card_list_by_id()
+        self.assertEqual({'bash': 1, 'defend_r': 4, 'strike_r': 3, 'twin strike': 2}, deck_list)
 
     def test_get_deck_card_list_upgrade_stripped_from_name(self):
         state = load_resource_state("card_reward/card_reward_skip_because_amount_and_some_in_deck_are_upgraded.json")
-        deck_list = state.get_deck_card_list_upgrade_stripped_from_name()
+        deck_list = state.get_deck_card_list_by_name_with_upgrade_stripped()
         self.assertEqual({'bash': 1, 'defend': 4, 'strike': 3, 'twin strike': 2}, deck_list)
 
     def test_custom_state_is_initialized_if_missing(self):

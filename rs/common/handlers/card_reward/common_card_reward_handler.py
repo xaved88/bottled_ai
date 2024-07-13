@@ -28,7 +28,7 @@ class CommonCardRewardHandler(Handler):
 
     def handle(self, state: GameState) -> HandlerAction:
         choice_list = state.get_choice_list_upgrade_stripped_from_choice()
-        deck_card_list = state.get_deck_card_list_upgrade_stripped_from_name()
+        deck_card_list = state.get_deck_card_list_by_name_with_upgrade_stripped()
 
         # we have to copy this, otherwise it will modify the list until the bot is rerun
         transformed_desired_cards = self.cards_desired_for_deck.copy()

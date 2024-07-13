@@ -77,7 +77,7 @@ class ShopPurchaseHandler(Handler):
                     return relic['name'].lower()
 
         # 5. Cards based on list
-        deck_card_list = state.get_deck_card_list()
+        deck_card_list = state.get_deck_card_list_by_id()
         for p in self.cards:
             for card in screen_state['cards']:
                 if card['id'] == p and gold >= card['price']:

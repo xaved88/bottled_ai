@@ -69,7 +69,7 @@ class ShopPurchaseHandler(Handler):
                 return "membership card"
 
         # 3. Cards based on list
-        deck_card_list = state.get_deck_card_list()
+        deck_card_list = state.get_deck_card_list_by_id()
         for p in self.cards_to_buy:
             for card in screen_state['cards']:
                 if card['id'] == p and gold >= card['price']:
