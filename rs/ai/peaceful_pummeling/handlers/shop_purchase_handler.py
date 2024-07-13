@@ -31,7 +31,11 @@ class ShopPurchaseHandler(Handler):
             'Damaru',
         ]
 
-        self.cards = []
+        self.cards = [
+            # 'Blasphemy',  # We have a specific line for purchasing Blasphemy with higher priority than Relics
+            'Adaptation',  # Rushdown
+            'Mentalfortress',
+        ]
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.SHOP_SCREEN.value
@@ -61,15 +65,16 @@ class ShopPurchaseHandler(Handler):
             if relic['name'] == 'Membership Card' and gold >= relic['price']:
                 return "membership card"
 
-        # 3. Relics based on list
+        # 3. Blasphemy
+        for card in screen_state['cards']:
+            if card['id'] == 'Blasphemy' and gold >= card['price']:
+                return card['name'].lower()
+
+        # 4. Relics based on list
         for p in self.relics:
             for relic in screen_state['relics']:
                 if relic['name'] == p and gold >= relic['price']:
                     return relic['name'].lower()
-
-        # 4. Purge in general
-        if can_purge and state.deck.contains_cards(CARD_REMOVAL_PRIORITY_LIST):
-            return "purge"
 
         # 5. Cards based on list
         deck_card_list = state.get_deck_card_list()
@@ -78,6 +83,10 @@ class ShopPurchaseHandler(Handler):
                 if card['id'] == p and gold >= card['price']:
                     if p.lower not in deck_card_list:
                         return card['name'].lower()
+
+        # 6. Purge in general
+        if can_purge and state.deck.contains_cards(CARD_REMOVAL_PRIORITY_LIST):
+            return "purge"
 
         # Nothing we want / can afford, leave.
         return ''
