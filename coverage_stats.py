@@ -19,7 +19,7 @@ relics_total = 177
 
 print("\n")
 print("Implementation status:")
-print("Chars:    " + str(characters_implemented) + " (" + str(int(characters_implemented/characters_total*100)) + "%)")
-print("Cards:  " + str(cards_implemented) + " (" + str(int(cards_implemented/cards_total*100)) + "%)")
-print("Powers: " + str(powers_implemented) + " (" + str(int(powers_implemented/powers_total*100)) + "%)")
-print("Relics: " + str(relics_implemented) + " (" + str(int(relics_implemented/relics_total*100)) + "%)")
+print(f"Chars:    {characters_implemented} ({int(characters_implemented/characters_total*100)}%)")
+print(f"Cards:  {cards_implemented} ({int(cards_implemented/cards_total*100)}%)")
+print(f"Powers: {powers_implemented} ({int(powers_implemented/powers_total*100)}%)")
+print(f"Relics: {relics_implemented} ({int(relics_implemented/relics_total*100)}%)")
