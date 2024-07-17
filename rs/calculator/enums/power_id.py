@@ -91,7 +91,8 @@ class PowerId(Enum):
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
     OMEGA = 'omegapower'
-    PANACHE = 'panache'
+    PANACHE = 'panache'  # See below
+    PANACHE_INTERNAL = 'internal_use_panache'  # Just for comparator purposes. Panache is handled by memory book.
     # We currently have damage provided by triggering the Panache power hardcoded to 10.
     # It's the first power we've run into that has multiple values associated with it.
     PEN_NIB_POWER_IRRELEVANT = 'pen nib'  # Covered by Pen Nib relic counting

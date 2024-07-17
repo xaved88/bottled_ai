@@ -1410,7 +1410,17 @@ class CalculatorCardsTest(CalculatorTestFixture):
         state = self.given_state(CardId.PANACHE)
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 0)
-        self.see_player_has_power(play, PowerId.PANACHE, 5)
+        self.assertEqual(5, play.state.get_memory_value(MemoryItem.PANACHE_COUNTER))
+        self.assertEqual(10, play.state.get_memory_value(MemoryItem.PANACHE_DAMAGE))
+        self.see_player_has_power(play, PowerId.PANACHE_INTERNAL, 1)
+
+    def test_panache_upgraded(self):
+        state = self.given_state(CardId.PANACHE, upgrade=1)
+        state.hand.append(get_card(CardId.PANACHE))
+        play = self.when_making_the_most_plays(state)
+        self.see_player_spent_energy(play, 0)
+        self.assertEqual(4, play.state.get_memory_value(MemoryItem.PANACHE_COUNTER))
+        self.assertEqual(24, play.state.get_memory_value(MemoryItem.PANACHE_DAMAGE))
 
     def test_sadistic_nature(self):
         state = self.given_state(CardId.SADISTIC_NATURE)

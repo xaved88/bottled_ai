@@ -673,3 +673,9 @@ def lesson_learned_post_hook(state: BattleStateInterface, effect: CardEffectsInt
             state.monsters[target_index].powers.get(PowerId.MINION) and not \
             life_link_more_alive:
         state.add_memory_value(MemoryItem.KILLED_WITH_LESSON_LEARNED, 1)
+
+
+def panache_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                      target_index: int = -1):
+    power_amount = 10 if not card.upgrade else 14
+    state.add_memory_value(MemoryItem.PANACHE_DAMAGE, power_amount)

@@ -4,6 +4,7 @@ from rs.calculator.enums.card_id import CardId
 from rs.calculator.enums.orb_id import OrbId
 from rs.calculator.enums.power_id import PowerId
 from rs.calculator.enums.relic_id import RelicId
+from rs.calculator.interfaces.memory_items import MemoryItem
 
 
 class CalculatorPowersTest(CalculatorTestFixture):
@@ -825,19 +826,26 @@ class CalculatorPowersTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0)
         self.see_random_damage_dealt(play, 0)
 
-    def test_panache_decrements(self):
+    def test_panache_counter_decrements(self):
         state = self.given_state(CardId.DEFEND_R)
-        state.player.powers[PowerId.PANACHE] = 5
+        state.add_memory_value(MemoryItem.PANACHE_DAMAGE, 10)
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
-        self.see_player_has_power(play, PowerId.PANACHE, 4)
+        self.assertEqual(4, play.state.get_memory_value(MemoryItem.PANACHE_COUNTER))
 
-    def test_panache_triggers(self):
+    def test_panache_counter_decrements_only_when_panache_damage_present(self):
         state = self.given_state(CardId.DEFEND_R)
-        state.player.powers[PowerId.PANACHE] = 1
         play = self.when_playing_the_first_card(state)
-        self.see_enemy_lost_hp(play, 10)
-        self.see_player_has_power(play, PowerId.PANACHE, 5)
+        self.see_enemy_lost_hp(play, 0)
+        self.assertEqual(5, play.state.get_memory_value(MemoryItem.PANACHE_COUNTER))
+
+    def test_panache_triggers_and_resets_when_counter_0(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.memory_general[MemoryItem.PANACHE_COUNTER] = 1
+        state.add_memory_value(MemoryItem.PANACHE_DAMAGE, 22)
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 22)
+        self.assertEqual(5, play.state.get_memory_value(MemoryItem.PANACHE_COUNTER))
 
     def test_sadistic_triggers(self):
         state = self.given_state(CardId.BLIND, player_powers={PowerId.SADISTIC: 5})

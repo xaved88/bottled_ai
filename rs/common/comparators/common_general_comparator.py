@@ -93,7 +93,7 @@ powers_we_like: List[PowerId] = [
     PowerId.NIRVANA,
     PowerId.NOXIOUS_FUMES,
     PowerId.OMEGA,
-    PowerId.PANACHE,
+    PowerId.PANACHE_INTERNAL,
     PowerId.PHANTASMAL,
     PowerId.PLATED_ARMOR,
     PowerId.REPAIR,

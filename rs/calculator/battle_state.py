@@ -380,13 +380,13 @@ class BattleState(BattleStateInterface):
             if after_image_block > 0:
                 self.add_player_block(after_image_block)
 
-        if self.player.powers.get(PowerId.PANACHE):
-            self.player.powers[PowerId.PANACHE] -= 1
-            if self.player.powers.get(PowerId.PANACHE) == 0:
+        if self.get_memory_value(MemoryItem.PANACHE_DAMAGE):
+            self.add_memory_value(MemoryItem.PANACHE_COUNTER, -1)
+            if self.get_memory_value(MemoryItem.PANACHE_COUNTER) == 0:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
-                        monster.inflict_damage(self.player, 10, 1, vulnerable_modifier=1, is_attack=False)
-                self.player.powers[PowerId.PANACHE] = 5
+                        monster.inflict_damage(self.player, self.get_memory_value(MemoryItem.PANACHE_DAMAGE), 1, vulnerable_modifier=1, is_attack=False)
+                self.add_memory_value(MemoryItem.PANACHE_COUNTER, 5)
 
         if self.player.powers.get(PowerId.HEATSINK) and card.type == CardType.POWER:
             self.draw_cards(self.player.powers.get(PowerId.HEATSINK))

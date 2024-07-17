@@ -115,3 +115,21 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         mb.memory_general[MemoryItem.MANTRA_THIS_BATTLE] = 3
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.MANTRA_THIS_BATTLE])
+
+    def test_memory_of_panache_counter_is_cleared_per_turn(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.PANACHE_COUNTER] = 2
+        new_state = load_resource_state('battles/memory/basic_turn_2.json', memory_book=mb)
+        self.assertEqual(5, new_state.memory_general[MemoryItem.PANACHE_COUNTER])
+
+    def test_memory_of_panache_damage_is_saved_across_turn(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.PANACHE_DAMAGE] = 10
+        new_state = load_resource_state('battles/memory/basic_turn_2.json', memory_book=mb)
+        self.assertEqual(10, new_state.memory_general[MemoryItem.PANACHE_DAMAGE])
+
+    def test_memory_of_panache_damage_is_reset_when_leaving_battle(self):
+        mb = TheBotsMemoryBook.new_default(last_known_turn=1)
+        mb.memory_general[MemoryItem.PANACHE_DAMAGE] = 10
+        new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
+        self.assertEqual(0, new_state.memory_general[MemoryItem.PANACHE_DAMAGE])

@@ -280,7 +280,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.MAYHEM:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.MAYHEM: 1})]
     if card.id == CardId.PANACHE:
-        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.PANACHE: 5})]
+        return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.PANACHE_INTERNAL: 1},
+                            post_hooks=[panache_post_hook])]
     if card.id == CardId.SADISTIC_NATURE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.SADISTIC: 5 if not card.upgrade else 7})]
 

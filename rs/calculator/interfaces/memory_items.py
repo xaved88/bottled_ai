@@ -9,6 +9,8 @@ class MemoryItem(Enum):
     LAST_KNOWN_TURN = auto()
     MANTRA_THIS_BATTLE = auto()
     NECRONOMICON_READY = auto()
+    PANACHE_COUNTER = auto()
+    PANACHE_DAMAGE = auto()
     KILLED_WITH_LESSON_LEARNED = auto()
     LIGHTNING_THIS_BATTLE = auto()
     SAVE_INTERNAL_MANTRA = auto()
