@@ -67,7 +67,7 @@ class EventHandler(Handler):
 
         if event_name == "Mushrooms":
             if hp_per >= 30:
-                return "choose 0"  # Fuck 'em up
+                return "choose 0"  # Get 'em!
             return "choose 1"
 
         if event_name == "Living Wall":
@@ -196,7 +196,7 @@ class EventHandler(Handler):
 
         if event_name == "Masked Bandits":
             if hp_per >= 50:
-                return "choose 1"  # Fuck 'em up!
+                return "choose 1"  # Get 'em!
             return "choose 0"  # Give up all money and leave.
 
         if event_name == "The Mausoleum":
@@ -275,7 +275,7 @@ class EventHandler(Handler):
 
         if event_name == "Mysterious Sphere":
             if hp_per >= 70:
-                return "choose 0"  # Fuck 'em up!
+                return "choose 0"  # Get 'em!
             else:
                 return "choose 1"  # Leave
 

@@ -55,7 +55,7 @@ class EventHandler(Handler):
                 return "choose 2"  # Take max hp loss
 
         if event_name == "Hypnotizing Colored Mushrooms":
-            return "choose 0"  # Fuck 'em up
+            return "choose 0"  # Get 'em!
 
         if event_name == "Living Wall":
             return "choose 2"  # Upgrade
@@ -170,7 +170,7 @@ class EventHandler(Handler):
 
         if event_name == "Masked Bandits":
             if hp_per >= 60:
-                return "choose 1"  # Fuck 'em up!
+                return "choose 1"  # Get 'em!
             else:
                 return "choose 0"  # Give up all money and leave.
 
@@ -216,7 +216,7 @@ class EventHandler(Handler):
 
         if event_name == "Mysterious Sphere":
             if hp_per >= 60:
-                return "choose 0"  # Fuck 'em up!
+                return "choose 0"  # Get 'em!
             else:
                 return "choose 1"  # Leave
 
