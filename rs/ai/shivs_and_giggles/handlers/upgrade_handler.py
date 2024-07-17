@@ -37,9 +37,28 @@ class UpgradeHandler(CommonUpgradeHandler):
         ]),
 
     def transform_priorities_based_on_game_state(self, priorities: List[str], state: GameState):
+        remove_if_snecko = [
+            'alchemize',
+            'bullet time',
+            'deflect',
+            'distraction',
+            'endless agony',
+            'envenom',
+            'escape plan',
+            'flash of steel',
+            'finesse',
+            'nightmare',
+            'phantasmal killer',
+            'setup',
+            'slice',
+            'terror',
+            'tools of the trade',
+        ]
+        safe_remove_if_snecko = []
+
         if state.has_relic("Snecko Eye"):
-            priorities.remove('tools of the trade')
-            priorities.remove('terror')
-            priorities.remove('escape plan')
-            priorities.remove('flash of steel')
-            priorities.remove('finesse')
+            for c in remove_if_snecko:
+                if c in priorities:
+                    safe_remove_if_snecko.append(c)
+            for d in safe_remove_if_snecko:
+                priorities.remove(d)
