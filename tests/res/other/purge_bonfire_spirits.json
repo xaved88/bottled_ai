@@ -1,0 +1,1349 @@
+{
+  "available_commands": [
+    "choose",
+    "key",
+    "click",
+    "wait",
+    "state"
+  ],
+  "ready_for_command": true,
+  "in_game": true,
+  "game_state": {
+    "choice_list": [
+      "eruption+",
+      "vigilance",
+      "strike",
+      "strike",
+      "empty fist",
+      "reach heaven",
+      "wallop+",
+      "flurry of blows+",
+      "cut through fate",
+      "tranquility",
+      "empty body",
+      "flurry of blows+",
+      "battle hymn",
+      "ragnarok",
+      "perseverance+",
+      "inner peace",
+      "rushdown+",
+      "tranquility"
+    ],
+    "screen_type": "GRID",
+    "screen_state": {
+      "cards": [
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Strike",
+          "id": "Strike_P",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "bcd67097-cafc-441c-bcd8-77f5a3f8ef4f",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Strike",
+          "id": "Strike_P",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "d8d982a7-ac8b-4247-a9f9-6850f2508709",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Eruption+",
+          "id": "Eruption",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "f62c5565-a16c-4d56-a6f4-7adc61e63105",
+          "upgrades": 1,
+          "rarity": "BASIC",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 2,
+          "name": "Vigilance",
+          "id": "Vigilance",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "678565f5-e6ac-4c30-86ad-19729d7806bb",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Empty Fist",
+          "id": "EmptyFist",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "a0df0181-c50f-40a5-a96c-337d9604697c",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 2,
+          "name": "Reach Heaven",
+          "id": "ReachHeaven",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "5e04b37b-b079-4d21-a8ca-e0811ad5b626",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 2,
+          "name": "Wallop+",
+          "id": "Wallop",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "26eb9acc-6c30-4efb-b3d4-62757e2d53ba",
+          "upgrades": 1,
+          "rarity": "UNCOMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 0,
+          "name": "Flurry of Blows+",
+          "id": "FlurryOfBlows",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "28f8b54e-dd1e-4766-9b13-ef782756f8cf",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Cut Through Fate",
+          "id": "CutThroughFate",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "b2e3ab21-0208-40ed-b2fb-5c1b9e9f5e90",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": true,
+          "cost": 1,
+          "name": "Tranquility",
+          "id": "ClearTheMind",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "d5627280-cf03-4a32-9c4d-99c31510abdf",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Empty Body",
+          "id": "EmptyBody",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "d47aba98-aeee-48cd-ad1b-ba178cd1bf9b",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 0,
+          "name": "Flurry of Blows+",
+          "id": "FlurryOfBlows",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "05e51ea0-45c7-492e-961e-70484ce6d0ac",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Battle Hymn",
+          "id": "BattleHymn",
+          "type": "POWER",
+          "ethereal": false,
+          "uuid": "7da3327e-9e68-4bd8-8462-d5b54da523fa",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 3,
+          "name": "Ragnarok",
+          "id": "Ragnarok",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "3d0a4a3f-0aab-4930-b497-41a2e37f12f1",
+          "upgrades": 0,
+          "rarity": "RARE",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Perseverance+",
+          "id": "Perseverance",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "b51f678e-ccfe-4686-adb4-7f36b74fb638",
+          "upgrades": 1,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 1,
+          "name": "Inner Peace",
+          "id": "InnerPeace",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "c599e0d0-6b26-41aa-9c4c-b3e671af2749",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "cost": 0,
+          "name": "Rushdown+",
+          "id": "Adaptation",
+          "type": "POWER",
+          "ethereal": false,
+          "uuid": "5e26bad3-a380-417b-af97-fb946cb17d4b",
+          "upgrades": 1,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "cost": 1,
+          "name": "Tranquility",
+          "id": "ClearTheMind",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "32e6941b-9eee-4011-bc75-b898341eaf94",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        }
+      ],
+      "selected_cards": [],
+      "for_transform": false,
+      "confirm_up": false,
+      "any_number": false,
+      "for_upgrade": false,
+      "num_cards": 1,
+      "for_purge": true
+    },
+    "seed": 1460700495588693717,
+    "deck": [
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_P",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "bcd67097-cafc-441c-bcd8-77f5a3f8ef4f",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Strike",
+        "id": "Strike_P",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "d8d982a7-ac8b-4247-a9f9-6850f2508709",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Eruption+",
+        "id": "Eruption",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "f62c5565-a16c-4d56-a6f4-7adc61e63105",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 2,
+        "name": "Vigilance",
+        "id": "Vigilance",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "678565f5-e6ac-4c30-86ad-19729d7806bb",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Empty Fist",
+        "id": "EmptyFist",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "a0df0181-c50f-40a5-a96c-337d9604697c",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 2,
+        "name": "Reach Heaven",
+        "id": "ReachHeaven",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "5e04b37b-b079-4d21-a8ca-e0811ad5b626",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 2,
+        "name": "Wallop+",
+        "id": "Wallop",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "26eb9acc-6c30-4efb-b3d4-62757e2d53ba",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 0,
+        "name": "Flurry of Blows+",
+        "id": "FlurryOfBlows",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "28f8b54e-dd1e-4766-9b13-ef782756f8cf",
+        "upgrades": 1,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Cut Through Fate",
+        "id": "CutThroughFate",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "b2e3ab21-0208-40ed-b2fb-5c1b9e9f5e90",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": true,
+        "cost": 1,
+        "name": "Tranquility",
+        "id": "ClearTheMind",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "d5627280-cf03-4a32-9c4d-99c31510abdf",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Empty Body",
+        "id": "EmptyBody",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "d47aba98-aeee-48cd-ad1b-ba178cd1bf9b",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 0,
+        "name": "Flurry of Blows+",
+        "id": "FlurryOfBlows",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "05e51ea0-45c7-492e-961e-70484ce6d0ac",
+        "upgrades": 1,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Battle Hymn",
+        "id": "BattleHymn",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "7da3327e-9e68-4bd8-8462-d5b54da523fa",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 3,
+        "name": "Ragnarok",
+        "id": "Ragnarok",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "3d0a4a3f-0aab-4930-b497-41a2e37f12f1",
+        "upgrades": 0,
+        "rarity": "RARE",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Perseverance+",
+        "id": "Perseverance",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "b51f678e-ccfe-4686-adb4-7f36b74fb638",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 1,
+        "name": "Inner Peace",
+        "id": "InnerPeace",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "c599e0d0-6b26-41aa-9c4c-b3e671af2749",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "cost": 0,
+        "name": "Rushdown+",
+        "id": "Adaptation",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "5e26bad3-a380-417b-af97-fb946cb17d4b",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "cost": 1,
+        "name": "Tranquility",
+        "id": "ClearTheMind",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "32e6941b-9eee-4011-bc75-b898341eaf94",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      }
+    ],
+    "relics": [
+      {
+        "name": "Pure Water",
+        "id": "PureWater",
+        "counter": -1
+      },
+      {
+        "name": "Bird-Faced Urn",
+        "id": "Bird Faced Urn",
+        "counter": -1
+      },
+      {
+        "name": "Pear",
+        "id": "Pear",
+        "counter": -1
+      },
+      {
+        "name": "Sozu",
+        "id": "Sozu",
+        "counter": -1
+      },
+      {
+        "name": "Anchor",
+        "id": "Anchor",
+        "counter": -1
+      },
+      {
+        "name": "Potion Belt",
+        "id": "Potion Belt",
+        "counter": -1
+      },
+      {
+        "name": "Snecko Eye",
+        "id": "Snecko Eye",
+        "counter": -1
+      }
+    ],
+    "max_hp": 82,
+    "act_boss": "Donu and Deca",
+    "gold": 178,
+    "action_phase": "WAITING_ON_USER",
+    "act": 3,
+    "screen_name": "GRID",
+    "room_phase": "EVENT",
+    "is_screen_up": true,
+    "potions": [
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      },
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      },
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      },
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      },
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      }
+    ],
+    "current_hp": 78,
+    "floor": 40,
+    "ascension_level": 0,
+    "class": "WATCHER",
+    "map": [
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "x": 0,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 1
+          }
+        ],
+        "x": 1,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "x": 5,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 6,
+            "y": 1
+          }
+        ],
+        "x": 6,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "x": 1,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "x": 2,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 6,
+            "y": 2
+          }
+        ],
+        "x": 5,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 6,
+            "y": 2
+          }
+        ],
+        "x": 6,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "x": 2,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 3
+          }
+        ],
+        "x": 6,
+        "y": 2,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "x": 2,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 6,
+            "y": 4
+          }
+        ],
+        "x": 5,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 6,
+            "y": 4
+          }
+        ],
+        "x": 6,
+        "y": 3,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "x": 2,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "x": 3,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 5
+          },
+          {
+            "x": 6,
+            "y": 5
+          }
+        ],
+        "x": 6,
+        "y": 4,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 1,
+            "y": 6
+          }
+        ],
+        "x": 2,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          }
+        ],
+        "x": 3,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "x": 5,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "x": 6,
+        "y": 5,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 7
+          }
+        ],
+        "x": 1,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 7
+          }
+        ],
+        "x": 2,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 2,
+            "y": 7
+          }
+        ],
+        "x": 3,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 3,
+            "y": 7
+          }
+        ],
+        "x": 4,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 5,
+            "y": 7
+          }
+        ],
+        "x": 5,
+        "y": 6,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 8
+          }
+        ],
+        "x": 0,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 0,
+            "y": 8
+          }
+        ],
+        "x": 1,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 1,
+            "y": 8
+          }
+        ],
+        "x": 2,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 4,
+            "y": 8
+          }
+        ],
+        "x": 3,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 4,
+            "y": 8
+          }
+        ],
+        "x": 4,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 8
+          }
+        ],
+        "x": 5,
+        "y": 7,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 0,
+            "y": 9
+          }
+        ],
+        "x": 0,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 2,
+            "y": 9
+          }
+        ],
+        "x": 1,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 3,
+            "y": 9
+          },
+          {
+            "x": 5,
+            "y": 9
+          }
+        ],
+        "x": 4,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "T",
+        "children": [
+          {
+            "x": 6,
+            "y": 9
+          }
+        ],
+        "x": 5,
+        "y": 8,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 10
+          }
+        ],
+        "x": 0,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 1,
+            "y": 10
+          }
+        ],
+        "x": 2,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 4,
+            "y": 10
+          }
+        ],
+        "x": 3,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 5,
+            "y": 10
+          }
+        ],
+        "x": 5,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 5,
+            "y": 10
+          }
+        ],
+        "x": 6,
+        "y": 9,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 11
+          }
+        ],
+        "x": 0,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 0,
+            "y": 11
+          }
+        ],
+        "x": 1,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 4,
+            "y": 11
+          }
+        ],
+        "x": 4,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 6,
+            "y": 11
+          }
+        ],
+        "x": 5,
+        "y": 10,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 0,
+            "y": 12
+          },
+          {
+            "x": 1,
+            "y": 12
+          }
+        ],
+        "x": 0,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 12
+          }
+        ],
+        "x": 4,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 12
+          },
+          {
+            "x": 6,
+            "y": 12
+          }
+        ],
+        "x": 6,
+        "y": 11,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 0,
+            "y": 13
+          }
+        ],
+        "x": 0,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 2,
+            "y": 13
+          }
+        ],
+        "x": 1,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 13
+          }
+        ],
+        "x": 3,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 6,
+            "y": 13
+          }
+        ],
+        "x": 5,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 6,
+            "y": 13
+          }
+        ],
+        "x": 6,
+        "y": 12,
+        "parents": []
+      },
+      {
+        "symbol": "?",
+        "children": [
+          {
+            "x": 1,
+            "y": 14
+          }
+        ],
+        "x": 0,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 2,
+            "y": 14
+          },
+          {
+            "x": 3,
+            "y": 14
+          }
+        ],
+        "x": 2,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 3,
+            "y": 14
+          }
+        ],
+        "x": 3,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "M",
+        "children": [
+          {
+            "x": 5,
+            "y": 14
+          },
+          {
+            "x": 6,
+            "y": 14
+          }
+        ],
+        "x": 6,
+        "y": 13,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 1,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 2,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 3,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 5,
+        "y": 14,
+        "parents": []
+      },
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 16
+          }
+        ],
+        "x": 6,
+        "y": 14,
+        "parents": []
+      }
+    ],
+    "room_type": "EventRoom"
+  }
+}

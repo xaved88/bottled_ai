@@ -10,3 +10,6 @@ class TestPurgeHandler(CoTestHandlerFixture):
 
     def test_empty_cage(self):
         self.execute_handler_tests('/other/purge_empty_cage.json', ['choose 0', 'wait 30', 'choose 4', 'wait 30'])
+
+    def test_event_bonfire_spirits(self):
+        self.execute_handler_tests('/other/purge_bonfire_spirits.json', ['choose 2', 'wait 30'])
