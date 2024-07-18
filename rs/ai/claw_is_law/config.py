@@ -12,10 +12,13 @@ DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'reinforced body': 1,
     'ftl': 3,
     'scrape': 1,
+    'dualcast': 1,
     'steam barrier': 3,
     'ball lightning': 1,
     'boot sequence': 1,
     'fission': 1,
+    'zap': 1,
+    'apparition': 1,
 }
 
 DESIRED_CARDS_FROM_POTIONS: dict[str, int] = {

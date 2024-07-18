@@ -1,6 +1,7 @@
 from typing import List
 
 from presentation_config import presentation_mode, p_delay, p_delay_s, slow_events
+from rs.ai.claw_is_law.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK
 from rs.game.screen_type import ScreenType
 from rs.helper.logger import log_missing_event
 from rs.machine.command import Command
@@ -69,6 +70,8 @@ class EventHandler(Handler):
                 return "choose 1"  # Leave.
 
         if event_name == "The Ssssserpent":
+            if state.get_relic_counter("Omamori") >= 1 and not state.has_relic("Ectoplasm"):
+                return "choose 0"  # Money in exchange for a curse
             return "choose 1"  # Leave
 
         if event_name == "World of Goop":
@@ -109,6 +112,10 @@ class EventHandler(Handler):
             return "choose 0"  # Just keep clicking
 
         if event_name == "Ominous Forge":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 1"  # Warped tongs!
+            if state.floor() >= 30:
+                return "choose 0"  # Might not be able to reasonably get rid of the curse anymore
             return "choose 1"  # I love the Warped Tongs relic.
 
         if event_name == "Purifier":
@@ -202,10 +209,29 @@ class EventHandler(Handler):
         # Act 3
 
         if event_name == "Falling":
-            if len(state.get_choice_list()) == 3:
-                return "choose 2"  # Lose the attack
-            else:
-                return "choose 0"  # OK our deck is weird - whatever, just lose something
+            options = state.get_falling_event_options()
+
+            # check for stuff we want to purge
+            for least_desired in CARD_REMOVAL_PRIORITY_LIST:
+                if least_desired in options:
+                    for idx, card in enumerate(options):
+                        if card == least_desired:
+                            return "choose " + str(idx)
+
+            # check for cards not in the pickup list
+            for idx, option in enumerate(options):
+                if option not in DESIRED_CARDS_FOR_DECK:
+                    return "choose " + str(idx)
+
+            # check for lowest card on the pickup list
+            pickup_prios = list(DESIRED_CARDS_FOR_DECK.keys())
+            pickup_prios.reverse()
+
+            for least_desired in pickup_prios:
+                if least_desired in options:
+                    for idx, card in enumerate(options):
+                        if card == least_desired:
+                            return "choose " + str(idx)
 
         if event_name == "Mind Bloom":
             return "choose 0"  # Fight an Act 1 boss for a relic.
@@ -232,7 +258,11 @@ class EventHandler(Handler):
                 return "choose 1"  # Leave
 
         if event_name == "Winding Halls":
-            return "choose 2"  # Lose Max HP to avoid dealing with complexity.
+            if state.get_relic_counter("Omamori") >= 1 and hp_per < 75:
+                return "choose 1"  # Take the curse and heal
+            if hp_per <= 10:
+                return "choose 1"  # Take the curse and heal
+            return "choose 2"  # Lose Max HP
 
         log_missing_event(event_name)
         return "choose 0"

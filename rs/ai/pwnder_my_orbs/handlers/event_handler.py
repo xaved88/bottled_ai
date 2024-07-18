@@ -70,6 +70,8 @@ class EventHandler(Handler):
                 return "choose 1"  # Leave.
 
         if event_name == "The Ssssserpent":
+            if state.get_relic_counter("Omamori") >= 1 and not state.has_relic("Ectoplasm"):
+                return "choose 0"  # Money in exchange for a curse
             return "choose 1"  # Leave
 
         if event_name == "World of Goop":
@@ -110,6 +112,10 @@ class EventHandler(Handler):
             return "choose 0"  # Just keep clicking
 
         if event_name == "Ominous Forge":
+            if state.get_relic_counter("Omamori") >= 1:
+                return "choose 1"  # Warped tongs!
+            if state.floor() >= 30:
+                return "choose 0"  # Might not be able to reasonably get rid of the curse anymore
             return "choose 1"  # I love the Warped Tongs relic.
 
         if event_name == "Purifier":
@@ -233,7 +239,11 @@ class EventHandler(Handler):
                 return "choose 1"  # Leave
 
         if event_name == "Winding Halls":
-            return "choose 2"  # Lose Max HP to avoid dealing with complexity.
+            if state.get_relic_counter("Omamori") >= 1 and hp_per < 75:
+                return "choose 1"  # Take the curse and heal
+            if hp_per <= 10:
+                return "choose 1"  # Take the curse and heal
+            return "choose 2"  # Lose Max HP
 
         log_missing_event(event_name)
         return "choose 0"
