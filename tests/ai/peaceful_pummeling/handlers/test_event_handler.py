@@ -40,6 +40,3 @@ class TestEventHandler(PpTestHandlerFixture):
 
     def test_library_heal(self):
         self.execute_handler_tests('/event/event_library_heal.json', ['choose sleep', 'wait 30'])
-
-    def test_library_grab_card(self):
-        self.execute_handler_tests('/event/event_library_read.json', ['choose read', 'wait 30'])

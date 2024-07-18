@@ -152,9 +152,7 @@ class EventHandler(Handler):
         # ACT 2
 
         if event_name == "Ancient Writing":
-            if state.deck.contains_card_amount("strike") >= 4:
-                return "choose 1"  # Upgrade all strikes and defends
-            return "choose 0"  # Card removal
+            return "choose 1"  # Upgrade all strikes and defends always because we currently can't tell the difference between card selection and purging in a grid event.
 
         if event_name == "Augmenter":
             return "choose 2"  # Take the Mutagenic Strength relic.
@@ -178,9 +176,7 @@ class EventHandler(Handler):
             return "choose 3"  # Leave
 
         if event_name == "The Library":
-            if hp_per > 60:
-                return "choose read"
-            return "choose sleep"
+            return "choose sleep"  # Heal, because we currently can't tell the difference between card selection and purging in a grid event.
 
         if event_name == "Masked Bandits":
             if hp_per >= 65:

@@ -16,11 +16,10 @@ class CommonCardRewardHandler(Handler):
             {} if cards_desired_from_potions is None else cards_desired_from_potions
 
     def can_handle(self, state: GameState) -> bool:
-        grid_card_choice = state.screen_type() == ScreenType.GRID.value and state.game_state()["room_phase"] == "EVENT"
-        # for covering e.g. library event
-
-        return state.has_command(Command.CHOOSE) and (
-                    state.screen_type() == ScreenType.CARD_REWARD.value or grid_card_choice)
+        return state.has_command(Command.CHOOSE) \
+               and state.screen_type() == ScreenType.CARD_REWARD.value \
+               and (state.game_state()["room_phase"] == "COMPLETE" or state.game_state()["room_phase"] == "EVENT" or
+                    state.game_state()["room_phase"] == "COMBAT")
 
     def transform_desired_cards_map_from_state(self, cards: dict[str, int], state: GameState):
         # can be implemented by children
@@ -54,7 +53,7 @@ class CommonCardRewardHandler(Handler):
 
         if 'bowl' in choice_list:
             exit_choice = "choose bowl"
-        elif not state.has_command(Command.SKIP):  # Relevant for the Colorless potion or The Library
+        elif not state.has_command(Command.SKIP):  # Mainly (only?) relevant for the Colorless potion
             exit_choice = "choose 0"
         elif state.game_state()["room_phase"] == "COMBAT":  # E.g. potions
             exit_choice = "skip"
