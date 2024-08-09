@@ -45,7 +45,13 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/discard_no_cards.json', [])
 
     def test_exhaust_screen_is_handled(self):
-        self.execute_handler_tests('/battles/exhaust/exhaust_burning_pact.json', ['choose 0', 'confirm', 'wait 30'])
+        self.execute_handler_tests('/battles/exhaust/exhaust_a_card.json', ['choose 1', 'confirm', 'wait 30'])
+
+    def test_exhaust_screen_is_okay_with_no_cards(self):
+        self.execute_handler_tests('/battles/exhaust/exhaust_no_cards.json', [])
+
+    def test_exhaust_prefer_to_exhaust_curse(self):
+        self.execute_handler_tests('/battles/exhaust/exhaust_the_curse.json', ['choose 2', 'confirm', 'wait 30'])
 
     def test_attacks_into_block_when_barricade_is_up(self):
         self.execute_handler_tests('/battles/general/attack_barricade.json', ['play 1'])
@@ -81,8 +87,8 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_avoid_shivs_in_discard_play_storm_of_steel_later(self):
         self.execute_handler_tests('/battles/general/play_storm_of_steel_later.json', ['play 1'])
 
-    def test_discard_doubt(self):
-        self.execute_handler_tests('/battles/general/discard_doubt_specifically.json', ['play 1'])
+    def test_play_survivor_to_be_able_to_discard_doubt(self):
+        self.execute_handler_tests('/battles/general/play_surivor_to_discard_doubt_specifically.json', ['play 1'])
 
     def test_gremlin_nob_defensive_skill_not_worth_it(self):
         self.execute_handler_tests(
