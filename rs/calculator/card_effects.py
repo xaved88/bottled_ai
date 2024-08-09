@@ -882,7 +882,7 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
     if card.id == CardId.BARRICADE:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BARRICADE: 1})]
     if card.id == CardId.BURNING_PACT:
-        return [CardEffects(target=TargetType.SELF, draw=3)]
-    if card.id == CardId.TRUE_GRIT:
-        return [CardEffects(target=TargetType.SELF, block=7)]
+        return [CardEffects(target=TargetType.SELF, draw=2 if not card.upgrade else 3, amount_to_exhaust=1)]
+    if card.id == CardId.TRUE_GRIT: #todo -> handle the un-upgraded case
+        return [CardEffects(target=TargetType.SELF, block=7, amount_to_exhaust=0 if not card.upgrade else 1)]
     return [CardEffects()]
