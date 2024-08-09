@@ -11,8 +11,7 @@
   "in_game": true,
   "game_state": {
     "choice_list": [
-      "twin strike+",
-      "defend"
+      "see hand in combat state"
     ],
     "screen_type": "HAND_SELECT",
     "screen_state": {
@@ -270,6 +269,19 @@
           "exhausts": false,
           "is_playable": true,
           "cost": 1,
+          "name": "Twin Strike+",
+          "id": "Twin Strike",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "0d0bc303-884f-4e18-87b5-e26e87b3d669",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
           "name": "Defend",
           "id": "Defend_R",
           "type": "SKILL",
@@ -281,16 +293,16 @@
         },
         {
           "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
-          "name": "Twin Strike+",
-          "id": "Twin Strike",
-          "type": "ATTACK",
+          "is_playable": false,
+          "cost": -2,
+          "name": "Regret",
+          "id": "regret",
+          "type": "CURSE",
           "ethereal": false,
-          "uuid": "0d0bc303-884f-4e18-87b5-e26e87b3d669",
-          "upgrades": 1,
-          "rarity": "COMMON",
-          "has_target": true
+          "uuid": "dd6c067e-a2fc-474f-8cf8-96908f77a8d4",
+          "upgrades": 0,
+          "rarity": "CURSE",
+          "has_target": false
         }
       ],
       "player": {
@@ -310,7 +322,7 @@
             "id": "Artifact"
           }
         ],
-        "energy": 1
+        "energy": 3
       }
     },
     "deck": [
