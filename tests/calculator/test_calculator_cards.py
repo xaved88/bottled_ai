@@ -473,6 +473,32 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_drew_cards(play, 3)
         self.see_hand_card_is(play, CardId.CARD_FROM_DRAW)
 
+    def test_burning_pact_does_not_exhaust_drawn_cards(self):
+        state = self.given_state(CardId.BURNING_PACT)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 0)
+
+    def test_burning_pact(self):
+        state = self.given_state(CardId.BURNING_PACT)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 2)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_upgraded_burning_pact(self):
+        state = self.given_state(CardId.BURNING_PACT, upgrade = 1)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 3)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
     def test_rage(self):
         state = self.given_state(CardId.RAGE)
         play = self.when_playing_the_first_card(state)

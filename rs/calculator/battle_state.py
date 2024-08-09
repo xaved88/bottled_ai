@@ -86,7 +86,7 @@ class BattleState(BattleStateInterface):
         return [(i, PLAY_DISCARD) for i, c in enumerate(self.hand)]
 
     def get_exhausts(self) -> List[Play]:
-        return [(i, PLAY_EXHAUST) for i, c in enumerate(self.hand)]
+        return [(i, PLAY_EXHAUST) for i, c in enumerate(self.hand) if c.id != CardId.CARD_FROM_DRAW]
 
     def transform_from_play(self, play: Play, is_first_play: bool):
         self.__is_first_play = is_first_play
@@ -329,6 +329,10 @@ class BattleState(BattleStateInterface):
             # energy gain
             self.player.energy += effect.energy_gain
 
+
+            if effect.amount_to_exhaust: # needs to be before draw because of burning pact. Hacky but works.
+                self.amount_to_exhaust += effect.amount_to_exhaust
+
             # card draw
             if effect.draw:
                 self.draw_cards(effect.draw, card_not_gone_yet=True)
@@ -336,9 +340,6 @@ class BattleState(BattleStateInterface):
             # discard
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
-
-            if effect.amount_to_exhaust:
-                self.amount_to_exhaust += effect.amount_to_exhaust
 
             if effect.amount_to_scry:
                 self.scry(effect.amount_to_scry)
