@@ -135,7 +135,9 @@ def create_battle_state(game_state: GameState) -> BattleState:
 
     # get discard action state
     must_discard = not game_state.screen_state_must_pick_card()
-    amount_to_discard = game_state.screen_state_max_cards()
+
+    amount_to_exhaust = game_state.screen_state_exhaust_cards()
+    amount_to_discard = game_state.screen_state_discard_cards()
     cards_discarded_this_turn = game_state.get_cards_discarded_this_turn()
 
     # get orbs
@@ -148,4 +150,5 @@ def create_battle_state(game_state: GameState) -> BattleState:
 
     return BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, must_discard,
                        amount_to_discard, cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots,
-                       memory_general=memory_general, memory_by_card=memory_by_card, potions=potions)
+                       memory_general=memory_general, memory_by_card=memory_by_card, potions=potions,
+                       amount_to_exhaust=amount_to_exhaust)

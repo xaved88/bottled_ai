@@ -119,6 +119,12 @@ class GameState:
         state = self.screen_state()
         return 1 if not state else state["can_pick_zero"]
 
+    def screen_state_exhaust_cards(self):
+        return 0 if not self.current_action() == "ExhaustAction" else self.screen_state_max_cards()
+
+    def screen_state_discard_cards(self):
+        return 0 if not self.current_action() == "DiscardAction" else self.screen_state_max_cards()
+
     def current_action(self):
         if self.game_state()["screen_type"] == "HAND_SELECT" or \
                 (self.combat_state() is not None and self.game_state()["screen_type"] == "GRID"):

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from rs.calculator.battle_state import PLAY_DISCARD, Play
+from rs.calculator.battle_state import PLAY_DISCARD, Play, PLAY_EXHAUST
 from rs.calculator.game_state_converter import create_battle_state
 from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.calculator.play_path import PlayPath, get_paths_bfs
@@ -40,6 +40,8 @@ def get_best_battle_action(game_state: GameState, comparator: ComparatorInterfac
             return HandlerAction(commands=[f"play {next_move[0] + 1}"], memory_book=memory_book)
         if next_move[1] == PLAY_DISCARD:
             return HandlerAction(commands=get_discard_commands(path.plays), memory_book=memory_book)
+        if next_move[1] == PLAY_EXHAUST:
+            return HandlerAction(commands=get_exhaust_commands(path.plays), memory_book=memory_book)
         return HandlerAction(commands=[f"play {next_move[0] + 1} {next_move[1]}"], memory_book=memory_book)
     return None
 
@@ -48,6 +50,25 @@ def get_discard_commands(plays: List[Play]) -> List[str]:
     raw_indexes = []
     for (card_idx, play_type) in plays:
         if play_type == PLAY_DISCARD:
+            raw_indexes.append(card_idx)
+        else:
+            break
+    raw_indexes.reverse()
+    adjusted_indexes = []
+    for (i, idx) in enumerate(raw_indexes):
+        for j in range(i + 1, len(raw_indexes)):
+            if raw_indexes[j] <= idx:
+                idx += 1
+        adjusted_indexes.append(idx)
+    adjusted_indexes.reverse()
+
+    return [f"choose {idx}" for idx in adjusted_indexes] + ["confirm", "wait 30"]
+
+
+def get_exhaust_commands(plays: List[Play]) -> List[str]:
+    raw_indexes = []
+    for (card_idx, play_type) in plays:
+        if play_type == PLAY_EXHAUST:
             raw_indexes.append(card_idx)
         else:
             break

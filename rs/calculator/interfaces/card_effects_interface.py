@@ -37,6 +37,7 @@ class CardEffectsInterface:
     end_turn_hooks: List['CardEffectCustomHook']
     heal: int
     amount_to_discard: int
+    amount_to_exhaust: int
     spawn_cards_in_hand: [CardInterface, int]
     spawn_cards_in_draw: [CardInterface, int]
     spawn_cards_in_discard: [CardInterface, int]
