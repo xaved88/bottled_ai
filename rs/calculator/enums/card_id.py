@@ -53,6 +53,7 @@ class CardId(Enum):
     BULLET_TIME = 'bullet time'
     BULLSEYE = 'lockon'
     BURN = 'burn'
+    BURNING_PACT = 'burning pact'
     BURST = 'burst'
     CALCULATED_GAMBLE = 'calculated gamble'
     CALTROPS = 'caltrops'
@@ -306,6 +307,7 @@ class CardId(Enum):
     THUNDER_STRIKE = 'thunder strike'
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     TRANQUILITY = 'clearthemind'  # Weird id alert!
+    TRUE_GRIT = 'true grit'
     TRIP = 'trip'
     TURBO = 'turbo'
     TWIN_STRIKE = 'twin strike'
