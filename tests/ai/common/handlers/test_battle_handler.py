@@ -44,6 +44,9 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_discard_is_okay_with_no_cards(self):
         self.execute_handler_tests('/battles/general/discard_no_cards.json', [])
 
+    def test_exhaust_screen_is_handled(self):
+        self.execute_handler_tests('/battles/exhaust/exhaust_burning_pact.json', ['choose 0', 'confirm', 'wait 30'])
+
     def test_attacks_into_block_when_barricade_is_up(self):
         self.execute_handler_tests('/battles/general/attack_barricade.json', ['play 1'])
 

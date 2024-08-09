@@ -270,19 +270,6 @@
           "exhausts": false,
           "is_playable": true,
           "cost": 1,
-          "name": "Twin Strike+",
-          "id": "Twin Strike",
-          "type": "ATTACK",
-          "ethereal": false,
-          "uuid": "0d0bc303-884f-4e18-87b5-e26e87b3d669",
-          "upgrades": 1,
-          "rarity": "COMMON",
-          "has_target": true
-        },
-        {
-          "exhausts": false,
-          "is_playable": true,
-          "cost": 1,
           "name": "Defend",
           "id": "Defend_R",
           "type": "SKILL",
@@ -291,6 +278,19 @@
           "upgrades": 0,
           "rarity": "BASIC",
           "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Twin Strike+",
+          "id": "Twin Strike",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "0d0bc303-884f-4e18-87b5-e26e87b3d669",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": true
         }
       ],
       "player": {
