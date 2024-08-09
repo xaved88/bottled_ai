@@ -88,7 +88,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('/battles/general/play_storm_of_steel_later.json', ['play 1'])
 
     def test_play_survivor_to_be_able_to_discard_doubt(self):
-        self.execute_handler_tests('/battles/general/play_surivor_to_discard_doubt_specifically.json', ['play 1'])
+        self.execute_handler_tests('/battles/general/play_survivor_to_discard_doubt_specifically.json', ['play 1'])
 
     def test_gremlin_nob_defensive_skill_not_worth_it(self):
         self.execute_handler_tests(
