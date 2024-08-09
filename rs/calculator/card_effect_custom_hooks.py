@@ -679,3 +679,7 @@ def panache_post_hook(state: BattleStateInterface, effect: CardEffectsInterface,
                       target_index: int = -1):
     power_amount = 10 if not card.upgrade else 14
     state.add_memory_value(MemoryItem.PANACHE_DAMAGE, power_amount)
+
+def recycle_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
+                      target_index: int = -1):
+    state.add_memory_value(MemoryItem.RECYCLE, 1)
