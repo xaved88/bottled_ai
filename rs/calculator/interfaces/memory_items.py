@@ -13,6 +13,7 @@ class MemoryItem(Enum):
     PANACHE_DAMAGE = auto()
     KILLED_WITH_LESSON_LEARNED = auto()
     LIGHTNING_THIS_BATTLE = auto()
+    RECYCLE = auto()
     SAVE_INTERNAL_MANTRA = auto()
     STANCE = auto()
     TYPE_LAST_PLAYED = auto()

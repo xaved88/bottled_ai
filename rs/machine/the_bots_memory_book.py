@@ -54,6 +54,7 @@ class TheBotsMemoryBook:
         self.memory_general[MemoryItem.ORANGE_PELLETS_SKILL] = 0
         self.memory_general[MemoryItem.ORANGE_PELLETS_POWER] = 0
         self.memory_general[MemoryItem.PANACHE_COUNTER] = 5
+        self.memory_general[MemoryItem.RECYCLE] = 0
 
     def initialize_memory_by_card(self, card_id: CardId):
         reset_schedule = {}

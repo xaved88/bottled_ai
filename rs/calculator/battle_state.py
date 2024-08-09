@@ -543,6 +543,12 @@ class BattleState(BattleStateInterface):
         pass
 
     def transform_from_exhaust(self, card: CardInterface, index: int):
+        if self.get_memory_value(MemoryItem.RECYCLE):
+            if card.cost == Cost.x_cost:
+                self.player.energy *= 2
+            elif card.cost != Cost.unplayable:
+                self.player.energy += card.cost
+            self.add_memory_value(MemoryItem.RECYCLE, -1)
         self.exhaust_card(card)
         self.amount_to_exhaust -= 1
         pass

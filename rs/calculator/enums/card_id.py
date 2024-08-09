@@ -244,6 +244,7 @@ class CardId(Enum):
     REAPER = 'reaper'
     REBOOT = 'reboot'
     RECURSION = 'redo'
+    RECYCLE = 'recycle'
     REFLEX = 'reflex'
     REGRET = 'regret'
     RECKLESS_CHARGE = 'reckless charge'

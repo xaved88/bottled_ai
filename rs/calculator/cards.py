@@ -90,7 +90,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
     if card_id == CardId.BURNING_PACT:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.TRUE_GRIT:
-        return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+        base_cost = 1 if cost is None else cost
+        return Card(card_id, upgrade, Cost.unplayable if not upgrade else base_cost, False, CardType.SKILL)
     if card_id == CardId.INTIMIDATE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.PUMMEL:
@@ -408,6 +409,9 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.SWEEPING_BEAM:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.ATTACK)
+    if card_id == CardId.RECYCLE:
+        base_cost = 1 if not upgrade else 0
+        return Card(card_id, upgrade, base_cost if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.CORE_SURGE:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.BOOT_SEQUENCE:

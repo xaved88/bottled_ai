@@ -491,13 +491,39 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_exhaust_count(play, 1)
 
     def test_upgraded_burning_pact(self):
-        state = self.given_state(CardId.BURNING_PACT, upgrade = 1)
+        state = self.given_state(CardId.BURNING_PACT, upgrade=1)
         state.hand.append(get_card(CardId.WOUND))
         play = self.when_playing_the_whole_hand(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_hand_count(play, 3)
         self.see_player_discard_pile_count(play, 1)
         self.see_player_exhaust_count(play, 1)
+
+    def test_non_upgraded_true_grit_is_not_played(self):
+        state = self.given_state(CardId.TRUE_GRIT)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 0)
+        self.see_player_hand_count(play, 1)
+        self.see_player_discard_pile_count(play, 0)
+
+    def test_upgraded_true_grit(self):
+        state = self.given_state(CardId.TRUE_GRIT, upgrade=1)
+        state.hand.append(get_card(CardId.WOUND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+        self.see_player_has_block(play, 9)
+
+    def test_upgraded_true_grit_with_no_cards_to_exhaust(self):
+        state = self.given_state(CardId.TRUE_GRIT, upgrade=1)
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 0)
+        self.see_player_has_block(play, 9)
 
     def test_rage(self):
         state = self.given_state(CardId.RAGE)
@@ -2594,6 +2620,52 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_has_block(play, 1)
         self.assertEqual(69, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "default"))
         self.assertEqual(2, play.state.get_memory_by_card(CardId.GENETIC_ALGORITHM, "different_uuid"))
+
+    def test_recycle_on_one_cost_card(self):
+        state = self.given_state(CardId.RECYCLE)
+        state.hand.insert(0,get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 0)  # no energy difference, spent one and then gained one
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_recycle_upgraded(self):
+        state = self.given_state(CardId.RECYCLE, upgrade=1)
+        state.hand.insert(0,get_card(CardId.STRIKE_R))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, -1)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_recycle_on_unplayable_card(self):
+        state = self.given_state(CardId.RECYCLE)
+        state.hand.insert(0, get_card(CardId.PAIN))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_recycle_on_x_cost_card(self):
+        state = self.given_state(CardId.RECYCLE)
+        state.hand.insert(0, get_card(CardId.WHIRLWIND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, -3) # start with 5, -1, *2 = 8 which is 3 more than start
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
+    def test_recycle_upgraded_on_x_cost_card(self):
+        state = self.given_state(CardId.RECYCLE, upgrade=1)
+        state.hand.insert(0, get_card(CardId.WHIRLWIND))
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_spent_energy(play, -5)
+        self.see_player_hand_count(play, 0)
+        self.see_player_discard_pile_count(play, 1)
+        self.see_player_exhaust_count(play, 1)
+
 
     def test_same_uuid_different_cards_do_not_overlap(self):
         state = self.given_state(CardId.GENETIC_ALGORITHM)
