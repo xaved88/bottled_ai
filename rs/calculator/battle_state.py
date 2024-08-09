@@ -22,6 +22,7 @@ from rs.game.card import CardType
 
 Play = tuple[int, int]  # card index, target index (-1 for none/all, -2 for discard)
 PLAY_DISCARD = -2
+PLAY_EXHAUST = -3
 
 
 class BattleState(BattleStateInterface):
@@ -33,7 +34,7 @@ class BattleState(BattleStateInterface):
                  total_random_damage_dealt: int = 0, total_random_poison_added: int = 0,
                  orbs: List[Tuple[OrbId, int]] = None, orb_slots: int = 0, memory_general: dict = None,
                  memory_by_card: dict[CardId, dict[ResetSchedule, dict[str, int]]] = None, amount_scryed: int = 0,
-                 saved_block_for_next_turn: int = 0, potions: Potions = None):
+                 saved_block_for_next_turn: int = 0, potions: Potions = None, amount_to_exhaust: int = 0):
         self.player: PlayerInterface = player
         self.hand: List[CardInterface] = [] if hand is None else hand
         self.discard_pile: List[CardInterface] = [] if discard_pile is None else discard_pile
@@ -44,6 +45,7 @@ class BattleState(BattleStateInterface):
         self.potions: Potions = {} if potions is None else potions
         self.must_discard: bool = must_discard
         self.amount_to_discard: int = amount_to_discard
+        self.amount_to_exhaust: int = amount_to_exhaust
         self.cards_discarded_this_turn: int = cards_discarded_this_turn
         self.total_random_damage_dealt: int = total_random_damage_dealt
         self.total_random_poison_added: int = total_random_poison_added
@@ -82,6 +84,9 @@ class BattleState(BattleStateInterface):
 
     def get_discards(self) -> List[Play]:
         return [(i, PLAY_DISCARD) for i, c in enumerate(self.hand)]
+
+    def get_exhausts(self) -> List[Play]:
+        return [(i, PLAY_EXHAUST) for i, c in enumerate(self.hand)]
 
     def transform_from_play(self, play: Play, is_first_play: bool):
         self.__is_first_play = is_first_play
@@ -123,6 +128,10 @@ class BattleState(BattleStateInterface):
 
         if target_index == PLAY_DISCARD:
             self.transform_from_discard(card, card_index)
+            return
+
+        if target_index == PLAY_EXHAUST:
+            self.transform_from_exhaust(card, card_index)
             return
 
         # some stuff needs to happen early
@@ -328,6 +337,9 @@ class BattleState(BattleStateInterface):
             if effect.amount_to_discard:
                 self.amount_to_discard += effect.amount_to_discard
 
+            if effect.amount_to_exhaust:
+                self.amount_to_exhaust += effect.amount_to_exhaust
+
             if effect.amount_to_scry:
                 self.scry(effect.amount_to_scry)
 
@@ -527,6 +539,11 @@ class BattleState(BattleStateInterface):
     def transform_from_discard(self, card: CardInterface, index: int):
         self.discard_card(card)
         self.amount_to_discard -= 1
+        pass
+
+    def transform_from_exhaust(self, card: CardInterface, index: int):
+        self.exhaust_card(card)
+        self.amount_to_exhaust -= 1
         pass
 
     def end_turn(self):

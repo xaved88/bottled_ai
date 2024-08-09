@@ -31,6 +31,7 @@ class CardEffects(CardEffectsInterface):
             end_turn_hooks: List[CardEffectCustomHook] = None,
             heal: int = 0,
             amount_to_discard: int = 0,
+            amount_to_exhaust: int = 0,
             spawn_cards_in_hand: [CardInterface, int] = None,
             spawn_cards_in_draw: [CardInterface, int] = None,
             spawn_cards_in_discard: [CardInterface, int] = None,
@@ -58,6 +59,7 @@ class CardEffects(CardEffectsInterface):
             CardEffectCustomHook] = [] if end_turn_hooks is None else end_turn_hooks
         self.heal: int = heal
         self.amount_to_discard: int = amount_to_discard
+        self.amount_to_exhaust: int = amount_to_exhaust
         self.spawn_cards_in_hand: [CardInterface, int] = spawn_cards_in_hand
         self.spawn_cards_in_draw: [CardInterface, int] = spawn_cards_in_draw
         self.spawn_cards_in_discard: [CardInterface, int] = spawn_cards_in_discard

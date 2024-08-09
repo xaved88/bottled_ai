@@ -23,11 +23,14 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
     if path_state in paths:
         return
     paths[path_state] = path
-    # resolve any open discards
+    # resolve any open discards or exhausts
     if path.state.amount_to_discard:
         plays = path.state.get_discards()
+    elif path.state.amount_to_exhaust:
+        plays = path.state.get_exhausts()
     else:
         plays = path.state.get_plays()
+
     for play in plays:
         new_state: BattleState = pickle_deepcopy(path.state)
         new_state.transform_from_play(play, is_first_play=not path.plays)
@@ -55,6 +58,8 @@ def get_paths_bfs(state: BattleState, max_path_count: int):
         # queue up all the next states that could happen
         if path.state.amount_to_discard:
             plays = path.state.get_discards()
+        elif path.state.amount_to_exhaust:
+            plays = path.state.get_exhausts()
         else:
             plays = path.state.get_plays()
 
