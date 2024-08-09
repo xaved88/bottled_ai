@@ -35,7 +35,9 @@ class CommonBattleHandler(Handler):
         self.max_path_count: int = max_path_count
 
     def can_handle(self, state: GameState) -> bool:
-        return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
+        return state.has_command(Command.PLAY) \
+               or state.current_action() == "DiscardAction" \
+               or state.current_action() == "ExhaustAction"
 
     def select_comparator(self, state: GameState) -> ComparatorInterface:
         alive_monsters = len(list(filter(lambda m: not m["is_gone"], state.get_monsters())))
