@@ -89,9 +89,6 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 3 if cost is None else cost, False, CardType.POWER)
     if card_id == CardId.BURNING_PACT:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
-    if card_id == CardId.TRUE_GRIT:
-        base_cost = 1 if cost is None else cost
-        return Card(card_id, upgrade, Cost.unplayable if not upgrade else base_cost, False, CardType.SKILL)
     if card_id == CardId.INTIMIDATE:
         return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.SKILL, exhausts=True)
     if card_id == CardId.PUMMEL:

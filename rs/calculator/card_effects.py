@@ -883,8 +883,6 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.BARRICADE: 1})]
     if card.id == CardId.BURNING_PACT:
         return [CardEffects(target=TargetType.SELF, draw=2 if not card.upgrade else 3, amount_to_exhaust=1)]
-    if card.id == CardId.TRUE_GRIT:
-        return [CardEffects(target=TargetType.SELF, block=7 if not card.upgrade else 9, amount_to_exhaust=1)]
     if card.id == CardId.RECYCLE:
         return [CardEffects(target=TargetType.SELF, amount_to_exhaust=1, post_hooks=[recycle_post_hook])]
     return [CardEffects()]

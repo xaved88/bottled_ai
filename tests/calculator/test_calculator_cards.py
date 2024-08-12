@@ -499,32 +499,6 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_discard_pile_count(play, 1)
         self.see_player_exhaust_count(play, 1)
 
-    def test_non_upgraded_true_grit_is_not_played(self):
-        state = self.given_state(CardId.TRUE_GRIT)
-        play = self.when_playing_the_whole_hand(state)
-        self.see_player_spent_energy(play, 0)
-        self.see_player_hand_count(play, 1)
-        self.see_player_discard_pile_count(play, 0)
-
-    def test_upgraded_true_grit(self):
-        state = self.given_state(CardId.TRUE_GRIT, upgrade=1)
-        state.hand.append(get_card(CardId.WOUND))
-        play = self.when_playing_the_whole_hand(state)
-        self.see_player_spent_energy(play, 1)
-        self.see_player_hand_count(play, 0)
-        self.see_player_discard_pile_count(play, 1)
-        self.see_player_exhaust_count(play, 1)
-        self.see_player_has_block(play, 9)
-
-    def test_upgraded_true_grit_with_no_cards_to_exhaust(self):
-        state = self.given_state(CardId.TRUE_GRIT, upgrade=1)
-        play = self.when_playing_the_whole_hand(state)
-        self.see_player_spent_energy(play, 1)
-        self.see_player_hand_count(play, 0)
-        self.see_player_discard_pile_count(play, 1)
-        self.see_player_exhaust_count(play, 0)
-        self.see_player_has_block(play, 9)
-
     def test_rage(self):
         state = self.given_state(CardId.RAGE)
         play = self.when_playing_the_first_card(state)

@@ -8,9 +8,9 @@ from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 default_undesired_relics = [
-    'Dead Branch',
-    'Bottled Flame',
+    'Bottled Flame',  # Currently not making good decisions about how to choose
     'Cloak Clasp',  # Problematic in Act 3 boss fights, especially Donu Deca, since NOT playing cards suddenly is very attractive.
+    'Dead Branch',  # Hard to plan around and our card coverage isn't quite there yet for all characters
 ]
 
 # most important on top
