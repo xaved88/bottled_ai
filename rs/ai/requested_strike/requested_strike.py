@@ -15,7 +15,7 @@ from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.card_reward.common_card_reward_handler import CommonCardRewardHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
-from rs.common.handlers.common_discard_handler import CommonDiscardHandler
+from rs.common.handlers.common_mass_discard_handler import CommonMassDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
 from rs.common.handlers.common_purge_handler import CommonPurgeHandler
 from rs.common.handlers.common_scry_handler import CommonScryHandler
@@ -53,7 +53,7 @@ REQUESTED_STRIKE: AiStrategy = AiStrategy(
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
-        CommonDiscardHandler(),
+        CommonMassDiscardHandler(),
         CommonScryHandler(),
     ]
 )

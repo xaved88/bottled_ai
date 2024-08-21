@@ -6,7 +6,7 @@ from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 #  Didn't find a quick and easy way of handling the curses/statuses without a list. Also, intentionally left out 'void'.
-cards_to_discard = [
+cards_to_mass_discard = [
     'strike',
     'strike+',
     'defend',
@@ -33,11 +33,12 @@ cards_to_discard = [
 ]
 
 
-class CommonDiscardHandler(Handler):
+class CommonMassDiscardHandler(Handler):
+    # Handles mass-discard cases like Gambler's Potion and Gambling Chip
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.HAND_SELECT.value \
-               and state.game_state()["screen_state"]["can_pick_zero"]  # We're currently only covering those cases!
+               and state.game_state()["screen_state"]["can_pick_zero"]
 
     def handle(self, state: GameState) -> HandlerAction:
 
@@ -47,7 +48,7 @@ class CommonDiscardHandler(Handler):
         choice_list = state.get_choice_list()
 
         for checked_card in choice_list:
-            if checked_card in cards_to_discard:
+            if checked_card in cards_to_mass_discard:
                 if presentation_mode:
                     return HandlerAction(commands=[p_delay, 'choose ' + checked_card])
                 return HandlerAction(commands=['choose ' + checked_card])
