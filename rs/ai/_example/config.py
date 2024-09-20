@@ -1,11 +1,18 @@
-CARD_REMOVAL_PRIORITY_LIST = ['strike', 'strike+', 'defend', 'defend+']
+# card id. 'strike+' is an upgraded strike
+CARD_REMOVAL_PRIORITY_LIST = [
+    'strike',
+    'strike+',
+    'defend',
+    'defend+']
 
+# [card display name]: [max amount to have in deck]
 DESIRED_CARDS_FOR_DECK: dict[str, int] = {
     'perfected strike': 1337,
     'twin strike': 2,
     'wild strike': 2,
 }
 
+# card display name: max amount to have in deck
 DESIRED_CARDS_FROM_POTIONS: dict[str, int] = {
     'demon form': 1,
     'apotheosis': 1,

@@ -1,6 +1,9 @@
+from typing import List
+
 from rs.ai._example.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK, HIGH_PRIORITY_UPGRADES, \
     DESIRED_CARDS_FROM_POTIONS, DESIRED_POTIONS
 from rs.ai._example.handlers.event_handler import EventHandler
+from rs.ai._example.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
 from rs.ai._example.handlers.shop_purchase_handler import ShopPurchaseHandler
 from rs.ai._example.handlers.upgrade_handler import UpgradeHandler
 from rs.common.handlers.common_astrolabe_handler import CommonAstrolabeHandler
@@ -19,6 +22,14 @@ from rs.common.handlers.common_shop_entrance_handler import CommonShopEntranceHa
 from rs.common.handlers.common_transform_handler import CommonTransformHandler
 from rs.machine.ai_strategy import AiStrategy
 from rs.machine.character import Character
+from rs.machine.handlers.handler import Handler
+
+example_battle_potion_handlers: List[Handler] = [
+    # Potions Handlers First
+    PotionsBossHandler(),
+    PotionsEventFightHandler(),
+    PotionsEliteHandler(),
+]
 
 EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
     name='EXAMPLE_STRATEGY',
