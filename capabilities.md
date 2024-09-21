@@ -24,5 +24,6 @@ See (TODO link to tierlist video) for a general overview of capabilities and the
 - Know that Writhing Mass will change intent after each hit. Could do: stop dealing damage when we can block the hit. Also avoid the curse.
 - Know when Time Eater is going to heal, so don't waste resources on him.
 - Add purchasing of potions (e.g. Ritual Potion) to the shop purchase handler.
+- Make `common_` handlers for events, potions, and shop purchasing so they can stop being duplicated.
 
 We maintain a big backlog of issues, let us know if you want inspiration. :D

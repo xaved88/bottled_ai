@@ -186,7 +186,6 @@ class BattleState(BattleStateInterface):
             return
         if target_index > -1 and self.monsters[target_index].is_gone:
             return
-        # todo -> battle is over
         self.resolve_card_play(card, target_index)
 
         if not lose_repeat_even_if_incomplete:

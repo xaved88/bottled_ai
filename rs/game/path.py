@@ -110,7 +110,6 @@ class Path:
                 self.gold += 30
                 # health
                 # TODO -> make the first 15 based on the floor number... because early elites = harder and we can't compensate for that yet
-                # TODO -> figure out burning elite with green key -> doesn't seem like that data is in the map/gamestate?!?!
                 self.hp -= config.elite_fight_health_loss(state)
                 if state.has_relic("Meat on the Bone") and self.hp / max_hp < 0.5:
                     self.hp += 12

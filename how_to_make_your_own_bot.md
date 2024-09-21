@@ -9,11 +9,11 @@ Changing a Strategy's configurations lets you customize your own bot.
 2) Copy the entire `_example` folder
 3) Rename example.py and EXAMPLE_STRATEGY to match your new Strategy's name
 4) Search for `_example` imports and rename them
-5) (Change the Strategy that is run in `main.py`)
 
 ### Basics
-- Come up with an idea of how you want the bot to behave
-- Adjust the lists in your Strategy's `config.py` file and your strategy's handlers.
+1) Come up with an idea of how you want the bot to behave
+2) Adjust the lists in your Strategy's `config.py` file and your strategy's handlers.
+3) Change the Strategy that is used in `main.py` and watch the bot play! Also check out the `\logs` directory.
 
 ### State of Bottled AI
 Important! For the current state of Bottled AI's capabilities, see [capabilities.py](capabilities.py).

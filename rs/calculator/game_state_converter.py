@@ -29,7 +29,6 @@ def make_card(card: GameCard) -> CardInterface:
         return Card(CardId.FAKE, 0, Cost.unplayable, False, CardType.FAKE)
     return Card(
         card_id=CardId(card.id.lower()),
-        # todo - some sort of logging here for ones we don't know. treat as wounds maybe? What about battle trance?
         upgrade=card.upgrades,
         cost=card.cost,
         needs_target=card.has_target,

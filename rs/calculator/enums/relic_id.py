@@ -14,14 +14,14 @@ from enum import Enum
 # 'sacred bark'
 # 'dolly's mirror'
 # 'ssserpent head' should go into map handler I guess
-# 'brimstone' - probaly need to be more aggressive when we have this
+# 'brimstone' - probably need to be more aggressive when we have this
 # and several others that aren't listed yet
 
 
 class RelicId(Enum):
     FAKE = 'fake'  # We make anything we don't know into this "fake" type
 
-    AKABEKO = 'akabeko'                             # Covered by Vigor
+    AKABEKO = 'akabeko'                             # Covered by Vigor power
     ANCHOR = 'anchor'                               # We know current block
     ANCIENT_TEA_SET = 'ancient tea set'             # N/A to battle calculations
     ART_OF_WAR = 'art of war'                       # We only look at current turn so far, so get this as bonus.

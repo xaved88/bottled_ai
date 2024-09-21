@@ -9,7 +9,6 @@ from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
-# TODO -> refactor this to a nice map of map to callable(state): string, when we touch it next...
 class EventHandler(Handler):
 
     def can_handle(self, state: GameState) -> bool:

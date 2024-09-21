@@ -1,7 +1,6 @@
 from enum import Enum
 
-# Todos:
-# Stasis is only semi-implemented
+# General note: powers that affect a future turn (e.g. DRAW_REDUCTION) are mostly not actually used in decision-making.
 
 
 class PowerId(Enum):
@@ -10,7 +9,7 @@ class PowerId(Enum):
     FAKE_DEXTERITY_TEMP = 'dexterity_temp'  # Fake power to avoid breaking a comparator.
 
     AMPLIFY = 'amplify'
-    ANGER_NOB = 'anger'  # Non-standard naming to distinguish it from Angry
+    ANGER_NOB = 'anger'  # Non-standard naming to distinguish it from ANGRY
     ANGRY = 'angry'
     ACCURACY = 'accuracy'
     AFTER_IMAGE = 'after image'
@@ -26,7 +25,7 @@ class PowerId(Enum):
     BURST = 'burst'
     CHOKED = 'choked'
     COLLECT = 'collect'
-    CONFUSED = 'confusion'  # Bot takes the new costs into account
+    CONFUSED = 'confusion'
     CONSTRICTED = 'constricted'
     CORPSE_EXPLOSION = 'corpse explosion'
     CORRUPTION = 'corruption'
@@ -40,12 +39,12 @@ class PowerId(Enum):
     DEXTERITY = 'dexterity'
     DOUBLE_DAMAGE = 'double damage'
     DOUBLE_TAP = 'double tap'
-    DRAW_CARD = 'draw card'  # It affects a future turn though, so we mostly don't do anything with it.
-    DRAW_REDUCTION = 'draw reduction'  # It affects a future turn though, so we mostly don't do anything with it.
+    DRAW_CARD = 'draw card'
+    DRAW_REDUCTION = 'draw reduction'
     DUPLICATION_POTION_POWER = 'duplicationpower'
     ECHO_FORM = 'echo form'
     ELECTRO = 'electro'
-    ENERGIZED = 'energizedblue'  # It affects a future turn though, so we mostly don't do anything with it.
+    ENERGIZED = 'energizedblue'
     ENTANGLED = 'entangled'
     EQUILIBRIUM = 'equilibrium'
     ENVENOM = 'envenom'
@@ -86,15 +85,13 @@ class PowerId(Enum):
     METALLICIZE = 'metallicize'
     MINION = 'minion'
     MODE_SHIFT = 'mode shift'
-    NEXT_TURN_BLOCK = 'next turn block'  # It affects a future turn though, so we mostly don't do anything with it.
+    NEXT_TURN_BLOCK = 'next turn block'
     NIRVANA = 'nirvana'
     NO_DRAW = 'no draw'
     NOXIOUS_FUMES = 'noxious fumes'
     OMEGA = 'omegapower'
-    PANACHE = 'panache'  # See below
+    PANACHE = 'panache'  # See PANACHE_INTERNAL
     PANACHE_INTERNAL = 'internal_use_panache'  # Just for comparator purposes. Panache is handled by memory book.
-    # We currently have damage provided by triggering the Panache power hardcoded to 10.
-    # It's the first power we've run into that has multiple values associated with it.
     PEN_NIB_POWER_IRRELEVANT = 'pen nib'  # Covered by Pen Nib relic counting
     PHANTASMAL = 'phantasmal'
     POISON = 'poison'
@@ -103,10 +100,10 @@ class PowerId(Enum):
     REGENERATE_ENEMY = 'regenerate'
     REGENERATION_PLAYER = 'regeneration'
     REPAIR = 'repair'
-    RITUAL = 'ritual'  # We don't do anything with it
+    RITUAL = 'ritual'
     RUSHDOWN = 'adaptation'
     SADISTIC = 'sadistic'
-    SHACKLED = 'shackled'  # Enemy regains strength at end of turn, not currently relevant
+    SHACKLED = 'shackled'
     SHARP_HIDE = 'sharp hide'
     SHIFTING = 'shifting'
     SIMMERING_RAGE = 'simmeringrage'
@@ -121,7 +118,7 @@ class PowerId(Enum):
     THIEVERY = 'thievery'  # N/A
     THORNS = 'thorns'
     THOUSAND_CUTS = 'thousand cuts'
-    TIME_WARP = 'time warp'  # We don't include the Strength-up from Time Warp because that might trigger too-conservative battle decisions.
+    TIME_WARP = 'time warp'  # We currently ignore the Strength-up from Time Warp because that might trigger too-conservative battle decisions with current decision-making.
     UNAWAKENED = 'unawakened'
     VIGOR = 'vigor'
     VULNERABLE = 'vulnerable'

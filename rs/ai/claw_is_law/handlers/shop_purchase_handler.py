@@ -6,7 +6,6 @@ from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
 
 
-# TODO -> find a nice way to configure this and extract it to commons
 class ShopPurchaseHandler(Handler):
 
     def __init__(self):
