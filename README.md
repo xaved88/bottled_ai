@@ -1,10 +1,15 @@
+# Bottled AI
+Customizable Slay the Spire bot
+
+Also check out our [YouTube channel](https://www.youtube.com/@BottledAI)!
+
 ## Setup
 
 ### Python Setup
 1) Have Python 3.11.8 or so installed
-    - Windows: you may need to add Python to the Path Environmental Variable
+    - Windows: you will likely need to add Python to the Path Environmental Variable
     - MacOS: you need Python 3.11+ within xcode. This requires xcode 14.0+ (this applied for python 3.9+, might need to be higher now), which in turn requires MacOS Monterey (lower versions won't work!)
-2) Have PIP (python package manager) installed: https://pip.pypa.io/en/stable/installation/
+2) Have [PIP](https://pip.pypa.io/en/stable/installation/) (python package manager) installed.
 
 ### Project Setup
 1) Clone this repository into the game's install folder, in a new folder: `ai\requested_strike`.
@@ -14,18 +19,18 @@
 
 ### Game Setup
 1) Through the steam workshop, make sure you have:
-    - BaseMod https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019
-    - StSLib https://steamcommunity.com/sharedfiles/filedetails/?id=1609158507
-    - ModTheSpire https://steamcommunity.com/sharedfiles/filedetails/?id=1605060445
-    - Communication Mod https://steamcommunity.com/sharedfiles/filedetails/?id=2131373661
+    - [BaseMod](https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019) 
+    - [StSLib](https://steamcommunity.com/sharedfiles/filedetails/?id=1609158507)
+    - [ModTheSpire](https://steamcommunity.com/sharedfiles/filedetails/?id=1605060445)
+    - [Communication Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2131373661)
 2) Run the game with the mods enabled
-3) Now your spire config file should be created! See https://github.com/kiooeht/ModTheSpire/wiki/SpireConfig for how to navigate there
+3) TODO: reword 3+4. Now your spire config file should be created! See https://github.com/kiooeht/ModTheSpire/wiki/SpireConfig for how to navigate there
 4) Find `config.properties` in the CommunicationMod folder. Then:
     - Windows: Add `command=python .\\ai\\requested_strike\\main.py` to the `config.properties` file there.
     - MacOS: Add `command=python3 ./ai/requested_strike/main.py` to the `config.properties` file there.
 
-### Running the Bot
-- Run the bot via the game's main menu
+### Running the bot
+- Run the bot via the game's main menu:
   - Mods ->
   - Communication Mod ->
   - Config (next to "Return")  ->
