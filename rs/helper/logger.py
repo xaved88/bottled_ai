@@ -96,8 +96,11 @@ def log_run_results(state: GameState, elites: List[str], bosses: List[str], stra
     message += ", Score:" + str(state.game_state()['screen_state']['score'])
     message += ", Strat: " + strategy_name
     message += ", DiedTo: "
-    for m in state.get_monsters():
-        message += m["name"] + ","
+    if state.get_monsters():
+        for m in state.get_monsters():
+            message += m["name"] + ","
+    else:
+        message += "N/A,"
     message += " Bosses: " + ",".join(bosses)
     message += " Elites: " + ",".join(elites)
     message += " Relics: "
