@@ -6,9 +6,9 @@ Also check out our [YouTube channel](https://www.youtube.com/@BottledAI)!
 ## Setup
 
 ### Python Setup
-1) Have Python 3.11.8 or so installed
-    - Windows: you will likely need to add Python to the Path Environmental Variable
-    - MacOS: you need Python 3.11+ within xcode. This requires xcode 14.0+ (this applied for python 3.9+, might need to be higher now), which in turn requires MacOS Monterey (lower versions won't work!)
+1) Have Python installed (min version 3.11.8).
+    - Windows: you will likely need to add Python to the Path Environmental Variable.
+    - MacOS: you need Python 3.11+ within xcode. This requires xcode 14.0+ (this applied for python 3.9+, might need to be higher now), which in turn requires MacOS Monterey (lower versions won't work!).
 2) Have [PIP](https://pip.pypa.io/en/stable/installation/) (python package manager) installed.
 
 ### Project Setup

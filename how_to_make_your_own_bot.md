@@ -16,7 +16,7 @@ Changing a Strategy's configurations lets you customize your own bot.
 3) Change the Strategy that is used in `main.py` and watch the bot play! Also check out the `\logs` directory.
 
 ### State of Bottled AI
-Important! For the current state of Bottled AI's capabilities, see [capabilities.py](capabilities.py).
+Important! For the current state of Bottled AI's capabilities, see [capabilities.md](capabilities.md).
 
 
 ## Advanced
