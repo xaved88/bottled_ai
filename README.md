@@ -66,9 +66,3 @@ To debug, check the output in the ModTheSpire console, or the `communication_mod
 - In the config parameters in main.py, turn "take_screenshots" to True
 - Only the last run will have its screenshots saved, and they're in logs/screenshots (starting a new run will delete anything in there)
 - Doesn't run on Mac, so also various previous steps about python dependencies may not be required
-
-### Analyzing
-You can run [analyze.py](analyze.py) to do analysis on recent runs. Simply supply a list of seeds to the variable at the top.
-
-It can be used for just seeing how a session went, but it will naturally get the last two instances of a seed and compare them. 
-So, it's made for doing a set of runs, changing the logic and rerunning them, then comparing performance results.

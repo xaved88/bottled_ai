@@ -1,5 +1,4 @@
 Pillow == 9.2.0
 pyautogui == 0.9.53
 coverage == 6.5.0
-prettytable == 3.4.1
 PySimpleGUI == 5.0.5
