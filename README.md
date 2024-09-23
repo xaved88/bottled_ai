@@ -23,9 +23,8 @@ Also check out our [YouTube channel](https://www.youtube.com/@BottledAI)!
     - [StSLib](https://steamcommunity.com/sharedfiles/filedetails/?id=1609158507)
     - [ModTheSpire](https://steamcommunity.com/sharedfiles/filedetails/?id=1605060445)
     - [Communication Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2131373661)
-2) Run the game with the mods enabled
-3) TODO: reword 3+4. Now your spire config file should be created! See https://github.com/kiooeht/ModTheSpire/wiki/SpireConfig for how to navigate there
-4) Find `config.properties` in the CommunicationMod folder. Then:
+2) Run the game with the mods enabled - this will create your spire config file. See [ModTheSpire's repository](https://github.com/kiooeht/ModTheSpire/wiki/SpireConfig) for additional information.
+3) Find `config.properties` in the CommunicationMod folder. Then:
     - Windows: Add `command=python .\\ai\\requested_strike\\main.py` to the `config.properties` file there.
     - MacOS: Add `command=python3 ./ai/requested_strike/main.py` to the `config.properties` file there.
 
