@@ -1,5 +1,5 @@
 ## Capabilities
-See (TODO link to tierlist video) for a general overview of capabilities and their current state.
+See [this YouTube Video](https://youtu.be/830r7OCz-h4) for a general overview of capabilities and their current state.
 
 ### Ironclad
 - Missing cards: several, but also specifically: Infernal Blade, True Grit

@@ -46,6 +46,10 @@ To debug, check the output in the ModTheSpire console, or the `communication_mod
 - See [how_to_make_your_own_bot.md](how_to_make_your_own_bot.md).
 
 
+## Contact
+Just raise an issue here on Github and we'll reach out!
+
+
 ## Tools
 
 ### Bot Controls

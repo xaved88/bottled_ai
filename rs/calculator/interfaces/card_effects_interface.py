@@ -29,7 +29,6 @@ class CardEffectsInterface:
     target: TargetType
     energy_gain: int
     draw: int
-    # hooks cannot be included due to circular imports... todo find a solution for this.
     pre_hooks: List['CardEffectCustomHook']
     post_hooks: List['CardEffectCustomHook']
     post_others_discarded_hooks: List['CardEffectCustomHookWithCard']
