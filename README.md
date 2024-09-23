@@ -60,3 +60,18 @@ Just raise an issue here on Github and we'll reach out!
 ### Tests
 - All tests can be found in the `/tests` directory.
 - VERY useful for checking bot behavior without needing to run the game.
+
+
+## Contributing
+
+We're very happy to have you contribute to this repository! What we'd specifically love to see:
+- Any increased card / functionality coverage.
+- Performance improvements.
+- New handlers that add give strategies more options for effectiveness (like better potion handling for example).
+- Bugfixes!
+
+We will be hesitant to integrate any new strategies - unless they bring in a particular new approach that would be beneficial for others to use / learn from.
+
+We normally will not accept major changes to the systems or code structure, if you'd like to do this then please fork the repo and share it with us so we can see what you've created!
+
+Just create a pull request with your changes and we'll address them promptly. Thanks!
