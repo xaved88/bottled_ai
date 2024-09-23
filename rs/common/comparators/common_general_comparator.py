@@ -20,6 +20,7 @@ default_comparisons = [
     most_free_draw,
     most_lasting_intangible,
     least_incoming_damage_over_1,
+    most_great_player_powers,
     most_dead_monsters,
     most_tranquility,
     most_enemy_talking_to_hand,
