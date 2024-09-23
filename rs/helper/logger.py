@@ -132,6 +132,3 @@ def init_log(filename="default"):
     with open(ROOT_DIR + "/logs/" + filename + ".log", 'a+') as file:
         file.truncate(0)
         file.close()
-    if os.path.exists(ROOT_DIR + "/logs/screenshots"):
-        shutil.rmtree(ROOT_DIR + "/logs/screenshots")
-    os.makedirs(ROOT_DIR + "/logs/screenshots")

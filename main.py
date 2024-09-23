@@ -11,7 +11,6 @@ from rs.api.client import Client
 from rs.machine.game import Game
 from rs.helper.logger import log, init_log, log_new_run_sequence
 
-take_screenshots = False  # Functionality is disabled on Mac and this value won't change anything.
 # If there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
     #'LGZ12EEMFGUK',
@@ -28,12 +27,12 @@ if __name__ == "__main__":
         game = Game(client, strategy)
         if run_seeds:
             for seed in run_seeds:
-                game.start(seed, take_screenshots)
+                game.start(seed)
                 game.run()
                 time.sleep(1)
         else:
             for i in range(run_amount):
-                game.start(make_random_seed(), take_screenshots)
+                game.start(make_random_seed())
                 game.run()
                 time.sleep(1)
 

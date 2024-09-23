@@ -3,10 +3,8 @@ from typing import Optional
 
 from rs.api.client import Client
 from rs.helper.controller import await_controller
-from rs.helper.general import can_handle_screenshots
 from rs.helper.logger import init_run_logging, log_to_run
 from rs.helper.seed import get_seed_string
-from rs.helper.snapshot_logger import log_snapshot
 from rs.machine.ai_strategy import AiStrategy
 from rs.machine.default_game_over import DefaultGameOverHandler
 from rs.machine.handlers.default_cancel import DefaultCancelHandler
@@ -41,13 +39,12 @@ class Game:
         self.last_state: Optional[GameState] = None
         self.game_over_handler: DefaultGameOverHandler = DefaultGameOverHandler()
 
-    def start(self, seed: str = "", take_snapshots: bool = False):
+    def start(self, seed: str = ""):
         self.the_bots_memory_book.set_new_game_state()
         self.run_elites = []
         self.last_elite = ""
         self.run_bosses = []
         self.last_boss = ""
-        self.take_snapshots = take_snapshots and can_handle_screenshots()
         start_message = f"start {self.strategy.character.value}"
         if seed:
             start_message += " 0 " + seed
@@ -87,9 +84,6 @@ class Game:
                 raise Exception("ah I didn't know what to do!")
 
     def __send_command(self, command: str):
-        if self.take_snapshots and self.last_state and 'game_state' in self.last_state.json and 'floor' in self.last_state.game_state():
-            log_snapshot(self.last_state.floor(), command)
-
         self.last_state = GameState(json.loads(self.client.send_message(command)), self.the_bots_memory_book)
 
     def __send_silent_command(self, command: str):
