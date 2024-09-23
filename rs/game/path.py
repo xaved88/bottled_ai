@@ -120,7 +120,7 @@ class Path:
                     self.hp += 6
             elif room.type == RoomType.TREASURE:
                 self.reward += config.relic_reward
-                if state.has_relic("Matroshka"):  # TODO -> charges?
+                if state.has_relic("Matryoshka") and state.get_relic_counter("Matryoshka") >= 1:
                     self.reward += 1
                 if state.has_relic("Cursed Key"):
                     self.reward -= config.curse_reward_loss
