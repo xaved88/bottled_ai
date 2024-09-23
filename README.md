@@ -58,9 +58,5 @@ Just raise an issue here on Github and we'll reach out!
 - Adjust the speed of certain actions in [presentation_config.py](presentation_config.py).
 
 ### Tests
-- All tests can be found in the `/tests` directory
-- VERY useful for checking bot behavior without needing to run the game
-- You can run coverage checks with:
-  - `python -m coverage run -m unittest discover .\tests`
-  - `python -m coverage report`
-  - `python -m coverage html`
+- All tests can be found in the `/tests` directory.
+- VERY useful for checking bot behavior without needing to run the game.
