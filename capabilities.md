@@ -15,7 +15,7 @@ See [this YouTube Video](https://youtu.be/830r7OCz-h4) for a general overview of
 - Missing cards: Conjure Blade, Foreign Influence, Meditate, Omniscience, Vault
 
 ### General
-- **Calculation limit:** The bot will stop thinking after it has evaluated 11,000 battle paths for one play. This will often result in it just playing the card that's all the way on the right. This is an intentional trade-off vs waiting a long time. Most likely to happen when you've got a LOT of cards in hand, the potential to play a lot of them, and 3+ enemies.
+- **Calculation limit:** The bot will stop thinking after it has evaluated 11,000 battle paths (configurable as `max_path_count` in multiple places) for one play. This will often result in it just playing the card that's all the way on the right. This is an intentional trade-off vs waiting a long time. Most likely to happen when you've got a LOT of cards in hand, the potential to play a lot of them, and 3+ enemies.
 - **Heart**: The bot doesn't know how to find the keys
 - **Bug**: Prayer Wheel card reward is only checked if first card reward is picked up
 - **Missing colorless cards**: Chrysalis, Discovery, Forethought, Jack of All Trades, Madness, Metamorphosis, Panic Button, Purity, Secret Technique, Secret Weapon, The Bomb, Thinking Ahead, Transmutation, Violence
