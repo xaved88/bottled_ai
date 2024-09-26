@@ -1,14 +1,33 @@
 # Bottled AI
-Customizable Slay the Spire bot
+Customizable bot for roguelike deck-building game [Slay the Spire](https://store.steampowered.com/app/646570/Slay_the_Spire/).
 
-Also check out our [YouTube channel](https://www.youtube.com/@BottledAI)!
+## FAQ
+### Does it win a lot? Is it super smart?
+Depends on which character and strategy is in use. We've got a few different ones! Our current best is Watcher, and there we've got a 62% chance of beating the Act 3 boss.
+We'll re-test all characters and publish up-to-date win rates soon.
+
+### How does it work? Machine Learning? Gen AI?
+Nah, just good old-fashioned manually constructed automated decision-making. For example:
+- Selecting Cards, Boss Relics, and Upgrades works with a prioritized list, e.g. our strategy for Watcher might prefer taking Blasphemy over Tranquility.
+- Some decisions have specific conditions attached to them, like in the Shining Light event: take the damage for the 2 random upgrades... but not if we don't have much health left.
+- In combat, the bot figures out what the outcome would be for each of the different ways it could play its hand (with a graph traversal and a simulation we constructed). Then, the bot picks the outcome it likes best and plays the cards in that order.
+  - To decide what the best outcome is, the bot weighs about 40 different values against each other. Simple example: the bot prefers a turn where it defeats an enemy, but not if we will take a bunch of damage to make it happen.
+
+### Does the bot have access to secret information, e.g. the outcomes of random rolls, or what it will draw next?
+No, it can only see what the player does.
+
+### What are its current limitations/capabilities?
+See [capabilities.md](capabilities.md).
+
+### Do you make videos about the bot?
+Actually, yes. Check out the [YouTube channel](https://www.youtube.com/@BottledAI)!
 
 ## Setup
 
 ### Python Setup
 1) Have Python installed (min version 3.11.8).
     - Windows: you will likely need to add Python to the Path Environmental Variable.
-    - MacOS: you need Python 3.11+ within xcode. This requires xcode 14.0+ (this applied for python 3.9+, might need to be higher now), which in turn requires MacOS Monterey (lower versions won't work!).
+    - MacOS: you need Python 3.11+ within xcode. This requires xcode 14.0+ (this applied for python 3.9+, might need to be higher now), which in turn requires macOS Monterey (lower versions won't work!).
 2) Have [PIP](https://pip.pypa.io/en/stable/installation/) (python package manager) installed.
 
 ### Project Setup
@@ -73,7 +92,7 @@ See [capabilities.md](capabilities.md) for a _rough_ overview of current functio
 
 Please note:
 - We will be hesitant to integrate any new strategies - unless they bring in a particular new approach that would be beneficial for others to use / learn from. 
-- We normally will not accept major changes to the systems or code structure, if you'd like to do this then please fork the repo and share it with us so we can see what you've created!
-- Please cover any new functionality with tests. If you're not sure how to do that, just submit your changes without tests and we can support you in adding them.
+- We normally will not accept major changes to the systems or code structure. If you'd like to do this, please fork the repo and share it with us so that we can see what you've created!
+- Please cover any new functionality with tests. If you're not sure how to do that, just submit your changes without tests anyway, and we can support you with adding them.
 
-Just create a pull request with your changes and we'll address them promptly. Thank you!
+Just create a pull request with your changes, and we'll address them promptly. Thank you!
