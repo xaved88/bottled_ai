@@ -92,6 +92,17 @@ class CommonCombatRewardHandler(Handler):
         if 'stolen_gold' in state.get_choice_list() and choice == 'did not choose':
             choice = 'stolen_gold'
 
+        if 'emerald_key' in state.get_choice_list()\
+                and self.slay_heart\
+                and choice == 'did not choose':
+            choice = 'emerald_key'
+
+        if 'sapphire_key' in state.get_choice_list()\
+                and self.slay_heart\
+                and state.floor() == 43\
+                and choice == 'did not choose':
+            choice = 'sapphire_key'
+
         if 'relic' in state.get_choice_list() and choice == 'did not choose':
             if state.game_state()["screen_state"]["rewards"][0]["relic"]["name"] not in self.undesired_relics:
                 choice = 'relic'

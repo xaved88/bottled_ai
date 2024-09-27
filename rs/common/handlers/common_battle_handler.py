@@ -18,7 +18,7 @@ from rs.machine.state import GameState
 
 @dataclass
 class BattleHandlerConfig:
-    big_fight_floors: list[int] = field(default_factory=lambda: [33, 50])
+    big_fight_floors: list[int] = field(default_factory=lambda: [33, 50, 55])
     big_fight_comparator: ComparatorInterface = BigFightComparator
     gremlin_nob_comparator: ComparatorInterface = GremlinNobComparator
     three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
