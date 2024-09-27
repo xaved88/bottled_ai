@@ -63,9 +63,11 @@ default_desired_potions = [
 
 class CommonCombatRewardHandler(Handler):
 
-    def __init__(self, undesired_relics: List[str] = None, desired_potions: List[str] = None):
+    def __init__(self, undesired_relics: List[str] = None, desired_potions: List[str] = None, slay_heart: bool = False):
         self.undesired_relics: List[str] = default_undesired_relics.copy() if undesired_relics is None else undesired_relics.copy()
         self.desired_potions: List[str] = default_desired_potions.copy() if desired_potions is None else desired_potions.copy()
+        self.slay_heart = slay_heart
+
         self.desired_potions.reverse()
 
     def can_handle(self, state: GameState) -> bool:
