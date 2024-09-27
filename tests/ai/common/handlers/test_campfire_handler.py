@@ -68,3 +68,6 @@ class CampfireHandlerTestCase(CoTestHandlerFixture):
 
     def test_pantograph_no_rest_floor_49(self):
         self.execute_handler_tests('/campfire/campfire_do_not_rest_pantograph_floor_49.json', ['choose smith'])
+
+    def test_no_recall_if_not_slay_heart(self):
+        self.execute_handler_tests('/campfire/campfire_recall.json', ['choose smith'])
