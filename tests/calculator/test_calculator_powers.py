@@ -1459,3 +1459,10 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_has_block(play, 8)
 
+    def test_beat_of_death_damages_when_playing_cards(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.monsters[0].powers[PowerId.BEAT_OF_DEATH] = 3
+        play = self.when_playing_the_whole_hand(state)
+        self.see_player_lost_hp(play, 6)
+

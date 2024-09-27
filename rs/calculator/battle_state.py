@@ -397,7 +397,8 @@ class BattleState(BattleStateInterface):
             if self.get_memory_value(MemoryItem.PANACHE_COUNTER) == 0:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
-                        monster.inflict_damage(self.player, self.get_memory_value(MemoryItem.PANACHE_DAMAGE), 1, vulnerable_modifier=1, is_attack=False)
+                        monster.inflict_damage(self.player, self.get_memory_value(MemoryItem.PANACHE_DAMAGE), 1,
+                                               vulnerable_modifier=1, is_attack=False)
                 self.add_memory_value(MemoryItem.PANACHE_COUNTER, 5)
 
         if self.player.powers.get(PowerId.HEATSINK) and card.type == CardType.POWER:
@@ -431,6 +432,9 @@ class BattleState(BattleStateInterface):
                 if card.type == CardType.POWER:
                     monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics,
                                        self.player.powers)
+            if monster.powers.get(PowerId.BEAT_OF_DEATH):
+                self.player.inflict_damage(monster, base_damage=monster.powers.get(PowerId.BEAT_OF_DEATH), hits=1,
+                                           vulnerable_modifier=1, is_attack=False)
 
         for effect in effects:
             # apply any powers from the card

@@ -17,6 +17,7 @@ class PowerId(Enum):
     BARRICADE = 'barricade'
     BATTLE_HYMN = 'battlehymn'
     BIAS = 'bias'
+    BEAT_OF_DEATH = 'beatofdeath'
     BERSERK = 'berserk'
     BLASPHEMER = 'endturndeath'
     BLOCK_RETURN = 'blockreturnpower'
