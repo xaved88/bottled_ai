@@ -1466,3 +1466,31 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_whole_hand(state)
         self.see_player_lost_hp(play, 6)
 
+    def test_invincible_decreases_when_damage_taken(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.INVINCIBLE] = 12
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6)
+        self.see_enemy_has_power(play, PowerId.INVINCIBLE, 6)
+
+    def test_invincible_caps_damage_taken(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.INVINCIBLE] = 5
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_has_power(play, PowerId.INVINCIBLE, 0)
+        self.see_enemy_lost_hp(play, 5)
+
+    def test_invincible_caps_healing_from_damage(self):
+        state = self.given_state(CardId.REAPER)
+        state.monsters[0].powers[PowerId.INVINCIBLE] = 2
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 2)
+        self.see_player_lost_hp(play, -2)
+        self.see_enemy_has_power(play, PowerId.INVINCIBLE, 0)
+
+    def test_invincible_blocks_damage_even_when_it_is_already_at_0(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].powers[PowerId.INVINCIBLE] = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 0)
+        self.see_enemy_has_power(play, PowerId.INVINCIBLE, 0)

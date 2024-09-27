@@ -16,8 +16,8 @@ class PowerId(Enum):
     ARTIFACT = 'artifact'
     BARRICADE = 'barricade'
     BATTLE_HYMN = 'battlehymn'
-    BIAS = 'bias'
     BEAT_OF_DEATH = 'beatofdeath'
+    BIAS = 'bias'
     BERSERK = 'berserk'
     BLASPHEMER = 'endturndeath'
     BLOCK_RETURN = 'blockreturnpower'
@@ -69,6 +69,7 @@ class PowerId(Enum):
     INTANGIBLE_PLAYER = 'intangibleplayer'
     INTANGIBLE_ENEMY = 'intangible'
     INTERNAL_ECHO_FORM_READY = 'echo form ready'  # internal use only, for marking whether echo form can be used
+    INVINCIBLE = 'invincible'
     JUGGERNAUT = 'juggernaut'
     LIFE_LINK = 'life link'
     LIKE_WATER = 'likewaterpower'
