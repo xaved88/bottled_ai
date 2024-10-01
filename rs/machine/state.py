@@ -200,3 +200,13 @@ class GameState:
         for idx, choice in enumerate(options):
             options[idx] = choice.replace("+", "")
         return options
+
+    def get_act_4_keys(self):
+        # just the first letter of the key is enough
+        keys = []
+        if "keys" not in self.game_state():
+            return ['Communication Mod out of date']
+        for key in self.game_state()["keys"]:
+            if self.game_state()["keys"].get(key):
+                keys.append(key[0])
+        return keys
