@@ -34,6 +34,8 @@ class Target(TargetInterface):
         damage = base_damage
         if self.powers.get(PowerId.VULNERABLE):
             damage = math.floor(damage * vulnerable_modifier)
+        if source.powers.get(PowerId.BACK_ATTACK):
+            damage = math.floor(damage * 1.5)
         if is_orbs and self.powers.get(PowerId.LOCK_ON):
             damage = math.floor(damage * 1.5)
 

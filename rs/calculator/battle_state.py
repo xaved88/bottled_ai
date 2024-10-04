@@ -415,6 +415,12 @@ class BattleState(BattleStateInterface):
             for i in range(self.player.powers.get(PowerId.HEX)):
                 self.spawn_in_draw(get_card(CardId.DAZED))
 
+        if self.player.powers.get(PowerId.SURROUNDED):
+            if target_index > -1:
+                if self.monsters[target_index].powers.get(PowerId.BACK_ATTACK):
+                    self.monsters[target_index].powers[PowerId.BACK_ATTACK] = 0
+                    self.monsters[1 - target_index].powers[PowerId.BACK_ATTACK] = -1
+
         # post card play MONSTER power checks
         for monster in self.monsters:
             if monster.powers.get(PowerId.TIME_WARP) is not None:
@@ -680,6 +686,8 @@ class BattleState(BattleStateInterface):
                 if self.get_stance() is StanceType.WRATH:
                     damage *= 2
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
+                if self.player.powers.get(PowerId.SURROUNDED):
+                    self.kill_monsters()
 
             if monster.powers.get(PowerId.EXPLOSIVE):
                 monster.powers[PowerId.EXPLOSIVE] -= 1
@@ -938,6 +946,13 @@ class BattleState(BattleStateInterface):
                                            m.powers)
                 if not m.powers.get(PowerId.UNAWAKENED, 0):
                     m.powers = {}
+
+        if self.player.powers.get(PowerId.SURROUNDED):
+            alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+            if alive_monsters < 2:
+                self.player.powers[PowerId.SURROUNDED] = 0
+                for m in self.monsters:
+                    m.powers[PowerId.BACK_ATTACK] = 0
 
     def trigger_orbs_passives(self):
         focus = self.player.powers.get(PowerId.FOCUS, 0)

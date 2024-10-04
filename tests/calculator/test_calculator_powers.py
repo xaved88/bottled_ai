@@ -1494,3 +1494,64 @@ class CalculatorPowersTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_enemy_lost_hp(play, 0)
         self.see_enemy_has_power(play, PowerId.INVINCIBLE, 0)
+
+    def test_back_attack_deals_more_damage(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].damage = 10
+        state.monsters[0].hits = 1
+        state.monsters[0].powers[PowerId.BACK_ATTACK] = -1
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 15)
+
+    def test_back_attack_combos_with_strength_correctly(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].damage = 12
+        state.monsters[0].hits = 1
+        state.monsters[0].powers[PowerId.BACK_ATTACK] = -1
+        state.monsters[0].powers[PowerId.STRENGTH] = 1
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_player_lost_hp(play, 19)
+
+    def test_back_attack_moves_depending_on_target(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2, player_powers={PowerId.SURROUNDED: -1})
+        state.monsters[0].powers[PowerId.BACK_ATTACK] = -1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, 0, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, -1, 1)
+
+    def test_back_attack_does_not_move_if_targeting_same(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2, player_powers={PowerId.SURROUNDED: 1})
+        state.monsters[1].powers[PowerId.BACK_ATTACK] = -1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 6, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, 0, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, -1, 1)
+
+    def test_back_attack_disappears_if_only_1_target(self):
+        state = self.given_state(CardId.STRIKE_R, targets=2, player_powers={PowerId.SURROUNDED: -1})
+        state.monsters[0].current_hp = 1
+        state.monsters[1].powers[PowerId.BACK_ATTACK] = -1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 100, 0)
+        self.see_player_has_power(play, PowerId.SURROUNDED, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, 0, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, 0, 1)
+
+    def test_back_attack_disappears_if_a_monster_dies_during_their_turn(self):
+        state = self.given_state(CardId.WOUND, targets=2, player_powers={PowerId.SURROUNDED: -1, PowerId.THORNS: 1})
+        state.monsters[0].current_hp = 1
+        state.monsters[0].damage = 0
+        state.monsters[0].hits = 1
+        state.monsters[1].powers[PowerId.BACK_ATTACK] = -1
+        state.monsters[1].damage = 2
+        state.monsters[1].hits = 1
+        play = self.when_playing_the_first_card(state)
+        play.state.end_turn()
+        self.see_enemy_lost_hp(play, 100, 0)
+        self.see_player_lost_hp(play, 2)
+        self.see_player_has_power(play, PowerId.SURROUNDED, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, 0, 0)
+        self.see_enemy_has_power(play, PowerId.BACK_ATTACK, 0, 1)
