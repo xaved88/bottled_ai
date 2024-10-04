@@ -273,3 +273,8 @@ def avoid_inconvenient_time_warp(best: CA, challenger: CA) -> Optional[bool]:
 def preserve_revive_options(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.revive_option_count() == challenger.revive_option_count() \
         else challenger.revive_option_count() > best.revive_option_count()
+
+
+def spear_lowest_health(best: CA, challenger: CA) -> Optional[bool]:
+    return None if best.spear_lowest_health() == challenger.spear_lowest_health() \
+        else challenger.spear_lowest_health() < best.spear_lowest_health()

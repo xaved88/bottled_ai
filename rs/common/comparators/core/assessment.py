@@ -280,3 +280,6 @@ class ComparatorAssessment:
                 lizard_count += 1
 
         return self.__get_value('roc', lambda: fairy_count + lizard_count)
+
+    def spear_lowest_health(self) -> int:
+        return self.__get_value('spear_lowest_health', lambda: self.monsters_vulnerable_hp()[-1])

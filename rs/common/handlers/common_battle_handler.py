@@ -5,6 +5,7 @@ from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.common.comparators.big_fight_comparator import BigFightComparator
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from rs.common.comparators.gremlin_nob_comparator import GremlinNobComparator
+from rs.common.comparators.shield_and_sword_comparator import ShieldAndSwordComparator
 from rs.common.comparators.three_sentry_comparator import ThreeSentriesComparator
 from rs.common.comparators.three_sentry_turn_1_comparator import ThreeSentriesTurn1Comparator
 from rs.common.comparators.transient_comparator import TransientComparator
@@ -24,6 +25,7 @@ class BattleHandlerConfig:
     three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
     three_sentries_turn_1_comparator: ComparatorInterface = ThreeSentriesTurn1Comparator
     transient_comparator: ComparatorInterface = TransientComparator
+    shield_and_spear_comparator: ComparatorInterface = ShieldAndSwordComparator
     waiting_lagavulin_comparator: ComparatorInterface = WaitingLagavulinComparator
     general_comparator: ComparatorInterface = CommonGeneralComparator
 
@@ -65,6 +67,8 @@ class CommonBattleHandler(Handler):
 
         transient_is_present = state.has_monster("Transient") and alive_monsters == 1
 
+        spear_still_alive = state.has_monster("Spire Shield") and alive_monsters == 2
+
         if big_fight:
             return self.config.big_fight_comparator()
         elif gremlin_nob_is_present:
@@ -77,6 +81,8 @@ class CommonBattleHandler(Handler):
             return self.config.waiting_lagavulin_comparator()
         elif transient_is_present:
             return self.config.transient_comparator()
+        elif spear_still_alive:
+            return self.config.shield_and_spear_comparator()
         return self.config.general_comparator()
 
     def handle(self, state: GameState) -> HandlerAction:

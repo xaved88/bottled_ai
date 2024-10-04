@@ -144,12 +144,14 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_one_dead.json', ['play 6'])
 
     def test_three_sentries_turn_1_can_kill(self):
-        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_turn_1_can_kill.json', ['play 1 1'])
+        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_turn_1_can_kill.json',
+                                   ['play 1 1'])
 
     def test_three_sentries_kill_edge_over_middle(self):
         mb = TheBotsMemoryBook.new_default()
         mb.memory_general[MemoryItem.STANCE] = StanceType.WRATH
-        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_kill_edge_over_middle.json', ['play 1 0'], memory_book=mb)
+        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_kill_edge_over_middle.json',
+                                   ['play 1 0'], memory_book=mb)
 
     def test_do_not_attack_escaped_mugger(self):
         self.execute_handler_tests('/battles/general/escaped_mugger.json', ['play 2 1'])
@@ -419,3 +421,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests(
             'battles/specific_comparator_cases/big_fight/time_eater_play_less_to_avoid_inconvenient_time_warp.json',
             ['end'])
+
+    def test_prefer_going_after_spear(self):
+        self.execute_handler_tests('battles/specific_comparator_cases/shield_and_spear/shield_and_spear_go_after_spear.json',
+                                   ['play 1 1'])
