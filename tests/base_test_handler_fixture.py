@@ -8,7 +8,7 @@ from test_helpers.resources import load_resource_state
 
 
 class BaseTestHandlerFixture(unittest.TestCase):
-    ai_handlers: List[Handler]  # should be overriden by AI package fixture
+    ai_handlers: List[Handler]  # should be overridden by AI package fixture
     handler: Type[Handler]  # should be overridden by children - the expected handler to respond to this state.
 
     def execute_handler_tests(self, state_path: str, expected=None,
