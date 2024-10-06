@@ -432,11 +432,16 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_end_turn_after_excessive_amount_of_cards_played(self):
         mb = TheBotsMemoryBook.new_default()
-        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 105
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
         self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played.json', ['end'], mb)
+
+    def test_end_turn_after_excessive_amount_of_cards_played_even_if_we_can_draw_more(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_can_still_draw_with_rushdown.json', ['end'], mb)
 
     def test_keep_playing_usefully_after_excessive_amount_of_cards_played(self):
         mb = TheBotsMemoryBook.new_default()
-        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 120
-        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_but_still_useful.json',
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_but_can_still_damage_enemy.json',
                                    ['play 1 0'], mb)
