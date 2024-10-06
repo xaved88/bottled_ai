@@ -1,0 +1,924 @@
+{
+  "available_commands": [
+    "play",
+    "end",
+    "potion",
+    "key",
+    "click",
+    "wait",
+    "state"
+  ],
+  "ready_for_command": true,
+  "in_game": true,
+  "game_state": {
+    "screen_type": "NONE",
+    "screen_state": {},
+    "seed": 2372144723510827919,
+    "combat_state": {
+      "draw_pile": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Halt+",
+          "id": "Halt",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "b56df3ce-322e-44d1-991b-6f3356bfd35e",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Eruption+",
+          "id": "Eruption",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "b0fd61c1-e4fa-450b-92e5-e747898e2fd1",
+          "upgrades": 1,
+          "rarity": "BASIC",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Fear No Evil",
+          "id": "FearNoEvil",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "bf319f7f-cf5d-4a6e-ab7c-49253cdbfa6b",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Indignation",
+          "id": "Indignation",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "66fbd097-fac1-43ea-8ded-1812380aa813",
+          "upgrades": 0,
+          "rarity": "UNCOMMON",
+          "has_target": false
+        }
+      ],
+      "discard_pile": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Crush Joints",
+          "id": "CrushJoints",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "ee49e62c-0a4e-4ae5-a644-05f17ab0722b",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Flurry of Blows",
+          "id": "FlurryOfBlows",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "cbd9a919-1403-4a9e-a634-ae6c67adaaca",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": true
+        }
+      ],
+      "exhaust_pile": [
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Miracle",
+          "id": "Miracle",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "5f2d3e1d-ccf7-4738-8b1e-aedf24b45683",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Apparition",
+          "id": "Ghostly",
+          "type": "SKILL",
+          "ethereal": true,
+          "uuid": "15d58c43-9227-4da0-b4d9-201c7de89151",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Insight",
+          "id": "Insight",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "d5ef5b9d-8ce9-43d3-8d00-d132277d9503",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Apparition",
+          "id": "Ghostly",
+          "type": "SKILL",
+          "ethereal": true,
+          "uuid": "348e7bc9-4975-4beb-bd96-5641ab2f76e7",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Apparition",
+          "id": "Ghostly",
+          "type": "SKILL",
+          "ethereal": true,
+          "uuid": "926e8b9d-6727-48bc-b45d-a99072c30ebe",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Apparition",
+          "id": "Ghostly",
+          "type": "SKILL",
+          "ethereal": true,
+          "uuid": "eb500f16-a05d-4595-a347-94d8207edb59",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": false,
+          "cost": -2,
+          "name": "Dazed",
+          "id": "Dazed",
+          "type": "STATUS",
+          "ethereal": true,
+          "uuid": "ebfa7897-2156-49f1-a47a-f6565fb7b59a",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Insight",
+          "id": "Insight",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "5d42055e-65d4-4271-911e-ad6fb9a76656",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Talk to the Hand+",
+          "id": "TalkToTheHand",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "fa96448d-87d0-478f-8273-650cc984f8b1",
+          "upgrades": 1,
+          "rarity": "UNCOMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Apparition",
+          "id": "Ghostly",
+          "type": "SKILL",
+          "ethereal": true,
+          "uuid": "912d7604-dbe0-4544-959b-c05dea08e677",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Insight",
+          "id": "Insight",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "8af38e77-8417-49a8-a003-a4697b14e737",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Talk to the Hand+",
+          "id": "TalkToTheHand",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "4ae088b5-b5ba-4b3f-85d6-8e14a3655910",
+          "upgrades": 1,
+          "rarity": "UNCOMMON",
+          "has_target": true
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Tranquility+",
+          "id": "ClearTheMind",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "c9971ff5-f7d7-4a50-b0c7-7f7651624733",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Insight",
+          "id": "Insight",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "31bb151d-4b70-4634-9a8d-5294428b2e9b",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Tranquility+",
+          "id": "ClearTheMind",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "254c3373-bf5f-4d8b-a935-4dde6df9aa92",
+          "upgrades": 1,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Slimed",
+          "id": "Slimed",
+          "type": "STATUS",
+          "ethereal": false,
+          "uuid": "aea8ca8c-b5a4-4b13-8fe5-9185bb76c576",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": false,
+          "is_playable": false,
+          "cost": -2,
+          "name": "Void",
+          "id": "Void",
+          "type": "STATUS",
+          "ethereal": true,
+          "uuid": "ba0d3dda-68df-4d02-9cbd-d6b99e35464a",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 0,
+          "name": "Insight",
+          "id": "Insight",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "681a97a4-a5d8-4d68-ad5c-e946a54544c6",
+          "upgrades": 0,
+          "rarity": "SPECIAL",
+          "has_target": false
+        },
+        {
+          "exhausts": true,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Crescendo",
+          "id": "Crescendo",
+          "type": "SKILL",
+          "ethereal": false,
+          "uuid": "df3860fe-ddf7-4cba-a7ee-e8cb37e562ba",
+          "upgrades": 0,
+          "rarity": "COMMON",
+          "has_target": false
+        }
+      ],
+      "cards_discarded_this_turn": 0,
+      "times_damaged": 26,
+      "monsters": [
+        {
+          "is_gone": false,
+          "move_hits": 1,
+          "move_base_damage": 40,
+          "last_move_id": 1,
+          "half_dead": false,
+          "move_adjusted_damage": 1,
+          "max_hp": 750,
+          "intent": "ATTACK",
+          "second_last_move_id": 4,
+          "move_id": 2,
+          "name": "Corrupt Heart",
+          "current_hp": 50,
+          "block": 0,
+          "id": "CorruptHeart",
+          "powers": [
+            {
+              "amount": 1,
+              "name": "Beat Of Death",
+              "id": "BeatOfDeath"
+            },
+            {
+              "amount": 1,
+              "name": "Invincible",
+              "id": "Invincible",
+              "misc": 300
+            }
+          ]
+        }
+      ],
+      "turn": 0,
+      "limbo": [],
+            "hand": [
+        {
+          "exhausts": false,
+          "is_playable": true,
+          "cost": 1,
+          "name": "Strike",
+          "id": "Strike_R",
+          "type": "ATTACK",
+          "ethereal": false,
+          "uuid": "00a99abc-ef81-418f-bd3b-c462aafde981",
+          "upgrades": 0,
+          "rarity": "BASIC",
+          "has_target": true
+        }
+      ],
+      "player": {
+        "orbs": [],
+        "current_hp": 1,
+        "block": 196,
+        "max_hp": 31,
+        "powers": [
+          {
+            "amount": 9,
+            "name": "Dexterity",
+            "id": "Dexterity"
+          },
+          {
+            "amount": 9,
+            "name": "Strength",
+            "id": "Strength"
+          },
+          {
+            "amount": 1,
+            "name": "Study",
+            "id": "Study"
+          },
+          {
+            "amount": 4,
+            "name": "Rushdown",
+            "id": "Adaptation"
+          },
+          {
+            "amount": 12,
+            "name": "Mental Fortress",
+            "id": "Controlled"
+          },
+          {
+            "amount": 1,
+            "name": "Intangible",
+            "id": "IntangiblePlayer"
+          }
+        ],
+        "energy": 3
+      }
+    },
+    "keys": {
+      "emerald": true,
+      "ruby": true,
+      "sapphire": true
+    },
+    "deck": [
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Eruption+",
+        "id": "Eruption",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "b0fd61c1-e4fa-450b-92e5-e747898e2fd1",
+        "upgrades": 1,
+        "rarity": "BASIC",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Vigilance",
+        "id": "Vigilance",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "55f418c3-8fde-491a-9e7d-5d4c2d784f49",
+        "upgrades": 0,
+        "rarity": "BASIC",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Empty Fist",
+        "id": "EmptyFist",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "511bfda4-fba5-4ed8-82cd-863f15ca146e",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Indignation",
+        "id": "Indignation",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "66fbd097-fac1-43ea-8ded-1812380aa813",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Fear No Evil",
+        "id": "FearNoEvil",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "00a99abc-ef81-418f-bd3b-c462aafde981",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Mental Fortress+",
+        "id": "MentalFortress",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "91e88aae-cedf-49fe-bc7f-12baf22320d6",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Mental Fortress+",
+        "id": "MentalFortress",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "0cc900c0-87ba-42d4-8b80-3529669cb194",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Study+",
+        "id": "Study",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "e6bb3691-58b4-44a3-a034-8e5e7bc0e85b",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": false,
+        "cost": 2,
+        "name": "Signature Move+",
+        "id": "SignatureMove",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "3203ca75-7ce7-42c3-ac60-8977e4e94879",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Halt+",
+        "id": "Halt",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "b56df3ce-322e-44d1-991b-6f3356bfd35e",
+        "upgrades": 1,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Tranquility+",
+        "id": "ClearTheMind",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "c9971ff5-f7d7-4a50-b0c7-7f7651624733",
+        "upgrades": 1,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Apparition",
+        "id": "Ghostly",
+        "type": "SKILL",
+        "ethereal": true,
+        "uuid": "926e8b9d-6727-48bc-b45d-a99072c30ebe",
+        "upgrades": 0,
+        "rarity": "SPECIAL",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Apparition",
+        "id": "Ghostly",
+        "type": "SKILL",
+        "ethereal": true,
+        "uuid": "912d7604-dbe0-4544-959b-c05dea08e677",
+        "upgrades": 0,
+        "rarity": "SPECIAL",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Apparition",
+        "id": "Ghostly",
+        "type": "SKILL",
+        "ethereal": true,
+        "uuid": "15d58c43-9227-4da0-b4d9-201c7de89151",
+        "upgrades": 0,
+        "rarity": "SPECIAL",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Apparition",
+        "id": "Ghostly",
+        "type": "SKILL",
+        "ethereal": true,
+        "uuid": "348e7bc9-4975-4beb-bd96-5641ab2f76e7",
+        "upgrades": 0,
+        "rarity": "SPECIAL",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Apparition",
+        "id": "Ghostly",
+        "type": "SKILL",
+        "ethereal": true,
+        "uuid": "eb500f16-a05d-4595-a347-94d8207edb59",
+        "upgrades": 0,
+        "rarity": "SPECIAL",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 2,
+        "name": "Wallop+",
+        "id": "Wallop",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "d1264524-cf47-403a-ae0f-65005216a11d",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Talk to the Hand+",
+        "id": "TalkToTheHand",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "fa96448d-87d0-478f-8273-650cc984f8b1",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Fear No Evil",
+        "id": "FearNoEvil",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "bf319f7f-cf5d-4a6e-ab7c-49253cdbfa6b",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Crescendo",
+        "id": "Crescendo",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "df3860fe-ddf7-4cba-a7ee-e8cb37e562ba",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Talk to the Hand+",
+        "id": "TalkToTheHand",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "4ae088b5-b5ba-4b3f-85d6-8e14a3655910",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Tantrum+",
+        "id": "Tantrum",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "dd6292c5-e853-4369-9205-992581cc4691",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Rushdown+",
+        "id": "Adaptation",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "d71da72b-ec7c-4d68-8f3f-a710e88e8e4d",
+        "upgrades": 1,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Rushdown",
+        "id": "Adaptation",
+        "type": "POWER",
+        "ethereal": false,
+        "uuid": "e4cdcb1f-8ef7-4353-8e53-b3f7569c963f",
+        "upgrades": 0,
+        "rarity": "UNCOMMON",
+        "has_target": false
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Flurry of Blows",
+        "id": "FlurryOfBlows",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "cbd9a919-1403-4a9e-a634-ae6c67adaaca",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": false,
+        "is_playable": true,
+        "cost": 1,
+        "name": "Crush Joints",
+        "id": "CrushJoints",
+        "type": "ATTACK",
+        "ethereal": false,
+        "uuid": "ee49e62c-0a4e-4ae5-a644-05f17ab0722b",
+        "upgrades": 0,
+        "rarity": "COMMON",
+        "has_target": true
+      },
+      {
+        "exhausts": true,
+        "is_playable": true,
+        "cost": 0,
+        "name": "Tranquility+",
+        "id": "ClearTheMind",
+        "type": "SKILL",
+        "ethereal": false,
+        "uuid": "254c3373-bf5f-4d8b-a935-4dde6df9aa92",
+        "upgrades": 1,
+        "rarity": "COMMON",
+        "has_target": false
+      }
+    ],
+    "relics": [
+      {
+        "name": "Pure Water",
+        "id": "PureWater",
+        "counter": -1
+      },
+      {
+        "name": "Question Card",
+        "id": "Question Card",
+        "counter": -1
+      },
+      {
+        "name": "Letter Opener",
+        "id": "Letter Opener",
+        "counter": 1
+      },
+      {
+        "name": "White Beast Statue",
+        "id": "White Beast Statue",
+        "counter": -1
+      },
+      {
+        "name": "Astrolabe",
+        "id": "Astrolabe",
+        "counter": -1
+      },
+      {
+        "name": "Red Mask",
+        "id": "Red Mask",
+        "counter": -1
+      },
+      {
+        "name": "Kunai",
+        "id": "Kunai",
+        "counter": 2
+      },
+      {
+        "name": "Violet Lotus",
+        "id": "VioletLotus",
+        "counter": -1
+      },
+      {
+        "name": "Du-Vu Doll",
+        "id": "Du-Vu Doll",
+        "counter": 0
+      },
+      {
+        "name": "Shuriken",
+        "id": "Shuriken",
+        "counter": 2
+      }
+    ],
+    "max_hp": 31,
+    "act_boss": "The Heart",
+    "gold": 1112,
+    "action_phase": "WAITING_ON_USER",
+    "act": 4,
+    "screen_name": "NONE",
+    "room_phase": "COMBAT",
+    "is_screen_up": false,
+    "potions": [
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      },
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": false,
+        "name": "Potion Slot",
+        "id": "Potion Slot"
+      },
+      {
+        "requires_target": false,
+        "can_use": false,
+        "can_discard": true,
+        "name": "Fairy in a Bottle",
+        "id": "FairyPotion"
+      }
+    ],
+    "current_hp": 1,
+    "floor": 55,
+    "ascension_level": 0,
+    "class": "WATCHER",
+    "map": [
+      {
+        "symbol": "R",
+        "children": [
+          {
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "x": 3,
+        "y": 0,
+        "parents": []
+      },
+      {
+        "symbol": "$",
+        "children": [
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "x": 3,
+        "y": 1,
+        "parents": []
+      },
+      {
+        "symbol": "E",
+        "children": [
+          {
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "x": 3,
+        "y": 2,
+        "parents": []
+      }
+    ],
+    "room_type": "MonsterRoomBoss"
+  }
+}

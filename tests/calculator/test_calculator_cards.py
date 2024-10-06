@@ -34,6 +34,13 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_player_spent_energy(play, 1)
         self.see_player_has_block(play, 8)
 
+    def test_block_cannot_exceed_990(self):
+        state = self.given_state(CardId.DEFEND_R)
+        state.player.block = 990
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_player_has_block(play, 990)
+
     def test_strike_g(self):
         state = self.given_state(CardId.STRIKE_G)
         play = self.when_playing_the_first_card(state)

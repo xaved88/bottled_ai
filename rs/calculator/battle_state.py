@@ -904,6 +904,7 @@ class BattleState(BattleStateInterface):
         if amount:
             self.player.block += amount
             self.trigger_block_effects()
+            self.player.block = min(self.player.block, 990)  # lower than 999 to avoid flailing against Beat of Death
 
     def trigger_block_effects(self, times: int = 1):
         for i in range(times):

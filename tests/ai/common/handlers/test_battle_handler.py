@@ -429,3 +429,14 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_heart_uses_big_fight_comparator(self):
         self.execute_handler_tests(
             'battles/specific_comparator_cases/big_fight/big_fight_heart_prioritize_power_over_damage.json', ['play 1'])
+
+    def test_end_turn_after_excessive_amount_of_cards_played(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 105
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played.json', ['end'], mb)
+
+    def test_keep_playing_usefully_after_excessive_amount_of_cards_played(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 120
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_but_still_useful.json',
+                                   ['play 1 0'], mb)
