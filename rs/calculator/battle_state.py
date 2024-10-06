@@ -420,11 +420,13 @@ class BattleState(BattleStateInterface):
             for i in range(self.player.powers.get(PowerId.HEX)):
                 self.spawn_in_draw(get_card(CardId.DAZED))
 
-        if self.player.powers.get(PowerId.SURROUNDED):
-            if target_index > -1:
-                if self.monsters[target_index].powers.get(PowerId.BACK_ATTACK):
-                    self.monsters[target_index].powers[PowerId.BACK_ATTACK] = 0
-                    self.monsters[1 - target_index].powers[PowerId.BACK_ATTACK] = -1
+        # Back Attack doesn't currently correctly get updated in the game when we attack a different monster.
+        # So commenting it out for now. @todo
+        # if self.player.powers.get(PowerId.SURROUNDED):
+        #     if target_index > -1:
+        #         if self.monsters[target_index].powers.get(PowerId.BACK_ATTACK):
+        #             self.monsters[target_index].powers[PowerId.BACK_ATTACK] = 0
+        #             self.monsters[1 - target_index].powers[PowerId.BACK_ATTACK] = -1
 
         # post card play MONSTER power checks
         for monster in self.monsters:
