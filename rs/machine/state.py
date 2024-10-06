@@ -210,3 +210,12 @@ class GameState:
             if self.game_state()["keys"].get(key):
                 keys.append(key[0])
         return keys
+
+    def get_burning_elite_position(self):
+        burning_elite_position = 0
+        if 'emerald_key_node' in self.game_state()["screen_state"]:
+            be = self.game_state()["screen_state"]["emerald_key_node"]
+            burning_elite_position = str(be["x"]) + "_" + str(be["y"])
+        return burning_elite_position
+
+

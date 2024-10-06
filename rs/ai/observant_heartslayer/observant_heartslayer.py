@@ -45,7 +45,7 @@ OBSERVANT_HEARTSLAYER: AiStrategy = AiStrategy(
         NeowHandler(),
         EventHandler(),
         CommonChestHandler(),
-        CommonMapHandler(),
+        CommonMapHandler(slay_heart=SLAY_HEART),
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST, slay_heart=SLAY_HEART),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),

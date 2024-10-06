@@ -17,6 +17,7 @@ default_config = PathHandlerConfig(
     hallway_fight_health_loss=lambda state: state.game_state()['act'] * 5,
     elite_base_reward=1,  # this does not include the relic, that's added separately
     elite_question_card_reward=0.15,
+    elite_emerald_key_reward=0,
     elite_fight_gold=30,
     elite_fight_health_loss=lambda state: (state.game_state()['act'] + 1) * 15,
     relic_reward=1.5,
@@ -31,13 +32,17 @@ default_config = PathHandlerConfig(
 
 class CommonMapHandler(Handler):
 
-    def __init__(self, config: PathHandlerConfig = None):
+    def __init__(self, config: PathHandlerConfig = None, slay_heart: bool = None):
         self.config: PathHandlerConfig = default_config if config is None else config
+        self.slay_heart = False if slay_heart is None else slay_heart
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.MAP.value and state.has_command(Command.CHOOSE)
 
     def handle(self, state: GameState) -> HandlerAction:
+        if self.slay_heart:
+            self.config.elite_emerald_key_reward = 5
+
         # Get the math and paths set up
         n = state.game_state()["screen_state"]["current_node"]
         current_position = str(n["x"]) + "_" + str(n["y"])

@@ -27,6 +27,7 @@ class PathHandlerConfig:
             hallway_fight_health_loss: GameStateCalculation = default_hallway_fight_health_loss,
             elite_base_reward: float = 1,  # this does not include the relic, that's added separately
             elite_question_card_reward: float = 0.15,
+            elite_emerald_key_reward: float = 0,
             elite_fight_gold: int = 30,
             elite_fight_health_loss: GameStateCalculation = default_elite_fight_health_loss,
             relic_reward: float = 1.5,
@@ -44,6 +45,7 @@ class PathHandlerConfig:
         self.hallway_fight_health_loss: GameStateCalculation = hallway_fight_health_loss
         self.elite_question_card_reward: float = elite_question_card_reward
         self.elite_base_reward: float = elite_base_reward
+        self.elite_emerald_key_reward: float = elite_emerald_key_reward
         self.elite_fight_gold: int = elite_fight_gold
         self.elite_fight_health_loss: GameStateCalculation = elite_fight_health_loss
         self.relic_reward: float = relic_reward
@@ -77,6 +79,8 @@ class Path:
         act: int = state.game_state()['act']
         floor: int = state.game_state()['floor']
 
+        emerald_key_available = state.get_burning_elite_position()
+
         for room in self.rooms:
             # MONSTERS
             if room.type == RoomType.MONSTER:
@@ -106,6 +110,8 @@ class Path:
                     self.reward += config.elite_question_card_reward
                 if state.has_relic("Black Star"):
                     self.reward += config.relic_reward
+                if emerald_key_available and room.id == state.get_burning_elite_position():
+                    self.reward += config.elite_emerald_key_reward
                 # gold
                 self.gold += 30
                 # health

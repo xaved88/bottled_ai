@@ -71,3 +71,12 @@ class GameStateConverterTest(unittest.TestCase):
     def test_get_act_4_keys_not_present(self):
         state = load_resource_state("other/chest_medium_reward.json")
         self.assertEqual(['Communication Mod out of date'], state.get_act_4_keys())
+
+    def test_get_burning_elite_position(self):
+        state = load_resource_state("path/path_includes_burning_elite.json")
+        self.assertEqual('1_5', state.get_burning_elite_position())
+
+    def test_get_burning_elite_position_not_available(self):
+        state = load_resource_state("path/path_elites.json")
+        self.assertEqual(0, state.get_burning_elite_position())
+
