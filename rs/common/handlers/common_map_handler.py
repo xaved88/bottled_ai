@@ -20,6 +20,7 @@ default_config = PathHandlerConfig(
     elite_emerald_key_reward=0,
     elite_fight_gold=30,
     elite_fight_health_loss=lambda state: (state.game_state()['act'] + 1) * 15,
+    elite_fight_emerald_key_extra_health_loss=5,
     relic_reward=1.5,
     curse_reward_loss=1.5,
     upgrade_reward=1.1,
