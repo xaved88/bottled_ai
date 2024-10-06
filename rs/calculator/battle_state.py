@@ -365,6 +365,11 @@ class BattleState(BattleStateInterface):
 
         self.add_memory_value(MemoryItem.CARDS_THIS_TURN, 1)
 
+        # for logging purposes
+        if not self.get_memory_value(MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN):
+            if self.get_memory_value(MemoryItem.CARDS_THIS_TURN) > 29:
+                self.add_memory_value(MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN, 1)
+
         # dispose of cards being played
         if card in self.hand:  # b/c some cards like fiend fire, will destroy themselves before they follow this route
             idx = self.hand.index(card)

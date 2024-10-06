@@ -133,3 +133,4 @@ class GameStateConverterWithMemoryBookTest(unittest.TestCase):
         mb.memory_general[MemoryItem.PANACHE_DAMAGE] = 10
         new_state = load_resource_state('card_reward/card_reward_take.json', memory_book=mb)
         self.assertEqual(0, new_state.memory_general[MemoryItem.PANACHE_DAMAGE])
+

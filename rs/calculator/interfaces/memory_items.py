@@ -16,6 +16,7 @@ class MemoryItem(Enum):
     RECYCLE = auto()
     SAVE_INTERNAL_MANTRA = auto()
     STANCE = auto()
+    PLAYED_30_PLUS_CARDS_IN_A_TURN = auto()
     TYPE_LAST_PLAYED = auto()
     ORANGE_PELLETS_ATTACK = auto()
     ORANGE_PELLETS_SKILL = auto()

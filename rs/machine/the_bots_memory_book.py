@@ -22,6 +22,7 @@ class TheBotsMemoryBook:
 
         # Doesn't wipe during run so that we can log the result :D
         self.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED] = 0
+        self.memory_general[MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN] = 0
 
         self.set_new_battle_state()
         self.set_new_turn_state()
