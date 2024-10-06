@@ -425,3 +425,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     def test_prefer_going_after_spear(self):
         self.execute_handler_tests('battles/specific_comparator_cases/shield_and_spear/shield_and_spear_go_after_spear.json',
                                    ['play 1 1'])
+
+    def test_heart_uses_big_fight_comparator(self):
+        self.execute_handler_tests(
+            'battles/specific_comparator_cases/big_fight/big_fight_heart_prioritize_power_over_damage.json', ['play 1'])

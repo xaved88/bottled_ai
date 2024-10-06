@@ -19,7 +19,7 @@ from rs.machine.state import GameState
 
 @dataclass
 class BattleHandlerConfig:
-    big_fight_floors: list[int] = field(default_factory=lambda: [33, 50, 55])
+    big_fight_floors: list[int] = field(default_factory=lambda: [33, 50])
     big_fight_comparator: ComparatorInterface = BigFightComparator
     gremlin_nob_comparator: ComparatorInterface = GremlinNobComparator
     three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
@@ -44,7 +44,7 @@ class CommonBattleHandler(Handler):
     def select_comparator(self, state: GameState) -> ComparatorInterface:
         alive_monsters = len(list(filter(lambda m: not m["is_gone"], state.get_monsters())))
 
-        big_fight = state.floor() in self.config.big_fight_floors
+        big_fight = state.floor() in self.config.big_fight_floors or state.has_monster("Corrupt Heart")
 
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
 
