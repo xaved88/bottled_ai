@@ -2,7 +2,6 @@ import time
 import traceback
 
 from rs.ai.claw_is_law.claw_is_law import CLAW_IS_LAW
-from rs.ai.observant_heartslayer.observant_heartslayer import OBSERVANT_HEARTSLAYER
 from rs.ai.peaceful_pummeling.peaceful_pummeling import PEACEFUL_PUMMELING
 from rs.ai.pwnder_my_orbs.pwnder_my_orbs import PWNDER_MY_ORBS
 from rs.ai.requested_strike.requested_strike import REQUESTED_STRIKE
@@ -14,10 +13,10 @@ from rs.helper.logger import log, init_log, log_new_run_sequence
 
 # If there are run seeds, it will run them. Otherwise, it will use the run amount.
 run_seeds = [
-    'PJXDI7JYG22P',
+    #'LGZ12EEMFGUK',
 ]
 run_amount = 1
-strategy = OBSERVANT_HEARTSLAYER
+strategy = PEACEFUL_PUMMELING
 
 if __name__ == "__main__":
     init_log()
