@@ -85,7 +85,7 @@ class CommonBattleHandler(Handler):
             return self.config.shield_and_spear_comparator()
         return self.config.general_comparator()
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         actions = get_best_battle_action(state, self.select_comparator(state), self.max_path_count)
         if actions:
             return actions

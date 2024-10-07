@@ -10,15 +10,14 @@ from rs.machine.state import GameState
 
 class CommonCampfireHandler(Handler):
 
-    def __init__(self, high_priority_upgrades: List[str] = None, card_removal_priorities: List[str] = None, slay_heart: bool = None):
+    def __init__(self, high_priority_upgrades: List[str] = None, card_removal_priorities: List[str] = None):
         self.high_priority_upgrades: List[str] = [] if high_priority_upgrades is None else high_priority_upgrades
         self.card_removal_priorities: List[str] = [] if card_removal_priorities is None else card_removal_priorities
-        self.slay_heart = False if slay_heart is None else slay_heart
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) and state.screen_type() == ScreenType.REST.value
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         can_rest = 'rest' in state.get_choice_list()
         can_toke = 'toke' in state.get_choice_list()
         can_lift = 'lift' in state.get_choice_list()
@@ -40,7 +39,7 @@ class CommonCampfireHandler(Handler):
                                  and state.get_player_health_percentage() <= 0.85 \
                                  and not pantograph_will_cover_floor_49
         important_upgrade_available = state.deck.contains_cards(self.high_priority_upgrades) and can_smith
-        last_recall_possibility = can_recall and state.floor() == 49 and self.slay_heart
+        last_recall_possibility = can_recall and state.floor() == 49 and slay_heart
 
         choice = "0"
 
@@ -52,7 +51,7 @@ class CommonCampfireHandler(Handler):
             choice = "toke"
         elif can_smith and important_upgrade_available:
             choice = "smith"
-        elif can_recall and self.slay_heart:
+        elif can_recall and slay_heart:
             choice = "recall"
         elif can_lift and state.get_relic_counter("Girya") < 2:
             choice = "lift"

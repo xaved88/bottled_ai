@@ -25,7 +25,7 @@ class PotionsBaseHandler(Handler):
         # must be implemented by children
         pass
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         pot = self.get_potions_to_play(state)[0]
         wait_command = "wait 30"
         if pot['requires_target']:

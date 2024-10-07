@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class PmoTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = PWNDER_MY_ORBS.handlers
+    strategy = PWNDER_MY_ORBS
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart

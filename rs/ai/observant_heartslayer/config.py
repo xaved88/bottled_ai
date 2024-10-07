@@ -1,5 +1,3 @@
-SLAY_HEART = True
-
 DESIRED_CARDS_FOR_DECK = {
     'blasphemy': 1,
     'talk to the hand': 3,

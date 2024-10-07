@@ -22,8 +22,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('battles/general/choose_kill.json', ['play 1 0'])
 
     def test_doesnt_play_burn(self):
-        state = load_resource_state('battles/general/burns.json')
-        self.assertEqual(['play 2 0'], CommonBattleHandler().handle(state).commands)
+        self.execute_handler_tests('battles/general/burns.json', ['play 2 0'])
 
     @unittest.skipUnless(os.environ.get('EXTENSIVE_TESTS'), "we only want to run this expensive test occasionally")
     def test_complex_case_does_not_timeout(self):
@@ -35,8 +34,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
             self.fail("Process took too long!")
 
     def test_another_simple_case(self):
-        state = load_resource_state('battles/general/another_simple.json')
-        self.assertEqual(['play 5'], CommonBattleHandler().handle(state).commands)
+        self.execute_handler_tests('battles/general/another_simple.json', ['play 5'])
 
     def test_discard_works_correctly(self):
         self.execute_handler_tests('/battles/general/discard.json', ['choose 1', 'confirm', 'wait 30'])

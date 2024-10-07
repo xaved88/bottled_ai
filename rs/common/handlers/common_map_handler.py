@@ -1,5 +1,3 @@
-from typing import List
-
 from presentation_config import presentation_mode, p_delay, slow_pathing
 from rs.game.map import Map
 from rs.game.path import PathHandlerConfig
@@ -33,15 +31,14 @@ default_config = PathHandlerConfig(
 
 class CommonMapHandler(Handler):
 
-    def __init__(self, config: PathHandlerConfig = None, slay_heart: bool = None):
+    def __init__(self, config: PathHandlerConfig = None):
         self.config: PathHandlerConfig = default_config if config is None else config
-        self.slay_heart = False if slay_heart is None else slay_heart
 
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.MAP.value and state.has_command(Command.CHOOSE)
 
-    def handle(self, state: GameState) -> HandlerAction:
-        if self.slay_heart:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
+        if slay_heart:
             self.config.elite_emerald_key_reward = 5
 
         # Get the math and paths set up

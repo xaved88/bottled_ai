@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class CilTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = CLAW_IS_LAW.handlers
+    strategy = CLAW_IS_LAW
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart

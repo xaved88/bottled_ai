@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class SgTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = SHIVS_AND_GIGGLES.handlers
+    strategy = SHIVS_AND_GIGGLES
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart

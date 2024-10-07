@@ -64,7 +64,7 @@ class CommonGroupedCardRewardHandler(Handler):
         # can be implemented by children
         pass
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         choice_list = state.get_choice_list_upgrade_stripped_from_choice()
         deck_card_list = state.get_deck_card_list_by_name_with_upgrade_stripped()
 

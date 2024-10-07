@@ -1,7 +1,7 @@
 from typing import List
 
 from rs.ai._example.config import CARD_REMOVAL_PRIORITY_LIST, DESIRED_CARDS_FOR_DECK, HIGH_PRIORITY_UPGRADES, \
-    DESIRED_CARDS_FROM_POTIONS, DESIRED_POTIONS, SLAY_HEART
+    DESIRED_CARDS_FROM_POTIONS, DESIRED_POTIONS
 from rs.ai._example.handlers.event_handler import EventHandler
 from rs.ai._example.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, PotionsEliteHandler
 from rs.ai._example.handlers.shop_purchase_handler import ShopPurchaseHandler
@@ -34,6 +34,7 @@ example_battle_potion_handlers: List[Handler] = [
 EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
     name='EXAMPLE_STRATEGY',
     character=Character.IRONCLAD,
+    slay_heart=False,
     handlers=[
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonBattleHandler(),
@@ -41,13 +42,13 @@ EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
-        CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS, slay_heart=SLAY_HEART),
+        CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK, DESIRED_CARDS_FROM_POTIONS),
         CommonNeowHandler(),
         EventHandler(),
         CommonChestHandler(),
-        CommonMapHandler(slay_heart=SLAY_HEART),
-        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST, slay_heart=SLAY_HEART),
+        CommonMapHandler(),
+        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
         CommonMassDiscardHandler(),

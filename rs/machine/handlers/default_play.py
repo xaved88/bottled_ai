@@ -9,7 +9,7 @@ class DefaultPlayHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.PLAY)
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         hand = state.hand
         energy = state.get_player_combat()["energy"]
         card_to_play = next(card for card in hand.cards if card.cost <= energy)

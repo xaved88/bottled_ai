@@ -33,7 +33,7 @@ class CommonScryHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.current_action() == 'ScryAction'
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         choice_list = state.get_choice_list()
         commands: list = []
 

@@ -1,7 +1,6 @@
 from typing import List
 
-from rs.ai.observant_heartslayer.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS, \
-    SLAY_HEART
+from rs.ai.observant_heartslayer.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS
 from rs.ai.observant_heartslayer.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.observant_heartslayer.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.observant_heartslayer.handlers.event_handler import EventHandler
@@ -33,6 +32,7 @@ peaceful_pummeling_potion_handlers: List[Handler] = [
 OBSERVANT_HEARTSLAYER: AiStrategy = AiStrategy(
     name='OBSERVANT_HEARTSLAYER',
     character=Character.WATCHER,
+    slay_heart=True,
     handlers=peaceful_pummeling_potion_handlers + [
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonBattleHandler(),
@@ -40,16 +40,16 @@ OBSERVANT_HEARTSLAYER: AiStrategy = AiStrategy(
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
-        CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS, slay_heart=SLAY_HEART),
+        CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CardRewardHandler(),
         NeowHandler(),
         EventHandler(),
         CommonChestHandler(),
-        CommonMapHandler(slay_heart=SLAY_HEART),
-        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST, slay_heart=SLAY_HEART),
+        CommonMapHandler(),
+        CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
         CommonShopEntranceHandler(),
         ShopPurchaseHandler(),
         CommonMassDiscardHandler(),
         CommonScryHandler(),
-    ]
+    ],
 )

@@ -19,7 +19,7 @@ class CommonAstrolabeHandler(Handler):
                and 'num_cards' in state.game_state()['screen_state'] \
                and state.game_state()['screen_state']['num_cards'] == 3
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         # basically use remove but pick the best 3?
         choice_list = state.get_choice_list()
         choices = []

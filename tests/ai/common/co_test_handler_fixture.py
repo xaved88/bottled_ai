@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class CoTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = EXAMPLE_STRATEGY.handlers
+    strategy = EXAMPLE_STRATEGY
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart

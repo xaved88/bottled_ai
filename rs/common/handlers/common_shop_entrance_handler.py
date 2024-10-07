@@ -13,5 +13,5 @@ class CommonShopEntranceHandler(Handler):
         return state.has_command(Command.CHOOSE) \
                and state.screen_type() == ScreenType.SHOP_ROOM.value
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         return HandlerAction(commands=["choose shop", "wait 30"])

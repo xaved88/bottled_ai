@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class OhTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = OBSERVANT_HEARTSLAYER.handlers
+    strategy = OBSERVANT_HEARTSLAYER
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart

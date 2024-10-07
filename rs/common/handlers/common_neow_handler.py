@@ -34,7 +34,7 @@ class CommonNeowHandler(Handler):
                and state.has_command(Command.CHOOSE) \
                and state.game_state()['screen_state']['event_id'] == "Neow Event"
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         if "leave" in state.get_choice_list():
             if presentation_mode:
                 return HandlerAction(commands=[p_delay_s, "choose 0"])

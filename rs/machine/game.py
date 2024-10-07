@@ -69,7 +69,7 @@ class Game:
             for handler in self.strategy.handlers + DEFAULT_GAME_HANDLERS:
                 if handler.can_handle(self.last_state):
                     log_to_run("Handler: " + str(handler))
-                    action = handler.handle(self.last_state)
+                    action = handler.handle(self.last_state, self.strategy.slay_heart)
                     if not action:
                         continue
                     if action.memory_book is not None:

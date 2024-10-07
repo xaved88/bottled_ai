@@ -16,7 +16,7 @@ class CommonTransformHandler(Handler):
                and state.game_state()["screen_type"] == "GRID" \
                and state.game_state()["screen_state"]["for_transform"]
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         choices = state.get_choice_list()
         choice = len(choices) - 1
         for pref in self.preferences:

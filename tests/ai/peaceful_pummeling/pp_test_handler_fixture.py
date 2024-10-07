@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class PpTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = PEACEFUL_PUMMELING.handlers
+    strategy = PEACEFUL_PUMMELING
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart
