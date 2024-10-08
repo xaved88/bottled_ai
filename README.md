@@ -64,7 +64,7 @@ To debug, check the output in the ModTheSpire console, or the `communication_mod
 
 
 ## Contact
-Just raise an issue here on GitHub. We're happy to support!
+Just use the Discussions feature here on GitHub. We're happy to discuss or support!
 
 
 ## Tools
