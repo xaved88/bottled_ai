@@ -27,8 +27,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
     @unittest.skipUnless(os.environ.get('EXTENSIVE_TESTS'), "we only want to run this expensive test occasionally")
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
-        state = load_resource_state('battles/general/complex_case.json')
-        self.assertEqual(['play 7'], CommonBattleHandler().handle(state).commands)
+        self.execute_handler_tests('battles/general/complex_case.json', ['play 7'])
         end = time.perf_counter()
         if end > start + 40:
             self.fail("Process took too long!")
