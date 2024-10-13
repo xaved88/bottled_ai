@@ -17,7 +17,7 @@ Nah, just good old-fashioned manually constructed automated decision-making. For
 No, it can only see what the player does.
 
 ### What are its current limitations/capabilities?
-See [capabilities.md](capabilities.md).
+See [capabilities.md](docs/capabilities.md).
 
 ### Do you make videos about the bot?
 Actually, yes. Check out the [YouTube channel](https://www.youtube.com/@BottledAI)!
@@ -60,7 +60,7 @@ The process has a timeout of 10s so if you simply see that delay but nothing's h
 To debug, check the output in the ModTheSpire console, or the `communication_mod_errors.log` in the StS folder.
 
 ## Making your own bot
-- See [how_to_make_your_own_bot.md](how_to_make_your_own_bot.md).
+- See [how_to_make_your_own_bot.md](docs/how_to_make_your_own_bot.md).
 
 
 ## Contact
@@ -88,7 +88,7 @@ We're also  happy to have you contribute to this repository! What we'd specifica
 - New handlers that add give strategies more options for effectiveness (like better potion handling for example).
 - Bugfixes!
 
-See [capabilities.md](capabilities.md) for a _rough_ overview of current functionality coverage.
+See [capabilities.md](docs/capabilities.md) for a _rough_ overview of current functionality coverage.
 
 Please note:
 - We will be hesitant to integrate any new strategies - unless they bring in a particular new approach that would be beneficial for others to use / learn from. 
