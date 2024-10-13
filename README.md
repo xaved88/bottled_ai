@@ -3,8 +3,7 @@ Customizable bot for roguelike deck-building game [Slay the Spire](https://store
 
 ## FAQ
 ### Does it win a lot? Is it super smart?
-Depends on which character and strategy is in use. We've got a few different ones! Our current best is Watcher, and there we've got a 62% chance of beating the Act 3 boss.
-We'll re-test all characters and publish up-to-date win rates soon.
+Depends on which character and strategy is in use. We've got a few different ones! You can see our most current [winrates here](docs/winrates.md).
 
 ### How does it work? Machine Learning? Gen AI?
 Nah, just good old-fashioned manually constructed automated decision-making. For example:
