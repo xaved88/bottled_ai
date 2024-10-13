@@ -5,7 +5,7 @@ from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.common.comparators.big_fight_comparator import BigFightComparator
 from rs.common.comparators.common_general_comparator import CommonGeneralComparator
 from rs.common.comparators.gremlin_nob_comparator import GremlinNobComparator
-from rs.common.comparators.shield_and_sword_comparator import ShieldAndSwordComparator
+from rs.common.comparators.shield_and_spear_comparator import ShieldAndSpearComparator
 from rs.common.comparators.three_sentry_comparator import ThreeSentriesComparator
 from rs.common.comparators.three_sentry_turn_1_comparator import ThreeSentriesTurn1Comparator
 from rs.common.comparators.transient_comparator import TransientComparator
@@ -25,7 +25,7 @@ class BattleHandlerConfig:
     three_sentries_comparator: ComparatorInterface = ThreeSentriesComparator
     three_sentries_turn_1_comparator: ComparatorInterface = ThreeSentriesTurn1Comparator
     transient_comparator: ComparatorInterface = TransientComparator
-    shield_and_spear_comparator: ComparatorInterface = ShieldAndSwordComparator
+    shield_and_spear_comparator: ComparatorInterface = ShieldAndSpearComparator
     waiting_lagavulin_comparator: ComparatorInterface = WaitingLagavulinComparator
     general_comparator: ComparatorInterface = CommonGeneralComparator
 
