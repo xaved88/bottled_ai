@@ -12,6 +12,8 @@ From October 2024: [release-03](https://github.com/xaved88/bottled_ai/releases/t
 | Defect    | PwnderMyOrbs      | 33%     | 39.4         | 52   |
 | Watcher   | PeacefulPummeling | 52%     | 45.86        | 50   |
 
+More details can be found at [winrate_details/release-03.md](winrate_details/release-03.md)
+
 ### How we determine these winrates:
 We randomly generate a number of seeds, and then have the bot play them! We aim for 50 runs for each character.
 
