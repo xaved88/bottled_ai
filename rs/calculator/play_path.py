@@ -1,7 +1,7 @@
 from typing import List
 
 from rs.calculator.battle_state import BattleState, Play
-from rs.calculator.helper import pickle_deepcopy
+from rs.calculator.game_state_converter import battlestate_deepcopy
 
 
 class PlayPath:
@@ -32,7 +32,7 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
         plays = path.state.get_plays()
 
     for play in plays:
-        new_state: BattleState = pickle_deepcopy(path.state)
+        new_state: BattleState = battlestate_deepcopy(path.state)
         new_state.transform_from_play(play, is_first_play=not path.plays)
         new_plays: List[Play] = path.plays.copy()
         new_plays.append(play)
@@ -42,7 +42,7 @@ def get_paths(path: PlayPath, paths: dict[str, PlayPath]):
 
 def get_paths_bfs(state: BattleState, max_path_count: int):
     explored_paths: dict[str, PlayPath] = {}
-    unexplored_paths = [PlayPath([], pickle_deepcopy(state))]
+    unexplored_paths = [PlayPath([], battlestate_deepcopy(state))]
 
     while len(explored_paths) < max_path_count:
         # as long as there are unexplored paths, keep progressing
@@ -64,7 +64,7 @@ def get_paths_bfs(state: BattleState, max_path_count: int):
             plays = path.state.get_plays()
 
         for play in plays:
-            new_state: BattleState = pickle_deepcopy(path.state)
+            new_state: BattleState = battlestate_deepcopy(path.state)
             new_state.transform_from_play(play, is_first_play=not path.plays)
             new_plays: List[Play] = path.plays.copy()
             new_plays.append(play)
