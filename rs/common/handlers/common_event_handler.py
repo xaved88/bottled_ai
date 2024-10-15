@@ -193,9 +193,7 @@ class CommonEventHandler(Handler):
                 return "choose 1"  # Leave, we don't like curses.
 
             case Event.THE_NEST:
-                if hp_per >= 50:
-                    return "choose 1"  # Ritual Dagger and a little damage.
-                return "choose 0"  # Free money
+                return "choose 0"  # Free money. 1 would be Ritual Dagger and a little damage.
 
             case Event.NLOTH:
                 return "choose 2"  # Leave, hard to statically make a good choice here.
