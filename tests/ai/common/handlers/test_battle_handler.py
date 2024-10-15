@@ -419,3 +419,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests(
             'battles/specific_comparator_cases/big_fight/time_eater_play_less_to_avoid_inconvenient_time_warp.json',
             ['end'])
+
+    def test_prefer_straight_damage_over_vulnerable_when_splitting(self):
+        self.execute_handler_tests('battles/general/split_terror_vs_strike.json', ['play 2 0'])

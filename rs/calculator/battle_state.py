@@ -655,6 +655,11 @@ class BattleState(BattleStateInterface):
             if not monster.powers.get(PowerId.BARRICADE, 0):
                 monster.block = 0
 
+            if monster.powers.get(PowerId.SPLIT, 0) and monster.current_hp <= monster.max_hp / 2:
+                monster.damage = 0
+                monster.hits = 0
+                monster.powers = {}
+
             poison = monster.powers.get(PowerId.POISON, 0)
             if poison > 0:
                 monster.powers[PowerId.POISON] -= 1
