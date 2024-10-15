@@ -168,10 +168,6 @@ class Target(TargetInterface):
                 self.block += block_to_add
                 block_to_add -= 1
 
-        if self.powers.get(PowerId.SPLIT) and self.current_hp <= self.max_hp / 2:
-            self.damage = 0
-            self.hits = 0
-            del self.powers[PowerId.SPLIT]
         if self.powers.get(PowerId.SHIFTING):
             self.add_powers({PowerId.STRENGTH: -health_damage_dealt}, source.relics, source.powers)
         return times_block_triggered
