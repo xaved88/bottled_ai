@@ -3,6 +3,7 @@ from typing import List
 
 from rs.calculator.interfaces.memory_items import MemoryItem
 from rs.game.deck import Deck
+from rs.game.event import Event
 from rs.machine.command import Command
 from rs.machine.orb import Orb
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
@@ -200,3 +201,11 @@ class GameState:
         for idx, choice in enumerate(options):
             options[idx] = choice.replace("+", "")
         return options
+
+    def get_event(self) -> Event:
+        event_name = self.game_state()['screen_state']['event_name']
+        possible_events = set(item.value for item in Event)
+
+        if event_name not in possible_events:
+            return event_name
+        return Event(event_name)
