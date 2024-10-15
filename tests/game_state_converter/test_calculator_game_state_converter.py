@@ -13,7 +13,7 @@ from test_helpers.resources import load_resource_state
 class GameStateConverterTest(unittest.TestCase):
 
     def test_battle_state_fails_with_non_battle_game_state(self):
-        state = load_resource_state("other/event_purifier.json")
+        state = load_resource_state("event/event_purifier.json")
         battle_state = create_battle_state(state)
         self.assertIsNone(battle_state)
 

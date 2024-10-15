@@ -6,4 +6,4 @@ class TestNeowHandler(CoTestHandlerFixture):
     handler = CommonNeowHandler
 
     def test_handle_neow(self):
-        self.execute_handler_tests('/other/event_neow.json', ['choose obtain a random common relic', 'wait 30'])
+        self.execute_handler_tests('/event/event_neow.json', ['choose obtain a random common relic', 'wait 30'])
