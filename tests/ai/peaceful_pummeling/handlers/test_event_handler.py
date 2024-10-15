@@ -5,8 +5,6 @@ from rs.ai.peaceful_pummeling.handlers.event_handler import EventHandler
 class TestEventHandler(PpTestHandlerFixture):
     handler = EventHandler
 
-
-
     def test_falling(self):
         self.execute_handler_tests('/event/event_falling.json', ['choose 1', 'wait 30'])
 
