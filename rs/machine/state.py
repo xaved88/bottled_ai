@@ -205,7 +205,7 @@ class GameState:
         # just the first letter of the key is enough
         keys = []
         if "keys" not in self.game_state():
-            return ['Communication Mod out of date']
+            return []
         for key in self.game_state()["keys"]:
             if self.game_state()["keys"].get(key):
                 keys.append(key[0])

@@ -39,11 +39,11 @@ class CommonCampfireHandler(Handler):
                                  and state.get_player_health_percentage() <= 0.85 \
                                  and not pantograph_will_cover_floor_49
         important_upgrade_available = state.deck.contains_cards(self.high_priority_upgrades) and can_smith
-        last_recall_possibility = can_recall and state.floor() == 49 and slay_heart
+        last_recall_possibility = can_recall and state.floor() == 49
 
         choice = "0"
 
-        if last_recall_possibility:
+        if last_recall_possibility and slay_heart:
             choice = "recall"
         elif can_rest and (worth_healing or worth_healing_floor_49):
             choice = "rest"

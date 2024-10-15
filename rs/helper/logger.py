@@ -98,6 +98,9 @@ def log_run_results(state: GameState, elites: List[str], bosses: List[str], stra
     if state.get_act_4_keys():
         keys = ", ".join(state.get_act_4_keys())
         message += ", Keys: " + keys
+    else:
+        if "keys" not in state.game_state():
+            message += ", Act 4 keys not found - Communication Mod out of Date!"
     message += ", DiedTo: "
     if state.get_monsters():
         for m in state.get_monsters():
