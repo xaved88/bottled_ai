@@ -66,9 +66,10 @@ def spot_weakness_post_hook(state: BattleStateInterface, effect: CardEffectsInte
 
 def apotheosis_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,
                          target_index: int = -1):
-    for i in range(len(state.draw_pile)):
-        c = state.draw_pile[i]
-        state.draw_pile[i] = get_card(c.id, upgrade=c.upgrade + 1)
+    for pile in [state.hand, state.draw_pile, state.discard_pile, state.exhaust_pile]:
+        for c in pile:
+            if not c.id == CardId.BURN:
+                c.upgrade += 1
 
 
 def heel_hook_post_hook(state: BattleStateInterface, effect: CardEffectsInterface, card: CardInterface,

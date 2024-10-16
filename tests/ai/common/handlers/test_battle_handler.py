@@ -422,3 +422,6 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
 
     def test_prefer_straight_damage_over_vulnerable_when_splitting(self):
         self.execute_handler_tests('battles/general/split_terror_vs_strike.json', ['play 2 0'])
+
+    def test_like_playing_free_apotheosis(self):
+        self.execute_handler_tests('battles/general/apotheosis.json', ['play 3'])
