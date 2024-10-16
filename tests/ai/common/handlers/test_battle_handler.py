@@ -442,3 +442,7 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
         self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_but_can_still_damage_enemy.json',
                                    ['play 1 0'], mb)
+
+    def test_prefer_straight_damage_over_vulnerable_when_splitting(self):
+        self.execute_handler_tests('battles/general/split_terror_vs_strike.json', ['play 2 0'])
+

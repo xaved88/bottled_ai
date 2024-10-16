@@ -3,8 +3,7 @@ Customizable bot for roguelike deck-building game [Slay the Spire](https://store
 
 ## FAQ
 ### Does it win a lot? Is it super smart?
-Depends on which character and strategy is in use. We've got a few different ones! Our current best is Watcher, and there we've got a 62% chance of beating the Act 3 boss.
-We'll re-test all characters and publish up-to-date win rates soon.
+Depends on which character and strategy is in use. We've got a few different ones! Our current best is a watcher strategy with 52% winrate. You can see our most current [winrates here](docs/winrates.md).
 
 ### How does it work? Machine Learning? Gen AI?
 Nah, just good old-fashioned manually constructed automated decision-making. For example:
@@ -17,7 +16,7 @@ Nah, just good old-fashioned manually constructed automated decision-making. For
 No, it can only see what the player does.
 
 ### What are its current limitations/capabilities?
-See [capabilities.md](capabilities.md).
+See [capabilities.md](docs/capabilities.md).
 
 ### Do you make videos about the bot?
 Actually, yes. Check out the [YouTube channel](https://www.youtube.com/@BottledAI)!
@@ -60,11 +59,11 @@ The process has a timeout of 10s so if you simply see that delay but nothing's h
 To debug, check the output in the ModTheSpire console, or the `communication_mod_errors.log` in the StS folder.
 
 ## Making your own bot
-- See [how_to_make_your_own_bot.md](how_to_make_your_own_bot.md).
+- See [how_to_make_your_own_bot.md](docs/how_to_make_your_own_bot.md).
 
 
 ## Contact
-Just raise an issue here on GitHub. We're happy to support!
+Just use the Discussions feature here on GitHub. We're happy to discuss or support!
 
 
 ## Tools
@@ -88,7 +87,7 @@ We're also  happy to have you contribute to this repository! What we'd specifica
 - New handlers that add give strategies more options for effectiveness (like better potion handling for example).
 - Bugfixes!
 
-See [capabilities.md](capabilities.md) for a _rough_ overview of current functionality coverage.
+See [capabilities.md](docs/capabilities.md) for a _rough_ overview of current functionality coverage.
 
 Please note:
 - We will be hesitant to integrate any new strategies - unless they bring in a particular new approach that would be beneficial for others to use / learn from. 

@@ -487,10 +487,22 @@ class CalculatorPowersTest(CalculatorTestFixture):
         state.monsters[0].hits = 2
         state.monsters[0].current_hp = 46
         state.monsters[0].max_hp = 80
-        state.monsters[0].powers = {PowerId.SPLIT: 1}
+        state.monsters[0].powers[PowerId.SPLIT] = 1
         play = self.when_playing_the_first_card(state)
         play.end_turn()
         self.see_enemy_does_not_have_power(play, PowerId.SPLIT)
+        self.see_player_lost_hp(play, 0)
+
+    def test_split_removes_enemy_powers(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.monsters[0].current_hp = 46
+        state.monsters[0].max_hp = 80
+        state.monsters[0].powers[PowerId.SPLIT] = 1
+        state.monsters[0].powers[PowerId.VULNERABLE] = 3
+        play = self.when_playing_the_first_card(state)
+        play.end_turn()
+        self.see_enemy_does_not_have_power(play, PowerId.SPLIT)
+        self.see_enemy_does_not_have_power(play, PowerId.VULNERABLE)
         self.see_player_lost_hp(play, 0)
 
     def test_not_quite_split_does_nothing(self):
