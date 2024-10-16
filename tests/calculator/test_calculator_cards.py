@@ -615,10 +615,18 @@ class CalculatorCardsTest(CalculatorTestFixture):
 
     def test_apotheosis(self):
         state = self.given_state(CardId.APOTHEOSIS)
-        state.draw_pile.append(get_card(CardId.STRIKE_R))
+        state.hand.append(get_card(CardId.STRIKE_R))
+        state.hand.append(get_card(CardId.BURN))
+        state.draw_pile.append(get_card(CardId.STRIKE_R, upgrade=1))
+        state.discard_pile.append(get_card(CardId.STRIKE_R))
+        state.exhaust_pile.append(get_card(CardId.STRIKE_R))
         play = self.when_playing_the_first_card(state)
-        self.assertEqual(play.state.draw_pile[0].upgrade, 1)
-        self.see_player_exhaust_count(play, 1)
+        self.assertEqual(play.state.hand[0].upgrade, 1)
+        self.assertEqual(play.state.hand[1].upgrade, 0)
+        self.assertEqual(play.state.draw_pile[0].upgrade, 2)
+        self.assertEqual(play.state.discard_pile[0].upgrade, 1)
+        self.assertEqual(play.state.exhaust_pile[0].upgrade, 1)
+        self.see_player_exhaust_count(play, 2)
 
     def test_hand_of_greed(self):
         state = self.given_state(CardId.HAND_OF_GREED)
