@@ -21,7 +21,7 @@ class CommonUpgradeHandler(Handler):
         # can be implemented by children
         pass
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         choice_list = state.game_state()["choice_list"]
 
         # we have to copy this, otherwise it will modify the list until the bot is rerun

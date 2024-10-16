@@ -365,6 +365,11 @@ class BattleState(BattleStateInterface):
 
         self.add_memory_value(MemoryItem.CARDS_THIS_TURN, 1)
 
+        # for logging purposes
+        if not self.get_memory_value(MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN):
+            if self.get_memory_value(MemoryItem.CARDS_THIS_TURN) > 29:
+                self.add_memory_value(MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN, 1)
+
         # dispose of cards being played
         if card in self.hand:  # b/c some cards like fiend fire, will destroy themselves before they follow this route
             idx = self.hand.index(card)
@@ -397,7 +402,8 @@ class BattleState(BattleStateInterface):
             if self.get_memory_value(MemoryItem.PANACHE_COUNTER) == 0:
                 for monster in self.monsters:
                     if monster.current_hp > 0:
-                        monster.inflict_damage(self.player, self.get_memory_value(MemoryItem.PANACHE_DAMAGE), 1, vulnerable_modifier=1, is_attack=False)
+                        monster.inflict_damage(self.player, self.get_memory_value(MemoryItem.PANACHE_DAMAGE), 1,
+                                               vulnerable_modifier=1, is_attack=False)
                 self.add_memory_value(MemoryItem.PANACHE_COUNTER, 5)
 
         if self.player.powers.get(PowerId.HEATSINK) and card.type == CardType.POWER:
@@ -413,6 +419,14 @@ class BattleState(BattleStateInterface):
         if self.player.powers.get(PowerId.HEX) and card.type != CardType.ATTACK:
             for i in range(self.player.powers.get(PowerId.HEX)):
                 self.spawn_in_draw(get_card(CardId.DAZED))
+
+        # Back Attack doesn't currently correctly get updated in the game when we attack a different monster.
+        # So commenting it out for now. @todo
+        # if self.player.powers.get(PowerId.SURROUNDED):
+        #     if target_index > -1:
+        #         if self.monsters[target_index].powers.get(PowerId.BACK_ATTACK):
+        #             self.monsters[target_index].powers[PowerId.BACK_ATTACK] = 0
+        #             self.monsters[1 - target_index].powers[PowerId.BACK_ATTACK] = -1
 
         # post card play MONSTER power checks
         for monster in self.monsters:
@@ -431,6 +445,9 @@ class BattleState(BattleStateInterface):
                 if card.type == CardType.POWER:
                     monster.add_powers({PowerId.STRENGTH: monster.powers.get(PowerId.CURIOSITY)}, self.player.relics,
                                        self.player.powers)
+            if monster.powers.get(PowerId.BEAT_OF_DEATH):
+                self.player.inflict_damage(monster, base_damage=monster.powers.get(PowerId.BEAT_OF_DEATH), hits=1,
+                                           vulnerable_modifier=1, is_attack=False)
 
         for effect in effects:
             # apply any powers from the card
@@ -681,6 +698,8 @@ class BattleState(BattleStateInterface):
                 if self.get_stance() is StanceType.WRATH:
                     damage *= 2
                 self.player.inflict_damage(monster, damage, monster.hits, vulnerable_modifier=player_vulnerable_mod)
+                if self.player.powers.get(PowerId.SURROUNDED):
+                    self.kill_monsters()
 
             if monster.powers.get(PowerId.EXPLOSIVE):
                 monster.powers[PowerId.EXPLOSIVE] -= 1
@@ -897,6 +916,7 @@ class BattleState(BattleStateInterface):
         if amount:
             self.player.block += amount
             self.trigger_block_effects()
+            self.player.block = min(self.player.block, 990)  # lower than 999 to avoid flailing against Beat of Death
 
     def trigger_block_effects(self, times: int = 1):
         for i in range(times):
@@ -939,6 +959,13 @@ class BattleState(BattleStateInterface):
                                            m.powers)
                 if not m.powers.get(PowerId.UNAWAKENED, 0):
                     m.powers = {}
+
+        if self.player.powers.get(PowerId.SURROUNDED):
+            alive_monsters = len([True for m in self.monsters if m.current_hp > 0])
+            if alive_monsters < 2:
+                self.player.powers[PowerId.SURROUNDED] = 0
+                for m in self.monsters:
+                    m.powers[PowerId.BACK_ATTACK] = 0
 
     def trigger_orbs_passives(self):
         focus = self.player.powers.get(PowerId.FOCUS, 0)

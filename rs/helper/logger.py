@@ -95,6 +95,12 @@ def log_run_results(state: GameState, elites: List[str], bosses: List[str], stra
     message += ", Floor:" + str(state.floor())
     message += ", Score:" + str(state.game_state()['screen_state']['score'])
     message += ", Strat: " + strategy_name
+    if state.get_act_4_keys():
+        keys = ", ".join(state.get_act_4_keys())
+        message += ", Keys: " + keys
+    else:
+        if "keys" not in state.game_state():
+            message += ", Act 4 keys not found - Communication Mod out of Date!"
     message += ", DiedTo: "
     if state.get_monsters():
         for m in state.get_monsters():
@@ -108,6 +114,8 @@ def log_run_results(state: GameState, elites: List[str], bosses: List[str], stra
         message += r["name"] + ","
     if state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED] > 0:
         message += " Killed with Lesson Learned: " + str(state.memory_general[MemoryItem.KILLED_WITH_LESSON_LEARNED])
+    if state.memory_general[MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN] > 0:
+        message += " Played more than 30 cards in a turn!"
     if sum(state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME].values()) > 10:
         message += " Extraordinary amount of Ritual Dagger power: " + str(sum(state.memory_by_card[CardId.RITUAL_DAGGER][ResetSchedule.GAME].values()))
     message += "\n"

@@ -14,8 +14,10 @@ class PowerId(Enum):
     ACCURACY = 'accuracy'
     AFTER_IMAGE = 'after image'
     ARTIFACT = 'artifact'
+    BACK_ATTACK = 'backattack'
     BARRICADE = 'barricade'
     BATTLE_HYMN = 'battlehymn'
+    BEAT_OF_DEATH = 'beatofdeath'
     BIAS = 'bias'
     BERSERK = 'berserk'
     BLASPHEMER = 'endturndeath'
@@ -68,6 +70,7 @@ class PowerId(Enum):
     INTANGIBLE_PLAYER = 'intangibleplayer'
     INTANGIBLE_ENEMY = 'intangible'
     INTERNAL_ECHO_FORM_READY = 'echo form ready'  # internal use only, for marking whether echo form can be used
+    INVINCIBLE = 'invincible'
     JUGGERNAUT = 'juggernaut'
     LIFE_LINK = 'life link'
     LIKE_WATER = 'likewaterpower'
@@ -114,6 +117,7 @@ class PowerId(Enum):
     STORM = 'storm'
     STRENGTH = 'strength'
     STUDY = 'study'
+    SURROUNDED = 'surrounded'
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     THIEVERY = 'thievery'  # N/A
     THORNS = 'thorns'

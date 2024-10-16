@@ -8,7 +8,8 @@ from test_helpers.resources import load_resource_state
 
 
 class BaseTestHandlerFixture(unittest.TestCase):
-    ai_handlers: List[Handler]  # should be overriden by AI package fixture
+    ai_handlers: List[Handler]  # should be overridden by AI package fixture
+    slay_heart: bool  # should be overridden by AI package fixture
     handler: Type[Handler]  # should be overridden by children - the expected handler to respond to this state.
 
     def execute_handler_tests(self, state_path: str, expected=None,
@@ -17,7 +18,7 @@ class BaseTestHandlerFixture(unittest.TestCase):
         actual = HandlerAction(commands=["empty"])
         for h in self.ai_handlers:
             if h.can_handle(state):
-                actual = h.handle(state)
+                actual = h.handle(state, slay_heart=self.slay_heart)
                 if actual is None:
                     continue
                 if type(h) is self.handler:

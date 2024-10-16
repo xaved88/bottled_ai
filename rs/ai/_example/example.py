@@ -34,6 +34,7 @@ example_battle_potion_handlers: List[Handler] = [
 EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
     name='EXAMPLE_STRATEGY',
     character=Character.IRONCLAD,
+    slay_heart=False,
     handlers=[
         CommonAstrolabeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonBattleHandler(),

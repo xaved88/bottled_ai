@@ -64,3 +64,19 @@ class GameStateConverterTest(unittest.TestCase):
         state = load_resource_state("event/event_falling_2_options.json")
         self.assertEqual(['tranquility', 'crush joints'], state.get_falling_event_options())
 
+    def test_get_act_4_keys(self):
+        state = load_resource_state("other/act_4_keys.json")
+        self.assertEqual(['e', 's'], state.get_act_4_keys())
+
+    def test_get_act_4_keys_not_present(self):
+        state = load_resource_state("other/chest_medium_reward.json")
+        self.assertEqual([], state.get_act_4_keys())
+
+    def test_get_burning_elite_position(self):
+        state = load_resource_state("path/path_includes_burning_elite.json")
+        self.assertEqual('1_5', state.get_burning_elite_position())
+
+    def test_get_burning_elite_position_not_available(self):
+        state = load_resource_state("path/path_elites.json")
+        self.assertEqual(0, state.get_burning_elite_position())
+

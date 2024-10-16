@@ -27,8 +27,10 @@ class PathHandlerConfig:
             hallway_fight_health_loss: GameStateCalculation = default_hallway_fight_health_loss,
             elite_base_reward: float = 1,  # this does not include the relic, that's added separately
             elite_question_card_reward: float = 0.15,
+            elite_emerald_key_reward: float = 0,
             elite_fight_gold: int = 30,
             elite_fight_health_loss: GameStateCalculation = default_elite_fight_health_loss,
+            elite_fight_emerald_key_extra_health_loss: int = 5,
             relic_reward: float = 1.5,
             curse_reward_loss: float = 1.5,
             upgrade_reward: float = 1.1,
@@ -44,8 +46,10 @@ class PathHandlerConfig:
         self.hallway_fight_health_loss: GameStateCalculation = hallway_fight_health_loss
         self.elite_question_card_reward: float = elite_question_card_reward
         self.elite_base_reward: float = elite_base_reward
+        self.elite_emerald_key_reward: float = elite_emerald_key_reward
         self.elite_fight_gold: int = elite_fight_gold
         self.elite_fight_health_loss: GameStateCalculation = elite_fight_health_loss
+        self.elite_fight_emerald_key_extra_health_loss: int = elite_fight_emerald_key_extra_health_loss
         self.relic_reward: float = relic_reward
         self.curse_reward_loss: float = curse_reward_loss
         self.upgrade_reward: float = upgrade_reward
@@ -76,6 +80,8 @@ class Path:
         max_hp: int = state.game_state()["max_hp"]
         act: int = state.game_state()['act']
         floor: int = state.game_state()['floor']
+
+        emerald_key_available = state.get_burning_elite_position()
 
         for room in self.rooms:
             # MONSTERS
@@ -118,6 +124,10 @@ class Path:
                     self.hp += 12
                 if state.has_relic("Burning Blood"):
                     self.hp += 6
+                # burning elite
+                if emerald_key_available and room.id == state.get_burning_elite_position():
+                    self.reward += config.elite_emerald_key_reward
+                    self.hp -= config.elite_fight_emerald_key_extra_health_loss
             elif room.type == RoomType.TREASURE:
                 self.reward += config.relic_reward
                 if state.has_relic("Matryoshka") and state.get_relic_counter("Matryoshka") >= 1:

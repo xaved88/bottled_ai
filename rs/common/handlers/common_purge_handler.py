@@ -19,7 +19,7 @@ class CommonPurgeHandler(Handler):
                and state.game_state()["screen_state"]["for_purge"] \
                and len(self.get_choices(state)) > -1
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         commands = []
         amount = 1
         if 'screen_state' in state.game_state() and 'num_cards' in state.game_state()['screen_state']:

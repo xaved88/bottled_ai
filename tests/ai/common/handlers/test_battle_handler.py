@@ -22,21 +22,18 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('battles/general/choose_kill.json', ['play 1 0'])
 
     def test_doesnt_play_burn(self):
-        state = load_resource_state('battles/general/burns.json')
-        self.assertEqual(['play 2 0'], CommonBattleHandler().handle(state).commands)
+        self.execute_handler_tests('battles/general/burns.json', ['play 2 0'])
 
     @unittest.skipUnless(os.environ.get('EXTENSIVE_TESTS'), "we only want to run this expensive test occasionally")
     def test_complex_case_does_not_timeout(self):
         start = time.perf_counter()
-        state = load_resource_state('battles/general/complex_case.json')
-        self.assertEqual(['play 7'], CommonBattleHandler().handle(state).commands)
+        self.execute_handler_tests('battles/general/complex_case.json', ['play 7'])
         end = time.perf_counter()
         if end > start + 40:
             self.fail("Process took too long!")
 
     def test_another_simple_case(self):
-        state = load_resource_state('battles/general/another_simple.json')
-        self.assertEqual(['play 5'], CommonBattleHandler().handle(state).commands)
+        self.execute_handler_tests('battles/general/another_simple.json', ['play 5'])
 
     def test_discard_works_correctly(self):
         self.execute_handler_tests('/battles/general/discard.json', ['choose 1', 'confirm', 'wait 30'])
@@ -144,12 +141,14 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
         self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_one_dead.json', ['play 6'])
 
     def test_three_sentries_turn_1_can_kill(self):
-        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_turn_1_can_kill.json', ['play 1 1'])
+        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_turn_1_can_kill.json',
+                                   ['play 1 1'])
 
     def test_three_sentries_kill_edge_over_middle(self):
         mb = TheBotsMemoryBook.new_default()
         mb.memory_general[MemoryItem.STANCE] = StanceType.WRATH
-        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_kill_edge_over_middle.json', ['play 1 0'], memory_book=mb)
+        self.execute_handler_tests('battles/specific_comparator_cases/three_sentries/sentry_kill_edge_over_middle.json',
+                                   ['play 1 0'], memory_book=mb)
 
     def test_do_not_attack_escaped_mugger(self):
         self.execute_handler_tests('/battles/general/escaped_mugger.json', ['play 2 1'])
@@ -420,5 +419,30 @@ class BattleHandlerTestCase(CoTestHandlerFixture):
             'battles/specific_comparator_cases/big_fight/time_eater_play_less_to_avoid_inconvenient_time_warp.json',
             ['end'])
 
+    def test_prefer_going_after_spear(self):
+        self.execute_handler_tests('battles/specific_comparator_cases/shield_and_spear/shield_and_spear_go_after_spear.json',
+                                   ['play 1 1'])
+
+    def test_heart_uses_big_fight_comparator(self):
+        self.execute_handler_tests(
+            'battles/specific_comparator_cases/big_fight/big_fight_heart_prioritize_power_over_damage.json', ['play 1'])
+
+    def test_end_turn_after_excessive_amount_of_cards_played(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played.json', ['end'], mb)
+
+    def test_end_turn_after_excessive_amount_of_cards_played_even_if_we_can_draw_more(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_can_still_draw_with_rushdown.json', ['end'], mb)
+
+    def test_keep_playing_usefully_after_excessive_amount_of_cards_played(self):
+        mb = TheBotsMemoryBook.new_default()
+        mb.memory_general[MemoryItem.CARDS_THIS_TURN] = 55
+        self.execute_handler_tests('battles/memory/excessive_amount_of_cards_played_but_can_still_damage_enemy.json',
+                                   ['play 1 0'], mb)
+
     def test_prefer_straight_damage_over_vulnerable_when_splitting(self):
         self.execute_handler_tests('battles/general/split_terror_vs_strike.json', ['play 2 0'])
+

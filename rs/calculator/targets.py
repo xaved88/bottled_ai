@@ -34,6 +34,8 @@ class Target(TargetInterface):
         damage = base_damage
         if self.powers.get(PowerId.VULNERABLE):
             damage = math.floor(damage * vulnerable_modifier)
+        if source.powers.get(PowerId.BACK_ATTACK):
+            damage = math.floor(damage * 1.5)
         if is_orbs and self.powers.get(PowerId.LOCK_ON):
             damage = math.floor(damage * 1.5)
 
@@ -80,8 +82,14 @@ class Target(TargetInterface):
                         if not self.powers[PowerId.BUFFER]:
                             del self.powers[PowerId.BUFFER]
                         continue
+                    if PowerId.INVINCIBLE in self.powers:
+                        hit_damage = min(self.powers[PowerId.INVINCIBLE], hit_damage)
                     self.current_hp -= hit_damage
                     health_damage_dealt += hit_damage
+                    if self.powers.get(PowerId.INVINCIBLE):
+                        self.powers[PowerId.INVINCIBLE] -= hit_damage
+                        if self.powers[PowerId.INVINCIBLE] < 0:
+                            self.powers[PowerId.INVINCIBLE] = 0
                     if is_attack and self.powers.get(PowerId.PLATED_ARMOR):
                         self.powers[PowerId.PLATED_ARMOR] -= 1
                     if is_attack and self.powers.get(PowerId.FLIGHT):

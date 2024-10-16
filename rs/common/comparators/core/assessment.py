@@ -280,3 +280,9 @@ class ComparatorAssessment:
                 lizard_count += 1
 
         return self.__get_value('roc', lambda: fairy_count + lizard_count)
+
+    def spear_lowest_health(self) -> int:
+        return self.__get_value('slh', lambda: self.monsters_vulnerable_hp()[-1])
+
+    def excessive_amount_of_cards_played_this_turn(self) -> int:
+        return self.__get_value('ctt', lambda: max(self.state.memory_general[MemoryItem.CARDS_THIS_TURN], 50))

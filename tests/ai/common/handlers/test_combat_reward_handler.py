@@ -48,3 +48,9 @@ class CombatRewardHandlerTestCase(CoTestHandlerFixture):
     # leaving this disabled for now since the check I'm doing is potentially too fragile
     # def test_skip_relic_multiple_relics_take_second(self):
     #     self.execute_handler_tests('/combat_reward/combat_reward_relics_2_take_second.json', ['proceed'])
+
+    def test_skip_emerald_key_if_not_slay_heart(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_emerald_key.json', ['proceed'])
+
+    def test_skip_sapphire_key_if_not_slay_heart(self):
+        self.execute_handler_tests('/combat_reward/combat_reward_sapphire_key_floor_43.json', ['choose relic'])

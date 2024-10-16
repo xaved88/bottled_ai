@@ -40,7 +40,7 @@ class CommonMassDiscardHandler(Handler):
         return state.screen_type() == ScreenType.HAND_SELECT.value \
                and state.game_state()["screen_state"]["can_pick_zero"]
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
 
         if not state.has_command(Command.CHOOSE):  # For case that we chose to discard all cards.
             return HandlerAction(commands=['confirm'])

@@ -36,6 +36,7 @@ default_comparisons = [
     lowest_enemy_plated_armor,
     most_orb_slots,
     most_channeled_orbs,
+    excessive_amount_of_cards_played_this_turn,
     most_draw_pay_early,
     most_draw_pay,
     most_good_player_powers,

@@ -200,3 +200,22 @@ class GameState:
         for idx, choice in enumerate(options):
             options[idx] = choice.replace("+", "")
         return options
+
+    def get_act_4_keys(self):
+        # just the first letter of the key is enough
+        keys = []
+        if "keys" not in self.game_state():
+            return []
+        for key in self.game_state()["keys"]:
+            if self.game_state()["keys"].get(key):
+                keys.append(key[0])
+        return keys
+
+    def get_burning_elite_position(self):
+        burning_elite_position = 0
+        if 'emerald_key_node' in self.game_state()["screen_state"]:
+            be = self.game_state()["screen_state"]["emerald_key_node"]
+            burning_elite_position = str(be["x"]) + "_" + str(be["y"])
+        return burning_elite_position
+
+

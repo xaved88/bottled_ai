@@ -1,5 +1,3 @@
-from typing import List
-
 from presentation_config import presentation_mode, p_delay, slow_pathing
 from rs.game.map import Map
 from rs.game.path import PathHandlerConfig
@@ -17,8 +15,10 @@ default_config = PathHandlerConfig(
     hallway_fight_health_loss=lambda state: state.game_state()['act'] * 5,
     elite_base_reward=1,  # this does not include the relic, that's added separately
     elite_question_card_reward=0.15,
+    elite_emerald_key_reward=0,
     elite_fight_gold=30,
     elite_fight_health_loss=lambda state: (state.game_state()['act'] + 1) * 15,
+    elite_fight_emerald_key_extra_health_loss=5,
     relic_reward=1.5,
     curse_reward_loss=1.5,
     upgrade_reward=1.1,
@@ -37,7 +37,10 @@ class CommonMapHandler(Handler):
     def can_handle(self, state: GameState) -> bool:
         return state.screen_type() == ScreenType.MAP.value and state.has_command(Command.CHOOSE)
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
+        if slay_heart:
+            self.config.elite_emerald_key_reward = 5
+
         # Get the math and paths set up
         n = state.game_state()["screen_state"]["current_node"]
         current_position = str(n["x"]) + "_" + str(n["y"])

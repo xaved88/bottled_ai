@@ -17,5 +17,5 @@ class CommonCardRewardTakeFirstCardHandler(Handler):
                and (state.game_state()["room_phase"] == "COMPLETE" or state.game_state()["room_phase"] == "EVENT" or
                     state.game_state()["room_phase"] == "COMBAT")
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         return HandlerAction(commands=["choose 0", "wait 30"])

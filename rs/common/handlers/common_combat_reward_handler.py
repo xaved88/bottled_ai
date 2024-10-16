@@ -66,13 +66,14 @@ class CommonCombatRewardHandler(Handler):
     def __init__(self, undesired_relics: List[str] = None, desired_potions: List[str] = None):
         self.undesired_relics: List[str] = default_undesired_relics.copy() if undesired_relics is None else undesired_relics.copy()
         self.desired_potions: List[str] = default_desired_potions.copy() if desired_potions is None else desired_potions.copy()
+
         self.desired_potions.reverse()
 
     def can_handle(self, state: GameState) -> bool:
         return state.has_command(Command.CHOOSE) \
             and state.screen_type() == ScreenType.COMBAT_REWARD.value
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
 
         # Chug a Fruit Juice straight away
         for idx, pot in enumerate(state.get_held_potion_names()):
@@ -89,6 +90,17 @@ class CommonCombatRewardHandler(Handler):
 
         if 'stolen_gold' in state.get_choice_list() and choice == 'did not choose':
             choice = 'stolen_gold'
+
+        if 'emerald_key' in state.get_choice_list()\
+                and slay_heart\
+                and choice == 'did not choose':
+            choice = 'emerald_key'
+
+        if 'sapphire_key' in state.get_choice_list()\
+                and slay_heart\
+                and state.floor() == 43\
+                and choice == 'did not choose':
+            choice = 'sapphire_key'
 
         if 'relic' in state.get_choice_list() and choice == 'did not choose':
             if state.game_state()["screen_state"]["rewards"][0]["relic"]["name"] not in self.undesired_relics:

@@ -274,3 +274,15 @@ class CalculatorOtherTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 10)
         self.see_player_spent_energy(play, 2)
         self.see_relic_value(play, RelicId.PEN_NIB, 0)
+
+    def test_trigger_more_than_X_cards_played_counter(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.add_memory_value(MemoryItem.CARDS_THIS_TURN, 29)
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN))
+
+    def test_do_not_trigger_again_more_than_X_cards_played_counter(self):
+        state = self.given_state(CardId.STRIKE_R)
+        state.add_memory_value(MemoryItem.CARDS_THIS_TURN, 35)
+        play = self.when_playing_the_first_card(state)
+        self.assertEqual(1, play.state.get_memory_value(MemoryItem.PLAYED_30_PLUS_CARDS_IN_A_TURN))

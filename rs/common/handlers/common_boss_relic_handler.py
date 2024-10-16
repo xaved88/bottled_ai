@@ -65,7 +65,7 @@ class CommonBossRelicHandler(Handler):
             if 'snecko eye' in prefs:
                 prefs.remove('snecko eye')
 
-    def handle(self, state: GameState) -> HandlerAction:
+    def handle(self, state: GameState, slay_heart: bool) -> HandlerAction:
         # we have to copy this, otherwise it will modify the prefs list until the bot is rerun
         prefs = self.pref.copy()
 

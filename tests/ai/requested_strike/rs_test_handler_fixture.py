@@ -6,4 +6,6 @@ from rs.machine.handlers.handler import Handler
 
 
 class RsTestHandlerFixture(BaseTestHandlerFixture):
-    ai_handlers: List[Handler] = REQUESTED_STRIKE.handlers
+    strategy = REQUESTED_STRIKE
+    ai_handlers: List[Handler] = strategy.handlers
+    slay_heart: bool = strategy.slay_heart
