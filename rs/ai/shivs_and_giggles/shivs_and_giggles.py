@@ -1,9 +1,9 @@
 from typing import List
 
-from rs.ai.shivs_and_giggles.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS
+from rs.ai.shivs_and_giggles.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS, \
+    DESIRED_CARDS_FOR_DECK
 from rs.ai.shivs_and_giggles.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.shivs_and_giggles.handlers.card_reward_handler import CardRewardHandler
-from rs.ai.shivs_and_giggles.handlers.event_handler import EventHandler
 from rs.ai.shivs_and_giggles.handlers.potions_handler import PotionsBossHandler, PotionsEventFightHandler, \
     PotionsEliteHandler
 from rs.ai.shivs_and_giggles.handlers.shop_purchase_handler import ShopPurchaseHandler
@@ -13,6 +13,7 @@ from rs.common.handlers.common_battle_handler import CommonBattleHandler
 from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
+from rs.common.handlers.common_event_handler import CommonEventHandler
 from rs.common.handlers.common_mass_discard_handler import CommonMassDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
 from rs.common.handlers.common_neow_handler import CommonNeowHandler
@@ -49,7 +50,7 @@ SHIVS_AND_GIGGLES: AiStrategy = AiStrategy(
         CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CardRewardHandler(),
         CommonNeowHandler(),
-        EventHandler(),
+        CommonEventHandler(removal_priority_list=CARD_REMOVAL_PRIORITY_LIST, cards_desired_for_deck=DESIRED_CARDS_FOR_DECK),
         CommonChestHandler(),
         CommonMapHandler(),
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),

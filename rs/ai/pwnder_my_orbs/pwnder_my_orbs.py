@@ -43,7 +43,7 @@ PWNDER_MY_ORBS: AiStrategy = AiStrategy(
         CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CardRewardHandler(),
         CommonNeowHandler(),
-        EventHandler(),
+        EventHandler(removal_priority_list=CARD_REMOVAL_PRIORITY_LIST, cards_desired_for_deck=[]),
         CommonChestHandler(),
         CommonMapHandler(),
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),

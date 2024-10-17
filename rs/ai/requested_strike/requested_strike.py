@@ -47,7 +47,7 @@ REQUESTED_STRIKE: AiStrategy = AiStrategy(
         CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK),
         NeowHandler(),
-        EventHandler(),
+        EventHandler(removal_priority_list=CARD_REMOVAL_PRIORITY_LIST, cards_desired_for_deck=DESIRED_CARDS_FOR_DECK),
         CommonChestHandler(),
         CommonMapHandler(),
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),

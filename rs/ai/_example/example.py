@@ -13,6 +13,7 @@ from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.card_reward.common_card_reward_handler import CommonCardRewardHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
+from rs.common.handlers.common_event_handler import CommonEventHandler
 from rs.common.handlers.common_mass_discard_handler import CommonMassDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
 from rs.common.handlers.common_neow_handler import CommonNeowHandler
@@ -44,7 +45,7 @@ EXAMPLE_STRATEGY: AiStrategy = AiStrategy(
         CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK, DESIRED_CARDS_FROM_POTIONS),
         CommonNeowHandler(),
-        EventHandler(),
+        EventHandler(removal_priority_list=CARD_REMOVAL_PRIORITY_LIST, cards_desired_for_deck=DESIRED_CARDS_FOR_DECK),
         CommonChestHandler(),
         CommonMapHandler(),
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),

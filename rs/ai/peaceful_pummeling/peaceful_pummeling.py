@@ -1,6 +1,7 @@
 from typing import List
 
-from rs.ai.peaceful_pummeling.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS
+from rs.ai.peaceful_pummeling.config import CARD_REMOVAL_PRIORITY_LIST, HIGH_PRIORITY_UPGRADES, DESIRED_POTIONS, \
+    DESIRED_CARDS_FOR_DECK
 from rs.ai.peaceful_pummeling.handlers.boss_relic_handler import BossRelicHandler
 from rs.ai.peaceful_pummeling.handlers.card_reward_handler import CardRewardHandler
 from rs.ai.peaceful_pummeling.handlers.event_handler import EventHandler
@@ -42,7 +43,7 @@ PEACEFUL_PUMMELING: AiStrategy = AiStrategy(
         CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CardRewardHandler(),
         NeowHandler(),
-        EventHandler(),
+        EventHandler(removal_priority_list=CARD_REMOVAL_PRIORITY_LIST, cards_desired_for_deck=DESIRED_CARDS_FOR_DECK),
         CommonChestHandler(),
         CommonMapHandler(),
         CommonCampfireHandler(HIGH_PRIORITY_UPGRADES, CARD_REMOVAL_PRIORITY_LIST),
