@@ -151,3 +151,106 @@ def create_battle_state(game_state: GameState) -> BattleState:
                        amount_to_discard, cards_discarded_this_turn, orbs=orbs, orb_slots=orb_slots,
                        memory_general=memory_general, memory_by_card=memory_by_card, potions=potions,
                        amount_to_exhaust=amount_to_exhaust)
+
+
+def battlestate_deepcopy(game_state: BattleState) -> BattleState:
+    # get relics
+    relics: Relics = dict(game_state.relics)
+
+    # get potions
+    potions: Potions = list(game_state.potions)
+
+    # get player status
+    player = Player(
+        is_player=True,
+        current_hp=game_state.player.current_hp,
+        max_hp=game_state.player.max_hp,
+        powers=dict(game_state.player.powers),
+        block=game_state.player.block,
+        energy=game_state.player.energy,
+        relics=relics,
+        potions=potions,
+    )
+
+    # get enemies
+    monsters = [
+        Monster(
+            is_player=False,
+            current_hp=monster.current_hp,
+            max_hp=monster.max_hp,
+            block=monster.block,
+            powers=dict(monster.powers),
+            damage=monster.damage,
+            hits=monster.hits,
+            is_gone=monster.is_gone,
+            name=monster.name
+        )
+        for monster in game_state.monsters
+    ]
+
+    # get cards     ## Need to figure out how to deep-copy cards
+    hand = [Card(card.id, card.upgrade,
+            card.cost, card.needs_target,
+            card.type, card.ethereal,
+            card.exhausts, card.uuid)
+            for card in game_state.hand]
+
+    draw_pile = [Card(card.id, card.upgrade,
+            card.cost, card.needs_target,
+            card.type, card.ethereal,
+            card.exhausts, card.uuid)
+            for card in game_state.draw_pile]
+
+    discard_pile = [Card(card.id, card.upgrade,
+            card.cost, card.needs_target,
+            card.type, card.ethereal,
+            card.exhausts, card.uuid)
+            for card in game_state.discard_pile]
+
+    exhaust_pile = [Card(card.id, card.upgrade,
+            card.cost, card.needs_target,
+            card.type, card.ethereal,
+            card.exhausts, card.uuid)
+            for card in game_state.exhaust_pile]
+
+    # get discard action state
+    must_discard = game_state.must_discard
+
+    amount_to_exhaust = game_state.amount_to_exhaust
+    amount_to_discard = game_state.amount_to_discard
+    cards_discarded_this_turn = game_state.cards_discarded_this_turn
+
+    # get orbs
+    orbs = [(OrbId(o.value), a) for o, a in game_state.orbs]
+    orb_slots = game_state.orb_slots
+
+    # get custom state
+    memory_by_card = {}
+
+    for key, value in game_state.memory_by_card.items():
+        for resetKey, val in value.items():
+            new_value = {resetKey : val.copy()}
+            memory_by_card[key] = new_value
+
+
+    memory_general = game_state.memory_general.copy()
+
+    #Other battle state items
+    total_random_damage_dealt = game_state.total_random_damage_dealt
+    total_random_poison_added = game_state.total_random_poison_added
+    amount_scryed = game_state.amount_scryed
+    saved_block_for_next_turn = game_state.saved_block_for_next_turn
+
+    new_battle_state = BattleState(player, hand, discard_pile, exhaust_pile, draw_pile, monsters, relics, must_discard,
+                       amount_to_discard, cards_discarded_this_turn, total_random_damage_dealt, total_random_poison_added,
+                       orbs=orbs, orb_slots=orb_slots, memory_general=memory_general, memory_by_card=memory_by_card,
+                       amount_scryed = amount_scryed, saved_block_for_next_turn = saved_block_for_next_turn, potions=potions,
+                       amount_to_exhaust=amount_to_exhaust)
+
+    new_battle_state.draw_free_early = game_state.draw_free_early
+    new_battle_state.draw_free = game_state.draw_free
+    new_battle_state.draw_pay_early = game_state.draw_pay_early
+    new_battle_state.draw_pay = game_state.draw_pay
+    new_battle_state.time_warp_full = game_state.time_warp_full
+
+    return new_battle_state
