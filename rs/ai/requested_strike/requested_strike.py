@@ -15,6 +15,7 @@ from rs.common.handlers.common_campfire_handler import CommonCampfireHandler
 from rs.common.handlers.card_reward.common_card_reward_handler import CommonCardRewardHandler
 from rs.common.handlers.common_chest_handler import CommonChestHandler
 from rs.common.handlers.common_combat_reward_handler import CommonCombatRewardHandler
+from rs.common.handlers.common_grid_select_handler import CommonGridSelectHandler
 from rs.common.handlers.common_mass_discard_handler import CommonMassDiscardHandler
 from rs.common.handlers.common_map_handler import CommonMapHandler
 from rs.common.handlers.common_purge_handler import CommonPurgeHandler
@@ -43,6 +44,7 @@ REQUESTED_STRIKE: AiStrategy = AiStrategy(
         BossRelicHandler(),
         UpgradeHandler(),
         CommonTransformHandler(CARD_REMOVAL_PRIORITY_LIST),
+        CommonGridSelectHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonPurgeHandler(CARD_REMOVAL_PRIORITY_LIST),
         CommonCombatRewardHandler(desired_potions=DESIRED_POTIONS),
         CommonCardRewardHandler(DESIRED_CARDS_FOR_DECK),
