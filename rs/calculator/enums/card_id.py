@@ -305,6 +305,7 @@ class CardId(Enum):
     THIRD_EYE = 'thirdeye'
     THROUGH_VIOLENCE = 'throughviolence'
     THUNDERCLAP = 'thunderclap'
+    TRUE_GRIT = 'true grit'
     THUNDER_STRIKE = 'thunder strike'
     TOOLS_OF_THE_TRADE = 'tools of the trade'
     TRANQUILITY = 'clearthemind'  # Weird id alert!
